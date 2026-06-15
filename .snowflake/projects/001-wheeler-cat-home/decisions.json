@@ -1,0 +1,58 @@
+{
+  "levelParam": "page",
+  "conversionLevel": "page-level",
+  "templateName": "test-1",
+  "pageSlug": "test-1",
+  "daRoot": "",
+  "targetRepo": "paolomoz/claude-design-eds",
+  "branch": "test-1",
+  "synthesizeMain": true,
+  "feasibility": {
+    "recommendation": "page-level",
+    "note": "Sections share global utility classes and one inline script; CSS/JS not section-independent. Matches requested level=page.",
+    "sections": [
+      { "name": "hero", "level": "page", "checks": { "structure": "pass", "cssScope": "partial", "contentModel": "pass", "jsIndependence": "fail", "visualIndependence": "pass" } },
+      { "name": "quick", "level": "page", "checks": { "structure": "pass", "cssScope": "partial", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } },
+      { "name": "used", "level": "page", "checks": { "structure": "pass", "cssScope": "partial", "contentModel": "pass", "jsIndependence": "fail", "visualIndependence": "pass" } },
+      { "name": "stats", "level": "page", "checks": { "structure": "pass", "cssScope": "pass", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } },
+      { "name": "service", "level": "page", "checks": { "structure": "pass", "cssScope": "partial", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } },
+      { "name": "offers", "level": "page", "checks": { "structure": "pass", "cssScope": "partial", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } },
+      { "name": "brands", "level": "page", "checks": { "structure": "pass", "cssScope": "pass", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } },
+      { "name": "locations", "level": "page", "checks": { "structure": "pass", "cssScope": "pass", "contentModel": "pass", "jsIndependence": "pass", "visualIndependence": "pass" } }
+    ]
+  },
+  "sections": [
+    { "firstClass": "hero", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "quick", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "used", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "stats", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "service", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "offers", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "brands", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "locations", "originalTag": "section", "rewriteToSection": false }
+  ],
+  "headLinks": [
+    { "rel": "preconnect", "href": "https://fonts.googleapis.com" },
+    { "rel": "preconnect", "href": "https://fonts.gstatic.com", "crossorigin": "" },
+    { "rel": "stylesheet", "href": "https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Barlow+Condensed:wght@500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap" }
+  ],
+  "inlineStyleLines": [[26, 313]],
+  "inlineScriptLines": [[686, 701]],
+  "externalLibs": [
+    { "name": "image-slot", "js": "input/image-slot.js", "strategy": "concatenate-into-animations", "note": "Custom <image-slot> web component; renders placeholders read-only outside its omelette runtime." }
+  ],
+  "assetStrategy": "vendor",
+  "assetBase": "file:///Users/paolo/Downloads/Wheelercat%202/",
+  "vendorAssetsTo": "assets/",
+  "vendoredAssets": [],
+  "assetNote": "No binary assets in source — all images are empty <image-slot> placeholders, SVGs are inline, fonts via Google CDN. Nothing copied to /assets/.",
+  "strip": [
+    { "selector": "template#__bundler_thumbnail", "reason": "bundler loading artifact" }
+  ],
+  "imageSlots": {
+    "handling": "data-slot-skip=placeholder; image-slot.js vendored into animations JS",
+    "ids": ["hero-bg", "svc-1", "svc-2", "off-1", "off-2", "off-3", "used-0", "used-1", "used-2", "used-3", "used-4", "used-5"],
+    "authorable": false,
+    "followUp": "Convert hero/offer backdrops to background-image slots if image authoring is required."
+  }
+}
