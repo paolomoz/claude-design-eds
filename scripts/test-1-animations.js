@@ -673,10 +673,21 @@
   const menuOpen = document.getElementById('menuOpen');
   const menuClose = document.getElementById('menuClose');
   if (mnav && menuOpen && menuClose) {
-    menuOpen.onclick = () => mnav.classList.add('open');
-    menuClose.onclick = () => mnav.classList.remove('open');
-    mnav.onclick = (e) => { if (e.target === mnav) mnav.classList.remove('open'); };
-    mnav.querySelectorAll('a.ml').forEach((a) => { a.onclick = () => mnav.classList.remove('open'); });
+    const setOpen = (open) => {
+      mnav.classList.toggle('open', open);
+      mnav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      menuOpen.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // Move focus into the panel on open; return it to the trigger on close.
+      if (open) mnav.querySelector('input, a, button')?.focus();
+      else menuOpen.focus();
+    };
+    menuOpen.onclick = () => setOpen(true);
+    menuClose.onclick = () => setOpen(false);
+    mnav.onclick = (e) => { if (e.target === mnav) setOpen(false); };
+    mnav.querySelectorAll('a.ml').forEach((a) => { a.onclick = () => setOpen(false); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mnav.classList.contains('open')) setOpen(false);
+    });
   }
 
   // filter chips (visual)
