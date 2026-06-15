@@ -1,0 +1,3 @@
+*{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Figtree',system-ui,sans-serif; -webkit-font-smoothing:antialiased; color:#16191F; }
+  a{ color:inherit; text-decoration:none; }
