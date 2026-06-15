@@ -1,0 +1,161 @@
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Libre+Caslon+Text:ital@0;1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<main>
+
+  <section class="search-band" data-screen-label="Flight search">
+    <div class="wrap">
+      <h1 data-slot="headline">Every journey is a <em>story.</em></h1>
+      <div class="search-card">
+        <div class="search-meta">
+          <span class="reward-toggle" id="rewardToggle"><span class="toggle-pill"></span>Search reward seats</span>
+          <span class="discount-link">Got a discount code?</span>
+        </div>
+        <div class="search-fields">
+          <span class="field"><label>Flying from</label><input type="text" placeholder="e.g. London"></input></span>
+          <span class="field"><label>Flying to</label><input type="text" placeholder="e.g. New York"></input></span>
+          <span class="field"><label>Journey</label><select><option>Round trip</option><option>One way</option><option>Multi-city</option></select></span>
+          <span class="field"><label>When</label><input type="text" placeholder="Add dates"></input></span>
+          <span class="field"><label>Who</label><select><option>1 traveller</option><option>2 travellers</option><option>3 travellers</option><option>4+ travellers</option></select></span>
+          <button class="btn btn-primary" type="button">Search flights</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ======================= hero ======================= -->
+  <section class="hero" data-screen-label="Hero">
+    <image-slot id="hero" shape="rect" placeholder="Drop a full-bleed hero image — aircraft, sky, destination" data-slot-skip="placeholder"></image-slot>
+    <div class="hero-card">
+      <span class="eyebrow" data-slot="eyebrow">Summer 2026</span>
+      <h2 data-slot="title">Take off into your next chapter</h2>
+      <p class="muted" data-slot="body">Book your 2026 travel today.</p>
+      <a class="btn btn-primary" href="#"><span data-slot="cta">Find your flight</span></a>
+    </div>
+  </section>
+  
+  <!-- ======================= feature rows ======================= -->
+  <section class="features wrap" data-screen-label="Feature rows">
+  
+    <div class="feature-row">
+      <div class="feature-copy">
+        <span class="eyebrow" data-slot="feat-1-eyebrow">Connecting you across the Atlantic</span>
+        <h2 data-slot="feat-1-title">Even more flights, even more places</h2>
+        <p class="muted" data-slot="feat-1-body">Dreaming of somewhere far? We'll get you there, with direct flights and easy connections from our home hub to cities across the US — including New York, Miami and Boston.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="feat-1-cta">See all our routes</span></a>
+      </div>
+      <image-slot id="feature-routes" radius="14" placeholder="Drop a destination photo" data-slot-skip="placeholder"></image-slot>
+    </div>
+  
+    <div class="feature-row">
+      <image-slot id="feature-club" radius="14" placeholder="Drop a travel-moment photo" data-slot-skip="placeholder"></image-slot>
+      <div class="feature-copy">
+        <span class="eyebrow" data-slot="feat-2-eyebrow">Time to start exploring?</span>
+        <h2 data-slot="feat-2-title">Join Club Fable</h2>
+        <p class="muted" data-slot="feat-2-body">Earn points on every flight you take with us, and spend them on the destinations you've always dreamed of. Joining is free — and the next chapter starts sooner than you think.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="feat-2-cta">Join the club</span></a>
+      </div>
+    </div>
+  
+  </section>
+  
+  <!-- ======================= cabins ======================= -->
+  <section class="cabins wrap" data-screen-label="Cabins">
+    <h2 class="section-title" data-slot="title">Fly in style, in any seat</h2>
+    <div class="cabin-grid">
+      <div class="cabin-card">
+        <image-slot id="cabin-economy" radius="14" placeholder="Economy cabin photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="cabin-1-title">Economy</h3>
+        <p class="lede" data-slot="cabin-1-lede">Three ways to fly</p>
+        <p class="muted" data-slot="cabin-1-body">With the best crew in the sky, our Economy means you can afford to be choosy.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="cabin-1-cta">Enjoy Economy</span></a>
+      </div>
+      <div class="cabin-card">
+        <image-slot id="cabin-premium" radius="14" placeholder="Premium cabin photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="cabin-2-title">Premium</h3>
+        <p class="lede" data-slot="cabin-2-lede">Comfort with all the perks</p>
+        <p class="muted" data-slot="cabin-2-body">The difference between a good flight and a phenomenal one is in the details.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="cabin-2-cta">Explore Premium</span></a>
+      </div>
+      <div class="cabin-card">
+        <image-slot id="cabin-first" radius="14" placeholder="First cabin photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="cabin-3-title">First Chapter</h3>
+        <p class="lede" data-slot="cabin-3-lede">The perfect retreat at 30,000 feet</p>
+        <p class="muted" data-slot="cabin-3-body">We've considered every last detail of your journey, so you don't have to.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="cabin-3-cta">Discover First Chapter</span></a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ======================= flying with us ======================= -->
+  <section class="flying wrap" data-screen-label="Flying with us">
+    <h2 class="section-title" data-slot="title">Flying with us</h2>
+    <div class="cabin-grid">
+      <div class="cabin-card">
+        <image-slot id="fw-experience" radius="14" placeholder="Onboard experience photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="fw-1-title">Our unique experience</h3>
+        <p class="muted" data-slot="fw-1-body">Stellar service, carefully curated entertainment, and plenty of little touches to make your time with us special.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="fw-1-cta">Fly in style</span></a>
+      </div>
+      <div class="cabin-card">
+        <image-slot id="fw-baggage" radius="14" placeholder="Baggage / arrivals photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="fw-2-title">Baggage, unpacked</h3>
+        <p class="muted" data-slot="fw-2-body">Everything you need to know about allowances, what you can carry onboard, and everything in between.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="fw-2-cta">Come this way</span></a>
+      </div>
+      <div class="cabin-card">
+        <image-slot id="fw-club" radius="14" placeholder="Club Fable lifestyle photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="fw-3-title">Club Fable</h3>
+        <p class="muted" data-slot="fw-3-body">Join for free and earn Fable Points on every flight — then spend them on your next adventure.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="fw-3-cta">Find out more</span></a>
+      </div>
+    </div>
+  
+    <div class="wide-grid">
+      <div class="wide-card">
+        <image-slot id="wide-netzero" radius="14" placeholder="Aircraft above clouds photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="wide-1-title">Our mission to net zero</h3>
+        <p class="muted" data-slot="wide-1-body">We've set ambitious interim milestones on our way to net zero carbon by 2050.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="wide-1-cta">Find out more</span></a>
+      </div>
+      <div class="wide-card">
+        <image-slot id="wide-saf" radius="14" placeholder="Hangar / aircraft photo" data-slot-skip="placeholder"></image-slot>
+        <h3 data-slot="wide-2-title">Sustainable fuel, real flights</h3>
+        <p class="muted" data-slot="wide-2-body">Pioneering transatlantic flying on 100% Sustainable Aviation Fuel.</p>
+        <a class="btn btn-outline" href="#"><span data-slot="wide-2-cta">More about our fuel</span></a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ======================= help strip ======================= -->
+  <section class="help-strip" data-screen-label="Help strip">
+    <div class="wrap help-grid">
+      <div class="help-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="5" width="18" height="15" rx="2"></rect><path d="M3 9h18M8 3v4M16 3v4"></path><path d="m9 14 2 2 4-4"></path></svg>
+        <h4 data-slot="help-1-title">Pre-travel advice</h4>
+        <p data-slot="help-1-body">Everything you need to know before you go.</p>
+        <a href="#"><span data-slot="help-1-link">Pre-travel advice</span></a>
+      </div>
+      <div class="help-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 13l18-7-7 18-2.5-7.5L3 13z"></path></svg>
+        <h4 data-slot="help-2-title">Flight information</h4>
+        <p data-slot="help-2-body">What to do if your flight is changed, delayed or disrupted.</p>
+        <a href="#"><span data-slot="help-2-link">Flight information</span></a>
+      </div>
+      <div class="help-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="6" y="8" width="12" height="13" rx="2"></rect><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>
+        <h4 data-slot="help-3-title">Flying with baggage</h4>
+        <p data-slot="help-3-body">Find out what you can and can't take with you.</p>
+        <a href="#"><span data-slot="help-3-link">Flying with baggage</span></a>
+      </div>
+      <div class="help-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+        <h4 data-slot="help-4-title">Pay with Fable Points</h4>
+        <p data-slot="help-4-body">Join Club Fable to earn and spend points on your flights.</p>
+        <a href="#"><span data-slot="help-4-link">Earn and spend</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
