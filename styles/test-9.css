@@ -1,0 +1,6 @@
+*{ box-sizing:border-box; }
+  body{ margin:0; background:#e7e7f2; font-family:'Saira',system-ui,sans-serif; -webkit-font-smoothing:antialiased; color:#15151f; }
+  .ph{ position:relative; overflow:hidden; }
+  .ph svg{ position:absolute; inset:0; margin:auto; width:38px; height:38px; opacity:.22; }
+  .scrollx{ scrollbar-width:none; }
+  .scrollx::-webkit-scrollbar{ display:none; }

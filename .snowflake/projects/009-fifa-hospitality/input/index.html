@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Saira:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:#e7e7f2; font-family:'Saira',system-ui,sans-serif; -webkit-font-smoothing:antialiased; color:#15151f; }
+  .ph{ position:relative; overflow:hidden; }
+  .ph svg{ position:absolute; inset:0; margin:auto; width:38px; height:38px; opacity:.22; }
+  .scrollx{ scrollbar-width:none; }
+  .scrollx::-webkit-scrollbar{ display:none; }
+</style>
+</helmet>
+
+<div style="width:100%; background:#e7e7f2; overflow-x:hidden;">
+
+  <!-- ===== TOP NAV ===== -->
+  <header style="background:#ffffff; border-bottom:1px solid #ececf2;">
+    <div style="max-width:1280px; margin:0 auto; padding:14px 32px; display:flex; align-items:center; gap:28px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="display:flex;">
+          <div style="width:26px; height:30px; background:linear-gradient(160deg,#3a1f6e,#171326); border-radius:3px;"></div>
+          <div style="width:26px; height:30px; background:linear-gradient(160deg,#c9a24a,#7d5d1e); border-radius:3px; margin-left:-7px;"></div>
+        </div>
+        <div style="font-family:'Saira Condensed'; font-weight:800; font-size:14px; letter-spacing:.06em; line-height:1;">ON LOCATION</div>
+        <div style="display:flex; align-items:center; gap:6px; margin-left:10px; padding:5px 9px; border:1px solid #e2e2ea; border-radius:6px; font-size:12px; font-weight:600;">
+          <span style="width:18px; height:12px; background:linear-gradient(90deg,#3c3b6e 40%,#fff 40%,#fff 50%,#b22 50%); border-radius:2px; display:inline-block;"></span>
+          USA <span style="opacity:.5;">▾</span>
+        </div>
+      </div>
+      <nav style="display:flex; align-items:center; gap:22px; font-size:13px; font-weight:600; color:#2a2a33; flex:1;">
+        <span>Single Matches</span>
+        <span>Match Offerings <span style="opacity:.5;">▾</span></span>
+        <span>FAQ</span>
+        <span>More <span style="opacity:.5;">▾</span></span>
+        <span>Schedule ▦</span>
+      </nav>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <span style="font-family:'Saira Condensed'; font-weight:800; font-style:italic; color:#1a1f71; font-size:18px; letter-spacing:.02em;">VISA</span>
+        <span style="font-family:'Saira Condensed'; font-weight:800; color:#15151f; font-size:18px; letter-spacing:-.02em;">FIFA</span>
+        <span style="font-size:13px; font-weight:600; color:#2a2a33;">English <span style="opacity:.5;">▾</span></span>
+        <span style="font-size:13px; font-weight:700; color:#15151f;">Log In / Sign Up</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section style="position:relative; background:radial-gradient(120% 90% at 70% 0%,#37489e 0%,#2e2370 45%,#231a55 100%); padding:0 0 64px; border-radius:0 0 60px 60px; overflow:hidden;">
+    <div style="position:absolute; top:-80px; left:-120px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,#4a3fa0 0%,transparent 65%); opacity:.6;"></div>
+    <div style="max-width:1280px; margin:0 auto; padding:40px 32px 0; position:relative;">
+
+      <div class="ph" style="position:absolute; left:24px; top:18px; width:150px; height:140px; border-radius:14px; background:linear-gradient(150deg,#6d3b2a,#caa14d 60%,#2e7d46); transform:rotate(-2deg);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+      <div class="ph" style="position:absolute; right:24px; top:8px; width:200px; height:120px; border-radius:14px; background:linear-gradient(150deg,#16a085,#2d6cdf 70%,#1b2a6b);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+
+      <div style="text-align:center; padding:60px 0 8px; max-width:680px; margin:0 auto;">
+        <div style="color:#cfd2f0; font-family:'Saira Condensed'; font-weight:700; letter-spacing:.18em; font-size:13px; margin-bottom:14px;">GET CLOSER THAN EVER TO</div>
+        <h1 style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:64px; line-height:.92; margin:0 0 18px; letter-spacing:-.01em;">FIFA WORLD CUP 26<span style="font-size:24px; vertical-align:super;">™</span></h1>
+        <p style="color:#d4d7ee; font-size:15px; line-height:1.55; margin:0 auto 26px; max-width:520px;">Experience the best of it all with official hospitality packages featuring premium tickets, food &amp; beverage, entertainment, and more. Now available: single matches and private suites!</p>
+        <button style="background:#fff; color:#231a55; border:none; padding:13px 30px; border-radius:30px; font-family:'Saira Condensed'; font-weight:700; font-size:15px; letter-spacing:.02em; cursor:pointer;">Browse All Matches</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:-30px;">
+        <div class="ph" style="width:150px; height:90px; border-radius:12px; background:linear-gradient(150deg,#2e7d46,#1b5e35);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+        <div class="ph" style="width:150px; height:90px; border-radius:12px; background:linear-gradient(150deg,#13243f,#0a1730);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+      </div>
+
+      <!-- Browse row -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:26px;">
+        <div style="font-family:'Saira Condensed'; font-weight:800; color:#fff; letter-spacing:.1em; font-size:15px;">BROWSE</div>
+        <div style="display:flex; align-items:center; gap:18px; color:#cfd2f0; font-size:13px; font-weight:600;">
+          <span style="color:#fff; border-bottom:2px solid #00c4b3; padding-bottom:4px;">Host City</span>
+          <span>Team</span>
+          <span style="background:rgba(255,255,255,.12); width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;">›</span>
+        </div>
+      </div>
+
+      <!-- City pills -->
+      <div class="scrollx" style="display:flex; gap:14px; margin-top:14px; overflow-x:auto; padding-bottom:4px;">
+        <sc-for list="{{ cities }}" as="city" hint-placeholder-count="7">
+          <div style="flex:0 0 auto; min-width:128px; height:74px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:'Saira Condensed'; font-weight:800; font-size:18px; letter-spacing:.03em; color:#fff; background:{{ city.bg }};">{{ city.name }}</div>
+        </sc-for>
+      </div>
+
+      <!-- disclaimer -->
+      <div style="text-align:center; margin-top:30px;">
+        <div style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:15px; letter-spacing:.02em;">Don't risk unofficial sources or leave tickets to chance!</div>
+        <p style="color:#b9bce0; font-size:12px; line-height:1.5; max-width:560px; margin:8px auto 0;">Secure your place with our exclusive hospitality packages from On Location, Official Hospitality Provider of FIFA World Cup 2026™. Up to 60 packages per order. To purchase more, call +1 844-892-1485. Seats not guaranteed to be together.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== APP + KNOW BEFORE ===== -->
+  <section style="max-width:1280px; margin:0 auto; padding:28px 32px 40px;">
+    <div style="display:grid; grid-template-columns:1.35fr 1fr; gap:22px;">
+      <div style="background:linear-gradient(110deg,#3a1f7a,#5b2bb0); border-radius:16px; padding:26px 30px; display:flex; align-items:center; justify-content:space-between; overflow:hidden;">
+        <div>
+          <div style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:22px; letter-spacing:.02em;">DOWNLOAD OUR APP</div>
+          <div style="display:flex; gap:12px; margin-top:14px;">
+            <div style="background:#000; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px; display:flex; align-items:center; gap:7px;">🍎 App Store</div>
+            <div style="background:#000; color:#fff; padding:8px 14px; border-radius:8px; font-size:12px; display:flex; align-items:center; gap:7px;">▶ Google Play</div>
+          </div>
+        </div>
+        <div class="ph" style="width:96px; height:120px; border-radius:14px; background:linear-gradient(160deg,#1a2452,#0c1230); border:3px solid rgba(255,255,255,.2);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/></svg></div>
+      </div>
+      <div style="background:linear-gradient(110deg,#a32424,#6e1717); border-radius:16px; padding:26px 30px; display:flex; align-items:center; justify-content:space-between; gap:18px;">
+        <div style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:22px; line-height:1; letter-spacing:.02em;">KNOW BEFORE YOU GO</div>
+        <div style="background:#fff; border-radius:8px; padding:11px 14px; font-size:13px; color:#777; display:flex; align-items:center; gap:30px; min-width:170px;">Choose Location <span style="opacity:.5;">▾</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SINGLE MATCHES (black) ===== -->
+  <section style="background:#0c0c14; border-radius:48px 48px 0 0; padding:64px 0 76px;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px;">
+        <h2 style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:54px; line-height:.92; margin:0; letter-spacing:-.01em;">SINGLE<br>MATCHES</h2>
+        <div style="max-width:330px; padding-top:6px;">
+          <p style="color:#b6b6c4; font-size:14px; line-height:1.55; margin:0 0 14px;">Choose from 104 matches across 16 dynamic host cities and venues™.</p>
+          <div style="display:flex; align-items:center; gap:18px;">
+            <button style="background:#00c4b3; color:#06231f; border:none; padding:11px 22px; border-radius:24px; font-family:'Saira Condensed'; font-weight:700; font-size:14px; cursor:pointer;">Explore All Matches</button>
+            <span style="color:#fff; font-size:13px; font-weight:600;">View Schedule ›</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div style="display:flex; gap:26px; margin:38px 0 22px; border-bottom:1px solid #23232f; font-size:14px; font-weight:600;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+          <div onClick="{{ t.onClick }}" style="padding-bottom:12px; cursor:pointer; color:{{ t.color }}; border-bottom:2px solid {{ t.border }}; margin-bottom:-1px;">{{ t.name }}</div>
+        </sc-for>
+      </div>
+
+      <!-- match cards -->
+      <div style="position:relative;">
+        <div class="scrollx" style="display:flex; gap:18px; overflow-x:auto; padding:4px 0 8px;">
+          <sc-for list="{{ matches }}" as="m" hint-placeholder-count="5">
+            <div style="flex:0 0 300px; background:#fff; border-radius:14px; overflow:hidden;">
+              <div class="ph" style="height:130px; background:{{ m.img }};"><svg viewBox="0 0 24 24" fill="none" stroke="#15151f" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+              <div style="padding:16px 18px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:1; gap:6px;"><div style="width:24px; height:16px; border-radius:3px; background:{{ m.flagA }};"></div><div style="font-family:'Saira Condensed'; font-weight:800; font-size:15px; text-align:center; line-height:1;">{{ m.teamA }}</div></div>
+                  <div style="font-family:'Saira Condensed'; font-weight:700; color:#9a9aa8; font-size:13px;">VS</div>
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:1; gap:6px;"><div style="width:24px; height:16px; border-radius:3px; background:{{ m.flagB }};"></div><div style="font-family:'Saira Condensed'; font-weight:800; font-size:15px; text-align:center; line-height:1;">{{ m.teamB }}</div></div>
+                </div>
+                <div style="margin-top:14px; font-size:12px; color:#55555f; line-height:1.9;">
+                  <div>📅 {{ m.date }}</div>
+                  <div>🏟 {{ m.venue }}</div>
+                  <div>📍 {{ m.loc }}</div>
+                </div>
+                <button style="width:100%; margin-top:14px; background:#0c0c14; color:#fff; border:none; padding:10px; border-radius:8px; font-family:'Saira Condensed'; font-weight:700; font-size:13px; cursor:pointer;">Buy Now</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:18px;">
+          <span style="width:32px; height:32px; border-radius:50%; border:1px solid #3a3a48; color:#fff; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;">‹</span>
+          <span style="width:32px; height:32px; border-radius:50%; border:1px solid #3a3a48; color:#fff; display:inline-flex; align-items:center; justify-content:center; cursor:pointer;">›</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRIVATE SUITES ===== -->
+  <section style="background:#e7e7f2; padding:48px 0 8px;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1fr 1.1fr; border-radius:18px; overflow:hidden;">
+        <div style="background:linear-gradient(150deg,#3a1f7a,#4f2596); padding:48px 44px; display:flex; flex-direction:column; justify-content:center;">
+          <h3 style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:34px; margin:0 0 16px; letter-spacing:.03em;">PRIVATE&nbsp;&nbsp;SUITES</h3>
+          <p style="color:#d6d2ef; font-size:14px; line-height:1.6; margin:0 0 24px; max-width:340px;">Level up with this exclusive offering that includes preferred entry, direct seating access, and dedicated service — all to be enjoyed privately among you and your guests.</p>
+          <button style="align-self:flex-start; background:#fff; color:#3a1f7a; border:none; padding:11px 28px; border-radius:24px; font-family:'Saira Condensed'; font-weight:700; font-size:14px; cursor:pointer;">Buy Now</button>
+        </div>
+        <div class="ph" style="min-height:280px; background:linear-gradient(150deg,#caa46a,#8a5a3c 60%,#3a2a44);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ADDITIONAL OFFERINGS ===== -->
+  <section style="background:#e7e7f2; padding:44px 0 56px;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <h2 style="font-family:'Saira Condensed'; font-weight:800; font-size:36px; margin:0 0 10px; letter-spacing:.01em;">ADDITIONAL OFFERINGS</h2>
+      <p style="color:#5a5a66; font-size:13px; margin:0 0 26px;">These specialty offerings are only available via inquiry (they cannot be purchased online). Please <span style="color:#2d6cdf; text-decoration:underline;">contact us here</span> or call us at 1-844-892-1485.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+        <div style="background:#fff; border-radius:16px; overflow:hidden;">
+          <div class="ph" style="height:200px; background:linear-gradient(150deg,#e88a3c,#7a3f6e 70%,#1b2452);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+          <div style="padding:22px 24px 26px;">
+            <h4 style="font-family:'Saira Condensed'; font-weight:800; font-size:20px; margin:0 0 10px;">PLATINUM ACCESS</h4>
+            <p style="color:#5a5a66; font-size:13px; line-height:1.6; margin:0 0 18px;">The most exclusive tier — it delivers an all-encompassing experience with full on-site customization and the most premium access available.</p>
+            <button style="background:#fff; color:#15151f; border:1.5px solid #15151f; padding:9px 22px; border-radius:22px; font-family:'Saira Condensed'; font-weight:700; font-size:13px; cursor:pointer;">Register Interest</button>
+          </div>
+        </div>
+        <div style="background:#fff; border-radius:16px; overflow:hidden;">
+          <div class="ph" style="height:200px; background:linear-gradient(150deg,#f0a24a,#3f8a8a 75%,#1b3452);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+          <div style="padding:22px 24px 26px;">
+            <h4 style="font-family:'Saira Condensed'; font-weight:800; font-size:20px; margin:0 0 10px;">ACCOMMODATIONS</h4>
+            <p style="color:#5a5a66; font-size:13px; line-height:1.6; margin:0 0 18px;">Select your preferred hotels, experiences, and/or car rentals to create your ideal trip package.</p>
+            <button style="background:#fff; color:#15151f; border:1.5px solid #15151f; padding:9px 22px; border-radius:22px; font-family:'Saira Condensed'; font-weight:700; font-size:13px; cursor:pointer;">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== UNRIVALED LOUNGE ACCESS (black) ===== -->
+  <section style="background:#0c0c14; position:relative; padding:64px 0 72px; overflow:hidden;">
+    <div style="position:absolute; right:-120px; top:-60px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,#0e8a7e 0%,transparent 62%); opacity:.5;"></div>
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px; position:relative;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+        <div>
+          <h2 style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:50px; line-height:.95; margin:0 0 20px;">UNRIVALED<br>LOUNGE ACCESS</h2>
+          <p style="color:#b6b6c4; font-size:14px; line-height:1.6; margin:0 0 14px; max-width:420px;">After selecting your series, choose from a selection of dynamic lounge offerings at every venue.</p>
+          <p style="color:#b6b6c4; font-size:14px; line-height:1.6; margin:0 0 28px; max-width:420px;">Each of the 16 FIFA World Cup 2026™ host venues offers multiple lounge options, all of which blend luxury comfort with extraordinary viewing access. Note: lounge quantities, sizes, and features vary by venue.</p>
+
+          <div style="border-top:1px solid #26263200;">
+            <sc-for list="{{ lounges }}" as="lg" hint-placeholder-count="3">
+              <div style="border-top:1px solid #262632;">
+                <div onClick="{{ lg.toggle }}" style="display:flex; justify-content:space-between; align-items:center; padding:18px 0; cursor:pointer;">
+                  <span style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:18px; letter-spacing:.02em;">{{ lg.name }}</span>
+                  <span style="color:#00c4b3; font-size:20px;">{{ lg.sign }}</span>
+                </div>
+                <sc-if value="{{ lg.isOpen }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding:0 0 22px;">
+                    <div style="font-family:'Saira Condensed'; font-weight:800; color:#00c4b3; font-size:14px; letter-spacing:.08em; margin-bottom:8px;">{{ lg.tier }}</div>
+                    <p style="color:#a4a4b4; font-size:13px; line-height:1.7; margin:0; max-width:400px;">{{ lg.body }}</p>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- image collage -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto auto; gap:14px;">
+          <div class="ph" style="grid-column:1 / 2; grid-row:1 / 2; height:150px; border-radius:14px; background:linear-gradient(150deg,#2a3f6e,#16243f);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+          <div class="ph" style="grid-column:2 / 3; grid-row:1 / 3; height:auto; border-radius:14px; background:linear-gradient(150deg,#3f8a6e,#1e5a44);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+          <div class="ph" style="grid-column:1 / 2; grid-row:2 / 4; border-radius:14px; background:linear-gradient(150deg,#7a3f6e,#3a1f55);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+          <div class="ph" style="grid-column:2 / 3; grid-row:3 / 4; height:150px; border-radius:14px; background:linear-gradient(150deg,#caa46a,#8a5a3c);"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY CHOOSE ===== -->
+  <section style="background:#fff; padding:64px 0;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;">
+        <div style="position:relative; padding:30px;">
+          <div style="position:absolute; left:0; top:0; width:74%; height:78%; background:linear-gradient(135deg,#5a2bb0,#e85a3c 70%,#f0a24a); border-radius:50% 50% 12px 50%;"></div>
+          <div class="ph" style="position:relative; height:300px; border-radius:50% 50% 12px 50%; background:linear-gradient(150deg,#2e7d46,#1b5e35); margin-left:18px; margin-top:18px;"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 17l-5-5L5 19"/></svg></div>
+        </div>
+        <div>
+          <h2 style="font-family:'Saira Condensed'; font-weight:800; font-size:44px; line-height:.98; margin:0 0 20px;">WHY CHOOSE ON LOCATION?</h2>
+          <p style="color:#55555f; font-size:14px; line-height:1.7; margin:0 0 28px; max-width:440px;">As the official hospitality provider of world-renowned events like the Olympic Games and Super Bowl, On Location has redefined the live event experience across sports, music, fashion, and beyond. On Location believes fandom shouldn't be limited to just watching an event; as a result, it creates extraordinary experiences for memories that last a lifetime.</p>
+          <div style="border-top:1px solid #e2e2ea; padding-top:20px;">
+            <div style="font-family:'Saira Condensed'; font-weight:800; font-size:38px; line-height:1;">2 MILLION</div>
+            <div style="color:#55555f; font-size:13px; margin-top:4px;">Global Guests Hosted Annually</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section style="background:#fff; padding:8px 0 72px;">
+    <div style="max-width:1080px; margin:0 auto; padding:0 32px;">
+      <h2 style="font-family:'Saira Condensed'; font-weight:800; font-size:40px; margin:0 0 26px;">FREQUENTLY ASKED QUESTIONS</h2>
+      <div style="border-top:1px solid #e6e6ee;">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #e6e6ee;">
+            <div onClick="{{ f.toggle }}" style="display:flex; justify-content:space-between; align-items:center; gap:20px; padding:20px 4px; cursor:pointer;">
+              <span style="font-size:15px; font-weight:600; color:#15151f;">{{ f.q }}</span>
+              <span style="color:{{ f.color }}; font-size:20px; flex:0 0 auto;">{{ f.sign }}</span>
+            </div>
+            <sc-if value="{{ f.isOpen }}" hint-placeholder-val="{{ false }}">
+              <p style="color:#55555f; font-size:13px; line-height:1.7; margin:0; padding:0 4px 22px; max-width:760px;">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex; justify-content:center; margin-top:34px;">
+        <button style="background:#fff; color:#15151f; border:1.5px solid #15151f; padding:11px 30px; border-radius:24px; font-family:'Saira Condensed'; font-weight:700; font-size:14px; cursor:pointer;">See All FAQs</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background:#0c0c14; padding:48px 0 28px;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 32px;">
+      <div style="display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:30px; height:34px; background:linear-gradient(160deg,#3a1f6e,#171326); border-radius:4px;"></div>
+            <span style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:14px; letter-spacing:.04em;">FIFA<br>WORLD CUP</span>
+            <div style="width:30px; height:34px; background:linear-gradient(160deg,#c9a24a,#7d5d1e); border-radius:4px; margin-left:6px;"></div>
+          </div>
+          <div style="display:flex; gap:14px; color:#8a8a98; font-size:15px;">
+            <span>f</span><span>𝕏</span><span>▶</span><span>◎</span><span>in</span>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 56px; color:#c4c4d0; font-size:13px;">
+          <span style="color:#fff; font-weight:600;">Home</span>
+          <span>FAQ</span>
+          <span>About Us</span>
+          <span>FIFA World Cup 26™ Sales Agents</span>
+          <span>My Account</span>
+          <span>Contact Us</span>
+          <span>My Orders</span>
+          <span>Request Accessible Hospitality</span>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:'Saira Condensed'; font-weight:800; color:#fff; font-size:14px; letter-spacing:.03em; margin-bottom:14px;">NOT READY TO MAKE<br>A PURCHASE?</div>
+          <button style="background:transparent; color:#fff; border:1.5px solid #4a4a58; padding:9px 22px; border-radius:22px; font-family:'Saira Condensed'; font-weight:700; font-size:13px; cursor:pointer;">Register Interest</button>
+        </div>
+      </div>
+      <div style="border-top:1px solid #20202c; margin-top:36px; padding-top:20px; text-align:center; color:#6a6a78; font-size:11px; line-height:1.9;">
+        <div>© 2026 On Location Events, LLC. All Rights Reserved.</div>
+        <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:6px;">
+          <span>Privacy Policy</span><span>FIFA Ticket Terms of Use</span><span>On Location Terms of Use</span><span>Hospitality Sales Agreement</span><span>Deposit Terms</span><span>Cookie Policy</span><span>Do Not Sell My Personal Info</span><span>Cookie Settings Preferences</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { faqOpen: 0, loungeOpen: 0, tab: 0 };
+
+  renderVals() {
+    const cities = [
+      { name: 'ATLANTA', bg: '#e04a39' },
+      { name: 'BOSTON', bg: '#14a89a' },
+      { name: 'DALLAS', bg: '#1f7a4d' },
+      { name: 'HOUSTON', bg: '#2d6cdf' },
+      { name: 'KANSAS CITY', bg: '#6b3fa0' },
+      { name: 'LOS ANGELES', bg: '#f0603a' },
+      { name: 'MIAMI', bg: '#e84a8c' },
+    ];
+
+    const tabNames = ['Popular', 'Group Stage', 'Round of 32'];
+    const tabs = tabNames.map((name, i) => ({
+      name,
+      color: i === this.state.tab ? '#fff' : '#7a7a88',
+      border: i === this.state.tab ? '#00c4b3' : 'transparent',
+      onClick: () => this.setState({ tab: i }),
+    }));
+
+    const matches = [
+      { teamA: 'TBD', teamB: 'TBD', flagA: '#3a3a48', flagB: '#3a3a48', date: 'Tuesday, July 07 at 4:00 pm', venue: 'Atlanta Stadium, USA', loc: 'M50: W36 vs W38', img: 'linear-gradient(150deg,#2e7d46,#1b5e35)' },
+      { teamA: 'TÜRKİYE', teamB: 'UNITED STATES', flagA: '#e30a17', flagB: 'linear-gradient(#b22,#fff,#3c3b6e)', date: 'Thursday, June 25 at 1:00 pm', venue: 'Los Angeles Stadium, USA', loc: 'M59: Türkiye vs United States', img: 'linear-gradient(150deg,#3f6e8a,#1e3a5a)' },
+      { teamA: 'COLOMBIA', teamB: 'PORTUGAL', flagA: 'linear-gradient(#f5c518,#0033a0,#c8102e)', flagB: 'linear-gradient(90deg,#006600 40%,#c8102e 40%)', date: 'Saturday, June 27 at 4:00 pm', venue: 'Dallas Stadium, USA', loc: 'M71: Colombia vs Portugal', img: 'linear-gradient(150deg,#7a3f6e,#3a1f55)' },
+      { teamA: 'TBD', teamB: 'TBD', flagA: '#3a3a48', flagB: '#3a3a48', date: 'Monday, June 29 at 1:00 pm', venue: 'Houston Stadium, USA', loc: 'M76: 1C vs 3F', img: 'linear-gradient(150deg,#2a3f6e,#16243f)' },
+      { teamA: 'TBD', teamB: 'TBD', flagA: '#3a3a48', flagB: '#3a3a48', date: 'Wednesday, July 01 at 4:00 pm', venue: 'Miami Stadium, USA', loc: 'M82: 1A vs 3C', img: 'linear-gradient(150deg,#caa46a,#8a5a3c)' },
+    ];
+
+    const loungeData = [
+      { name: 'Pitchside Lounge', tier: 'VIP', body: 'Your entry to an exclusive experience that blends luxurious comfort with electrifying energy. Witness the action in premium sideline seats while enjoying elevated amenities — including curated, regionally-driven culinary offerings, a chef-driven menu featuring local flavors and ingredients — all to be enjoyed pre-match, halftime, and post-match.' },
+      { name: 'Champions Club', tier: 'PREMIUM', body: 'A refined club setting with premium seating, all-inclusive food and beverage, and dedicated hospitality service positioned for an unforgettable view of the pitch.' },
+      { name: 'FIFA Pavilion', tier: 'SIGNATURE', body: 'The signature gathering space combining vibrant atmosphere, gourmet dining, and front-row access to the energy of FIFA World Cup 26™.' },
+    ];
+    const lounges = loungeData.map((l, i) => ({
+      ...l,
+      isOpen: i === this.state.loungeOpen,
+      sign: i === this.state.loungeOpen ? '–' : '+',
+      toggle: () => this.setState({ loungeOpen: this.state.loungeOpen === i ? -1 : i }),
+    }));
+
+    const faqData = [
+      { q: 'How is hospitality different from a general ticket?', a: 'FIFA World Cup 26™ hospitality packages are ticket-inclusive offerings and series that provide premium seating, exclusive entertainment, and upscale food and beverages, with service levels ranging from private suites to shared lounges — and other festive product options within the stadium\u2019s secure perimeter — along with a variety of additional one-of-a-kind experiences. These packages provide an elevated experience beyond standard event offerings.' },
+      { q: 'Can I buy hospitality packages from other companies?', a: 'On Location is the Official Hospitality Provider of the FIFA World Cup 26™. To guarantee authenticity and the full hospitality experience, packages should be purchased through On Location or its authorized sales agents.' },
+      { q: 'Why are there separate FIFA Hospitality Digital Checkout Store for each of the three host nations (Canada, Mexico, and the U.S.)?', a: 'Each host nation has distinct regulations, currencies, and tax requirements, so dedicated stores ensure accurate pricing, compliance, and a smooth purchasing experience for guests in each country.' },
+      { q: 'What do I need to know re: purchasing packages in different host nations?', a: 'Purchases are processed in the local currency of the selected host nation, and applicable taxes and terms vary by country. Review the relevant store\u2019s terms before completing your order.' },
+      { q: 'Is it possible for different purchasers – those who have purchased packages using separate accounts – to sit together at a match?', a: 'Seating together is not guaranteed across separate orders or accounts. To improve the likelihood of adjacent seating, purchase within a single order where possible, or contact our team for assistance.' },
+    ];
+    const faqs = faqData.map((f, i) => ({
+      ...f,
+      isOpen: i === this.state.faqOpen,
+      sign: i === this.state.faqOpen ? '✕' : '+',
+      color: i === this.state.faqOpen ? '#e04a39' : '#e04a39',
+      toggle: () => this.setState({ faqOpen: this.state.faqOpen === i ? -1 : i }),
+    }));
+
+    return { cities, tabs, matches, lounges, faqs };
+  }
+}
+</script>
+</body>
+</html>
