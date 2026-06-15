@@ -1,0 +1,27 @@
+{
+  "levelParam": "page", "conversionLevel": "page-level",
+  "templateName": "test-2", "pageSlug": "test-2", "daRoot": "",
+  "targetRepo": "paolomoz/claude-design-eds", "branch": "test-2",
+  "synthesizeMain": true,
+  "sections": [
+    { "firstClass": "hero", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "new-products", "originalTag": "section", "rewriteToSection": false, "disambiguated": "from class 'section' via data-screen-label 'New products'" },
+    { "firstClass": "brand-band", "originalTag": "section", "rewriteToSection": false },
+    { "firstClass": "discover", "originalTag": "section", "rewriteToSection": false, "disambiguated": "from class 'section tinted' via data-screen-label 'Discover Festool'" },
+    { "firstClass": "service-band", "originalTag": "section", "rewriteToSection": false }
+  ],
+  "headLinks": [
+    { "rel": "preconnect", "href": "https://fonts.googleapis.com" },
+    { "rel": "preconnect", "href": "https://fonts.gstatic.com", "crossorigin": "anonymous" },
+    { "rel": "stylesheet", "href": "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" }
+  ],
+  "externalCss": "festool-redesign.css -> styles/test-2.css (verbatim)",
+  "assetStrategy": "none", "assetNote": "external CSS only; no binary assets, no url() refs",
+  "strip": [
+    { "what": "React+ReactDOM+Babel CDN scripts", "reason": "dev-only tweaks panel runtime" },
+    { "what": "tweaks-panel.jsx + #tweaks-root + both type=text/babel scripts", "reason": "dev-only design tweaks UI" },
+    { "what": "html[data-hero]/[data-density] attributes", "reason": "redundant; defaults match" }
+  ],
+  "imageSlots": { "handling": "data-slot-skip; image-slot.js vendored", "authorable": false, "count": 11 },
+  "slotCount": 42
+}
