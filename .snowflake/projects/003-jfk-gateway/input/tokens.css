@@ -1,0 +1,107 @@
+/* ============================================================
+   Gateway International — original token system
+   Inspired by airport wayfinding (petrol ink + signal orange),
+   intentionally distinct from any existing airport brand.
+   ============================================================ */
+
+:root {
+  /* Color — petrol / paper / signal */
+  --ink: oklch(0.26 0.05 230);          /* deep petrol navy */
+  --ink-2: oklch(0.36 0.05 230);
+  --ink-soft: oklch(0.50 0.03 230);
+  --brand: oklch(0.46 0.10 230);        /* petrol blue */
+  --brand-strong: oklch(0.38 0.09 230);
+  --signal: oklch(0.72 0.17 50);        /* wayfinding orange */
+  --signal-ink: oklch(0.30 0.10 50);
+  --paper: oklch(0.985 0.004 90);       /* warm white */
+  --paper-2: oklch(0.955 0.006 90);
+  --card: #ffffff;
+  --line: oklch(0.90 0.008 230);
+  --tint: oklch(0.95 0.015 230);        /* pale petrol tint band */
+  --ok: oklch(0.62 0.14 150);
+  --warn: oklch(0.70 0.15 80);
+  --bad: oklch(0.58 0.19 25);
+
+  /* Type */
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-body: "Archivo", system-ui, sans-serif;
+
+  /* Shape */
+  --r: 10px;
+  --r-lg: 16px;
+  --shadow-card: 0 1px 2px oklch(0.26 0.05 230 / 0.06), 0 8px 24px oklch(0.26 0.05 230 / 0.08);
+  --shadow-pop: 0 2px 6px oklch(0.26 0.05 230 / 0.10), 0 16px 40px oklch(0.26 0.05 230 / 0.16);
+
+  /* Layout */
+  --max-w: 1180px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--signal); color: var(--signal-ink); }
+
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: var(--brand); }
+button { font-family: inherit; cursor: pointer; }
+
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+
+.eyebrow {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.h-display {
+  font-weight: 800;
+  font-stretch: 110%;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--r);
+  padding: 11px 18px;
+  font-size: 14.5px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: var(--ink-2); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ink-soft); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* Scrollbar hiding for carousels */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
