@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<title>Fable Bank — Personal Banking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"></link>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"></link>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Libre+Caslon+Text:ital@0;1&amp;family=Space+Grotesk:wght@400;500;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"></link>
+<link rel="stylesheet" href="fable.css"></link>
+<script src="image-slot.js"></script>
+</head>
+<body>
+
+<!-- ============ Utility bar ============ -->
+<div class="utility" data-screen-label="Utility bar">
+  <div class="wrap">
+    <div class="utility-links">
+      <a href="#">Branches &amp; ATMs</a>
+      <a href="#">Help</a>
+      <a href="#">Español</a>
+    </div>
+    <div class="utility-links">
+      <a href="#">Search</a>
+      <a class="signon-mini" href="#">Sign on</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Masthead ============ -->
+<header class="masthead" data-screen-label="Masthead">
+  <div class="wrap masthead-row">
+    <a class="brand" href="#">
+      <span class="brand-mark">F</span>
+      <span class="brand-name">Fable <small>Bank &amp; Trust</small></span>
+    </a>
+    <nav class="primary-nav">
+      <a class="active" href="#">Personal</a>
+      <a href="#">Wealth</a>
+      <a href="#">Small Business</a>
+      <a href="#">Commercial</a>
+      <a href="#">About Fable</a>
+    </nav>
+  </div>
+  <div class="product-nav">
+    <div class="wrap">
+      <a href="#">Checking</a>
+      <a href="#">Savings &amp; CDs</a>
+      <a href="#">Credit Cards</a>
+      <a href="#">Home Loans</a>
+      <a href="#">Personal Loans</a>
+      <a href="#">Auto</a>
+      <a href="#">Planning &amp; Tools</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero" data-screen-label="Hero">
+  <div class="wrap">
+    <aside class="signon-card">
+      <h2>Good morning</h2>
+      <p class="sub">Sign on to manage your accounts.</p>
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" type="text" autocomplete="username"></input>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password"></input>
+      </div>
+      <div class="signon-row">
+        <button class="btn btn-primary" type="button">Sign on</button>
+        <a href="#" class="offer-link" style="font-size: 14px;">Enroll</a>
+      </div>
+      <div class="signon-links">
+        <a href="#">Sign on with a passkey</a>
+        <a href="#">Forgot username or password?</a>
+      </div>
+    </aside>
+
+    <div class="hero-offer">
+      <p class="hero-kicker">New customer offer</p>
+      <h1>Every account starts <em>a story.</em> Begin yours with $300.</h1>
+      <p>Open an eligible Fable checking account and receive qualifying direct deposits within 90 days. No monthly fee for the first year.</p>
+      <div class="hero-cta-row">
+        <a class="btn btn-accent" href="#">Get started</a>
+        <a class="btn btn-ghost" href="#">Compare accounts</a>
+      </div>
+      <p class="hero-fineprint">Offer terms apply. Available for new checking customers only.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Offers row ============ -->
+<section class="offers" data-screen-label="Offers">
+  <div class="wrap offers-grid">
+    <article class="offer-card">
+      <div class="offer-figure"><span>$125</span></div>
+      <h3>Students, start here</h3>
+      <p>A First Chapter account with no minimums — and a $125 bonus for students just starting out.</p>
+      <a class="offer-link" href="#">Get started</a>
+    </article>
+    <article class="offer-card">
+      <div class="offer-figure"><span>60k</span> points</div>
+      <h3>Fable Voyage Card</h3>
+      <p>Earn 60,000 bonus points when you spend $4,000 in your first three months. Terms apply.</p>
+      <a class="offer-link" href="#">Learn more</a>
+    </article>
+    <article class="offer-card">
+      <div class="offer-figure"><span>2%</span> back</div>
+      <h3>Everyday Card</h3>
+      <p>Unlimited 2% cash rewards on purchases, with no category juggling and no annual fee.</p>
+      <a class="offer-link" href="#">Learn more</a>
+    </article>
+    <article class="offer-card">
+      <div class="offer-figure"><span>4.30%</span> APY</div>
+      <h3>Today's savings rates</h3>
+      <p>See current rates on high-yield savings and CDs, updated daily.</p>
+      <a class="offer-link" href="#">Check rates</a>
+    </article>
+  </div>
+</section>
+
+<!-- ============ Promo banner ============ -->
+<section class="promo" data-screen-label="Promo banner">
+  <div class="wrap">
+    <div class="promo-frame">
+      <image-slot id="promo-hero" shape="rect" placeholder="Drop a lifestyle / travel photo"></image-slot>
+      <div class="promo-overlay">
+        <h2>Go further on every getaway</h2>
+        <p>Voyage cardmembers earn 3× points on travel and dining, everywhere your story takes you.</p>
+        <a class="btn btn-primary" href="#">Explore Voyage</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Guidance ============ -->
+<section class="guidance" data-screen-label="Guidance">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="rule"></div>
+      <h2>Guidance for every chapter</h2>
+      <p>Wherever you are in your story — starting out, building, or settling in — we'll help you plan the next page.</p>
+    </div>
+    <div class="guidance-grid">
+      <article class="guidance-card">
+        <image-slot id="guide-1" shape="rect" placeholder="Drop a photo — starting out"></image-slot>
+        <div class="guidance-body">
+          <h3>Step into your future</h3>
+          <p>Set goals and track progress with Storyline, our free financial planning tool.</p>
+          <a class="btn btn-ghost" href="#">Discover how</a>
+        </div>
+      </article>
+      <article class="guidance-card">
+        <image-slot id="guide-2" shape="rect" placeholder="Drop a photo — protecting"></image-slot>
+        <div class="guidance-body">
+          <h3>Protect what you've built</h3>
+          <p>Insurance, estate basics, and safeguards for the life you've worked for.</p>
+          <a class="btn btn-ghost" href="#">Unlock your options</a>
+        </div>
+      </article>
+      <article class="guidance-card">
+        <image-slot id="guide-3" shape="rect" placeholder="Drop a photo — dreaming"></image-slot>
+        <div class="guidance-body">
+          <h3>Your dreams, your plan</h3>
+          <p>Start crafting the foundation for the future you see yourself in.</p>
+          <a class="btn btn-ghost" href="#">Get started</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ App band ============ -->
+<section class="app-band" data-screen-label="Mobile app">
+  <div class="wrap">
+    <div class="phone" aria-hidden="true">
+      <div class="phone-screen">
+        <div class="phone-status"><span>9:41</span><span>●●●</span></div>
+        <p class="phone-title">Your spending, told simply</p>
+        <p class="phone-sub">March 1 – March 31 · $1,725.34</p>
+        <div class="phone-chart">
+          <div class="bar" style="height: 42%;"></div>
+          <div class="bar" style="height: 64%;"></div>
+          <div class="bar hot" style="height: 92%;"></div>
+          <div class="bar" style="height: 55%;"></div>
+          <div class="bar" style="height: 38%;"></div>
+          <div class="bar" style="height: 70%;"></div>
+        </div>
+        <div class="phone-rows">
+          <div class="phone-row"><span>Groceries</span><b>$412.80</b></div>
+          <div class="phone-row"><span>Dining</span><b>$268.15</b></div>
+          <div class="phone-row"><span>Transit</span><b>$96.40</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="app-copy">
+      <h2>Ask <em>Sage,</em> your money's narrator</h2>
+      <p>Sage reads between the lines of your spending — summaries by category, retailer, and account — and answers in plain language. Only in the Fable Mobile app.</p>
+      <div class="store-badges">
+        <a class="store-badge" href="#"><span><small>Download on the</small>App Store</span></a>
+        <a class="store-badge" href="#"><span><small>Get it on</small>Google Play</span></a>
+      </div>
+      <p class="app-fineprint">*Screen image is simulated. Message and data rates may apply.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Community ============ -->
+<section class="community" data-screen-label="Community">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="rule"></div>
+      <h2>Banking, relationship by relationship</h2>
+      <p>It doesn't happen in one transaction or one quarter. Trust is earned page by page.</p>
+    </div>
+    <div class="community-grid">
+      <article class="community-card">
+        <image-slot id="community-1" shape="rect" placeholder="Drop a photo — our people"></image-slot>
+        <div class="community-body">
+          <h3>Who we are</h3>
+          <p>Fable helps strengthen communities through inclusion, economic empowerment, and sustainability.</p>
+          <a class="btn btn-ghost" href="#">About Fable</a>
+        </div>
+      </article>
+      <article class="community-card">
+        <image-slot id="community-2" shape="rect" placeholder="Drop a photo — our communities"></image-slot>
+        <div class="community-body">
+          <h3>Why communities come first</h3>
+          <p>We don't just serve our neighborhoods — we are our neighborhoods. Read the stories behind the branches.</p>
+          <a class="btn btn-ghost" href="#">Fable Stories</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Help row ============ -->
+<section class="help" data-screen-label="Help">
+  <div class="wrap">
+    <h2>How can we help?</h2>
+    <div class="help-row">
+      <a class="help-item" href="#">
+        <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+        Find a branch
+      </a>
+      <a class="help-item" href="#">
+        <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg></span>
+        Make an appointment
+      </a>
+      <a class="help-item" href="#">
+        <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.33c-.55.21-.9.71-.9 1.3v.37"></path><circle cx="12" cy="17" r="0.5" fill="currentColor"></circle></svg></span>
+        Quick help
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer data-screen-label="Footer">
+  <div class="wrap">
+    <div class="footer-links">
+      <a href="#">Privacy &amp; Security</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Notice of Data Collection</a>
+      <a href="#">Report Fraud</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Careers</a>
+      <a href="#">Sitemap</a>
+    </div>
+    <div class="footer-note">
+      <h4>Investment and insurance products are:</h4>
+      <ul>
+        <li>Not insured by the FDIC or any federal government agency</li>
+        <li>Not a deposit or obligation of, or guaranteed by, the bank</li>
+        <li>Subject to investment risks, including possible loss of principal</li>
+      </ul>
+    </div>
+    <div class="footer-legal">
+      <p>Deposit products offered by Fable Bank &amp; Trust, N.A. Member FDIC. Equal Housing Lender.</p>
+      <p>Fable Bank &amp; Trust is a fictional brand created for design exploration. Rates and offers shown are illustrative.</p>
+    </div>
+    <div class="footer-brandline">
+      <span class="brand-mark">F</span> Fable
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Tweaks ============ -->
+<div id="tweaks-root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="fable-tweaks.jsx"></script>
+
+</body>
+</html>

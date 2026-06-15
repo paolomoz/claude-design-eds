@@ -1,0 +1,209 @@
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Libre+Caslon+Text:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<main>
+
+  <section class="hero" data-screen-label="Hero">
+    <div class="wrap">
+      <aside class="signon-card">
+        <h2 data-slot="signon-title">Good morning</h2>
+        <p class="sub" data-slot="signon-sub">Sign on to manage your accounts.</p>
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" autocomplete="username"></input>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password"></input>
+        </div>
+        <div class="signon-row">
+          <button class="btn btn-primary" type="button">Sign on</button>
+          <a href="#" class="offer-link" style="font-size: 14px;">Enroll</a>
+        </div>
+        <div class="signon-links">
+          <a href="#">Sign on with a passkey</a>
+          <a href="#">Forgot username or password?</a>
+        </div>
+      </aside>
+  
+      <div class="hero-offer">
+        <p class="hero-kicker" data-slot="kicker">New customer offer</p>
+        <h1 data-slot="headline">Every account starts <em>a story.</em> Begin yours with $300.</h1>
+        <p data-slot="body">Open an eligible Fable checking account and receive qualifying direct deposits within 90 days. No monthly fee for the first year.</p>
+        <div class="hero-cta-row">
+          <a class="btn btn-accent" href="#"><span data-slot="cta-1">Get started</span></a>
+          <a class="btn btn-ghost" href="#"><span data-slot="cta-2">Compare accounts</span></a>
+        </div>
+        <p class="hero-fineprint" data-slot="fineprint">Offer terms apply. Available for new checking customers only.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============ Offers row ============ -->
+  <section class="offers" data-screen-label="Offers">
+    <div class="wrap offers-grid">
+      <article class="offer-card">
+        <div class="offer-figure"><span data-slot="offer-1-figure">$125</span></div>
+        <h3 data-slot="offer-1-title">Students, start here</h3>
+        <p data-slot="offer-1-body">A First Chapter account with no minimums — and a $125 bonus for students just starting out.</p>
+        <a class="offer-link" href="#"><span data-slot="offer-1-link">Get started</span></a>
+      </article>
+      <article class="offer-card">
+        <div class="offer-figure"><span data-slot="offer-2-figure">60k</span> points</div>
+        <h3 data-slot="offer-2-title">Fable Voyage Card</h3>
+        <p data-slot="offer-2-body">Earn 60,000 bonus points when you spend $4,000 in your first three months. Terms apply.</p>
+        <a class="offer-link" href="#"><span data-slot="offer-2-link">Learn more</span></a>
+      </article>
+      <article class="offer-card">
+        <div class="offer-figure"><span data-slot="offer-3-figure">2%</span> back</div>
+        <h3 data-slot="offer-3-title">Everyday Card</h3>
+        <p data-slot="offer-3-body">Unlimited 2% cash rewards on purchases, with no category juggling and no annual fee.</p>
+        <a class="offer-link" href="#"><span data-slot="offer-3-link">Learn more</span></a>
+      </article>
+      <article class="offer-card">
+        <div class="offer-figure"><span data-slot="offer-4-figure">4.30%</span> APY</div>
+        <h3 data-slot="offer-4-title">Today's savings rates</h3>
+        <p data-slot="offer-4-body">See current rates on high-yield savings and CDs, updated daily.</p>
+        <a class="offer-link" href="#"><span data-slot="offer-4-link">Check rates</span></a>
+      </article>
+    </div>
+  </section>
+  
+  <!-- ============ Promo banner ============ -->
+  <section class="promo" data-screen-label="Promo banner">
+    <div class="wrap">
+      <div class="promo-frame">
+        <image-slot id="promo-hero" shape="rect" placeholder="Drop a lifestyle / travel photo" data-slot-skip="placeholder"></image-slot>
+        <div class="promo-overlay">
+          <h2 data-slot="title">Go further on every getaway</h2>
+          <p data-slot="body">Voyage cardmembers earn 3× points on travel and dining, everywhere your story takes you.</p>
+          <a class="btn btn-primary" href="#"><span data-slot="cta">Explore Voyage</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============ Guidance ============ -->
+  <section class="guidance" data-screen-label="Guidance">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="rule"></div>
+        <h2 data-slot="title">Guidance for every chapter</h2>
+        <p data-slot="intro">Wherever you are in your story — starting out, building, or settling in — we'll help you plan the next page.</p>
+      </div>
+      <div class="guidance-grid">
+        <article class="guidance-card">
+          <image-slot id="guide-1" shape="rect" placeholder="Drop a photo — starting out" data-slot-skip="placeholder"></image-slot>
+          <div class="guidance-body">
+            <h3 data-slot="guide-1-title">Step into your future</h3>
+            <p data-slot="guide-1-body">Set goals and track progress with Storyline, our free financial planning tool.</p>
+            <a class="btn btn-ghost" href="#"><span data-slot="guide-1-cta">Discover how</span></a>
+          </div>
+        </article>
+        <article class="guidance-card">
+          <image-slot id="guide-2" shape="rect" placeholder="Drop a photo — protecting" data-slot-skip="placeholder"></image-slot>
+          <div class="guidance-body">
+            <h3 data-slot="guide-2-title">Protect what you've built</h3>
+            <p data-slot="guide-2-body">Insurance, estate basics, and safeguards for the life you've worked for.</p>
+            <a class="btn btn-ghost" href="#"><span data-slot="guide-2-cta">Unlock your options</span></a>
+          </div>
+        </article>
+        <article class="guidance-card">
+          <image-slot id="guide-3" shape="rect" placeholder="Drop a photo — dreaming" data-slot-skip="placeholder"></image-slot>
+          <div class="guidance-body">
+            <h3 data-slot="guide-3-title">Your dreams, your plan</h3>
+            <p data-slot="guide-3-body">Start crafting the foundation for the future you see yourself in.</p>
+            <a class="btn btn-ghost" href="#"><span data-slot="guide-3-cta">Get started</span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============ App band ============ -->
+  <section class="app-band" data-screen-label="Mobile app">
+    <div class="wrap">
+      <div class="phone" aria-hidden="true">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>●●●</span></div>
+          <p class="phone-title">Your spending, told simply</p>
+          <p class="phone-sub">March 1 – March 31 · $1,725.34</p>
+          <div class="phone-chart">
+            <div class="bar" style="height: 42%;"></div>
+            <div class="bar" style="height: 64%;"></div>
+            <div class="bar hot" style="height: 92%;"></div>
+            <div class="bar" style="height: 55%;"></div>
+            <div class="bar" style="height: 38%;"></div>
+            <div class="bar" style="height: 70%;"></div>
+          </div>
+          <div class="phone-rows">
+            <div class="phone-row"><span>Groceries</span><b>$412.80</b></div>
+            <div class="phone-row"><span>Dining</span><b>$268.15</b></div>
+            <div class="phone-row"><span>Transit</span><b>$96.40</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="app-copy">
+        <h2 data-slot="title">Ask <em>Sage,</em> your money's narrator</h2>
+        <p data-slot="body">Sage reads between the lines of your spending — summaries by category, retailer, and account — and answers in plain language. Only in the Fable Mobile app.</p>
+        <div class="store-badges">
+          <a class="store-badge" href="#"><span><small>Download on the</small>App Store</span></a>
+          <a class="store-badge" href="#"><span><small>Get it on</small>Google Play</span></a>
+        </div>
+        <p class="app-fineprint" data-slot="fineprint">*Screen image is simulated. Message and data rates may apply.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============ Community ============ -->
+  <section class="community" data-screen-label="Community">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="rule"></div>
+        <h2 data-slot="title">Banking, relationship by relationship</h2>
+        <p data-slot="intro">It doesn't happen in one transaction or one quarter. Trust is earned page by page.</p>
+      </div>
+      <div class="community-grid">
+        <article class="community-card">
+          <image-slot id="community-1" shape="rect" placeholder="Drop a photo — our people" data-slot-skip="placeholder"></image-slot>
+          <div class="community-body">
+            <h3 data-slot="comm-1-title">Who we are</h3>
+            <p data-slot="comm-1-body">Fable helps strengthen communities through inclusion, economic empowerment, and sustainability.</p>
+            <a class="btn btn-ghost" href="#"><span data-slot="comm-1-cta">About Fable</span></a>
+          </div>
+        </article>
+        <article class="community-card">
+          <image-slot id="community-2" shape="rect" placeholder="Drop a photo — our communities" data-slot-skip="placeholder"></image-slot>
+          <div class="community-body">
+            <h3 data-slot="comm-2-title">Why communities come first</h3>
+            <p data-slot="comm-2-body">We don't just serve our neighborhoods — we are our neighborhoods. Read the stories behind the branches.</p>
+            <a class="btn btn-ghost" href="#"><span data-slot="comm-2-cta">Fable Stories</span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ============ Help row ============ -->
+  <section class="help" data-screen-label="Help">
+    <div class="wrap">
+      <h2 data-slot="title">How can we help?</h2>
+      <div class="help-row">
+        <a class="help-item" href="#">
+          <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+          <span data-slot="help-1-label">Find a branch</span>
+        </a>
+        <a class="help-item" href="#">
+          <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 11h18"></path></svg></span>
+          <span data-slot="help-2-label">Make an appointment</span>
+        </a>
+        <a class="help-item" href="#">
+          <span class="help-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.33c-.55.21-.9.71-.9 1.3v.37"></path><circle cx="12" cy="17" r="0.5" fill="currentColor"></circle></svg></span>
+          <span data-slot="help-3-label">Quick help</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
