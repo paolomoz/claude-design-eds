@@ -113,3 +113,28 @@ Most sections share global utility classes (`.btn`, `.wrap`, `.sec-head`,
 `.eyebrow`, `.cond`) and the page relies on one shared inline script — CSS and
 JS are not section-independent. Recommendation would be **page-level** anyway,
 which matches the requested level.
+
+## Phase: Round-trip
+
+**Local (drafts) — PASS.** `overlay=test-1`, 8 sections in order, `body.appear`,
+h1 "WE KEEP UTAH / WORKING." (line break preserved), bodyText 3484 chars,
+scrollHeight 5126px, 12 image-slots, 6 cards, header+footer fragments injected,
+Google Fonts in `<head>`. Identical to the original source render (same 3484 /
+5126 measured in pre-flight). Only console error: 404 on
+`/drafts/.image-slots.state.json` — the image-slot sidecar, swallowed by its
+own `.catch`. Harmless.
+
+**Production (test-1 branch) — PASS.** Same metrics at
+https://test-1--claude-design-eds--paolomoz.aem.page/test-1 . DA source PUT 200;
+preview 200; all code-bus artifacts 200. Same single harmless sidecar 404.
+
+URLs:
+- Production preview: https://test-1--claude-design-eds--paolomoz.aem.page/test-1
+- DA editor:          https://da.live/edit#/paolomoz/claude-design-eds/test-1
+
+## Phase: Reflect
+
+- 110 text slots across 8 sections; images intentionally NOT authorable
+  (see image-slot decision). Header/footer/nav/mobile-menu/filter-chips static.
+- Generating the DA doc *from* the finished template (single source of truth)
+  gave exact 110↔110 slot-name parity with zero hand-sync. Recommended pattern.
