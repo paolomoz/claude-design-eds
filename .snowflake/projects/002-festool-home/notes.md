@@ -32,3 +32,20 @@ h1 "Tabless. Extra power for your cordless tools.".
 discover, service-band], bodyText 2202 + scrollH 4153 (identical to source),
 React tweaks panel gone (reactPresent=false), header/footer present, fonts in
 head. Only console error: harmless image-slots.state.json 404.
+
+**Production (test-2 branch) — PASS.** Same metrics at
+https://test-2--claude-design-eds--paolomoz.aem.page/test-2 . DA PUT 200,
+preview 200, all code-bus artifacts 200, reactPresent=false. Single harmless
+sidecar 404.
+
+URLs:
+- Production preview: https://test-2--claude-design-eds--paolomoz.aem.page/test-2
+- DA editor:          https://da.live/edit#/paolomoz/claude-design-eds/test-2
+
+## Validation note (2nd run)
+Confirms the "page #2 is cheaper" claim: Phase 0 (substrate) skipped entirely
+(config.json already stamped), npm install skipped, skill docs already in
+context. Genuinely different input exercised three code paths run #001 didn't:
+external stylesheet, dev-tool stripping (React/Babel), and first-class collision
+disambiguation. All handled. Remaining cost was still hand-writing the template
+(42 slots) — the same target the proposed slotizer would automate.
