@@ -785,6 +785,28 @@ for (const n of ['hero','quick','used','stats','service','offers','brands','loca
 
 Cross-check each flag against the prototype: full-bleed is correct only where the prototype section has no inner max-width wrapper.
 
+## Step 10 — Visual diff & reconcile (optional, recommended)
+
+After deploy, reconcile the EDS page against the source prototype *visually*. Eyeballing alone misses the silent post-pipeline regressions this skill keeps re-learning (#36 stretched images, #37 dropped wraps, #38 dropped shared primitives, #39 stripped spans) — they pass lint and throw no error. `tools/da/visual-diff.mjs` renders BOTH at a fixed viewport with reduced motion, screenshots them, and emits a **structured metrics report + advisory red flags**. It is *not* a pixel diff — computed-style measurements (container widths/offsets, image natural-vs-rendered dims, heading/eyebrow colors) are the signal; pixels are noise (fonts, animation, dynamic mock data).
+
+```bash
+# Prereq: a RENDERABLE prototype. Static → serve from its own dir so relative
+# ../assets resolve. JSX → pre-render first (#24/#27).
+( cd <prototype-dir> && python3 -m http.server 8791 & )
+
+node tools/da/visual-diff.mjs \
+  "http://localhost:8791/<prototype>.html" \
+  "https://<branch>--<repo>--<owner>.aem.page/<path>" \
+  --sections ".hero,.feature-tabs,.compare"   # optional per-section shots
+```
+
+Read the output:
+- **Red flags (advisory)** — `STRETCHED IMAGE` (raster aspect ≠ natural → #36, add `height:auto`); `FLUSH-LEFT TEXT` (a left-anchored heading/para at left≈0 → #37, the owning block dropped its max-width wrap). A clean page prints "none".
+- **Metrics JSON** — compare `proto` vs `eds`: `eyebrows`/`headings` colors (catches #38 — a primitive styled in the prototype but dropped in one block), `images` dims, and `contentBoxes` (each block's content width + left offset; a wrapped block sits at left ≈ (viewport−maxw)/2 + padding, a dropped-wrap block at left ≈ 0).
+- **Screenshots** in the `--out` dir (default `qa/`): open the full-page pair and any per-section shots and confirm fidelity.
+
+Fix the flagged few, then re-run until red flags are "none" and the metrics line up. The red-flag list doubles as a regression checklist — it is seeded from the findings above, so a new silent regression is worth adding both a fix AND a probe signal.
+
 ## Anti-patterns (lessons paid for the hard way)
 
 These look reasonable. They will cost a full reset.
