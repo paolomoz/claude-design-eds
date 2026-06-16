@@ -322,7 +322,18 @@ For a typical 5–10 page site:
 
 ### 1. Audit (light)
 
-**First, normalize the input to static HTML.** If a prototype is React/JSX (an HTML shell that mounts components), render it to static HTML before auditing — `curl` the running prototype, or read the `.jsx` + a screenshot and reconstruct the `<main>`. If it's `<x-dc>` document-content, the sections are still `<section>`/`<div>` elements; just expect inline `style="…"` instead of a `<style>` block. The rest of this skill assumes a static `<main>` exists.
+**First, normalize the input to static HTML.** If a prototype is React/JSX (an HTML shell that mounts `.jsx` into `#root`), **pre-render it to static HTML** before auditing (#24). The reliable recipe:
+```bash
+# 1. serve the prototype's OWN folder with a plain static server (NOT file:// —
+#    babel-standalone XHRs the .jsx and file:// CORS-blocks it; the aem dev
+#    server CSP-blocks the inline scripts too).
+( cd samples/<proto> && python3 -m http.server 8765 & )
+# 2. load in Playwright (React/babel load from unpkg — needs internet), wait for
+#    mount, capture #root's innerHTML, save it for the block agents to read:
+#    page.goto('http://localhost:8765/<file>.html'); waitForTimeout(4000);
+#    fs.writeFileSync('samples/<proto>/_rendered.html', root.innerHTML)
+```
+From there it converts like an external-CSS prototype (semantic classes + the prototype's `.css`). If it's `<x-dc>` document-content, the sections are still `<section>`/`<div>` elements; just expect inline `style="…"` instead of a `<style>` block. The rest of this skill assumes a static `<main>` exists.
 
 Read every prototype's `<main>` markup (skip the `<style>` for now) and produce a per-page section list:
 
@@ -557,6 +568,8 @@ Some links are NOT buttons. Examples:
 
 For these: the author leaves the `<a>` as a plain anchor in content (no `<strong>` / `<em>` wrap), and the owning block styles it with per-block CSS. The convention is for buttons; if it's not a button, don't apply it.
 
+**Multi-variant button systems (#25).** The strong/em convention only names three slots (primary / secondary / accent). When a prototype has **more** context-specific variants than that — e.g. JFK's `.btn--accent` (yellow), `.btn--primary` (blue), `.btn--ghost` (outline), `.btn--onblue` (white-on-blue) — author emphasis can't express them. Don't force it: **lift the prototype's full `.btn` + variant system into `styles/styles.css`**, author the CTAs as plain `<a>` in content, and have each block apply the right `btn btn--<variant>` class to the cloned anchor (the block knows its section's variant). This is the same "if it doesn't fit, style it" escape hatch, applied at the button-system level rather than per-link.
+
 ### 6. Static header + footer fragments
 
 Header and footer are **static fragments** — extracted verbatim from the prototype with their full DOM and styles intact. No EDS authoring, no block JS parsing. They are stored in `fragments/header.html` and `fragments/footer.html` at the repo root and committed to GitHub as code.
@@ -597,6 +610,8 @@ No `<!DOCTYPE>`, no `<html>`, no `<body>` wrapper. Just the raw `<style>` + DOM.
 - Document anything you dropped in the conversion log.
 
 **Footer reconciliation (see #4).** The AuthorKit `lazy.js` also tries to load the footer as a *block* (`utils/footer.js` → `loadBlock(footer)`), which collides with the static footer fragment and renders an error box. Make sure the Runtime-bootstrap edit removing that import has been applied.
+
+**Fragment root class (#26).** `postlcp.js` sets the host element's class to `header` / `footer`. If the prototype's chrome styling is keyed to a *different* root class (e.g. JFK's `.utilnav` / `.site-footer`), wrap the fragment content in a `<div class="<that-class>">` so the lifted root selector matches — `header.header` / `footer.footer` is only the host. (Don't nest another `<header>`/`<footer>` inside the host element; use a `<div>`.)
 
 **`header: off` / `footer: off`:** To suppress header/footer on a specific page, add a metadata block with `header: off` or `footer: off`. The loader checks `getMetadata('header')` / `getMetadata('footer')` before fetching.
 

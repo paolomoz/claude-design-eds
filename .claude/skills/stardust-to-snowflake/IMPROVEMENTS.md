@@ -57,6 +57,39 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
   no reserved-class block names. The improved skill carried this hard case.
 - **New findings surfaced:** #17, #18, #19, #20 below.
 
+### test-4 — JFK International (`samples/JFKAirport`)
+- Branch: `snowflake-blocks-test-4` (off `snowflake-blocks`)
+- DA: `https://da.live/#/paolomoz/claude-design-eds/snowflake-blocks/test-4`
+- Preview: `https://snowflake-blocks-test-4--claude-design-eds--paolomoz.aem.page/snowflake-blocks/test-4`
+- Outcome: ✅ faithful end-to-end render. 8 blocks (hero w/ ASK tab toolbar, status
+  live wait-times table, wc-strip, guide, essentials, redev, accessibility, news)
+  + 2 chrome fragments.
+- Prototype type: **React/JSX app** (HTML shell mounts `.jsx` into `#root`) with an
+  external `jfk-styles.css`. The **last untested input shape** — validated the
+  "pre-render JSX → static HTML first" path (#1).
+- **Skill fixes validated:** #21 footer-class fix held on a fresh conversion (navy
+  footer renders); #13 (`.wrap` reproduced), #14 (no JS-reveal), #19/#23 QA, body
+  fragment, headless deploy, non-variable/variable fonts all held.
+- **New findings surfaced:** #24, #25, #26 below.
+
+---
+
+## Findings (test-4)
+
+### 24. 🟠 Pre-render JSX prototypes over a STATIC HTTP server (not file://)
+The JSX prototype mounts `.jsx` into `#root` via babel-standalone, which fetches the `.jsx` files by XHR. Under `file://` those XHRs are **CORS-blocked**, so nothing renders (empty `#root`). The aem dev server transforms/CSP-blocks the page too. What worked: serve the prototype's own folder with a plain static server (`python3 -m http.server` in `samples/<proto>/`), load it in Playwright (React/babel fetch from unpkg — needs internet), wait, then capture `#root`'s `innerHTML` as the static DOM. From there it converts like an external-CSS prototype (semantic classes + the prototype's `.css`). Save the captured DOM (e.g. `samples/<proto>/_rendered.html`) so block agents read it.
+**Proposed:** put the concrete recipe in the #1 pre-render note: static server + Playwright capture of `#root`, save `_rendered.html`, then convert the rendered DOM.
+
+### 25. 🟠 Multi-variant button systems don't fit the strong/em convention
+JFK ships four context-specific button variants (`.btn--accent`, `.btn--primary`, `.btn--ghost`, `.btn--onblue`). The skill's strong/em → primary/secondary/accent convention only has three slots and can't express "white-on-blue" vs "ghost" vs "accent" by author emphasis. What worked: **lift the prototype's full `.btn` + variant system into `styles/styles.css`** and have each block apply the right variant class to the cloned CTA (author CTAs as plain `<a>`; the block knows the section's variant). This is the documented "convention is for simple primary/secondary; if it doesn't fit, style per-prototype" escape hatch — just applied at the button-system level.
+**Proposed:** add to Step 5: when a prototype has >3 button variants or variants the convention can't name, lift the variant system globally and let blocks assign variant classes; don't force it into strong/em.
+
+### 26. 🟡 Fragment root class: wrap content in the prototype's root class
+postlcp sets the host element's class to `header`/`footer` (#21). If the prototype's chrome styling is keyed to a different root class (JFK footer = `.site-footer`, header = `.utilnav`), wrap the fragment content in a `<div class="<that-class>">` so the lifted CSS root selector matches — or rewrite the selector to `footer.footer`. Wrapping is the lower-friction choice (keeps the lifted CSS verbatim).
+**Proposed:** note in Step 6 — fragment content goes in a `<div>` with the prototype's chrome root class; `header.header`/`footer.footer` is just the host.
+
+**Implemented (#24–26):** #24 + #26 added to SKILL.md (Step 1 pre-render recipe; Step 6 fragment-root-class note); #25 added to Step 5 (lift multi-variant button systems). The JSX pre-render also exercised the agent-resilience path: when subagents died on transient API 500s mid-build, the finished lint-clean blocks were kept and the one missing block + the content page were authored by hand from each block's JSDoc contract + the captured `_rendered.html`.
+
 ---
 
 ## Findings (test-3)
