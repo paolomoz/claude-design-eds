@@ -47,7 +47,11 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url("/styles/fonts/source-serif-4-variable.woff2") format("woff2");
+
+  /* opsz-axis variant: the prototype loads Source Serif 4 with the optical-size
+     axis (opsz,wght@8..60), so headings get size-tuned letterforms. Use the
+     opsz file (not wght-only) — font-optical-sizing:auto (default) tracks size. */
+  src: url("/styles/fonts/source-serif-4-opsz.woff2") format("woff2");
 }
 
 /* Metric-matched fallbacks — zero CLS on swap. Body face (Public Sans) renames
