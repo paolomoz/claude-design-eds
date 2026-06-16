@@ -79,6 +79,21 @@ The local QA recipe (#8) suggested a tall capture window. A `min-height:100vh` h
 The footer had a newsletter `<form onsubmit="return false">`. EDS's delivered CSP is `script-src 'nonce-…' 'strict-dynamic' 'unsafe-inline'` — with `strict-dynamic`, `'unsafe-inline'` is ignored, so **inline `on*` handlers don't fire** (and `<script>` in fragments never runs). A real `<form>` would then submit and reload. **Fix:** render such controls non-submitting — a `<div>` wrapper with `<button type="button">`, no `<form>`/`onsubmit`. (Generalizes #5: not just `<script>`, but inline handlers too.)
 **Proposed:** add to Step 6 (fragments): "no `<form onsubmit>` / inline `on*` — CSP blocks them; render decorative controls as non-submitting (`type="button"`, no `<form>`)."
 
+### 21. 🔴 The #4 footer fix silently breaks fragment ROOT styling (regression)
+Found by visual review: the Beehive footer should be **yellow**, but it rendered on the dark body background. Cause: `postlcp.js` only does `el.innerHTML = html` — it does NOT set a class on the `<footer>`. `decorateHeader()` sets the *header's* class, but the **footer's** class was set by `utils/footer.js` → which the #4 fix removed. So `footer.footer { background: … }` (the fragment's own root selector) never matches, and any styling on the fragment ROOT (background, padding, color) silently no-ops. It was invisible in test-1/test-2 only because their dark footers ≈ the dark body.
+**Fix applied (test-3):** `postlcp.js` sets `el.className = name` before injecting, so `header.header` / `footer.footer` match.
+**Proposed:** fold this into the Runtime bootstrap right next to the #4 lazy.js edit — two halves of the same change. Future runtime ports must include BOTH (port from the latest test branch that has both fixes, not test-1).
+
+### 22. 🟠 Single-weight display fonts: match the prototype's effective (faux-bold) weight
+Beehive's display face is **Anton** (ships only weight 400). The prototype renders headings via the browser-default heading bold (700) → faux-bold. My foundation set `h1,h2,h3 { font-weight: 400 }`, so headings rendered visibly **lighter** than the prototype. Match the *effective* weight the prototype shows (here 700, synthesized from the 400-only Anton) — don't assume "single-weight font ⇒ font-weight 400".
+**Proposed:** add to Step 4: when the display font has one weight but the prototype shows it bold (default `<h1>`/`<h2>` weight), set that weight explicitly so the faux-bold matches.
+
+### 23. 🟠 Visually diff each section against the prototype — parallel agents drift on layout
+Two agent-built fidelity bugs only showed on a side-by-side: the taproom header used `justify-content: space-between` with eyebrow + headline as siblings (splitting them left/right) when the prototype **stacks** them top-left; and a hard `<br>` in the headline ("COME BUZZ / BY") was dropped because the block read `textContent` (use the cell's `innerHTML` and author the `<br>`). Programmatic width/decoration checks (#13/#19) pass these; only an eyeball-vs-prototype catches them.
+**Proposed:** strengthen QA — capture the **prototype** (it self-renders from its file) and the **live/harness** at the same viewport per section and compare. Watch for: header alignment, intentional line breaks, heading weight, and section-root background/color.
+
+**Implemented (#17–23):** applied to SKILL.md — #17 Step 7 brief (interactive/component-driven → rows + block JS); #18 covered by #1's `<x-dc>` lift pointer; #19 + #23 "Local QA" (real-viewport scroll capture + per-section visual diff); #20 Step 6 (no inline `on*`/forms in fragments); #21 Runtime bootstrap (postlcp `el.className = name`, paired with the #4 lazy.js edit); #22 Step 4 (match the prototype's effective heading weight). The #21 footer-class fix also shipped in test-3's `postlcp.js`.
+
 ---
 
 ## Findings (test-2)

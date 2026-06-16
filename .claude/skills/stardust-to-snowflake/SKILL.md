@@ -57,7 +57,17 @@ blocks/cards blocks/columns blocks/widget   # unused demo blocks (delete to avoi
 styles/fonts.css styles/lazy-styles.css     # @font-face goes in styles.css; AuthorKit head loads only styles.css
 ```
 
-**After porting, reconcile `scripts/lazy.js`** — see finding [#4 in IMPROVEMENTS.md]: the stock AuthorKit `lazy.js` lazy-loads `utils/footer.js`, which does `loadBlock(footer)` and collides with the static footer fragment (renders a visible "Error" box, since there is no `blocks/footer`). **Delete the `import('./utils/footer.js')…` line** when using static chrome fragments.
+**After porting, two runtime edits are mandatory (do BOTH — they're halves of one change):**
+1. **`scripts/lazy.js` (#4):** the stock AuthorKit `lazy.js` lazy-loads `utils/footer.js`, which does `loadBlock(footer)` and collides with the static footer fragment (renders a visible "Error" box, since there is no `blocks/footer`). **Delete the `import('./utils/footer.js')…` line.**
+2. **`scripts/postlcp.js` (#21):** deleting `utils/footer.js` also removed the only code that set the `<footer>`'s class. Without it, the fragment's own root selector (`footer.footer { background: … }`) never matches and any styling on the fragment ROOT (background/padding/color) silently no-ops. In `loadStaticFragment`, set the class before injecting:
+   ```js
+   const html = await resp.text();
+   el.className = name;          // so header.header / footer.footer match
+   el.innerHTML = html;
+   ```
+   This bug is invisible when the footer happens to match the body background; it bites the moment a fragment has its own background (e.g. a yellow footer).
+
+When starting a NEW conversion in this repo, port the runtime from the **latest test branch** (which already carries both edits), not from a stale early branch.
 
 **Lint mismatch (#6).** The AuthorKit runtime is authored for `@adobe/eslint-config-helix`; a boilerplate project lints with `airbnb-base`, so `npm run lint` will throw thousands of errors on the vendored runtime + minified `deps/`. Treat the runtime as vendored — add to `.eslintignore`:
 ```
@@ -462,6 +472,8 @@ Never substitute classifications (don't match a serif brand to Arial; don't matc
 
 **Multiple display families (#12).** A brand may use several families — e.g. Barlow (body) + Barlow Condensed + Barlow Semi Condensed (display). The `body.session` pattern only gates the **body** family; display families referenced directly by class (headings, eyebrows) load with `font-display: swap` and aren't fully CLS-eliminated. Define each as a `:root` token (`--font-cond`, `--font-semi`) and reference it per-block on the elements that use it. Fully metric-matching every display family is optional polish — for display text used sparingly (eyebrows, big condensed headings) the CLS impact is small; **document the trade-off** in the conversion log rather than over-engineering it.
 
+**Match the prototype's effective weight (#22).** A single-weight display font (e.g. **Anton**, ships only 400) often appears *bolder* in the prototype than its one weight: a bare `<h1>`/`<h2>` inherits the browser-default heading weight (700), and the browser **faux-bolds** the 400-only face. If your foundation sets `h1,h2,h3 { font-weight: 400 }`, headings render visibly lighter than the prototype. Set the weight the prototype actually shows (often 700) so the faux-bold matches — don't assume "one weight in the file ⇒ `font-weight: 400`".
+
 ### 5. Lean on EDS button conventions — DO NOT manufacture button anchors in block JS
 
 The EDS link decorator in `scripts/ak.js` (`decorateButton()`) automatically applies button classes when authors wrap a link in inline emphasis. This runs during page boot, AFTER block JS. Block JS just needs to clone the cell anchor as-is.
@@ -581,6 +593,7 @@ No `<!DOCTYPE>`, no `<html>`, no `<body>` wrapper. Just the raw `<style>` + DOM.
 **Fragments cannot run JavaScript.** Because the fragment is injected via `innerHTML`, any `<script>` inside it is inert — the prototype's header JS (mobile-menu toggle, scroll-state shadow, dropdown logic) will NOT run. Re-implement interactive chrome as **CSS-only**:
 - **Mobile menu / drawer** → checkbox-hack: a visually-hidden `<input type="checkbox" id="mnav-toggle">` as the first element, `<label for="mnav-toggle">` for the open button and the close button and a full-screen scrim label, and CSS `#mnav-toggle:checked ~ #mnav { … }` to drive the open/close state and the panel transform.
 - **Scroll-state shadow / sticky color change** → drop it (keep a static border), or use a CSS scroll-driven approach where supported. Don't try to reattach JS to the fragment.
+- **Forms / inline `on*` handlers (#20)** → EDS's delivered CSP is `script-src 'nonce-…' 'strict-dynamic' 'unsafe-inline'`; with `strict-dynamic`, `'unsafe-inline'` is **ignored**, so inline `onsubmit`/`onclick` never fire. A real `<form>` would then submit and reload the page. Render such controls **non-submitting**: a `<div>` wrapper (no `<form>`) with `<button type="button">`. (Same root cause as the no-`<script>` rule — fragments are inert.)
 - Document anything you dropped in the conversion log.
 
 **Footer reconciliation (see #4).** The AuthorKit `lazy.js` also tries to load the footer as a *block* (`utils/footer.js` → `loadBlock(footer)`), which collides with the static footer fragment and renders an error box. Make sure the Runtime-bootstrap edit removing that import has been applied.
@@ -606,6 +619,8 @@ The brief template:
 > **Images — `<image-slot>` placeholders (#2)**: claude-design prototypes use `<image-slot>` custom elements as image drop-targets; there are usually NO real image assets. Treat each image as an **optional** authored cell holding a `<picture>`/`<img>` (`const pic = cell.querySelector('picture, img'); if (pic) …`). When the cell is empty, fall back to the prototype's background treatment (e.g. dark `--ink`, or a placeholder rectangle) via the block CSS so the section still looks right with no image. Leave image cells EMPTY in the authoring snippet.
 >
 > **Scroll-reveal / JS-hidden content (#14)**: if the prototype hides content behind a class an inline `<script>` toggles on scroll (`.reveal { opacity:0 }` + an IntersectionObserver that adds `.in`), do NOT lift the `opacity:0` — the prototype script does not run in EDS, so the content would be **permanently invisible**. Render it visible; drop the reveal (keep only hover/`:hover` transitions). Honor `prefers-reduced-motion`.
+>
+> **Interactive / component-driven sections (#17)**: when a section is driven by a component (state, a list loop like `<sc-for>`, conditionals like `<sc-if>`, `{{ }}` bindings, a `data-count` counter, a tab/selector), split it: **data → authorable rows** (one row per list item, with the item's fields as cells) and **behavior → block JS**. Unlike static *fragments*, **block JS runs** — so `decorate()` is the right place to wire click handlers, an IntersectionObserver count-up, tab switching, etc. Render the default/active state in markup; drive the rest from JS-held local state. `{{ }}`/`<sc-for>`/`<sc-if>` are NOT EDS syntax — read them as "loop these rows" / "show one state".
 >
 > **Buttons**: do NOT manufacture button anchors. Author CTAs as `<strong><a>` (primary) or `<em><a>` (secondary) in the content page; in block JS, clone the cell's child nodes into a `.actions` wrapper. Block CSS only overrides global button styles when something is genuinely different (e.g. larger size). Text links with flourish (wavelength underline) are NOT buttons — leave as plain `<a>` and style per-block.
 >
@@ -703,6 +718,10 @@ npx -y @adobe/aem-cli up --no-open &
 ```
 
 Open `http://localhost:3000/qa/page.html` — `scripts.js` runs `loadArea()`, blocks load from the code origin, fragments inject via `postlcp.js`. Screenshot / inspect with headless Chrome (`--virtual-time-budget=9000 --screenshot` / `--dump-dom`) or Playwright.
+
+**Capture at a real viewport and scroll — not one giant window (#19).** A `min-height:100vh` hero becomes *window-tall* under a huge capture window (e.g. 7800px), pushing its centered content far down and off the top crop — it looks like the hero text vanished. Instead, use Playwright at a normal viewport (e.g. 1440×900) and `scrollIntoView()` each section before each screenshot.
+
+**Visually diff each section against the prototype (#23).** Programmatic checks (width, decoration counts, interactivity) pass things the eye catches — header alignment, intentional line breaks (`<br>`), heading **weight**, and a section root's **background/color** (e.g. a footer that should be a brand color but renders on the body background). Open the prototype itself (`<x-dc>`/JSX prototypes self-render from their file via their `support.js`/bundle) and the harness at the **same viewport, section by section**, and compare.
 
 **Wide-viewport layout check (#13).** Always QA at a **wide** viewport (≥1600px), not just 1440 — a missing max-width container is invisible where the 1320 max ≈ the viewport. Measure each block's inner content width and flag anything spanning full width that shouldn't:
 
