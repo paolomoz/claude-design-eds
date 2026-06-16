@@ -1,0 +1,96 @@
+/* guide — "Your guide to JFK" overlay-card scroller.
+   Section CSS lifted from jfk-styles.css and scoped under .guide.
+   Global tokens (--navy-900/800, --sky-50, --accent, --radius, etc.),
+   .wrap, .section-head, .kicker, and section.block padding/tint come
+   from styles/styles.css and are NOT redefined here. */
+
+/* section.block padding + .tint background applied to the block itself
+   (this runtime does not emit a `<name>-container` section class).
+   guide is `block tint` → light --sky-50 background. */
+.guide {
+  display: block;
+  padding: calc(64px * var(--sp)) 0;
+  background: var(--sky-50);
+}
+
+/* scroller */
+.guide .guide-scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 264px;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+}
+
+.guide .guide-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 320px;
+  scroll-snap-align: start;
+  background: var(--navy-800);
+  border: 0;
+  padding: 0;
+  text-align: left;
+  display: block;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.guide .guide-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+
+.guide .guide-card image-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* image fallback: no real asset → sky-100/navy placeholder block */
+.guide .guide-card .guide-img-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--sky-100) 0%, var(--navy-800) 100%);
+}
+
+.guide .guide-card .guide-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(185deg, rgba(7, 26, 74, 0.08) 40%, rgba(7, 26, 74, 0.82) 100%);
+  pointer-events: none;
+}
+
+.guide .guide-card .guide-label {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.guide .guide-card .guide-label .arr {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  transition: transform 0.18s;
+}
+
+.guide .guide-card:hover .arr { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .guide .guide-scroller { scroll-behavior: auto; }
+  .guide .guide-card,
+  .guide .guide-card .arr { transition: none; }
+  .guide .guide-card:hover { transform: none; }
+  .guide .guide-card:hover .arr { transform: none; }
+}

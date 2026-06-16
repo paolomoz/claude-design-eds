@@ -1,0 +1,44 @@
+/*
+ * wc-strip block CSS — lifted verbatim from jfk-styles.css (.wc-strip rules)
+ * scoped under .wc-strip. Tokens, .wrap, and the button base are global and
+ * are NOT redefined here; only the navy a.btn override is lifted.
+ */
+
+/* world cup strip (lifted verbatim, scoped) */
+.wc-strip {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.wc-strip .wrap {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.wc-strip .wc-mark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.wc-strip p {
+  margin: 0;
+  flex: 1;
+  min-width: 280px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.wc-strip a.btn { padding: 10px 18px; background: var(--navy-900); color: var(--white); }
+.wc-strip a.btn:hover { filter: brightness(1.25); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-strip a.btn { transition: none; }
+  .wc-strip a.btn:hover { filter: none; }
+}

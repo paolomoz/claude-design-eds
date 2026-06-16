@@ -1,0 +1,52 @@
+<style>
+  /* ===== JFK utility nav (static fragment) ===== */
+  header.header { display: block; }
+
+  .utilnav { background: var(--navy-900); color: #c8d6f5; font-size: 13.5px; }
+  .utilnav .wrap { display: flex; align-items: center; gap: 28px; height: 46px; }
+  .utilnav .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: 0.04em;
+  }
+  .utilnav .brand .roundel {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--navy-900);
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .utilnav nav { margin-left: auto; display: flex; gap: 4px; }
+  .utilnav nav a {
+    color: #c8d6f5;
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .utilnav nav a:hover { background: rgb(255 255 255 / 10%); color: var(--white); }
+
+  @media (max-width: 720px) {
+    .utilnav nav { display: none; }
+  }
+</style>
+
+<div class="utilnav">
+  <div class="wrap">
+    <div class="brand"><span class="roundel">✈</span><span>JFK INTERNATIONAL</span></div>
+    <nav>
+      <a href="#flights">Flights</a>
+      <a href="#transport">Transportation &amp; Parking</a>
+      <a href="#guide">Explore JFK</a>
+      <a href="#essentials">Dine, Shop, Relax</a>
+    </nav>
+  </div>
+</div>

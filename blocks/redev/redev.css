@@ -1,0 +1,84 @@
+/*
+ * redev block CSS — lifted verbatim from jfk-styles.css (.redev rules and
+ * section.block padding) and scoped under .redev. Tokens, .wrap, and the
+ * button system are global and are NOT redefined here.
+ */
+
+/* redevelopment band (lifted verbatim, scoped) + section.block padding */
+.redev {
+  padding: calc(64px * var(--sp)) 0;
+  background: var(--navy-900);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.redev::after {
+  content: "JFK";
+  position: absolute;
+  right: -40px;
+  bottom: -90px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 320px;
+  line-height: 1;
+  color: rgb(255 255 255 / 4.5%);
+  pointer-events: none;
+}
+
+.redev .wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding-top: calc(64px * var(--sp));
+  padding-bottom: calc(64px * var(--sp));
+}
+
+.redev .kicker { color: var(--accent); }
+
+.redev h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.redev p { color: #b9c7ea; }
+
+.redev .cta-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+/* image / placeholder fallback */
+.redev .redev-media { position: relative; }
+
+.redev .redev-media image-slot,
+.redev .redev-media img,
+.redev .redev-media picture {
+  width: 100%;
+  height: 300px;
+  display: block;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.redev .redev-media.is-placeholder {
+  min-height: 300px;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, var(--navy-800, #0c2461), var(--navy-900));
+  border: 1px solid rgb(255 255 255 / 8%);
+}
+
+/* responsive (lifted: collapse to single column) */
+@media (width <= 980px) {
+  .redev .wrap { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .redev a.btn { transition: none; }
+}

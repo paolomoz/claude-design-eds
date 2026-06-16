@@ -1,0 +1,72 @@
+/* essentials — "Get your essentials and more" 3-up card grid.
+   Section CSS lifted from jfk-styles.css and scoped under .essentials.
+   Global tokens, .wrap, .section-head, .kicker, and section.block padding
+   come from styles/styles.css and are NOT redefined here.
+   essentials is NOT tinted (no background). */
+
+.essentials {
+  display: block;
+  padding: calc(64px * var(--sp)) 0;
+}
+
+.essentials .ess-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.essentials .ess-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.18s, box-shadow 0.18s;
+  display: flex;
+  flex-direction: column;
+}
+
+.essentials .ess-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+
+.essentials .ess-card image-slot { width: 100%; height: 190px; display: block; }
+
+/* image fallback: no real asset → sky-100/navy placeholder block,
+   matching the prototype's 190px card-image height */
+.essentials .ess-card .ess-img-fallback {
+  display: block;
+  width: 100%;
+  height: 190px;
+  background: linear-gradient(160deg, var(--sky-100) 0%, var(--navy-800) 100%);
+}
+
+.essentials .ess-card .ess-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.essentials .ess-card h3 { font-size: 19px; font-weight: 800; }
+.essentials .ess-card p { margin: 0; color: var(--ink-soft); font-size: 14px; flex: 1; }
+
+.essentials .ess-card .ess-link {
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--blue-600);
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.essentials .ess-card .ess-link:hover { text-decoration: underline; }
+
+@media (max-width: 899px) {
+  .essentials .ess-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .essentials .ess-card { transition: none; }
+  .essentials .ess-card:hover { transform: none; }
+}
