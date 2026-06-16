@@ -1,0 +1,105 @@
+/* Cabins — full-bleed ink band, lifted from Meridian prototype, scoped under .cabins */
+
+/* Section head (shared with .md-section) */
+.cabins .md-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.cabins .md-section-head h2 {
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.cabins .md-section-sub {
+  color: var(--md-ink-60);
+  font-size: 17px;
+}
+
+.cabins .md-cabin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* Cabins — full-bleed ink band */
+.cabins.md-section-ink {
+  max-width: none;
+  background: var(--md-ink);
+  color: var(--md-paper);
+  padding: 88px 48px;
+}
+
+.cabins.md-section-ink .md-section-head,
+.cabins.md-section-ink .md-cabin-grid {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cabins.md-section-ink .md-section-head {
+  margin-bottom: 36px;
+}
+
+.cabins.md-section-ink .md-section-sub {
+  color: var(--md-paper-70);
+}
+
+.cabins .md-cabin-card {
+  border: 1px solid color-mix(in oklab, var(--md-paper) 18%, transparent);
+  border-radius: var(--md-radius-lg);
+  padding: 28px 26px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cabins .md-cabin-card:hover {
+  border-color: var(--md-accent);
+  transform: translateY(-3px);
+}
+
+.cabins .md-cabin-index {
+  font-family: var(--md-display);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--md-accent);
+  letter-spacing: 0.1em;
+}
+
+.cabins .md-cabin-card h3 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.cabins .md-cabin-strap {
+  font-weight: 600;
+}
+
+.cabins .md-cabin-desc {
+  color: var(--md-paper-70);
+  font-size: 15px;
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cabins .md-cabin-card {
+    transition: none;
+  }
+
+  .cabins .md-cabin-card:hover {
+    transform: none;
+  }
+}
+
+@media (width <= 980px) {
+  .cabins .md-cabin-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,54 @@
+/* Loyalty — lifted from Meridian prototype, scoped under .loyalty */
+
+/* Section container (.md-section) */
+.loyalty.md-section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 88px 48px;
+}
+
+.loyalty .md-loyalty {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: center;
+  border: 1.5px solid var(--md-ink-12);
+  border-radius: var(--md-radius-lg);
+  padding: 56px;
+  background: color-mix(in oklab, var(--md-accent) 6%, var(--md-paper));
+}
+
+.loyalty .md-hero-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--md-accent);
+  margin-bottom: 14px;
+}
+
+.loyalty .md-loyalty-copy h2 {
+  font-size: clamp(28px, 3vw, 38px);
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.loyalty .md-loyalty-copy p:not(.md-hero-eyebrow) {
+  color: var(--md-ink-60);
+  margin-bottom: 24px;
+  max-width: 480px;
+}
+
+.loyalty .md-loyalty-art {
+  display: flex;
+  justify-content: center;
+  color: var(--md-accent);
+  opacity: 0.9;
+}
+
+@media (width <= 980px) {
+  .loyalty .md-loyalty {
+    grid-template-columns: 1fr;
+    padding: 36px;
+  }
+}

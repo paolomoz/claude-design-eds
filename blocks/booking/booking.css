@@ -1,0 +1,571 @@
+/* booking — Meridian hero + booking flow (CSS lifted from the prototype \3c style>, scoped) */
+
+.booking { display: block; }
+
+/* ---------- hero ---------- */
+.booking .md-hero {
+  position: relative;
+  background: var(--md-ink);
+  color: var(--md-paper);
+  padding: 64px 48px 0;
+  overflow: hidden;
+}
+
+.booking .md-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 95% at 72% 110%, var(--md-accent) 0%, color-mix(in oklab, var(--md-accent) 38%, transparent) 36%, transparent 68%);
+}
+
+.booking .md-hero-art {
+  position: absolute;
+  inset: 0;
+  color: var(--md-paper);
+  pointer-events: none;
+}
+
+.booking .md-hero-arcs {
+  width: 100%;
+  height: 100%;
+}
+
+.booking .md-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+.booking .md-hero-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--md-accent) 70%, #fff);
+  margin-bottom: 14px;
+}
+
+.booking .md-hero-title {
+  font-size: clamp(64px, 9vw, 124px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.booking .md-hero-sub {
+  font-size: 20px;
+  margin-top: 22px;
+  max-width: 460px;
+  color: var(--md-paper-70);
+}
+
+/* search panel — sibling of hero, pulled up to overlap */
+.booking .md-hero-search {
+  position: relative;
+  z-index: 3;
+  max-width: var(--maxw);
+  margin: -56px auto 0;
+  padding: 0 48px 64px;
+}
+
+.booking .md-search {
+  background: #fff;
+  color: var(--md-ink);
+  border-radius: var(--md-radius-lg);
+  box-shadow: 0 24px 60px -18px rgb(10 10 40 / 45%);
+  padding: 22px 26px 26px;
+}
+
+.booking .md-search-toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.booking .md-search-pax {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.booking .md-search-grid {
+  display: grid;
+  grid-template-columns: 1.2fr auto 1.2fr 0.9fr 0.9fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.booking .md-swap {
+  width: 40px;
+  height: 45px;
+  border: 1.5px solid var(--md-ink-12);
+  background: #fff;
+  border-radius: var(--md-radius-sm);
+  cursor: pointer;
+  font-size: 17px;
+  color: var(--md-ink);
+}
+.booking .md-swap:hover { background: var(--md-ink-12); }
+
+.booking .md-search-submit {
+  height: 45px;
+  white-space: nowrap;
+}
+
+.booking .md-search-error {
+  margin-top: 10px;
+  color: #d43a2f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- flow pages ---------- */
+.booking .md-flow-page { min-height: 60vh; }
+
+.booking .md-flow-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px 48px 8px;
+}
+.booking .md-flow-route { text-align: center; }
+
+.booking .md-flow-route strong {
+  display: block;
+  font-family: var(--md-display);
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.booking .md-flow-route span {
+  font-size: 14px;
+  color: var(--md-ink-60);
+}
+.booking .md-cabin-toggle { background: var(--md-ink-12); }
+
+.booking .md-results {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px 48px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.booking .md-results-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 12px 0 8px;
+}
+
+.booking .md-flight-card {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 28px;
+  background: #fff;
+  border: 1.5px solid var(--md-ink-12);
+  border-radius: var(--md-radius-lg);
+  padding: 22px 26px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.booking .md-flight-card:hover {
+  border-color: var(--md-ink);
+  box-shadow: 0 8px 24px -12px rgb(10 10 40 / 25%);
+}
+
+.booking .md-flight-times {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.booking .md-flight-time strong {
+  font-family: var(--md-display);
+  font-size: 28px;
+  font-weight: 700;
+  display: block;
+  line-height: 1.1;
+}
+
+.booking .md-flight-time strong sup {
+  font-size: 13px;
+  color: var(--md-accent);
+}
+
+.booking .md-flight-time span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--md-ink-60);
+}
+
+.booking .md-flight-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 130px;
+}
+
+.booking .md-flight-dur {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--md-ink-60);
+}
+
+.booking .md-flight-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--md-ink-12);
+  position: relative;
+}
+
+.booking .md-flight-line i {
+  position: absolute;
+  right: -1px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--md-accent);
+}
+
+.booking .md-flight-stops {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--md-accent);
+}
+
+.booking .md-flight-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--md-ink-60);
+  font-weight: 500;
+}
+
+.booking .md-flight-fare {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.booking .md-fare-price {
+  font-family: var(--md-display);
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.booking .md-fare-note {
+  font-size: 12px;
+  color: var(--md-ink-60);
+  margin-bottom: 8px;
+}
+
+/* ---------- seat map ---------- */
+.booking .md-seatmap-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 48px 96px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  align-items: start;
+}
+
+.booking .md-seatmap {
+  background: #fff;
+  border: 1.5px solid var(--md-ink-12);
+  border-radius: var(--md-radius-lg);
+  padding: 32px;
+}
+
+.booking .md-seat-row {
+  display: grid;
+  grid-template-columns: 32px repeat(3, 44px) 28px repeat(3, 44px);
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.booking .md-seat-header { margin-bottom: 14px; }
+
+.booking .md-seat-col {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-ink-60);
+}
+
+.booking .md-seat-rownum {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-ink-60);
+  text-align: center;
+}
+
+.booking .md-seat {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--md-radius-sm);
+  border: 1.5px solid var(--md-ink-12);
+  background: color-mix(in oklab, var(--md-accent) 8%, #fff);
+  cursor: pointer;
+  font-weight: 700;
+  color: #fff;
+  font-size: 16px;
+  transition: transform 0.1s ease, background 0.12s ease, border-color 0.12s ease;
+}
+
+.booking .md-seat:hover:not(:disabled, .picked) {
+  border-color: var(--md-accent);
+  transform: scale(1.07);
+}
+
+.booking .md-seat.taken {
+  background: var(--md-ink-12);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.booking .md-seat.picked {
+  background: var(--md-accent);
+  border-color: var(--md-accent);
+  transform: scale(1.05);
+}
+
+.booking .md-seat-legend {
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--md-ink-60);
+}
+
+.booking .md-seat-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.booking .md-seat.demo {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  display: inline-block;
+}
+
+.booking .md-seat-summary {
+  background: #fff;
+  border: 1.5px solid var(--md-ink-12);
+  border-radius: var(--md-radius-lg);
+  padding: 26px;
+  position: sticky;
+  top: 24px;
+}
+
+.booking .md-seat-summary h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.booking .md-seat-summary dl {
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking .md-seat-summary dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.booking .md-seat-summary dt {
+  color: var(--md-ink-60);
+  font-size: 14px;
+}
+
+.booking .md-seat-summary dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: right;
+}
+
+.booking .md-summary-total {
+  border-top: 1.5px solid var(--md-ink-12);
+  padding-top: 12px;
+  margin-top: 6px;
+}
+
+.booking .md-summary-total dd {
+  font-family: var(--md-display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+/* ---------- confirmation / boarding pass ---------- */
+.booking .md-confirm-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 56px 48px 110px;
+}
+
+.booking .md-boarding-pass {
+  width: 460px;
+  max-width: 100%;
+  background: var(--md-ink);
+  color: var(--md-paper);
+  border-radius: var(--md-radius-lg);
+  padding: 28px 30px;
+  position: relative;
+  box-shadow: 0 30px 70px -20px rgb(10 10 40 / 50%);
+}
+
+.booking .md-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.booking .md-wordmark-text {
+  font-family: var(--md-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.booking .md-bp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.booking .md-bp-status {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-accent);
+  background: color-mix(in oklab, var(--md-accent) 18%, transparent);
+  padding: 5px 12px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.booking .md-bp-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.booking .md-bp-route > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking .md-bp-route strong {
+  font-family: var(--md-display);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.booking .md-bp-route span {
+  font-size: 13px;
+  color: var(--md-paper-70);
+  margin-top: 4px;
+}
+
+.booking .md-bp-route svg {
+  color: var(--md-accent);
+  flex-shrink: 0;
+}
+
+.booking .md-bp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 12px;
+  margin-bottom: 24px;
+}
+
+.booking .md-bp-grid dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--md-paper-70);
+  margin-bottom: 2px;
+}
+
+.booking .md-bp-grid dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.booking .md-bp-tear {
+  border-top: 2px dashed color-mix(in oklab, var(--md-paper) 25%, transparent);
+  margin: 0 -30px 18px;
+  position: relative;
+}
+
+.booking .md-bp-tear::before,
+.booking .md-bp-tear::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--md-paper);
+}
+.booking .md-bp-tear::before { left: -10px; }
+.booking .md-bp-tear::after { right: -10px; }
+
+.booking .md-bp-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--md-paper-70);
+}
+
+.booking .md-confirm-note {
+  color: var(--md-ink-60);
+  max-width: 380px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking .md-flight-card,
+  .booking .md-seat { transition: none; }
+}
+
+@media (width <= 980px) {
+  .booking .md-search-grid { grid-template-columns: 1fr auto 1fr; }
+  .booking .md-search-submit { grid-column: 1 / -1; }
+  .booking .md-seatmap-wrap { grid-template-columns: 1fr; }
+  .booking .md-flight-card { grid-template-columns: 1fr; }
+  .booking .md-flight-fare { align-items: flex-start; }
+}
