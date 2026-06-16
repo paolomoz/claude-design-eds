@@ -24,8 +24,9 @@ export default function decorate(block) {
   const h2 = document.createElement('h2');
   h2.className = 'cond';
   if (introCells[0]) {
-    // preserve <em> (yellow highlight) and inline markup from the headline cell
-    h2.innerHTML = introCells[0].innerHTML.trim();
+    // Reuse an authored heading (server-visible, SEO #35); preserve <em>; avoid nesting.
+    const headingSrc = introCells[0].querySelector('h1, h2, h3, h4, h5, h6') || introCells[0];
+    h2.innerHTML = headingSrc.innerHTML.trim();
   }
   intro.append(h2);
 

@@ -69,9 +69,11 @@ export default async function decorate(block) {
   // Headline — any <em> becomes the yellow highlighted word.
   const headlineCell = cell(headlineRow);
   if (headlineCell) {
+    // Reuse an authored heading so the <h1> is server-visible (SEO #35); avoid nesting.
+    const headingSrc = headlineCell.querySelector('h1, h2, h3, h4, h5, h6') || headlineCell;
     const h1 = document.createElement('h1');
     h1.className = 'cond';
-    h1.innerHTML = headlineCell.innerHTML;
+    h1.innerHTML = headingSrc.innerHTML;
     h1.querySelectorAll('em').forEach((em) => {
       const hl = document.createElement('span');
       hl.className = 'hl';
