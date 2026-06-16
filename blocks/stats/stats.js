@@ -54,5 +54,9 @@ export default function decorate(block) {
     grid.append(item);
   });
 
-  block.replaceChildren(stripe, grid);
+  const wrap = document.createElement('div');
+  wrap.className = 'wrap';
+  wrap.append(grid);
+
+  block.replaceChildren(stripe, wrap);
 }

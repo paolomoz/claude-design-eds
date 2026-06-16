@@ -150,5 +150,9 @@ export default function decorate(block) {
     }
   }
 
-  block.replaceChildren(head, filters, cards, foot);
+  const wrap = document.createElement('div');
+  wrap.className = 'wrap';
+  wrap.append(head, filters, cards, foot);
+
+  block.replaceChildren(wrap);
 }

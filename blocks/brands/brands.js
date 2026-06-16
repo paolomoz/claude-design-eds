@@ -43,5 +43,9 @@ export default async function decorate(block) {
   });
   frag.append(brandRow);
 
-  block.replaceChildren(frag);
+  const wrap = document.createElement('div');
+  wrap.className = 'wrap';
+  wrap.append(frag);
+
+  block.replaceChildren(wrap);
 }
