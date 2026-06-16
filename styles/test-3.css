@@ -105,6 +105,18 @@ button { font-family: inherit; cursor: pointer; }
 /* Scrollbar hiding for carousels */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Keyboard focus — branded ring, visible on both light body and dark surfaces */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Comfortable mobile hit area for pill/tab controls */
+.tk-pill, .tk-tab, .gtw-waits-tabs button { min-height: 44px; }
 /* ============ Header ============ */
 .gtw-header {
   background: var(--ink);
@@ -163,13 +175,83 @@ button { font-family: inherit; cursor: pointer; }
   background: oklch(1 0 0 / 0.1);
   border: none;
   color: #fff;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
 }
 .gtw-nav-icon:hover { background: oklch(1 0 0 / 0.2); }
+
+/* Mobile nav: hamburger toggle (hidden on desktop) + slide-in drawer */
+.gtw-nav-toggle {
+  display: none;
+  background: oklch(1 0 0 / 0.1);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  place-items: center;
+}
+.gtw-nav-toggle:hover { background: oklch(1 0 0 / 0.2); }
+
+.gtw-menu {
+  width: min(380px, 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+  padding: 0;
+  border: none;
+  background: var(--ink);
+  color: #fff;
+  transform: translateX(100%);
+  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), overlay 0.34s allow-discrete, display 0.34s allow-discrete;
+}
+.gtw-menu[open] { transform: translateX(0); }
+@starting-style { .gtw-menu[open] { transform: translateX(100%); } }
+.gtw-menu::backdrop { background: oklch(0.18 0.04 230 / 0.55); opacity: 0; transition: opacity 0.34s ease, overlay 0.34s allow-discrete, display 0.34s allow-discrete; }
+.gtw-menu[open]::backdrop { opacity: 1; }
+@starting-style { .gtw-menu[open]::backdrop { opacity: 0; } }
+.gtw-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 16px 0 24px;
+  border-bottom: 1px solid oklch(1 0 0 / 0.15);
+}
+.gtw-menu-title { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: oklch(1 0 0 / 0.7); }
+.gtw-menu-close {
+  background: oklch(1 0 0 / 0.1);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.gtw-menu-close:hover { background: oklch(1 0 0 / 0.2); }
+.gtw-menu-nav { display: flex; flex-direction: column; padding: 8px 12px; }
+.gtw-menu-nav a {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 0 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid oklch(1 0 0 / 0.08);
+  transition: color 0.12s ease;
+}
+.gtw-menu-nav a:last-child { border-bottom: none; }
+.gtw-menu-nav a:hover { color: var(--signal); }
+@media (prefers-reduced-motion: reduce) {
+  .gtw-menu, .gtw-menu::backdrop { transition: none; }
+}
 
 /* ============ Hero ============ */
 .gtw-hero {
@@ -483,11 +565,11 @@ button { font-family: inherit; cursor: pointer; }
   color: #fff;
   font-weight: 800;
   font-stretch: 115%;
-  font-size: 30px;
+  font-size: clamp(22px, 6vw, 30px);
   line-height: 1.05;
   letter-spacing: -0.01em;
 }
-.gtw-event-line.is-big { font-size: 58px; color: var(--signal); }
+.gtw-event-line.is-big { font-size: clamp(40px, 11vw, 58px); color: var(--signal); }
 .gtw-event-copy { display: grid; gap: 12px; justify-items: start; }
 .gtw-event-copy p { color: var(--ink-soft); }
 .gtw-event-links { display: grid; gap: 8px; margin-top: 4px; }
@@ -596,6 +678,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ============ News ============ */
 .gtw-news { padding-bottom: 88px; display: grid; gap: 20px; }
+.gtw-news-title { font-size: 34px; }
 .gtw-news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .gtw-news-card { display: grid; gap: 8px; align-content: start; justify-items: start; }
 .gtw-news-img { width: 100%; height: 140px; }
@@ -640,5 +723,8 @@ button { font-family: inherit; cursor: pointer; }
   .gtw-essentials-grid { grid-template-columns: 1fr; }
   .gtw-news-grid { grid-template-columns: 1fr 1fr; }
   .gtw-nav a { display: none; }
+  .gtw-nav-toggle { display: grid; }
   .tk-parking { grid-template-columns: 1fr; }
+  .gtw-footer-grid { grid-template-columns: 1fr 1fr; }
+  .gtw-footer-base { flex-direction: column; gap: 8px; }
 }

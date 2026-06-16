@@ -642,3 +642,47 @@
     customElements.define('image-slot', ImageSlot);
   }
 })();
+
+/* Mobile nav drawer — hamburger toggles a native <dialog> (top-layer: no
+   stacking-context clipping, native Esc + focus trap). The overlay engine
+   injects the header asynchronously after load, so this uses document-level
+   event delegation — no init timing dependency, works whenever the header
+   lands. The 'close' aria sync is attached lazily on first open. */
+(() => {
+  let closeSynced = false;
+  const getMenu = () => document.getElementById('gtw-menu');
+  const getToggle = () => document.querySelector('.gtw-nav-toggle');
+
+  document.addEventListener('click', (e) => {
+    const menu = getMenu();
+    if (!menu) return;
+
+    if (e.target.closest('.gtw-nav-toggle')) {
+      const toggle = getToggle();
+      if (!closeSynced) {
+        closeSynced = true;
+        // Native close (Esc / backdrop / link) → resync aria + return focus.
+        menu.addEventListener('close', () => {
+          const t = getToggle();
+          if (t) { t.setAttribute('aria-expanded', 'false'); t.focus(); }
+        });
+      }
+      if (typeof menu.showModal === 'function' && !menu.open) menu.showModal();
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    // Close button, a followed link, or a backdrop click (target is the dialog).
+    if (e.target.closest('.gtw-menu-close')
+      || e.target.closest('.gtw-menu-nav a')
+      || e.target === menu) {
+      if (menu.open) menu.close();
+    }
+  });
+
+  // Resizing up to desktop while open: dismiss so it can't strand on screen.
+  window.matchMedia('(min-width: 961px)').addEventListener('change', (e) => {
+    const menu = getMenu();
+    if (e.matches && menu && menu.open) menu.close();
+  });
+})();

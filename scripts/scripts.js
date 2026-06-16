@@ -204,6 +204,13 @@ async function applyTemplateOverlay(main) {
   main.innerHTML = newMain.innerHTML;
   main.dataset.overlay = templateName;
 
+  // Load template-scoped behavior JS the same way as the CSS — each template
+  // ships its own at /scripts/<template>-animations.js (menus, reveals,
+  // <image-slot>, etc). Fire-and-forget so it never blocks overlay paint;
+  // a missing file is non-fatal (templates without behavior just skip it).
+  import(`${window.hlx.codeBasePath}/scripts/${templateName}-animations.js`)
+    .catch(() => { /* template ships no behavior script */ });
+
   await cssLoaded;
   return true;
 }

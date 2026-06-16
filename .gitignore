@@ -13,3 +13,6 @@ helix-importer-ui
 !AGENTS.md
 # Snowflake skill: in-progress run state (committed only on close)
 .snowflake/projects/*/state.json
+
+# audit output (generated)
+.audit/
