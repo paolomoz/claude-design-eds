@@ -1,0 +1,45 @@
+/* help-row — "How can we help?" row of 3 circular-icon quick links.
+   Inline styles from the prototype lifted here, scoped to .help-row. */
+
+.help-row {
+  margin-top: 56px;
+}
+
+.help-row h3 {
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+
+.help-row .help-row-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 40px;
+}
+
+.help-row .help-row-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.help-row .help-row-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--eb-green-50);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.help-row .help-row-icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--eb-primary);
+}
+
+.help-row .help-row-item .eb-link {
+  font-size: 14.5px;
+}

@@ -1,0 +1,145 @@
+/* ==========================================================================
+   home-hero — Evergreen Bank marketing hero
+   Inline styles from the rendered home <section> lifted into scoped classes.
+   Shared classes (.eb-container, .eb-card, .eb-field, .eb-input, .eb-btn,
+   .eb-link) come from styles.css. Body text inherits Public Sans via body.session.
+   ========================================================================== */
+
+.home-hero {
+  background: linear-gradient(160deg, var(--eb-cream), var(--eb-green-50));
+  border-bottom: 1px solid var(--eb-line);
+}
+
+.home-hero .home-hero-inner {
+  display: flex;
+  gap: 56px;
+  align-items: center;
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+
+/* ===== left: sign-on form ===== */
+.home-hero .home-hero-form {
+  padding: calc(26px * var(--eb-space));
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(14px * var(--eb-space));
+  box-shadow: rgb(20 40 30 / 35%) 0 18px 45px -18px;
+}
+
+.home-hero .home-hero-form-title {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.home-hero .home-hero-form-sub {
+  font-size: 13.5px;
+  color: var(--eb-ink-soft);
+}
+
+.home-hero .home-hero-pwd-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-hero .home-hero-show {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--eb-primary);
+}
+
+.home-hero .home-hero-submit { width: 100%; }
+
+.home-hero .home-hero-form-links {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 2px;
+}
+
+.home-hero .home-hero-form-links .eb-link { font-size: 13px; }
+
+/* ===== middle: promo ===== */
+.home-hero .home-hero-promo {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.home-hero .home-hero-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eb-primary);
+}
+
+.home-hero .home-hero-headline {
+  font-size: 46px;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  max-width: 520px;
+}
+
+.home-hero .home-hero-paragraph {
+  font-size: 17px;
+  color: var(--eb-ink-soft);
+  max-width: 460px;
+}
+
+.home-hero .home-hero-cta {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* ===== right: $300 badge ===== */
+.home-hero .home-hero-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-right: 12px;
+  flex-shrink: 0;
+}
+
+.home-hero .home-hero-badge-label {
+  font-family: var(--eb-font-display);
+  font-size: 20px;
+  color: var(--eb-primary);
+}
+
+.home-hero .home-hero-badge-amount {
+  font-family: var(--eb-font-display);
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--eb-primary-deep);
+  line-height: 1;
+  border-top: 3px solid var(--eb-accent);
+  border-bottom: 3px solid var(--eb-accent);
+  padding: 12px 6px;
+}
+
+/* ===== responsive ===== */
+@media (width <= 900px) {
+  .home-hero .home-hero-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 36px;
+  }
+
+  .home-hero .home-hero-form { width: 100%; }
+  .home-hero .home-hero-badge { align-self: center; }
+  .home-hero .home-hero-headline { font-size: 38px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero .eb-btn { transition: none; }
+}

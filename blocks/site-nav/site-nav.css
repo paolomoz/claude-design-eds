@@ -1,0 +1,133 @@
+/* ==========================================================================
+   site-nav — Evergreen Bank marketing header
+   Inline styles from the rendered home <header> lifted into scoped classes.
+   Shared classes (.eb-container, .eb-btn, .eb-btn-gold) come from styles.css.
+   ========================================================================== */
+
+/* ===== utility bar (green) ===== */
+.site-nav .site-nav-utility {
+  background: var(--eb-primary-deep);
+  color: var(--eb-white);
+}
+
+.site-nav .site-nav-utility-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+}
+
+/* ===== brand / wordmark ===== */
+.site-nav .site-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.site-nav .site-nav-wordmark {
+  font-family: var(--eb-font-display);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--eb-white);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.site-nav .site-nav-wordmark-light { font-weight: 400; }
+
+/* ===== utility actions ===== */
+.site-nav .site-nav-utility-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.site-nav .site-nav-util-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.site-nav .site-nav-util-link:hover { opacity: 1; }
+
+.site-nav .site-nav-icon {
+  width: 15px;
+  height: 15px;
+  stroke: var(--eb-white);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-nav .site-nav-search {
+  background: none;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  color: inherit;
+}
+
+.site-nav .site-nav-search .site-nav-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.site-nav .site-nav-signon {
+  padding: 7px 18px;
+  font-size: 13px;
+}
+
+/* ===== nav bar (white) ===== */
+.site-nav .site-nav-bar {
+  background: var(--eb-white);
+  border-bottom: 1px solid var(--eb-line);
+}
+
+.site-nav .site-nav-tabs {
+  display: flex;
+  gap: 28px;
+  height: 50px;
+  align-items: stretch;
+}
+
+.site-nav .site-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 3px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--eb-ink-soft);
+  margin-bottom: -1px;
+}
+
+.site-nav .site-nav-tab.is-active {
+  font-weight: 700;
+  color: var(--eb-primary-deep);
+  border-bottom-color: var(--eb-accent);
+}
+
+.site-nav .site-nav-links {
+  display: flex;
+  gap: 22px;
+  padding: 10px 0 12px;
+  flex-wrap: wrap;
+}
+
+.site-nav .site-nav-link {
+  font-size: 13.5px;
+  color: var(--eb-ink-soft);
+}
+
+.site-nav .site-nav-link:hover { color: var(--eb-primary); }
+
+/* ===== responsive ===== */
+@media (width <= 600px) {
+  .site-nav .site-nav-util-link,
+  .site-nav .site-nav-search { display: none; }
+
+  .site-nav .site-nav-links { gap: 14px; }
+}

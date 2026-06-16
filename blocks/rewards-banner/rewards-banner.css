@@ -1,0 +1,75 @@
+/* rewards-banner — full-width rounded "Summit Rewards" promo banner.
+   Inline styles lifted from the prototype's rewards section.
+   Shared classes (.eb-photo, .eb-btn, .eb-btn-primary) live in styles/styles.css.
+   `.eb-container` wrap + section margin-top reproduced below. */
+
+.rewards-banner {
+  max-width: 1180px;
+  margin: 48px auto 0;
+  padding: 0 32px;
+}
+
+.rewards-banner .rewards-banner-frame {
+  position: relative;
+  border-radius: var(--eb-radius);
+  overflow: hidden;
+}
+
+.rewards-banner .rewards-banner-photo {
+  height: 320px;
+  border-radius: 0;
+}
+
+.rewards-banner .rewards-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 92%) 0%,
+    rgb(255 255 255 / 75%) 42%,
+    transparent 70%
+  );
+}
+
+@media (width >= 600px) {
+  .rewards-banner .rewards-banner-overlay {
+    padding: 0 56px;
+  }
+}
+
+.rewards-banner .rewards-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 380px;
+}
+
+.rewards-banner .rewards-banner-headline {
+  font-size: 30px;
+}
+
+.rewards-banner .rewards-banner-body {
+  font-size: 15px;
+  color: var(--eb-ink-soft);
+}
+
+.rewards-banner .rewards-banner-cta {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+/* honor reduced-motion: neutralize the inherited .eb-btn transition/press */
+@media (prefers-reduced-motion: reduce) {
+  .rewards-banner .rewards-banner-cta {
+    transition: none;
+  }
+
+  .rewards-banner .rewards-banner-cta:active {
+    transform: none;
+  }
+}

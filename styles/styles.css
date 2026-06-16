@@ -173,6 +173,44 @@ aem-sidekick {
 }
 .eb-btn-gold:hover { filter: brightness(0.95); }
 
+.eb-btn-secondary {
+  background: transparent;
+  color: var(--eb-primary);
+  border-color: var(--eb-primary);
+}
+.eb-btn-secondary:hover { background: var(--eb-green-50); }
+
+.eb-link {
+  color: var(--eb-primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+.eb-link:hover { text-decoration: underline; }
+
+/* image placeholder (prototype's .eb-photo for empty image slots) */
+.eb-photo {
+  position: relative;
+  background:
+    linear-gradient(135deg, color-mix(in oklch, var(--eb-primary) 22%, var(--eb-cream)), color-mix(in oklch, var(--eb-accent) 30%, var(--eb-cream)));
+  border-radius: var(--eb-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eb-photo::after {
+  content: attr(data-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklch, var(--eb-ink) 55%, transparent);
+  border: 1.5px dashed color-mix(in oklch, var(--eb-ink) 30%, transparent);
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
 .eb-card {
   background: var(--eb-white);
   border: 1px solid var(--eb-line);

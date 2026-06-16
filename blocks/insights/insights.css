@@ -1,0 +1,79 @@
+/* insights — "Insights that find you" deep-green band, white text.
+   Inline styles from the prototype lifted here, scoped to .insights. The
+   white-solid / outline-white buttons are local variants (not redefining the
+   shared .eb-btn-* classes). */
+
+.insights {
+  margin-top: 64px;
+}
+
+.insights .insights-band {
+  background: var(--eb-primary-deep);
+  border-radius: var(--eb-radius);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+  padding: 40px 32px;
+}
+
+.insights .insights-photo {
+  width: 200px;
+  height: 220px;
+  flex-shrink: 0;
+}
+
+.insights .insights-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.insights .insights-content h2 {
+  font-size: 28px;
+  color: #fff;
+}
+
+.insights .insights-content p {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.insights .insights-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.insights .insights-btn-primary {
+  background: #fff;
+  color: var(--eb-primary-deep);
+  padding: 9px 20px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.insights .insights-btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgb(255 255 255 / 50%);
+  padding: 9px 20px;
+  font-size: 13.5px;
+}
+
+@media (width >= 900px) {
+  .insights .insights-band {
+    flex-direction: row;
+    text-align: left;
+    gap: 48px;
+    padding: 44px 56px;
+  }
+
+  .insights .insights-content {
+    align-items: flex-start;
+  }
+}

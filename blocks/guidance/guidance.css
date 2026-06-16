@@ -1,0 +1,69 @@
+/* guidance — "Financial guidance and support": centered head + 3 photo cards.
+   Inline styles from the prototype lifted here, scoped to .guidance. The
+   .eb-container wrap + section margin-top reproduce the prototype section. */
+
+.guidance {
+  margin-top: 64px;
+}
+
+.guidance .guidance-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.guidance .guidance-rule {
+  width: 44px;
+  height: 3px;
+  background: var(--eb-accent);
+  margin: 0 auto 18px;
+}
+
+.guidance .guidance-head h2 {
+  font-size: 30px;
+}
+
+.guidance .guidance-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.guidance .guidance-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.guidance .guidance-photo {
+  height: 170px;
+  border-radius: 0;
+}
+
+.guidance .guidance-body {
+  padding: calc(22px * var(--eb-space));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.guidance .guidance-body h3 {
+  font-size: 18px;
+}
+
+.guidance .guidance-body p {
+  font-size: 13.5px;
+  color: var(--eb-ink-soft);
+  flex: 1;
+}
+
+.guidance .guidance-cta .eb-btn {
+  padding: 8px 20px;
+  font-size: 13.5px;
+}
+
+@media (width >= 900px) {
+  .guidance .guidance-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
