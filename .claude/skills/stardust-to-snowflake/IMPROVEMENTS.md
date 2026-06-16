@@ -144,6 +144,23 @@ minor heading CLS.
 metric-matched; document the display-font CLS trade-off (and that adding
 metric-matched fallbacks per display family is optional polish).
 
+### 13. 🔴 Parallel block agents inconsistently reproduce the max-width container
+Found post-deploy on the live preview: the prototype wraps most section
+content in `<div class="wrap">` (max-width 1320, centered) — the dark/colored
+section **background** bleeds full-width but the **content** must not. Of 8
+blocks built by 4 parallel agents, 4 reproduced the `.wrap` (hero, service,
+offers, locations) and 3 did not (`used`, `stats`, `brands`) — their grids ran
+edge-to-edge at wide viewports. (`quick` is correctly full-bleed — the
+prototype has no `.wrap` there.)
+**Fix applied (test-1):** each block's content appended into a `.wrap` div,
+`block.replaceChildren(wrap)` (stats keeps the full-width `.stripe` outside).
+**Proposed:** (a) make the per-block agent brief explicit — "if the prototype
+section content sits inside a max-width container, reproduce it; only go
+full-bleed where the prototype is"; (b) add a post-build QA step that measures
+each block's inner content width at a wide viewport (>1440) and flags
+unintended full-width content. This bug is invisible at ≤1440px (where 1320
+max-width ≈ viewport) — **test wide**.
+
 ---
 
 ## Implementation checklist (apply to SKILL.md on `snowflake-blocks`)
@@ -160,3 +177,4 @@ metric-matched fallbacks per display family is optional polish).
 - [ ] #10 Split methodology vs sprinkle; document curl DA deploy
 - [ ] #11 Non-variable-font branch (compute metrics)
 - [ ] #12 Multi-family CLS note
+- [ ] #13 Block briefs must reproduce max-width container; add wide-viewport QA
