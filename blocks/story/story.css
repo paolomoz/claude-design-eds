@@ -1,0 +1,138 @@
+/* ==========================================================================
+   story — light "Our Story" band. Inner grid capped at --maxw and centered.
+   Decorative hex counter-spins (pure CSS, honors reduced-motion). Tokens come
+   from styles.css; do not redefine.
+   ========================================================================== */
+
+.story {
+  position: relative;
+  background: var(--cream);
+  color: var(--ink);
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 5vw, 64px);
+  scroll-margin-top: 80px;
+  overflow: hidden;
+}
+
+/* counter-spinning decorative hex, bottom-left */
+.story .story-hex {
+  position: absolute;
+  left: -60px;
+  bottom: -60px;
+  width: 320px;
+  opacity: 0.5;
+  animation: bh-spinr 80s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story .story-hex { animation: none; }
+}
+
+@keyframes bh-spinr {
+  from { transform: rotate(0); }
+  to { transform: rotate(-360deg); }
+}
+
+/* inner grid — container cap (#13) */
+.story .story-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(30px, 5vw, 72px);
+  align-items: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+@media (width >= 900px) {
+  .story .story-inner {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+/* intro column */
+.story .story-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.story .story-diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+
+.story .story-eyebrow-text {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.story .story-headline {
+  margin: 0 0 24px;
+  font-size: clamp(38px, 5.5vw, 80px);
+  line-height: 0.92;
+}
+
+.story .story-para {
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--story-ink);
+  max-width: 520px;
+}
+
+.story .story-para:last-child {
+  margin-bottom: 0;
+}
+
+/* stat cards — 2×2 grid */
+.story .story-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.story .story-stat {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 20px;
+  padding: 28px 24px;
+}
+
+/* alternating ink/accent: cards 2 & 3 get the accent treatment */
+.story .story-stat:nth-child(2),
+.story .story-stat:nth-child(3) {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.story .story-stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 62px);
+  line-height: 0.9;
+  color: var(--accent);
+}
+
+/* accent cards flip the number to ink */
+.story .story-stat:nth-child(2) .story-stat-number,
+.story .story-stat:nth-child(3) .story-stat-number {
+  color: var(--ink);
+}
+
+.story .story-stat-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+  color: var(--muted-3);
+}
+
+/* on accent cards the label is ink */
+.story .story-stat:nth-child(2) .story-stat-label,
+.story .story-stat:nth-child(3) .story-stat-label {
+  color: var(--ink);
+}

@@ -1,0 +1,68 @@
+<style>
+  /* ===== Beehive nav (static fragment) ===== */
+  header.header { display: block; }
+
+  .bh-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px clamp(20px, 5vw, 64px);
+    background: rgb(11 11 11 / 80%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(255 203 5 / 18%);
+  }
+
+  .bh-nav .brand { display: flex; align-items: center; gap: 12px; }
+  .bh-nav .brand span {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--cream);
+  }
+  .bh-nav .links { display: flex; align-items: center; gap: clamp(14px, 2.5vw, 34px); }
+  .bh-nav .links a {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .bh-nav .links a:hover { opacity: 1; color: var(--accent); }
+  .bh-nav .links a.visit {
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 11px 20px;
+    border-radius: 999px;
+    opacity: 1;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .bh-nav .links a.visit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgb(255 203 5 / 35%); color: var(--ink); }
+
+  @media (max-width: 720px) {
+    .bh-nav .links a:not(.visit) { display: none; }
+  }
+</style>
+
+<nav class="bh-nav">
+  <a class="brand" href="/" aria-label="Beehive Brewing home">
+    <svg width="30" height="34" viewBox="0 0 30 34" fill="none">
+      <path d="M15 1 L28.8 9 V25 L15 33 L1.2 25 V9 Z" fill="var(--accent)" stroke="#0B0B0B" stroke-width="1.5" />
+      <path d="M15 8 L22 12 V20 L15 24 L8 20 V12 Z" fill="#0B0B0B" />
+    </svg>
+    <span>BEEHIVE</span>
+  </a>
+  <div class="links">
+    <a href="#lineup">Beers</a>
+    <a href="#story">Our Story</a>
+    <a href="#taproom">Taproom</a>
+    <a class="visit" href="#taproom">Visit Us</a>
+  </div>
+</nav>

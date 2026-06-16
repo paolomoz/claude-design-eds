@@ -1,0 +1,35 @@
+/* ==========================================================================
+   marquee — full-bleed accent band with black top/bottom borders and an Anton
+   text strip duplicated for a seamless loop. Honors reduced motion.
+   ========================================================================== */
+
+.marquee {
+  overflow: hidden;
+  padding: 14px 0;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--accent);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+}
+
+.marquee .marquee-track {
+  display: inline-flex;
+  gap: 0;
+  will-change: transform;
+}
+
+.marquee .marquee-text {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 30px);
+  letter-spacing: 0.04em;
+}
+
+@keyframes bh-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee .marquee-track { animation: bh-marquee 26s linear infinite; }
+}

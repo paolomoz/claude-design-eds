@@ -1,0 +1,346 @@
+/* ==========================================================================
+   Lineup — interactive "What's on tap" beer selector.
+   All styling lifted from the prototype's inline styles, scoped to .lineup.
+   Tokens (--accent, --ink, --cream, --font-display …) come from styles.css.
+   ========================================================================== */
+
+.lineup {
+  position: relative;
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 5vw, 64px);
+  scroll-margin-top: 80px;
+}
+
+/* ---- head: eyebrow + headline | intro -------------------------------- */
+.lineup .lineup-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: clamp(34px, 5vw, 58px);
+}
+
+.lineup .lineup-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.lineup .lineup-diamond {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.lineup .lineup-eyebrow-text {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lineup .lineup-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6.5vw, 92px);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.lineup .lineup-intro {
+  max-width: 340px;
+  margin: 0;
+  color: var(--muted, #9a9588);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---- two-column grid: glass | detail+list ---------------------------- */
+.lineup .lineup-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+}
+
+@media (width >= 900px) {
+  .lineup .lineup-grid {
+    grid-template-columns: minmax(280px, 1fr) 1.25fr;
+  }
+}
+
+/* ---- glass display panel --------------------------------------------- */
+.lineup .lineup-glass-display {
+  position: relative;
+  min-height: 460px;
+  border: 1px solid rgb(244 239 226 / 12%);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 50% 30%, rgb(255 203 5 / 12%), rgb(255 203 5 / 0%) 60%),
+    var(--panel, #111);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lineup .lineup-glass-hex {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.lineup .lineup-abv {
+  position: absolute;
+  top: 26px;
+  left: 26px;
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--accent);
+  line-height: 0.8;
+}
+
+.lineup .lineup-abv-pct {
+  font-size: 20px;
+  -webkit-text-stroke: 0;
+}
+
+.lineup .lineup-ibu {
+  position: absolute;
+  top: 34px;
+  right: 26px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim, #8c8778);
+}
+
+/* ---- the glass ------------------------------------------------------- */
+.lineup .lineup-glass {
+  position: relative;
+  width: 128px;
+  height: 300px;
+}
+
+.lineup .lineup-glass-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px 10px 16px 16px / 8px 8px 26px 26px;
+  background: rgb(255 255 255 / 5%);
+  border: 2px solid rgb(255 255 255 / 14%);
+  overflow: hidden;
+}
+
+.lineup .lineup-glass-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 84%;
+  transition: background 0.5s ease;
+}
+
+.lineup .lineup-glass-head {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8%;
+  height: 14%;
+  background: linear-gradient(#fff, #f1ead2);
+  border-radius: 50%;
+  filter: blur(0.3px);
+}
+
+.lineup .lineup-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(255 255 255 / var(--bh-alpha, 0.5));
+  animation: bh-rise var(--bh-dur, 3s) ease-in infinite var(--bh-delay, 0s);
+}
+
+/* ---- detail + list column -------------------------------------------- */
+.lineup .lineup-detail-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.lineup .lineup-detail {
+  border-bottom: 1px solid rgb(244 239 226 / 12%);
+  padding-bottom: 26px;
+  margin-bottom: 8px;
+}
+
+.lineup .lineup-detail.is-entering {
+  animation: bh-enter 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.lineup .lineup-detail-style {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.lineup .lineup-detail-name {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 0.92;
+}
+
+.lineup .lineup-detail-blurb {
+  margin: 0 0 22px;
+  color: var(--muted-2, #b7b2a4);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.lineup .lineup-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lineup .lineup-detail-row + .lineup-detail-row {
+  margin-top: 8px;
+}
+
+.lineup .lineup-detail-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim, #8c8778);
+  width: 64px;
+}
+
+.lineup .lineup-detail-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.lineup .lineup-strength-track {
+  flex: 1;
+  height: 8px;
+  background: rgb(244 239 226 / 12%);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.lineup .lineup-strength-bar {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+/* ---- selectable beer list -------------------------------------------- */
+.lineup .lineup-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.lineup .lineup-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  border-bottom: 1px solid rgb(244 239 226 / 10%);
+  background: transparent;
+  color: var(--cream);
+  padding: 18px;
+  border-radius: 12px;
+  transition: background 0.25s ease, transform 0.2s ease;
+  font-family: inherit;
+}
+
+.lineup .lineup-item:hover {
+  transform: translateX(6px);
+}
+
+.lineup .lineup-item[aria-selected="true"] {
+  background: rgb(255 203 5 / 10%);
+}
+
+.lineup .lineup-item-num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  opacity: 0.6;
+  width: 30px;
+}
+
+.lineup .lineup-item-name {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 26px);
+  letter-spacing: 0.01em;
+}
+
+.lineup .lineup-item-style {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.lineup .lineup-item-abv {
+  font-family: var(--font-display);
+  font-size: 20px;
+}
+
+/* ---- keyframes (copied from the prototype helmet \3c style>) ------------ */
+@keyframes bh-rise {
+  0% {
+    transform: translateY(8px) scale(0.7);
+    opacity: 0;
+  }
+
+  20% { opacity: 0.9; }
+
+  100% {
+    transform: translateY(-150px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes bh-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- honor reduced motion ------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .lineup .lineup-bubble {
+    animation: none;
+    opacity: 0;
+  }
+
+  .lineup .lineup-detail.is-entering { animation: none; }
+  .lineup .lineup-item:hover { transform: none; }
+
+  .lineup .lineup-glass-fill,
+  .lineup .lineup-strength-bar { transition: none; }
+}
