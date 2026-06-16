@@ -335,6 +335,8 @@ For a typical 5–10 page site:
 ```
 From there it converts like an external-CSS prototype (semantic classes + the prototype's `.css`). If it's `<x-dc>` document-content, the sections are still `<section>`/`<div>` elements; just expect inline `style="…"` instead of a `<style>` block. The rest of this skill assumes a static `<main>` exists.
 
+**View behind routing / sign-in (#27).** If the view you want is not the default render (e.g. a signed-in dashboard behind a sign-on flow), **seed the app's persisted state before it boots** rather than capturing the landing page. Many prototypes persist their route to `localStorage`: `page.addInitScript(() => localStorage.setItem('<key>', JSON.stringify({page:'dashboard', user:'Alex'})))` then navigate. Generic alternatives: drive the UI to the view (fill + submit the sign-on form, then capture) or set the router hash/URL. Capture `#root` for the view you actually intend to convert.
+
 Read every prototype's `<main>` markup (skip the `<style>` for now) and produce a per-page section list:
 
 ```
@@ -678,6 +680,12 @@ export default async function decorate(block) {
 }
 ```
 
+**Interactive blocks (#28).** When the prototype section is a stateful component (a selector, a filter, a form that mutates data, a multi-step flow), reproduce it as **one self-contained interactive block that owns the state** — block JS runs, so this is fully supported:
+- **Data → keyed authorable rows.** For heterogeneous data, key each row by its first cell (`account | id | name | …`, `txn | date | desc | …`) and parse by key. Homogeneous lists are just one row per item.
+- **Behavior → local state + targeted re-render.** Hold a mutable `state` object; write small `render*()` functions (e.g. `renderCards()`, `renderList()`) and re-invoke only the affected one on each interaction — the manual equivalent of a React re-render. A form that mutates data validates, updates `state`, re-renders the affected parts (cards, totals, `<option>`s), and shows a confirmation.
+- This mirrors lifting state to a parent in React: if several widgets share data, put them in **one** block rather than trying to sync state across blocks. (Cross-block coordination, if ever needed, is a DOM `CustomEvent`.)
+- **QA the behavior, not just the paint** — see Local QA: drive each control and assert the state change.
+
 ### 9. Content page scaffold
 
 Content pages contain only the body sections — no metadata block for header/footer. The static fragments are loaded automatically by `postlcp.js` from `fragments/header.html` and `fragments/footer.html` on the same code origin. No per-page configuration is needed.
@@ -737,6 +745,8 @@ Open `http://localhost:3000/qa/page.html` — `scripts.js` runs `loadArea()`, bl
 **Capture at a real viewport and scroll — not one giant window (#19).** A `min-height:100vh` hero becomes *window-tall* under a huge capture window (e.g. 7800px), pushing its centered content far down and off the top crop — it looks like the hero text vanished. Instead, use Playwright at a normal viewport (e.g. 1440×900) and `scrollIntoView()` each section before each screenshot.
 
 **Visually diff each section against the prototype (#23).** Programmatic checks (width, decoration counts, interactivity) pass things the eye catches — header alignment, intentional line breaks (`<br>`), heading **weight**, and a section root's **background/color** (e.g. a footer that should be a brand color but renders on the body background). Open the prototype itself (`<x-dc>`/JSX prototypes self-render from their file via their `support.js`/bundle) and the harness at the **same viewport, section by section**, and compare.
+
+**Drive interactive blocks and assert state changes (#28).** For any interactive block, don't stop at the static render — Playwright-drive each control and assert the result: click a selector/tab → expect the active item / filtered count to change; submit an invalid form → expect the error text; submit a valid one → assert the visible state changed (e.g. a balance went `$4,862.13 → $3,862.13`, a confirmation appeared). Run the same drive against the **deployed** preview too — block JS that worked in the harness can still trip on CSP or a missing dependency live.
 
 **Wide-viewport layout check (#13).** Always QA at a **wide** viewport (≥1600px), not just 1440 — a missing max-width container is invisible where the 1320 max ≈ the viewport. Measure each block's inner content width and flag anything spanning full width that shouldn't:
 

@@ -72,6 +72,38 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
   fragment, headless deploy, non-variable/variable fonts all held.
 - **New findings surfaced:** #24, #25, #26 below.
 
+### test-5 — Evergreen Bank (`samples/Wells Fargo`)
+- Branch: `snowflake-blocks-test-5` (off `snowflake-blocks`)
+- DA: `https://da.live/#/paolomoz/claude-design-eds/snowflake-blocks/test-5`
+- Preview: `https://snowflake-blocks-test-5--claude-design-eds--paolomoz.aem.page/snowflake-blocks/test-5`
+- Outcome: ✅ pixel-faithful render **with the interactive features reproduced** —
+  selectable account cards, a transaction filter, and a Quick Transfer form with
+  validation, a live balance update, and a confirmation. 1 interactive `dashboard`
+  block + 2 chrome fragments.
+- Prototype type: **React/JSX app** with a signed-in dashboard behind a sign-on
+  flow, brand.css tokens + per-element inline styles, serif display (Source Serif 4).
+- **Skill fixes validated:** #17 (component → rows + block JS), #24 (JSX pre-render),
+  #22 (serif display weight), #21 footer class — all held.
+- **New findings surfaced:** #27, #28 below. (Goal of this run: reproduce the
+  *interactive* JSX, not just static markup.)
+
+---
+
+## Findings (test-5)
+
+### 27. 🟠 Pre-render a view behind routing/auth by seeding the app's persisted state
+Evergreen's interactive part (the dashboard) is behind a sign-on flow; the default render is the marketing home. The app persists its route to `localStorage` (`evergreen_state`). To pre-render the target view, **seed that state before the app boots** — Playwright `page.addInitScript(() => localStorage.setItem('evergreen_state', JSON.stringify({page:'dashboard',user:'Alex'})))`, then navigate. (Generic alternatives: drive the UI to the view, e.g. fill + submit the sign-on form, then capture; or set the framework's router/hash.) Capture `#root` for the view you actually want to convert.
+**Proposed:** add to the #24 pre-render recipe — for app views behind routing/auth, seed the persisted state (localStorage/hash/URL) or drive the UI to the target view before capturing.
+
+### 28. 🟢 Reproducing rich interactivity: one stateful view → one self-contained block
+The dashboard is a single React component tree with `accounts` state lifted to the app and a transfer that mutates it (re-rendering cards, total, and the form selects). The faithful EDS form is **one interactive block that owns that state**:
+- **Data → keyed authorable rows.** Heterogeneous data (user / accounts / transactions / insight) authored as rows keyed by a first cell (`account | id | name | …`), parsed by the block.
+- **Behavior → block JS with local state + render functions.** Hold a mutable `state` (selected, filter, balances); write small `renderCards()` / `renderList()` functions and re-invoke the affected one on each interaction — this is the manual equivalent of React's re-render. The transfer validates, mutates balances, calls `renderCards()` + updates the total + rebuilds the select `<option>`s, then shows a confirmation.
+- **Verify the interactivity in QA**, not just the static render: Playwright-drive each control (click a card, click a filter, submit a bad amount → expect the error, submit a valid one → assert the balance/confirmation changed). This run asserted `$4,862.13 → $3,862.13` after a `$1,000` transfer.
+**Proposed:** add an "Interactive blocks" subsection to Step 8 — keyed rows for heterogeneous data; local state + targeted re-render; and a QA step that drives the controls and asserts state changes (extends #17).
+
+**Implemented (#27–28):** #27 folded into the #24 pre-render recipe (Step 1); #28 added as an "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA.
+
 ---
 
 ## Findings (test-4)
