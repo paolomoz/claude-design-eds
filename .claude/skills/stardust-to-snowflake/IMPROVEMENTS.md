@@ -165,16 +165,18 @@ max-width ≈ viewport) — **test wide**.
 
 ## Implementation checklist (apply to SKILL.md on `snowflake-blocks`)
 
-- [ ] #1 Generalize input scope + JSX/`<x-dc>` pre-render note
-- [ ] #2 Document `image-slot → optional picture cell + CSS fallback`
-- [ ] #3 Add runtime-bootstrap step (file manifest + removals) for plain boilerplate
-- [ ] #4 Reconcile `lazy.js` footer with static `postlcp.js` footer
-- [ ] #5 Fragment interactivity = CSS-only (checkbox-hack pattern)
-- [ ] #6 Ship `.eslintignore` additions for vendored runtime
-- [ ] #7 Step 9 = body fragment by default (Source-API path)
-- [ ] #8 Add the local QA harness recipe
-- [ ] #9 Scale naming ceremony to multi-page only
-- [ ] #10 Split methodology vs sprinkle; document curl DA deploy
-- [ ] #11 Non-variable-font branch (compute metrics)
-- [ ] #12 Multi-family CLS note
-- [ ] #13 Block briefs must reproduce max-width container; add wide-viewport QA
+All implemented on `snowflake-blocks` (SKILL.md + da-deploy-protocol.md).
+
+- [x] #1 Generalize input scope + JSX/`<x-dc>` pre-render note — "When to use" + Step 1
+- [x] #2 Document `image-slot → optional picture cell + CSS fallback` — Step 7 brief, Step 9, anti-pattern 14
+- [x] #3 Add runtime-bootstrap step (file manifest + removals) for plain boilerplate — "Runtime bootstrap"
+- [x] #4 Reconcile `lazy.js` footer with static `postlcp.js` footer — bootstrap + Step 6 + anti-pattern 15
+- [x] #5 Fragment interactivity = CSS-only (checkbox-hack pattern) — Step 6
+- [x] #6 Ship `.eslintignore` additions for vendored runtime — "Runtime bootstrap"
+- [x] #7 Step 9 = body fragment by default (Source-API path) — Step 9 + checklist
+- [x] #8 Add the local QA harness recipe — "Local QA before deploy"
+- [x] #9 Scale naming ceremony to multi-page only — Step 2
+- [x] #10 Split methodology vs sprinkle; document curl DA deploy — "Running headless" + da-deploy-protocol.md
+- [x] #11 Non-variable-font branch (compute metrics) — Step 4 + anti-pattern 11
+- [x] #12 Multi-family CLS note — Step 4
+- [x] #13 Block briefs must reproduce max-width container; add wide-viewport QA — Step 7 brief, Local QA, anti-pattern 13

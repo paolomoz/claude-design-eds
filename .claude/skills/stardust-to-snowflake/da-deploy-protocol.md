@@ -2,6 +2,35 @@
 
 Reference for the deploy sequence used by Snowflake's Serve panel. This replaces the previous `aem put` / `aem preview` / `aem publish` pipeline with mount-based writes.
 
+> **Two transports.** The **mount** path below (`write_file /mnt/da` + `mount refresh`) is for the sprinkle/cone runtime. From a **local agent** (Claude Code / CLI) there is no mount — use the **headless (Source API)** path in the next section instead. Both write the same sanitised **body-fragment** HTML; only the transport differs.
+
+## Headless deploy (Source API + curl) — local agent
+
+Use when running without the cone/mount. Needs an IMS token (`DA_TOKEN`; see the `da-content` / `da-auth` skills — may live in the repo `.env`, which MUST be gitignored). Also **push the code branch to GitHub first** so AEM Code Sync builds it and the branch preview renders your blocks.
+
+```bash
+ORG=<daOrg>; REPO=<daRepo>; BRANCH=<branch>; P=<path-without-extension>   # e.g. snowflake-blocks/test-1
+TOKEN="$DA_TOKEN"
+
+# 1. sanitise non-ASCII to entities (in place, idempotent) — DA corrupts raw UTF-8
+node tools/da/sanitise.js content/$P.html
+
+# 2. write the body fragment to DA (multipart, field name MUST be `data`, type text/html)
+curl -sS -X PUT -H "Authorization: Bearer $TOKEN" \
+  -F "data=@content/$P.html;type=text/html" \
+  "https://admin.da.live/source/$ORG/$REPO/$P.html"           # expect 201
+
+# 3. preview (separate, required; path WITHOUT .html; ref = the code branch)
+curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
+  "https://admin.hlx.page/preview/$ORG/$REPO/$BRANCH/$P"       # expect 200
+
+# 4. (optional) publish to aem.live
+curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
+  "https://admin.hlx.page/live/$ORG/$REPO/$BRANCH/$P"
+```
+
+URLs: DA edit `https://da.live/#/$ORG/$REPO/$P` · preview `https://$BRANCH--$REPO--$ORG.aem.page/$P` · live `https://$BRANCH--$REPO--$ORG.aem.live/$P`. Token pre-flight: a 401 with empty body means it expired (dev tokens last ~24h) — re-auth. The remaining sections describe the **mount** transport.
+
 ## Prerequisites
 
 - DA mount active at `/mnt/da` (established during `connect-repo`)

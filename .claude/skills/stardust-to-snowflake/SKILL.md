@@ -1,8 +1,9 @@
 ---
 name: stardust-to-snowflake
-description: Convert stardust HTML prototypes (under stardust/prototypes/**) into Edge Delivery Services (EDS / AEM) blocks and content pages. Each prototype <section> becomes one EDS block; the prototype's per-section CSS becomes that block's CSS scoped under the block class. Use when the user wants to lift a stardust pipeline output (or any styled per-page HTML prototypes) into a working EDS site under blocks/ and content/.
+description: Convert per-page styled HTML prototypes (stardust under stardust/prototypes/**, or claude-design / Mobirise / Relume / Lovable / v0 / Figma-derived pages, or JSX prototypes pre-rendered to HTML, often under samples/) into Edge Delivery Services (EDS / AEM) blocks and content pages. Each prototype <section> becomes one EDS block; the prototype's per-section CSS becomes that block's CSS scoped under the block class. Use when the user wants to lift styled per-page HTML prototypes into a working EDS site under blocks/ and content/.
 references:
   - da-deploy-protocol.md
+  - IMPROVEMENTS.md
 ---
 
 # Stardust → EDS
@@ -10,8 +11,13 @@ references:
 ## When to use
 
 The user has:
-1. Static HTML prototypes (one per page) under `stardust/prototypes/**/*.html` with inline `<style>` blocks. Typically produced by the `stardust:prototype` skill, but any per-page styled HTML works.
-2. An EDS project at the repo root — `blocks/`, `styles/`, `scripts/`, `head.html`, plus existing blocks (`fragment`, `section-metadata`).
+1. **Per-page styled HTML prototypes** — one file per page, each carrying its own CSS. Accept any of these shapes:
+   - **Single-file with inline `<style>`** and `:root` tokens + semantic `<section class="…">` (e.g. stardust output, or claude-design "Stardust"/Mobirise/Relume-style pages). Easiest — convert directly.
+   - **External per-page `.css`** (the `<style>` lives in a sibling stylesheet). Read the linked CSS the same way you'd read an inline `<style>`.
+   - **`<x-dc>` document-content with everything inline-styled** (per-element `style="…"`). Harder — you must lift inline styles into a scoped block stylesheet.
+   - **React/JSX prototypes** (an HTML shell that mounts `.jsx` components at runtime). **Pre-render to static HTML first** (run it, or screenshot + read the JSX to reconstruct the DOM); you cannot decorate a shell that has no server-rendered `<main>`.
+   The prototypes typically live under `stardust/prototypes/**` or a `samples/<Name>/` folder — don't hard-code the path; discover them.
+2. An EDS project at the repo root — `blocks/`, `styles/`, `scripts/`, `head.html`, plus existing blocks (`fragment`, `section-metadata`). If the project is **vanilla `aem-boilerplate`** rather than the AuthorKit runtime this skill assumes, run the **Runtime bootstrap** below first.
 3. A goal to convert: prototypes → authorable EDS blocks + EDS content pages under `content/**`.
 
 If the user has prototypes but no EDS scaffolding, stop and ask whether to bootstrap. If they have EDS but no prototypes, this skill doesn't apply.
@@ -26,6 +32,60 @@ upskill ai-ecoverse/skills --skill aem
 ```
 
 The skill is installed to `/workspace/skills/aem/SKILL.md`. The sprinkle-driven flow auto-detects this on load and fires the `install-deps` lick when missing (see Sprinkle integration). When invoked from chat, run the command yourself before starting any of the steps below.
+
+## Runtime bootstrap (vanilla aem-boilerplate targets)
+
+This skill's runtime is the **AuthorKit** runtime (`ak.js` page boot, `postlcp.js` static header/footer fragments, `body.session` font gating, `decorateSession()`, `tools/da/sanitise.js`). The conversion steps below assume those files exist. They are **NOT** in this skill folder — they live in the AuthorKit / author-kit repo (`github.com/ai-ecoverse/snowflake`, aka `aemsites/author-kit`).
+
+If the target project is a **vanilla `aem-boilerplate`** (it has `scripts/aem.js` + `scripts/scripts.js` and `header`/`footer` blocks, but no `ak.js`/`postlcp.js`), port the runtime before Step 1. Fetch the author-kit tarball and copy:
+
+**Port in (from author-kit):**
+```
+scripts/ak.js scripts/scripts.js scripts/postlcp.js scripts/lazy.js scripts/utils/*
+tools/**                      # da/sanitise.js + da/da.js (+ sidekick, quick-edit, scheduler — keep so lazy.js/scripts.js imports resolve)
+deps/**                       # rum.js + lit (head.html loads deps/rum.js)
+head.html                     # AuthorKit head: loads ak.js + scripts.js + styles.css + deps/rum.js
+blocks/fragment blocks/section-metadata
+.hlxignore
+```
+
+**Remove (boilerplate the AuthorKit runtime replaces):**
+```
+scripts/aem.js scripts/delayed.js          # replaced by ak.js + lazy.js
+blocks/header blocks/footer                 # replaced by static fragments/{header,footer}.html (Step 6)
+blocks/cards blocks/columns blocks/widget   # unused demo blocks (delete to avoid stale aem.js imports)
+styles/fonts.css styles/lazy-styles.css     # @font-face goes in styles.css; AuthorKit head loads only styles.css
+```
+
+**After porting, reconcile `scripts/lazy.js`** — see finding [#4 in IMPROVEMENTS.md]: the stock AuthorKit `lazy.js` lazy-loads `utils/footer.js`, which does `loadBlock(footer)` and collides with the static footer fragment (renders a visible "Error" box, since there is no `blocks/footer`). **Delete the `import('./utils/footer.js')…` line** when using static chrome fragments.
+
+**Lint mismatch (#6).** The AuthorKit runtime is authored for `@adobe/eslint-config-helix`; a boilerplate project lints with `airbnb-base`, so `npm run lint` will throw thousands of errors on the vendored runtime + minified `deps/`. Treat the runtime as vendored — add to `.eslintignore`:
+```
+deps/
+scripts/ak.js
+scripts/lazy.js
+scripts/postlcp.js
+scripts/scripts.js
+scripts/utils/
+tools/
+blocks/fragment/
+samples            # reference prototypes, not project code
+```
+Your generated blocks + `styles/styles.css` still lint clean under airbnb (expand any single-line multi-declaration CSS rules the prototype used). Alternatively, adopt the author-kit `eslint.config.js` (helix) wholesale.
+
+## Running headless (no sprinkle)
+
+The **Sprinkle integration** section below assumes the cloud sprinkle UI + cone runtime (`mount`, `write_file`, `sprinkle send`, `scoop_wait`). **Steps 1–9 are the runtime-agnostic methodology** and work unchanged from a local agent (Claude Code / CLI). Only the deploy transport differs:
+
+| | Sprinkle / cone | Headless (local agent) |
+|---|---|---|
+| Code | committed in cone, pushed | `git push` the branch → AEM Code Sync builds it |
+| Content write | `write_file /mnt/da/...` | DA Source API: `PUT admin.da.live/source/<org>/<repo>/<path>.html` (multipart, field name **`data`**, `type=text/html`) |
+| Make live | `mount refresh` | `POST admin.hlx.page/preview/<org>/<repo>/<branch>/<path>` (then optionally `/live/...`) |
+| Sanitise | `tools/da/sanitise.js` | same — run it before the PUT |
+| Auth | provider OAuth | IMS token (`DA_TOKEN`) — see the `da-content` / `da-auth` skills |
+
+The content payload is a **body fragment** either way (see Step 9). The headless deploy needs the **code branch pushed to GitHub** so the branch preview (`<branch>--<repo>--<org>.aem.page`) renders with your blocks. See `da-deploy-protocol.md` for the full curl contract.
 
 ## Sprinkle integration
 
@@ -250,6 +310,8 @@ For a typical 5–10 page site:
 
 ### 1. Audit (light)
 
+**First, normalize the input to static HTML.** If a prototype is React/JSX (an HTML shell that mounts components), render it to static HTML before auditing — `curl` the running prototype, or read the `.jsx` + a screenshot and reconstruct the `<main>`. If it's `<x-dc>` document-content, the sections are still `<section>`/`<div>` elements; just expect inline `style="…"` instead of a `<style>` block. The rest of this skill assumes a static `<main>` exists.
+
 Read every prototype's `<main>` markup (skip the `<style>` for now) and produce a per-page section list:
 
 ```
@@ -269,7 +331,9 @@ Naming rules:
 - When a section appears on multiple pages but looks different (e.g. home `hero` vs case-study `case-hero` vs service `service-hero`), they are different blocks. Prefix with the page archetype.
 - When two sections within one prototype share the same visual treatment but different copy (e.g. case-study `discovery` and `decisions` are both 2-col prose with eyebrow + headline), it is fine to merge into one block (`case-prose-2col`) with a single text variant cell ("tinted" / "default"). Use your judgment.
 
-**Surface 3–5 naming questions to the user before writing any block code:**
+**Scale the naming ceremony to the number of pages.** For a **single-page** conversion where each `<section class="X">` has a self-evident, unique name (`hero`, `quick`, `used`, `stats`…), there are no cross-page reuse decisions to make — just lock `block name = section class` and proceed; don't pepper the user with questions. The questions below matter for **multi-page** sites, where the same-looking section recurs and you must decide reuse vs. archetype-prefixing.
+
+**Surface 3–5 naming questions to the user before writing any block code (multi-page sites):**
 - "What's the home hero called? `hero`?"
 - "Are the closing CTAs across all pages identical? Same `closing` block?"
 - "Should case-study discovery/decisions/solutions be one block or three?"
@@ -321,6 +385,23 @@ curl -sSL -o styles/fonts/<name>-italic-variable.woff2 \
 ```
 
 Latin-only variable woff2 is typically 30–60 KB per file, weights 100–900 included.
+
+**Non-variable fonts (#11).** Many Google fonts ship only as named static weights — no variable axis (e.g. **Barlow**, Barlow Condensed, Anton). For these, `@fontsource-variable/<name>` does NOT exist; use the **static** `@fontsource/<name>` package and fetch each weight you actually use:
+```bash
+curl -sSL -o styles/fonts/<name>-700.woff2 \
+  "https://cdn.jsdelivr.net/npm/@fontsource/<name>@latest/files/<name>-latin-700-normal.woff2"
+```
+Static `@fontsource` packages also do **not** publish a "Fallback" `@font-face`, so you must **compute** the metric-override values yourself (principle 3) from the woff2 with fonttools:
+```python
+from fontTools.ttLib import TTFont
+f = TTFont("styles/fonts/<name>-400.woff2"); upm=f['head'].unitsPerEm; hhea=f['hhea']; os2=f['OS/2']
+arial = dict(upm=2048, xavg=904)  # Arial reference (use Times metrics for a serif brand)
+size_adjust = (os2.xAvgCharWidth/upm) / (arial['xavg']/arial['upm'])
+adj = upm*size_adjust
+print(f"size-adjust:{size_adjust*100:.2f}% ascent-override:{hhea.ascent/adj*100:.2f}% "
+      f"descent-override:{abs(hhea.descent)/adj*100:.2f}% line-gap-override:{hhea.lineGap/adj*100:.2f}%")
+```
+Apply those to the system-font override `@font-face` (renamed `"Arial"` / `"Times New Roman"`) exactly as in principle 3.
 
 **3. Body.session pattern with a metric-matched fallback `@font-face`.**
 The brand font must NOT render at first paint. Default to a metric-matched system font; switch to the brand font once `decorateSession()` (in `scripts/ak.js`) adds `body.session`. The recipe:
@@ -375,6 +456,8 @@ Use the SAME class of typeface for the fallback so visual rhythm is preserved du
 - Monospace brand → fallback `"Courier New", courier, monospace`. Override `@font-face "Courier New"` with `local("Courier New")`. (Note: skipping monospace metric-matching is acceptable when the mono font is only used in small eyebrows/labels — CLS impact is negligible. Document the choice in the conversion log.)
 
 Never substitute classifications (don't match a serif brand to Arial; don't match a sans brand to Times). Even with metric overrides, character widths and rhythm differ enough that the visible shift is jarring.
+
+**Multiple display families (#12).** A brand may use several families — e.g. Barlow (body) + Barlow Condensed + Barlow Semi Condensed (display). The `body.session` pattern only gates the **body** family; display families referenced directly by class (headings, eyebrows) load with `font-display: swap` and aren't fully CLS-eliminated. Define each as a `:root` token (`--font-cond`, `--font-semi`) and reference it per-block on the elements that use it. Fully metric-matching every display family is optional polish — for display text used sparingly (eyebrows, big condensed headings) the CLS impact is small; **document the trade-off** in the conversion log rather than over-engineering it.
 
 ### 5. Lean on EDS button conventions — DO NOT manufacture button anchors in block JS
 
@@ -492,6 +575,13 @@ No `<!DOCTYPE>`, no `<html>`, no `<body>` wrapper. Just the raw `<style>` + DOM.
 
 **Loading mechanism:** `scripts/postlcp.js` fetches `fragments/header.html` and `fragments/footer.html` from the code origin (`codeBase`) and injects via `innerHTML`. On branch-hosted pages (`<branch>--repo--org.aem.live`), relative paths resolve to the correct branch automatically.
 
+**Fragments cannot run JavaScript.** Because the fragment is injected via `innerHTML`, any `<script>` inside it is inert — the prototype's header JS (mobile-menu toggle, scroll-state shadow, dropdown logic) will NOT run. Re-implement interactive chrome as **CSS-only**:
+- **Mobile menu / drawer** → checkbox-hack: a visually-hidden `<input type="checkbox" id="mnav-toggle">` as the first element, `<label for="mnav-toggle">` for the open button and the close button and a full-screen scrim label, and CSS `#mnav-toggle:checked ~ #mnav { … }` to drive the open/close state and the panel transform.
+- **Scroll-state shadow / sticky color change** → drop it (keep a static border), or use a CSS scroll-driven approach where supported. Don't try to reattach JS to the fragment.
+- Document anything you dropped in the conversion log.
+
+**Footer reconciliation (see #4).** The AuthorKit `lazy.js` also tries to load the footer as a *block* (`utils/footer.js` → `loadBlock(footer)`), which collides with the static footer fragment and renders an error box. Make sure the Runtime-bootstrap edit removing that import has been applied.
+
 **`header: off` / `footer: off`:** To suppress header/footer on a specific page, add a metadata block with `header: off` or `footer: off`. The loader checks `getMetadata('header')` / `getMetadata('footer')` before fetching.
 
 ### 7. Blocks (parallel agents)
@@ -507,6 +597,10 @@ The brief template:
 > **Existing blocks — REUSE, do not recreate**: [list with one-line authoring shape per block].
 >
 > **Brand tokens** are global in `styles/styles.css`; do not redefine.
+>
+> **Section layout — reproduce the prototype's max-width container (#13)**: if the prototype section wraps its content in a centered max-width container (`<div class="wrap">` / `.container` / `.inner`), your block MUST recreate it — build the content into a `.wrap` div (`block.replaceChildren(wrap)`), so the colored/section background bleeds full-width but the **content** stays within the page max-width. Only render content edge-to-edge where the prototype section itself is full-bleed (no inner wrapper). Getting this wrong is invisible at ≤1440px and only shows at wide viewports.
+>
+> **Images — `<image-slot>` placeholders (#2)**: claude-design prototypes use `<image-slot>` custom elements as image drop-targets; there are usually NO real image assets. Treat each image as an **optional** authored cell holding a `<picture>`/`<img>` (`const pic = cell.querySelector('picture, img'); if (pic) …`). When the cell is empty, fall back to the prototype's background treatment (e.g. dark `--ink`, or a placeholder rectangle) via the block CSS so the section still looks right with no image. Leave image cells EMPTY in the authoring snippet.
 >
 > **Buttons**: do NOT manufacture button anchors. Author CTAs as `<strong><a>` (primary) or `<em><a>` (secondary) in the content page; in block JS, clone the cell's child nodes into a `.actions` wrapper. Block CSS only overrides global button styles when something is genuinely different (e.g. larger size). Text links with flourish (wavelength underline) are NOT buttons — leave as plain `<a>` and style per-block.
 >
@@ -553,9 +647,9 @@ export default async function decorate(block) {
 
 Content pages contain only the body sections — no metadata block for header/footer. The static fragments are loaded automatically by `postlcp.js` from `fragments/header.html` and `fragments/footer.html` on the same code origin. No per-page configuration is needed.
 
+**The content page is a DA *body fragment* (#7).** The DA Source API (the headless deploy path) requires the document to start at `<body>` — **no `<!DOCTYPE>`, no `<html>`, no `<head>`** (the pipeline injects head/scripts/styles from Code Bus). Emit exactly:
+
 ```html
-<!DOCTYPE html>
-<html lang="en">
 <body>
   <header></header>
   <main>
@@ -571,8 +665,9 @@ Content pages contain only the body sections — no metadata block for header/fo
   </main>
   <footer></footer>
 </body>
-</html>
 ```
+
+(Only the **mount-based** deploy tolerates a full `<!DOCTYPE html><html>…</html>` document — it strips `<head>` on ingestion. For the Source-API/`curl` path, emit the body fragment above. Before any DA write, run `node tools/da/sanitise.js <file>` to encode non-ASCII — `® · – —`, accents, emoji — to HTML entities, or DA corrupts them to U+FFFD.)
 
 To suppress header/footer on a specific page, add a `metadata` block with `header: off` and/or `footer: off`:
 
@@ -586,7 +681,38 @@ To suppress header/footer on a specific page, add a `metadata` block with `heade
 
 **Do NOT emit a `<head>` element.** EDS content pages are markdown-equivalent fragments: the document metadata (title, meta, stylesheets, scripts) lives in the project's `head.html`, which EDS injects at delivery time. A `<head>` block in a content page is dead weight at best and a duplication conflict at worst.
 
-Image URLs MUST be fully qualified (`https://main--<repo>--<owner>.aem.page/stardust/prototypes/images/…`) so EDS preview and the rendered prototype agree on what to show.
+When the prototype has **real** images, image URLs MUST be fully qualified (`https://main--<repo>--<owner>.aem.page/stardust/prototypes/images/…`) so EDS preview and the rendered prototype agree on what to show. When the prototype uses **`<image-slot>` placeholders** (no real assets — common for claude-design prototypes), leave the image cells EMPTY (`<div></div>`); the block CSS background fallback (Step 7) renders the section correctly without an image. The author drops real images in later.
+
+## Local QA before deploy (no DA)
+
+`aem up --html-folder content` is **not** a reliable way to preview new pages: it serves repo files statically and only renders a path through the full pipeline if that path is already in the remote routing index — brand-new paths 404 on the rendered route. To verify decoration locally, build a **self-contained harness** and open it through the dev server (which serves repo code at its real paths):
+
+```bash
+# 1. dev server (serves /scripts, /styles, /blocks, /fragments at their real paths)
+npx -y @adobe/aem-cli up --no-open &
+
+# 2. harness = head.html scripts + the page's body fragment, saved as a static repo file
+{ echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'; cat head.html; echo '</head>'
+  sed -n '/<body>/,/<\/body>/p' content/<path>.html   # (wrap a bare body fragment in <body>…</body> first)
+  echo '</html>'; } > qa/page.html        # qa/ should be gitignored
+```
+
+Open `http://localhost:3000/qa/page.html` — `scripts.js` runs `loadArea()`, blocks load from the code origin, fragments inject via `postlcp.js`. Screenshot / inspect with headless Chrome (`--virtual-time-budget=9000 --screenshot` / `--dump-dom`) or Playwright.
+
+**Wide-viewport layout check (#13).** Always QA at a **wide** viewport (≥1600px), not just 1440 — a missing max-width container is invisible where the 1320 max ≈ the viewport. Measure each block's inner content width and flag anything spanning full width that shouldn't:
+
+```js
+// Playwright, viewport 1600: for each block, is the content constrained?
+for (const n of ['hero','quick','used','stats','service','offers','brands','locations']) {
+  const w = await page.evaluate((sel) => {
+    const inner = document.querySelector(`.${sel} .wrap`) || document.querySelector(`.${sel}`).firstElementChild;
+    return Math.round(inner.getBoundingClientRect().width);
+  }, n);
+  console.log(n, w, w > 1340 ? '<== FULL-WIDTH (check against prototype)' : '');
+}
+```
+
+Cross-check each flag against the prototype: full-bleed is correct only where the prototype section has no inner max-width wrapper.
 
 ## Anti-patterns (lessons paid for the hard way)
 
@@ -623,18 +749,29 @@ Naming + reuse decisions look small but ripple through every block and content p
 Google Fonts `<link>` tags, Adobe Fonts script tags, any CDN-hosted stylesheet, AND `<link rel="preload" as="font">` lines all belong out of `head.html`. The first three add DNS/handshake hops and external coupling; the preload looks helpful but it's not — the metric-matched `body.session` pattern (principle 3) makes preload irrelevant for CLS, and adding it splits font discovery between two files. Declare `@font-face` in `styles/styles.css` only. Document any non-self-hostable proprietary font and the CLS trade-off it imposes.
 
 **11. Skipping the metric-matched fallback `@font-face`.**
-Without `size-adjust` + `ascent-override` + `descent-override` on a system-font fallback, the swap from system font → brand font shifts every line of text on the page when the woff2 lands. Lift the calibration from the matching `@fontsource-variable/<name>` package; rename the override `@font-face` after the system font (`"Arial"`, `"Times New Roman"`) so any reference to that family in a font stack picks up the adjusted metrics automatically.
+Without `size-adjust` + `ascent-override` + `descent-override` on a system-font fallback, the swap from system font → brand font shifts every line of text on the page when the woff2 lands. For a variable brand, lift the calibration from the matching `@fontsource-variable/<name>` package; for a **non-variable** brand (static weights only, no published Fallback face), compute it from the woff2 with fonttools (Step 4, #11). Rename the override `@font-face` after the system font (`"Arial"`, `"Times New Roman"`) so any reference to that family in a font stack picks up the adjusted metrics automatically.
 
 **12. Over-applying the button convention.**
 Not every link is a button. Whole-card tile anchors, tel:/mailto: channel values, and styled text links (e.g. wavelength-underlined "How we work →") are NOT buttons. Authors leave these as plain `<a>`; per-block CSS styles them. **The convention is for chips with a clickable boundary; if it's not that, don't apply it.**
 
+**13. Dropping the prototype's max-width container.**
+The prototype wraps section content in a centered max-width container (`.wrap` / `.container`) while the section background bleeds full-width. If your block appends content straight to the block root, the content runs edge-to-edge at wide viewports. **Recreate the container** (`block.replaceChildren(wrap)`). This is the easiest bug to miss because it's invisible at ≤1440px — QA wide (see Local QA). Parallel block agents are especially prone to this: state the rule in each brief.
+
+**14. Forgetting `<image-slot>` placeholders have no real assets.**
+Claude-design prototypes use `<image-slot>` drop-targets, not `<img>` with real `src`. Don't hard-code a prototype image URL (it 404s) and don't ship a broken `<img>`. Treat the image as an **optional** cell and give the block a CSS background fallback so the empty state still looks right.
+
+**15. Loading the footer twice (block + static fragment).**
+The AuthorKit `lazy.js` lazy-loads `utils/footer.js` → `loadBlock(footer)`. With static chrome fragments (this skill) and no `blocks/footer`, that throws and renders a visible "Error" box between the last section and the footer. Remove the `utils/footer.js` import from `lazy.js` during Runtime bootstrap.
+
 ## Checklist (per page)
 
 - [ ] Each section in the prototype `<main>` has a corresponding block call in the content page.
-- [ ] **No `<head>` element.** The page goes `<!DOCTYPE html><html><body>…</body></html>` — EDS injects the project `head.html` at delivery.
+- [ ] **Content page is a body fragment** for the Source-API deploy: starts at `<body>`, **no `<!DOCTYPE>`/`<html>`/`<head>`** — EDS injects the project `head.html` at delivery. (Only the mount deploy tolerates a full doc.)
+- [ ] Ran `node tools/da/sanitise.js` on the content before any DA write (non-ASCII → entities).
 - [ ] `<header></header>` and `<footer></footer>` are EMPTY (static fragments load automatically via `postlcp.js`).
 - [ ] No `metadata` block needed for header/footer. Only add one if suppressing them (`header: off` / `footer: off`).
-- [ ] Image URLs are fully qualified (`https://main--…/stardust/prototypes/images/…`).
+- [ ] Real image URLs are fully qualified; `<image-slot>` placeholders → empty cells with a block CSS background fallback.
+- [ ] Each block reproduces the prototype's max-width container; **no unintended full-width content at a wide (≥1600px) viewport**.
 - [ ] No `<style>` or `<script>` tags in the content page.
 - [ ] No section-metadata blocks.
 - [ ] Closing CTA reuses the shared `closing` block.
@@ -648,7 +785,7 @@ Not every link is a button. Whole-card tile anchors, tel:/mailto: channel values
 - [ ] `prefers-reduced-motion: reduce` honored on any animation.
 - [ ] `head.html` is untouched. No font `<link>`, `<script>`, `<style>`, or `<link rel="preload" as="font">` lines added. All `@font-face` declarations live in `styles/styles.css`. Brand woff2(s) live in `styles/fonts/`.
 - [ ] Body defaults to a metric-matched system fallback (`arial, sans-serif` for sans brand, `times, "Times New Roman", serif` for serif). `body.session` switches to the brand stack via `var(--font-body)`.
-- [ ] An override `@font-face` named after the system font (e.g. `"Arial"`) declares `size-adjust` / `ascent-override` / `descent-override` lifted from `@fontsource-variable/<name>`'s published calibration. Result: zero CLS on font swap.
+- [ ] An override `@font-face` named after the system font (e.g. `"Arial"`) declares `size-adjust` / `ascent-override` / `descent-override`. For variable brands, lift the calibration from `@fontsource-variable/<name>`; for non-variable brands, **compute** it from the woff2 with fonttools. Result: zero CLS on font swap.
 - [ ] No per-block `font-family: var(--font-body)` or `var(--font-display)` declarations. Brand font flows from `body.session` via inheritance. Only mono and serif (Fraunces / Times) families are explicitly set per-block.
 
 ## When you finish
