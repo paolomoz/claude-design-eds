@@ -1,0 +1,192 @@
+/* Offers — section head + grid of whole-card <a> offer cards with bg image, gradient,
+   tag, headline and "View offer" text link. Lifted from prototype `.offers`/`.offer` rules,
+   scoped under .offers. Mobile-first; grid collapses 3 -> 2 -> 1 column. */
+
+.offers {
+  background: var(--paper);
+  padding: 60px 0;
+}
+
+/* ----- Section head ----- */
+.offers .sec-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 38px;
+}
+
+.offers .sec-head .kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--yellow-deep);
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+}
+
+.offers .sec-head .kicker::before {
+  content: "";
+  width: 34px;
+  height: 4px;
+  background: var(--yellow);
+}
+
+.offers .sec-head h2 {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  font-size: clamp(34px, 4vw, 52px);
+  margin: 10px 0 0;
+}
+
+.offers .sec-head .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 15px;
+  white-space: nowrap;
+  border-bottom: 3px solid var(--yellow);
+  padding-bottom: 4px;
+  color: var(--ink);
+}
+
+.offers .sec-head .link:hover {
+  gap: 13px;
+}
+
+/* ----- Offer grid ----- */
+.offers .offer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.offers .offer {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--white);
+
+  /* Dark fallback when no image authored — gradient handled by .ov over --ink-2. */
+  background: var(--ink-2);
+}
+
+.offers .offer .offer-img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.offers .offer .offer-img picture,
+.offers .offer .offer-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.offers .offer .ov {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(14 14 14 / 15%) 0%,
+    rgb(14 14 14 / 55%) 55%,
+    rgb(14 14 14 / 90%) 100%
+  );
+}
+
+.offers .offer .c {
+  position: relative;
+  z-index: 2;
+  padding: 26px;
+}
+
+.offers .offer .tag {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+.offers .offer h3 {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 26px;
+  line-height: 1;
+  margin: 0 0 10px;
+  letter-spacing: 0.01em;
+}
+
+.offers .offer .more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13.5px;
+  color: var(--yellow);
+  white-space: nowrap;
+}
+
+.offers .offer:hover .more {
+  gap: 12px;
+}
+
+/* ----- Responsive ----- */
+@media (width >= 600px) {
+  .offers .offer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .offers {
+    padding: 84px 0;
+  }
+
+  .offers .sec-head {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+@media (width >= 1200px) {
+  .offers .offer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offers .sec-head .link,
+  .offers .offer .more {
+    transition: none;
+  }
+}

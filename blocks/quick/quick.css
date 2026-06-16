@@ -1,0 +1,94 @@
+/* Quick actions — lifted from prototype .quick rules, scoped under .quick block class. */
+
+.quick {
+  background: var(--ink-2);
+  border-top: 4px solid var(--yellow);
+}
+
+.quick .grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.quick a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 26px 24px;
+  color: #fff;
+  border-right: 1px solid rgb(255 255 255 / 8%);
+  transition: 0.18s;
+}
+
+.quick a:last-child { border-right: none; }
+
+.quick a:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.quick .ico {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: var(--yellow);
+  color: var(--ink);
+  border-radius: 4px;
+  transition: 0.18s;
+}
+
+.quick a:hover .ico {
+  background: var(--ink);
+  color: var(--yellow);
+}
+
+.quick .ico svg {
+  width: 26px;
+  height: 26px;
+  stroke: currentcolor;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.quick .txt b {
+  display: block;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 21px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.quick .txt span {
+  font-size: 13.5px;
+  color: #b6b3ab;
+}
+
+.quick a:hover .txt span { color: var(--ink); }
+
+/* Prototype responsive — @media(max-width:1140px): 3-up */
+@media (width <= 1140px) {
+  .quick .grid { grid-template-columns: repeat(3, 1fr); }
+  .quick a:nth-child(3) { border-right: none; }
+}
+
+/* Prototype responsive — @media(max-width:680px): 2-up, stacked borders */
+@media (width <= 680px) {
+  .quick .grid { grid-template-columns: 1fr 1fr; }
+
+  .quick a {
+    border-right: none;
+    border-bottom: 1px solid rgb(255 255 255 / 8%);
+    padding: 20px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick a,
+  .quick .ico { transition: none; }
+}

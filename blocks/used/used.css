@@ -1,0 +1,289 @@
+/* Used block — lifted from prototype .used, scoped under .used */
+
+.used {
+  background: var(--paper);
+  padding: 84px 0;
+}
+
+/* section head */
+.used .sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 38px;
+}
+
+.used .sec-head .kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--yellow-deep);
+}
+
+.used .sec-head .kicker::before {
+  content: "";
+  width: 34px;
+  height: 4px;
+  background: var(--yellow);
+}
+
+.used .sec-head h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  margin: 10px 0 0;
+}
+
+.used .sec-head p {
+  margin: 8px 0 0;
+  color: var(--steel);
+  max-width: 52ch;
+}
+
+.used .sec-head .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 15px;
+  white-space: nowrap;
+  border-bottom: 3px solid var(--yellow);
+  padding-bottom: 4px;
+  color: var(--ink);
+}
+
+.used .sec-head .link:hover {
+  gap: 13px;
+}
+
+.used .sec-head .link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* filter chips (visual only) */
+.used .filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.used .chip {
+  font-family: var(--font-semi);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: 14px;
+  padding: 9px 18px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  border-radius: 40px;
+  color: var(--ink-3);
+}
+
+.used .chip.active {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+/* card grid */
+.used .cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.used .card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: .2s;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.used .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 12%);
+  border-color: #d6d3cb;
+}
+
+/* image / placeholder — dark fallback when no authored image */
+.used .card .ph {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--ink-2);
+}
+
+.used .card .ph picture,
+.used .card .ph img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.used .card .badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 3px;
+}
+
+.used .card .fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 92%);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.used .card .fav:hover {
+  background: var(--white);
+  transform: scale(1.08);
+}
+
+.used .card .fav svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--ink);
+  fill: none;
+  stroke-width: 1.9;
+}
+
+.used .card .body {
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.used .card h3 {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 23px;
+  line-height: 1;
+  letter-spacing: .01em;
+  margin: 0 0 12px;
+}
+
+.used .card .specs {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  color: var(--steel);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.used .card .specs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.used .card .specs svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--steel);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.used .card .foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.used .card .price {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.used .card .price small {
+  display: block;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* "Details" — styled text link, not a button */
+.used .card .view {
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+}
+
+.used .card:hover .view {
+  color: var(--yellow-deep);
+}
+
+/* footer button */
+.used .used-foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+}
+
+@media (width <= 1140px) {
+  .used .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 680px) {
+  .used {
+    padding: 60px 0;
+  }
+
+  .used .sec-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .used .cards {
+    grid-template-columns: 1fr;
+  }
+}

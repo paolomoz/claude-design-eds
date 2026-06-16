@@ -1,0 +1,156 @@
+<style>
+  /* ===== Wheeler header (static fragment) ===== */
+  header.header { display: block; }
+
+  /* utility bar */
+  .utility { background: var(--ink); color: #cfcdc7; font-size: 13px; }
+  .utility .wrap { display: flex; align-items: center; justify-content: space-between; height: 38px; }
+  .utility a { display: inline-flex; align-items: center; gap: 7px; letter-spacing: 0.03em; white-space: nowrap; }
+  .utility .u-left { display: flex; gap: 22px; }
+  .utility .u-right { display: flex; gap: 22px; }
+  .utility a:hover { color: var(--yellow); }
+  .utility svg { width: 15px; height: 15px; stroke: currentcolor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .utility .pill { color: var(--yellow); font-weight: 600; }
+
+  /* sticky masthead */
+  .site-header { position: sticky; top: 0; z-index: 60; background: #fff; border-bottom: 1px solid var(--line); }
+  .masthead { display: flex; align-items: center; gap: 26px; height: 84px; }
+  .logo { display: flex; align-items: center; flex-shrink: 0; }
+  .logo .mark { font-family: var(--font-cond); font-weight: 700; font-size: 34px; letter-spacing: 0.02em; color: var(--ink); text-transform: uppercase; line-height: 1; }
+  .logo .cat { display: inline-flex; align-items: center; background: var(--ink); color: #fff; font-family: var(--font-cond); font-weight: 700; font-size: 18px; letter-spacing: 0.14em; padding: 5px 9px 4px; margin-left: 10px; position: relative; }
+  .logo .cat::after { content: ""; position: absolute; right: -1px; bottom: -1px; border-left: 13px solid transparent; border-bottom: 13px solid var(--yellow); }
+  .search { flex: 1; display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1.5px solid var(--line); border-radius: 3px; padding: 0 14px; height: 46px; max-width: 430px; }
+  .search input { border: none; background: transparent; width: 100%; font-family: var(--font-body); font-size: 16px; outline: none; color: var(--ink); }
+  .search input::placeholder { color: #9b9890; }
+  .search svg { width: 19px; height: 19px; stroke: #8a877f; fill: none; stroke-width: 2; }
+  .mast-cta { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+  .iconbtn { width: 46px; height: 46px; display: grid; place-items: center; border: 1.5px solid var(--line); border-radius: 3px; color: var(--ink); background: #fff; cursor: pointer; transition: 0.15s; }
+  .iconbtn:hover { background: var(--yellow); border-color: var(--yellow); }
+  .iconbtn svg { width: 22px; height: 22px; stroke: currentcolor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .phone-cta { display: inline-flex; flex-direction: column; line-height: 1.05; padding-left: 8px; }
+  .phone-cta .l { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); font-weight: 600; }
+  .phone-cta .n { font-family: var(--font-cond); font-weight: 700; font-size: 23px; color: var(--ink); }
+
+  /* primary nav (black bar) */
+  nav.primary { background: var(--ink); }
+  nav.primary .wrap { display: flex; align-items: stretch; }
+  nav.primary ul { list-style: none; display: flex; margin: 0; padding: 0; flex-wrap: wrap; }
+  nav.primary a { display: flex; align-items: center; height: 50px; padding: 0 18px; color: #fff; font-family: var(--font-semi); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 15px; border-right: 1px solid rgb(255 255 255 / 7%); position: relative; transition: 0.15s; }
+  nav.primary li:first-child a { border-left: 1px solid rgb(255 255 255 / 7%); }
+  nav.primary a:hover { background: var(--yellow); color: var(--ink); }
+  nav.primary a.strong { color: var(--yellow); }
+  nav.primary a.strong:hover { color: var(--ink); }
+
+  .menu-toggle { display: none; }
+
+  /* mobile menu — CSS checkbox hack (fragments cannot run JS) */
+  .mnav-toggle { position: absolute; opacity: 0; pointer-events: none; }
+  #mnav { position: fixed; inset: 0; z-index: 200; opacity: 0; pointer-events: none; transition: 0.25s; }
+  #mnav .mnav-scrim { position: absolute; inset: 0; background: rgb(8 8 8 / 60%); }
+  #mnav .panel { position: absolute; top: 0; right: 0; height: 100%; width: min(340px, 86vw); background: var(--ink); transform: translateX(100%); transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1); padding: 24px; overflow-y: auto; }
+  .mnav-toggle:checked ~ #mnav { opacity: 1; pointer-events: auto; }
+  .mnav-toggle:checked ~ #mnav .panel { transform: none; }
+  #mnav .mhead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; position: relative; z-index: 2; }
+  #mnav .mhead .x { width: 44px; height: 44px; display: grid; place-items: center; color: #fff; border: 1px solid rgb(255 255 255 / 20%); border-radius: 4px; cursor: pointer; }
+  #mnav .msearch { display: flex; align-items: center; gap: 10px; background: #1f1f1d; border-radius: 4px; padding: 0 14px; height: 48px; margin-bottom: 20px; position: relative; z-index: 2; }
+  #mnav .msearch input { background: transparent; border: none; color: #fff; outline: none; width: 100%; font-size: 16px; font-family: var(--font-body); }
+  #mnav .msearch svg { width: 18px; height: 18px; stroke: #888; fill: none; stroke-width: 2; }
+  #mnav a.ml { display: block; color: #fff; font-family: var(--font-cond); font-weight: 700; text-transform: uppercase; font-size: 21px; letter-spacing: 0.02em; padding: 13px 0; border-bottom: 1px solid rgb(255 255 255 / 9%); position: relative; z-index: 2; }
+  #mnav a.ml.y { color: var(--yellow); }
+  #mnav .mphone { margin-top: 22px; display: flex; align-items: center; gap: 10px; background: var(--yellow); color: var(--ink); justify-content: center; height: 52px; font-family: var(--font-cond); font-weight: 700; font-size: 22px; border-radius: 3px; position: relative; z-index: 2; }
+
+  @media (max-width: 960px) {
+    nav.primary, .search, .phone-cta { display: none; }
+    .menu-toggle { display: grid; }
+    .masthead { height: 72px; gap: 16px; }
+    .mast-cta { gap: 6px; }
+  }
+
+  @media (max-width: 680px) {
+    .utility .u-left a:not(.pill) { display: none; }
+    .logo .mark { font-size: 27px; }
+    .logo .cat { font-size: 15px; }
+  }
+</style>
+
+<input type="checkbox" id="mnav-toggle" class="mnav-toggle" aria-hidden="true" />
+
+<!-- utility bar -->
+<div class="utility">
+  <div class="wrap">
+    <div class="u-left">
+      <a href="#" class="pill"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z" /><circle cx="12" cy="10" r="2.6" /></svg> Salt Lake City, UT</a>
+      <a href="#">Find a Branch</a>
+      <a href="#">Careers</a>
+    </div>
+    <div class="u-right">
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h12" /></svg> Cat® Connect</a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg> Live Chat</a>
+      <a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg> Sign In</a>
+    </div>
+  </div>
+</div>
+
+<!-- masthead -->
+<div class="site-header">
+  <div class="wrap">
+    <div class="masthead">
+      <a href="/" class="logo" aria-label="Wheeler home">
+        <span class="mark">Wheeler</span>
+        <span class="cat">CAT</span>
+      </a>
+      <div class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
+        <input type="text" placeholder="What can we help you find?" aria-label="Search" />
+      </div>
+      <div class="mast-cta">
+        <a class="iconbtn" href="tel:8014363672" aria-label="Call"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg></a>
+        <div class="phone-cta">
+          <span class="l">Call us today</span>
+          <span class="n">801-436-3672</span>
+        </div>
+        <label class="iconbtn menu-toggle" for="mnav-toggle" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg></label>
+      </div>
+    </div>
+  </div>
+  <nav class="primary">
+    <div class="wrap">
+      <ul>
+        <li><a href="#" class="strong">New Equipment</a></li>
+        <li><a href="#used" class="strong">Used Equipment</a></li>
+        <li><a href="#">Rent Now</a></li>
+        <li><a href="#">Order Parts</a></li>
+        <li><a href="#service">Request Service</a></li>
+        <li><a href="#">Power Systems</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Training</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<!-- mobile menu -->
+<div id="mnav">
+  <label class="mnav-scrim" for="mnav-toggle" aria-label="Close menu"></label>
+  <div class="panel">
+    <div class="mhead">
+      <a href="/" class="logo"><span class="mark" style="color:#fff">Wheeler</span><span class="cat">CAT</span></a>
+      <label class="x" for="mnav-toggle" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg></label>
+    </div>
+    <div class="msearch">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
+      <input type="text" placeholder="What can we help you find?" />
+    </div>
+    <a href="#" class="ml y">New Equipment</a>
+    <a href="#used" class="ml y">Used Equipment</a>
+    <a href="#" class="ml">Rent Now</a>
+    <a href="#" class="ml">Order Parts</a>
+    <a href="#service" class="ml">Request Service</a>
+    <a href="#" class="ml">Power Systems</a>
+    <a href="#" class="ml">Technology</a>
+    <a href="#" class="ml">Training</a>
+    <a href="#" class="ml">Support</a>
+    <a href="tel:8014363672" class="mphone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg> 801-436-3672</a>
+  </div>
+</div>

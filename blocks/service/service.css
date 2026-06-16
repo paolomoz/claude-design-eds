@@ -1,0 +1,133 @@
+/* Service — 2-column copy + overlapping image gallery with "combined years" badge.
+   Lifted from prototype `.service` rules; scoped under .service. Mobile-first. */
+
+.service {
+  padding: 60px 0;
+}
+
+.service .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* ----- Copy ----- */
+.service .copy .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+  color: var(--yellow-deep);
+}
+
+.service .copy h2 {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  font-size: clamp(32px, 3.6vw, 48px);
+  margin: 14px 0 18px;
+}
+
+.service .copy p {
+  color: var(--steel);
+  font-size: 17.5px;
+  margin: 0 0 28px;
+  max-width: 48ch;
+}
+
+.service .cta-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ----- Gallery ----- */
+.service .gallery {
+  position: relative;
+  min-height: 360px;
+  margin-top: 10px;
+}
+
+.service .gallery .slot {
+  position: absolute;
+  box-shadow: 0 24px 50px rgb(0 0 0 / 18%);
+  border: 6px solid var(--white);
+
+  /* Dark placeholder fallback when no image is authored. */
+  background: var(--ink-2);
+  overflow: hidden;
+}
+
+.service .gallery .slot picture,
+.service .gallery .slot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service .g1 {
+  top: 0;
+  left: 0;
+  width: 74%;
+  height: 300px;
+  z-index: 1;
+}
+
+.service .g2 {
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  height: 280px;
+  z-index: 2;
+}
+
+.service .badge-yrs {
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  z-index: 3;
+  background: var(--yellow);
+  color: var(--ink);
+  padding: 16px 20px;
+  width: 150px;
+}
+
+.service .badge-yrs b {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 0.9;
+  display: block;
+}
+
+.service .badge-yrs span {
+  font-family: var(--font-semi);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+}
+
+/* ----- Responsive: 2-col layout from 960px up (prototype collapses below 960) ----- */
+@media (width >= 960px) {
+  .service {
+    padding: 84px 0;
+  }
+
+  .service .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .service .gallery {
+    min-height: 440px;
+    margin-top: 0;
+  }
+}

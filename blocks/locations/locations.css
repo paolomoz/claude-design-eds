@@ -1,0 +1,73 @@
+/* Locations — lifted from prototype .locations; scoped under .locations block.
+   Yellow CTA band with decorative ::after ring. Mobile-first: 1 column → 2 @900px. */
+
+.locations {
+  background: var(--yellow);
+  color: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.locations::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 340px;
+  height: 340px;
+  border: 36px solid rgb(14 14 14 / 6%);
+  border-radius: 50%;
+}
+
+.locations .wrap {
+  position: relative;
+  z-index: 2;
+  padding: 70px 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.locations .eyebrow {
+  font-family: var(--font-semi);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+  display: block;
+}
+
+.locations h2 {
+  font-family: var(--font-cond);
+  font-size: clamp(34px, 4.2vw, 58px);
+  margin: 14px 0;
+}
+
+.locations p {
+  font-size: 18px;
+  margin: 0 0 26px;
+  max-width: 42ch;
+}
+
+.locations .city-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.locations .city {
+  background: rgb(14 14 14 / 8%);
+  border: 1.5px solid rgb(14 14 14 / 18%);
+  font-family: var(--font-semi);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 14px;
+  padding: 8px 15px;
+  border-radius: 40px;
+}
+
+@media (width >= 900px) {
+  .locations .wrap { grid-template-columns: 1.1fr 1fr; }
+}

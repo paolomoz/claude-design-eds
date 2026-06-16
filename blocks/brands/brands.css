@@ -1,0 +1,61 @@
+/* Brands — lifted from prototype .brands; scoped under .brands block.
+   Mobile-first: 2-up grid → 3-up @600px → 6-up @900px. */
+
+.brands {
+  background: #fff;
+  text-align: center;
+  padding: 64px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.brands h2 {
+  font-family: var(--font-cond);
+  font-size: clamp(26px, 3vw, 38px);
+  margin: 0 0 6px;
+}
+
+.brands p {
+  color: var(--steel);
+  margin: 0 0 38px;
+}
+
+.brands .brand-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.brands .brand-tile {
+  height: 74px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  color: #a8a59d;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 20px;
+  background: var(--paper);
+  transition: 0.15s;
+}
+
+.brands .brand-tile:hover {
+  color: var(--ink);
+  border-color: #cfccc4;
+}
+
+@media (width >= 600px) {
+  .brands .brand-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (width >= 900px) {
+  .brands .brand-row { grid-template-columns: repeat(6, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brands .brand-tile { transition: none; }
+}
