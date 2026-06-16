@@ -13,10 +13,8 @@
 /* header */
 .taproom .taproom-head {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: clamp(34px, 5vw, 56px);
 }
 

@@ -23,6 +23,11 @@ async function loadStaticFragment(el, name) {
     const resp = await fetch(path);
     if (!resp.ok) return;
     const html = await resp.text();
+    // Tag the host element so the fragment's `header.header` / `footer.footer`
+    // root selectors match. (decorateHeader sets the header class; the footer's
+    // was previously set by utils/footer.js, which the static-fragment flow
+    // drops — so set it here.)
+    el.className = name;
     el.innerHTML = html;
   } catch (e) {
     // Silent fail — page renders without header/footer

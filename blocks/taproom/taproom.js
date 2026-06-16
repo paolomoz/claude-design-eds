@@ -34,7 +34,7 @@ export default async function decorate(block) {
   const html = (cell) => (cell ? cell.innerHTML.trim() : '');
 
   const eyebrow = text(rows[0]);
-  const headline = text(rows[1]);
+  const headline = html(rows[1]?.firstElementChild); // keep an authored <br>
 
   // row 2: [ label | address ]
   const infoRow = rows[2];

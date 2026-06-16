@@ -80,7 +80,10 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 400;
+
+  /* Anton ships only a 400 weight; the prototype renders headings at the
+     browser-default heading bold (700, faux-bold). Match that. */
+  font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.01em;
 }
