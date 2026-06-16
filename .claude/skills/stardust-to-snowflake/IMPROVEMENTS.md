@@ -102,7 +102,12 @@ The dashboard is a single React component tree with `accounts` state lifted to t
 - **Verify the interactivity in QA**, not just the static render: Playwright-drive each control (click a card, click a filter, submit a bad amount → expect the error, submit a valid one → assert the balance/confirmation changed). This run asserted `$4,862.13 → $3,862.13` after a `$1,000` transfer.
 **Proposed:** add an "Interactive blocks" subsection to Step 8 — keyed rows for heterogeneous data; local state + targeted re-render; and a QA step that drives the controls and asserts state changes (extends #17).
 
-**Implemented (#27–28):** #27 folded into the #24 pre-render recipe (Step 1); #28 added as an "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA.
+### 29. 🟠 Multi-view SPA → multiple EDS pages; per-page chrome via `header: off` + a nav block
+A prototype SPA can have several views with **different chrome** (Evergreen: a marketing home with a full nav + "Sign on", and a signed-in dashboard with a minimal utility bar + "Sign off"). Pre-render each view (#27) and convert each to its own EDS page (`/…/test-5`, `/…/test-5-home`). But `postlcp.js` loads ONE shared `fragments/header.html` for the whole site, so two different headers can't both be the fragment. Resolution: keep the most common header as the fragment (here: the dashboard's), and on the *other* page set **`header: off`** (a `metadata` block: `header | off`) and render that page's header as a **block** (`site-nav`) at the top of its content. The footer was identical across views, so the footer fragment is shared. Link the views with real hrefs (the home "Sign on" → the dashboard page).
+- Harness caveat: the `metadata` block is consumed by the delivery pipeline (→ head `<meta>`), but the local harness has no pipeline, so it (a) doesn't apply `header: off` and (b) tries to load `metadata` as a block → a stray "Error" box. Build the harness with the `<header>` element stripped to preview header-off pages; both are non-issues live (verified: `<meta name="header" content="off">`, no error box, only `site-nav` renders).
+**Proposed:** add a "Multi-view / multi-page" note to Step 9 — one EDS page per view; shared chrome stays a fragment; per-page chrome = `header: off`/`footer: off` metadata + a nav block; link views with hrefs.
+
+**Implemented (#27–29):** #27 folded into the #24 pre-render recipe (Step 1); #28 added as an "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA; #29 added as a "Multi-view / multi-page" note in Step 9.
 
 ---
 
