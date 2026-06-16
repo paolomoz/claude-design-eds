@@ -606,6 +606,7 @@ No `<!DOCTYPE>`, no `<html>`, no `<body>` wrapper. Just the raw `<style>` + DOM.
 1. Copy the header DOM (utility bar + topnav) from any prototype — it's shared across all pages.
 2. Copy the footer DOM from any prototype — also shared.
 3. For each fragment, collect the relevant CSS rules from the prototype's `_tokens.css` and any page `<style>` blocks. Include all responsive breakpoints.
+3b. **Lift the chrome element's OWN box styles (#31)** — `margin`, `padding`, `border` set on the prototype's `<header>`/`<footer>` element itself — onto `header.header` / `footer.footer`, not just the inner content styles. The fragment injects into the EDS `<header>`/`<footer>`, which sit OUTSIDE `<main>`, so the gap between the last section and the footer comes entirely from the footer's own top margin (e.g. `footer { margin-top: 72px }`). Easy to miss: the inner content looks right while the footer sits flush against the last block.
 4. Scope the CSS inside a `<style>` tag at the top of the fragment file.
 5. Rewrite relative asset paths (e.g. `../assets/logo.png`) to fully-qualified URLs on the code origin: `https://main--<repo>--<owner>.aem.page/path/to/asset`.
 6. Rewrite relative link hrefs (e.g. `donate.html`) to root-relative paths (e.g. `/donate`) matching how EDS serves pages.

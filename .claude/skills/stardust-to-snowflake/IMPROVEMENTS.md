@@ -111,7 +111,11 @@ A prototype SPA can have several views with **different chrome** (Evergreen: a m
 Found by eyeballing the deployed home vs the prototype — the serif headings were subtly off. The prototype's Google Fonts URL was `Source+Serif+4:opsz,wght@8..60,400;…` — it uses the **optical-size axis**. The default `@fontsource-variable/<name>` file (`<name>-latin-wght-normal.woff2`) is **wght-only** (fixed optical size), so headings render at one optical master and look heavier/different at large sizes. Fontsource also ships an **opsz** file (`<name>-latin-opsz-normal.woff2`, ~2× the bytes) that carries both `wght` and `opsz`; with `font-optical-sizing: auto` (the CSS default) the browser tracks `opsz` to the font-size and headings match. After the swap, the heading close-ups were identical (same family/weight/size/optical-sizing).
 **Proposed:** add to Step 4 — check the prototype's font URL for an `opsz` axis; if present, self-host the `…-opsz-normal.woff2` fontsource file (not the wght-only one) and rely on `font-optical-sizing: auto`. Generally: match the exact axes the prototype loads.
 
-**Implemented (#27–30):** #27 → #24 pre-render recipe (Step 1); #28 → "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA; #29 → "Multi-view / multi-page" note in Step 9; #30 → Step 4 (opsz-axis fonts).
+### 31. 🟠 Lift the chrome element's own margins into the static fragment
+The footer sat flush against the last block on both Evergreen pages. Cause: the prototype's footer carried its own `margin-top: 72px` (an inline/own style on the `<footer>` element itself), and I'd lifted the footer's *inner* styles but not the **element-level** margin. Static chrome fragments inject into the EDS `<header>`/`<footer>`, which sit OUTSIDE `<main>` — so the spacing between the last section and the footer comes entirely from the footer's own top margin (the last block usually has none to spare). Same applies to a header that has a bottom margin/border. After adding `margin-top: 72px` to `footer.footer`, both pages got the correct 72px gap.
+**Proposed:** add to Step 6 — when extracting header/footer, lift the prototype chrome element's OWN box styles (margin, padding, border) onto `header.header` / `footer.footer`, not just the inner content styles. Easy to miss because the inner content looks right; only the gap to `<main>` is wrong.
+
+**Implemented (#27–31):** #27 → Step 1; #28 → Step 8 + Local QA; #29 → Step 9; #30 → Step 4; #31 → Step 6 (lift chrome element's own margins).
 
 ---
 
