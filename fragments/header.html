@@ -1,0 +1,54 @@
+<style>
+  /* ===== Evergreen Bank header (signed-in utility bar) ===== */
+  header.header { display: block; }
+
+  .eb-topbar { background: var(--eb-primary-deep); color: #fff; }
+  .eb-topbar .eb-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .eb-logo { display: inline-flex; align-items: center; gap: 9px; }
+  .eb-logo .name {
+    font-family: var(--eb-font-display);
+    font-weight: 700;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .eb-logo .name .light { font-weight: 400; }
+  .eb-topbar .util { display: flex; align-items: center; gap: 22px; }
+  .eb-topbar .util .item { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.85; }
+  .eb-topbar .util svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .eb-topbar .util .signoff {
+    background: var(--eb-accent);
+    color: var(--eb-ink);
+    border: none;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 18px;
+  }
+
+  @media (max-width: 640px) {
+    .eb-topbar .util .item { display: none; }
+  }
+</style>
+
+<div class="eb-topbar">
+  <div class="eb-container">
+    <a class="eb-logo" href="/" aria-label="Evergreen Bank home">
+      <svg width="26" height="26" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="var(--eb-primary)" /><path d="M14 5 L21 16 H16.5 L20 22 H8 L11.5 16 H7 Z" fill="var(--eb-accent)" /></svg>
+      <span class="name">Evergreen<span class="light"> Bank</span></span>
+    </a>
+    <div class="util">
+      <span class="item"><svg viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></svg> Locations</span>
+      <span class="item">Help</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg>
+      <button class="signoff" type="button">Sign off</button>
+    </div>
+  </div>
+</div>

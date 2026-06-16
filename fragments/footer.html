@@ -1,0 +1,73 @@
+<style>
+  /* ===== Evergreen Bank footer ===== */
+  footer.footer {
+    display: block;
+    background: var(--eb-cream);
+    border-top: 1px solid var(--eb-line);
+  }
+  footer .f-inner { padding: 48px 32px 36px; }
+  footer .f-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  footer .f-brand { display: flex; flex-direction: column; gap: 14px; }
+  footer .eb-logo { display: inline-flex; align-items: center; gap: 9px; }
+  footer .eb-logo .name {
+    font-family: var(--eb-font-display);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--eb-primary-deep);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  footer .eb-logo .name .light { font-weight: 400; }
+  footer .f-brand p { font-size: 13px; color: var(--eb-ink-faint); max-width: 280px; }
+  footer .f-col { display: flex; flex-direction: column; gap: 10px; }
+  footer .f-col .h { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--eb-ink-faint); }
+  footer .f-col span:not(.h) { font-size: 13.5px; color: var(--eb-ink-soft); }
+  footer .f-legal {
+    border-top: 1px solid var(--eb-line);
+    margin-top: 36px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--eb-ink-faint);
+  }
+  footer .f-legal .links { display: flex; gap: 18px; }
+
+  @media (max-width: 760px) {
+    footer .f-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<div class="f-inner eb-container">
+  <div class="f-grid">
+    <div class="f-brand">
+      <span class="eb-logo">
+        <svg width="22" height="22" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="var(--eb-primary)" /><path d="M14 5 L21 16 H16.5 L20 22 H8 L11.5 16 H7 Z" fill="var(--eb-accent)" /></svg>
+        <span class="name">Evergreen<span class="light"> Bank</span></span>
+      </span>
+      <p>Banking that grows with you. Member FDIC. Equal Housing Lender.</p>
+    </div>
+    <div class="f-col">
+      <span class="h">Products</span>
+      <span>Checking</span><span>Savings &amp; CDs</span><span>Credit cards</span><span>Mortgages</span><span>Auto loans</span>
+    </div>
+    <div class="f-col">
+      <span class="h">Support</span>
+      <span>Help center</span><span>Contact us</span><span>Report fraud</span><span>Accessibility</span>
+    </div>
+    <div class="f-col">
+      <span class="h">Company</span>
+      <span>About Evergreen</span><span>Careers</span><span>Community impact</span><span>Newsroom</span>
+    </div>
+  </div>
+  <div class="f-legal">
+    <span>© 2026 Evergreen Bank, N.A. All rights reserved. (Fictional brand — design prototype.)</span>
+    <span class="links"><span>Privacy</span><span>Security</span><span>Terms of use</span></span>
+  </div>
+</div>
