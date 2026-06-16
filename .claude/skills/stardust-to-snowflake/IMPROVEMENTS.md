@@ -23,6 +23,39 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
   semantic `<section class="…">` — the **closest** of the samples to what the
   skill expects.
 
+### test-2 — Festool (`samples/Festool`)
+- Branch: `snowflake-blocks-test-2` (off the **improved** `snowflake-blocks`)
+- DA: `https://da.live/#/paolomoz/claude-design-eds/snowflake-blocks/test-2`
+- Preview: `https://snowflake-blocks-test-2--claude-design-eds--paolomoz.aem.page/snowflake-blocks/test-2`
+- Outcome: ✅ faithful end-to-end render (header, hero, new-products, brand-band,
+  discover, service-band, footer). 5 blocks + 2 chrome fragments.
+- Prototype type: single-file HTML with an **external** `.css`, semantic
+  `<section>`, green-accent brand, reuses **Barlow** (body) + Barlow Condensed
+  (display), chevron text-links instead of chunky buttons.
+- **Skill fixes validated:** #13 held — all 5 parallel-built blocks reproduced
+  the `.wrap` max-width container (no full-width bug; the agent briefs now state
+  the rule). #4 held — no footer "Error" box (runtime port carried the lazy.js
+  fix). Body-fragment (#7), non-variable fonts (#11), image-slot fallbacks (#2),
+  headless deploy (#10) all worked from the skill as written.
+- **New findings surfaced:** #14, #15, #16 below.
+
+---
+
+## Findings (test-2)
+
+### 14. 🔴 Scroll-reveal animations rely on JS — never ship the `opacity:0`
+Festool sections carry a `.reveal` class (`opacity:0; transform:translateY()`) that an IntersectionObserver flips to `.in` on scroll. That observer lives in the prototype's inline `<script>`, which **does not run** in EDS (block JS rebuilds the DOM; the prototype script is discarded). If a block lifts `.reveal { opacity:0 }` verbatim, the content is **permanently invisible**.
+**Fix applied (test-2):** drop the reveal entirely — render content visible; keep only hover transitions. (Optional: a per-block IntersectionObserver could re-add a reveal, but it wasn't worth it.)
+**Proposed:** add to Step 7 brief + a checklist line + an anti-pattern: "if the prototype hides content behind a JS-toggled reveal class, render it visible — never ship `opacity:0` without an observer." Generalizes #5 (fragments can't run JS) to **block** content.
+
+### 15. 🟠 Block name must not collide with reserved EDS classes
+Festool's two main sections both use `class="section"` (`section` + `section tinted`). `section` is a **reserved EDS class** (the section wrapper becomes `<div class="section">`), and `default-content` / `block-content` are reserved too. Naming a block `section` would break decoration. Had to rename to semantic block names (`new-products`, `discover`) and apply the `tinted` treatment as a block variant.
+**Proposed:** add to Step 2 naming rules: "block name = the section's class, EXCEPT when that class is generic/reserved (`section`, `default-content`, `block-content`, `wrap`, `button`) — then derive a semantic name from the section's `data-screen-label`/intent."
+
+### 16. 🟠 Secure `.env` (DA token) on the PARENT branch, not per-test
+The DA token lives in repo `.env`. Test subbranches branch from `snowflake-blocks`, so if `.gitignore` doesn't ignore `.env` on the **parent**, every new test branch re-exposes the token (had to re-add the ignore on both test-1 and test-2). Fixed once on `snowflake-blocks` so all subbranches inherit it. Also gitignore `qa/` (the local QA harness) and keep `samples/` out of commits.
+**Proposed:** add an early skill step / bootstrap line: "ensure `.gitignore` excludes `.env`, `.env.*`, `qa/` before the first commit; the token must never enter git." Pair with the existing token-expiry caveat (dev tokens ~24h; a 401 with empty body = expired → refresh).
+
 ---
 
 ## Findings (test-1)
