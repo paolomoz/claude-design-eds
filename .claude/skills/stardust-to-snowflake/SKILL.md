@@ -412,6 +412,13 @@ curl -sSL -o styles/fonts/<name>-italic-variable.woff2 \
 
 Latin-only variable woff2 is typically 30–60 KB per file, weights 100–900 included.
 
+**Match the axes the prototype loads — incl. optical size (#30).** Check the prototype's Google Fonts `<link>` URL. If it requests an **`opsz`** (optical-size) axis — e.g. `Source+Serif+4:opsz,wght@8..60,400;…` — the default `@fontsource-variable/<name>` file (`<name>-latin-wght-normal.woff2`) is **wght-only** (one fixed optical master) and headings will render subtly off (heavier/different letterforms at large sizes). Fetch the **opsz** file instead (carries both `wght` + `opsz`, ~2× the bytes); `font-optical-sizing: auto` (the CSS default) then tracks the size:
+```bash
+curl -sSL -o styles/fonts/<name>-opsz.woff2 \
+  "https://cdn.jsdelivr.net/npm/@fontsource-variable/<name>@latest/files/<name>-latin-opsz-normal.woff2"
+```
+More generally: self-host the variant whose axes match what the prototype loaded (wght-only vs opsz; italic if used).
+
 **Non-variable fonts (#11).** Many Google fonts ship only as named static weights — no variable axis (e.g. **Barlow**, Barlow Condensed, Anton). For these, `@fontsource-variable/<name>` does NOT exist; use the **static** `@fontsource/<name>` package and fetch each weight you actually use:
 ```bash
 curl -sSL -o styles/fonts/<name>-700.woff2 \

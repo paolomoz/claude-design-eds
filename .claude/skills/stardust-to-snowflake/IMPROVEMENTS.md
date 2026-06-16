@@ -107,7 +107,11 @@ A prototype SPA can have several views with **different chrome** (Evergreen: a m
 - Harness caveat: the `metadata` block is consumed by the delivery pipeline (→ head `<meta>`), but the local harness has no pipeline, so it (a) doesn't apply `header: off` and (b) tries to load `metadata` as a block → a stray "Error" box. Build the harness with the `<header>` element stripped to preview header-off pages; both are non-issues live (verified: `<meta name="header" content="off">`, no error box, only `site-nav` renders).
 **Proposed:** add a "Multi-view / multi-page" note to Step 9 — one EDS page per view; shared chrome stays a fragment; per-page chrome = `header: off`/`footer: off` metadata + a nav block; link views with hrefs.
 
-**Implemented (#27–29):** #27 folded into the #24 pre-render recipe (Step 1); #28 added as an "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA; #29 added as a "Multi-view / multi-page" note in Step 9.
+### 30. 🟠 Optical-size (`opsz`) fonts: self-host the opsz variant, not the wght-only file
+Found by eyeballing the deployed home vs the prototype — the serif headings were subtly off. The prototype's Google Fonts URL was `Source+Serif+4:opsz,wght@8..60,400;…` — it uses the **optical-size axis**. The default `@fontsource-variable/<name>` file (`<name>-latin-wght-normal.woff2`) is **wght-only** (fixed optical size), so headings render at one optical master and look heavier/different at large sizes. Fontsource also ships an **opsz** file (`<name>-latin-opsz-normal.woff2`, ~2× the bytes) that carries both `wght` and `opsz`; with `font-optical-sizing: auto` (the CSS default) the browser tracks `opsz` to the font-size and headings match. After the swap, the heading close-ups were identical (same family/weight/size/optical-sizing).
+**Proposed:** add to Step 4 — check the prototype's font URL for an `opsz` axis; if present, self-host the `…-opsz-normal.woff2` fontsource file (not the wght-only one) and rely on `font-optical-sizing: auto`. Generally: match the exact axes the prototype loads.
+
+**Implemented (#27–30):** #27 → #24 pre-render recipe (Step 1); #28 → "Interactive blocks" note in Step 8 + a QA-drives-the-controls line in Local QA; #29 → "Multi-view / multi-page" note in Step 9; #30 → Step 4 (opsz-axis fonts).
 
 ---
 
