@@ -1,0 +1,123 @@
+/* ============================================================
+   Discover — prototype <section class="section tinted">
+   Rules lifted verbatim from festool-redesign.css and scoped
+   under .discover. The tinted treatment (--surface background)
+   is applied to the block root. Tokens, .wrap, .kicker and
+   .chev-link come from styles/styles.css (not redefined).
+   ============================================================ */
+
+.discover {
+  padding: var(--section-pad) 0;
+  background: var(--surface);
+}
+
+.discover .section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: calc(var(--gap) * 1.8);
+}
+
+.discover .section-head h2 { font-size: clamp(36px, 3.4vw, 52px); }
+
+.discover .section-head .sub {
+  color: var(--text-dim);
+  margin: 10px 0 0;
+  max-width: 64ch;
+}
+
+/* ---------- discover grid ---------- */
+.discover .discover-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--gap);
+}
+
+.discover .discover-card {
+  grid-column: span 2;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.discover .discover-card:hover {
+  transform: translateY(-4px);
+  border-color: transparent;
+  box-shadow: 0 18px 44px rgb(24 34 44 / 14%);
+}
+
+.discover .discover-card.feature { grid-column: span 3; }
+
+.discover .discover-card picture,
+.discover .discover-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.discover .discover-card.feature picture,
+.discover .discover-card.feature img { height: 300px; }
+
+/* empty image cell → prototype --surface placeholder box, fixed media heights */
+.discover .discover-card .media-empty {
+  width: 100%;
+  height: 220px;
+  background: var(--surface);
+}
+
+.discover .discover-card.feature .media-empty { height: 300px; }
+
+.discover .discover-card .body {
+  padding: 22px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.discover .discover-card h3 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.discover .discover-card p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.discover .discover-card .chev-link {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 15px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discover .discover-card { transition: none; }
+}
+
+/* responsive: 6-col → stacked. feature + standard cards become full width */
+@media (width <= 900px) {
+  .discover .discover-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .discover .discover-card,
+  .discover .discover-card.feature { grid-column: span 2; }
+}
+
+@media (width <= 600px) {
+  .discover .discover-grid { grid-template-columns: 1fr; }
+
+  .discover .discover-card,
+  .discover .discover-card.feature { grid-column: span 1; }
+
+  .discover .section-head {
+    flex-direction: column;
+    align-items: start;
+    gap: 16px;
+  }
+}

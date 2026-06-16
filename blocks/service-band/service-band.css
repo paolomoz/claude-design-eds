@@ -1,0 +1,93 @@
+/* ==========================================================================
+   service-band block — light --surface band, 2-col grid (disc | copy).
+   Rules lifted verbatim from the prototype (.service-band) and scoped to
+   .service-band. The prototype's .reveal scroll animation is dropped:
+   content renders visible by default (no opacity:0).
+   ========================================================================== */
+
+.service-band { background: var(--surface); }
+
+.service-band .wrap {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: calc(var(--gap) * 3);
+  align-items: center;
+  padding-top: var(--section-pad);
+  padding-bottom: var(--section-pad);
+}
+
+.service-band .service-disc {
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  box-shadow: 0 24px 64px rgb(24 34 44 / 18%);
+}
+
+.service-band .service-disc .l1 {
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.service-band .service-disc .l2 {
+  font-weight: 700;
+  font-size: 58px;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+}
+
+.service-band .service-copy h2 {
+  font-size: clamp(38px, 3.6vw, 54px);
+  margin-bottom: 16px;
+}
+
+.service-band .service-copy p {
+  color: var(--text-dim);
+  font-size: 18px;
+  max-width: 56ch;
+  margin: 0 0 30px;
+}
+
+.service-band .service-points {
+  display: flex;
+  gap: calc(var(--gap) * 1.6);
+  margin: 0 0 34px;
+  padding: 0;
+  list-style: none;
+}
+
+.service-band .service-points li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-band .service-points .big {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.service-band .service-points .small {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+/* stack on small screens */
+@media (width <= 900px) {
+  .service-band .wrap {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: left;
+  }
+}

@@ -1,0 +1,67 @@
+/* brand-band — dark brand statement band, full-width bleed, content within max-width.
+   Rules lifted verbatim from the Festool prototype and scoped under .brand-band. */
+
+.brand-band {
+  background: var(--ink);
+  color: var(--text-inverse);
+  overflow: hidden;
+}
+
+.brand-band .wrap {
+  display: grid;
+  grid-template-columns: 6fr 5fr;
+  gap: calc(var(--gap) * 2.5);
+  align-items: center;
+  padding-top: var(--section-pad);
+  padding-bottom: var(--section-pad);
+}
+
+.brand-band .years {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+.brand-band h2 {
+  font-size: clamp(44px, 4.4vw, 64px);
+  color: #fff;
+  margin: 16px 0 18px;
+}
+
+.brand-band p {
+  color: var(--text-inverse-dim);
+  font-size: 18px;
+  max-width: 52ch;
+  margin: 0 0 30px;
+}
+
+/* image — real asset or subtle dark placeholder fallback, both 380px tall */
+.brand-band .image-slot,
+.brand-band picture,
+.brand-band img {
+  width: 100%;
+  height: 380px;
+  display: block;
+}
+
+.brand-band img {
+  object-fit: cover;
+}
+
+.brand-band .image-slot {
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, var(--ink-2), var(--ink));
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
+}
+
+/* single column on small screens */
+@media (width <= 700px) {
+  .brand-band .wrap {
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+  }
+}

@@ -1,0 +1,101 @@
+<style>
+  /* ===== Festool footer (static fragment) ===== */
+  footer.footer {
+    display: block;
+    background: var(--ink);
+    color: var(--text-inverse-dim);
+    padding: calc(var(--section-pad) * 0.8) 0 0;
+  }
+
+  footer .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: calc(var(--gap) * 2);
+    padding-bottom: calc(var(--gap) * 2.5);
+  }
+  footer .footer-grid h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-inverse);
+    margin: 0 0 16px;
+  }
+  footer .footer-grid ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  footer .footer-grid a { color: var(--text-inverse-dim); font-size: 15px; transition: color 0.15s ease; }
+  footer .footer-grid a:hover { color: var(--lime); }
+  footer .footer-brand .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 0.10em;
+    color: var(--lime);
+    line-height: 1;
+  }
+  footer .footer-brand p { font-size: 15px; max-width: 36ch; margin: 14px 0 0; }
+
+  footer .footer-legal {
+    border-top: 1px solid rgb(255 255 255 / 10%);
+    padding: 22px 0;
+  }
+  footer .footer-legal .wrap {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  footer .footer-legal a { color: var(--text-inverse-dim); }
+  footer .footer-legal a:hover { color: var(--lime); }
+  footer .footer-legal .copyright { margin-left: auto; }
+
+  @media (max-width: 900px) {
+    footer .footer-grid { grid-template-columns: 1fr 1fr; gap: calc(var(--gap) * 1.5); }
+  }
+  @media (max-width: 600px) {
+    footer .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="wrap footer-grid">
+  <div class="footer-brand">
+    <a class="wordmark" href="/">FESTOOL</a>
+    <p>Passion for high-quality power tools. Tools for professional tradespeople — for the toughest demands.</p>
+  </div>
+  <div>
+    <h4>Power tools</h4>
+    <ul>
+      <li><a href="#">Cordless products</a></li>
+      <li><a href="#">Saws</a></li>
+      <li><a href="#">Dust extractors</a></li>
+      <li><a href="#">Sanders</a></li>
+      <li><a href="#">Routing</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Accessories</h4>
+    <ul>
+      <li><a href="#">Surface preparation</a></li>
+      <li><a href="#">Dust extraction</a></li>
+      <li><a href="#">Routing</a></li>
+      <li><a href="#">Storage and transportation</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">customerservice-int@festool.com</a></li>
+      <li><a href="#">+49 (0) 7024 804 0</a></li>
+      <li><a href="#">To contact page</a></li>
+    </ul>
+  </div>
+</div>
+<div class="footer-legal">
+  <div class="wrap">
+    <a href="#">Privacy</a>
+    <a href="#">Legal notice</a>
+    <a href="#">Terms and conditions</a>
+    <span class="copyright">Redesign concept — not affiliated with Festool GmbH</span>
+  </div>
+</div>
