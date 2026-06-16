@@ -372,7 +372,7 @@ Lock the answers in writing (in `stardust/eds-conversion-log.md` or similar). Th
 Update `styles/styles.css` to the following — and ONLY the following:
 
 - Lift `:root` tokens verbatim from the prototype's `<style>` (colors, fonts, type scale, weights, tracking, layout, motion easing).
-- Document reset (box-sizing, margin reset, scroll-behavior, body font + bg, ::selection, img defaults, button reset).
+- Document reset (box-sizing, margin reset, scroll-behavior, body font + bg, ::selection, img defaults, button reset). **The `img` reset MUST be `img { display: block; max-width: 100%; height: auto; }` (#36).** EDS's media pipeline emits `<img>` with `width`/`height` attributes; without `height: auto` a width constraint stretches the image vertically (a landscape 1920×1258 rendered 677×1258). The bug is invisible on the prototype (raw `<img>`, no attrs) — it only appears post-pipeline.
 - A minimal EDS section scaffold:
   ```css
   main .section { display: block; }
@@ -826,7 +826,7 @@ Without `size-adjust` + `ascent-override` + `descent-override` on a system-font 
 Not every link is a button. Whole-card tile anchors, tel:/mailto: channel values, and styled text links (e.g. wavelength-underlined "How we work →") are NOT buttons. Authors leave these as plain `<a>`; per-block CSS styles them. **The convention is for chips with a clickable boundary; if it's not that, don't apply it.**
 
 **13. Dropping the prototype's max-width container.**
-The prototype wraps section content in a centered max-width container (`.wrap` / `.container`) while the section background bleeds full-width. If your block appends content straight to the block root, the content runs edge-to-edge at wide viewports. **Recreate the container** (`block.replaceChildren(wrap)`). This is the easiest bug to miss because it's invisible at ≤1440px — QA wide (see Local QA). Parallel block agents are especially prone to this: state the rule in each brief.
+The prototype wraps section content in a centered max-width container (`.wrap` / `.container`) while the section background bleeds full-width. If your block appends content straight to the block root, the content runs edge-to-edge at wide viewports. **Recreate the container** (`block.replaceChildren(wrap)`, or a CSS `max-width: var(--maxw); margin: 0 auto; padding: 0 24px` on the content). This is the easiest bug to miss because it's invisible at ≤1440px — QA wide (see Local QA). Parallel block agents are especially prone to this: state the rule in each brief. **The trap is worst on plain-background sections (#37):** agents reliably keep the wrap on full-bleed *banded* blocks (the colored background makes the edge obvious) but drop it on sections whose background is the page background — there the missing constraint is invisible until you measure. EVERY block constrains content to `--maxw`; the only thing that stays full-bleed is a section *background* (e.g. keep the wrap on the inner grid so a hero's wash background still spans the viewport).
 
 **14. Forgetting `<image-slot>` placeholders have no real assets.**
 Claude-design prototypes use `<image-slot>` drop-targets, not `<img>` with real `src`. Don't hard-code a prototype image URL (it 404s) and don't ship a broken `<img>`. Treat the image as an **optional** cell and give the block a CSS background fallback so the empty state still looks right.
@@ -849,7 +849,9 @@ A block that builds its own layout/view wrapper (common for interactive blocks t
 - [ ] **Page begins with a `metadata` block** (#34): real Title (≤60 chars, from the `<h1>`, never a block name) + Description (~155 chars). `header: off` / `footer: off` / `Robots` rows go in the same block when needed.
 - [ ] **Exactly one `<h1>` per page** (#35): the hero/lead headline is `<h1>`; section titles are `<h2>`/`<h3>`; no headline left as a bare `<div>` (interactive blocks included — the lead title is `<h1>` in server-visible markup).
 - [ ] Real image URLs are fully qualified; `<image-slot>` placeholders → empty cells with a block CSS background fallback.
-- [ ] Each block reproduces the prototype's max-width container; **no unintended full-width content at a wide (≥1600px) viewport**.
+- [ ] Each block reproduces the prototype's max-width container — **including plain-background sections** (#37); **no unintended full-width content at a wide (≥1600px) viewport**.
+- [ ] Global `img` reset is `display: block; max-width: 100%; height: auto;` (#36) — EDS adds width/height attrs; without `height: auto` images stretch vertically.
+- [ ] Any styling that depends on a `<span>`/class INSIDE a block cell is re-created in `decorate()` (#39) — EDS strips `<span>` in block cells (e.g. wrap a `.stars` run in JS, don't author it).
 - [ ] No `<style>` or `<script>` tags in the content page.
 - [ ] No section-metadata blocks.
 - [ ] Closing CTA reuses the shared `closing` block.

@@ -107,6 +107,33 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
 
 ---
 
+## Findings (test-8 — Knack, native stardust `uplift-knack/home-C-cinematic`)
+
+First conversion of a real stardust prototype (10 blocks) with the SEO-hardened
+skill. SEO #34/#35 held perfectly as a forward design (1 `<h1>` + 8 `<h2>` server-
+visible, real `<title>`/description). A Playwright prototype↔EDS visual diff then
+surfaced four fidelity gaps — three are reinforcements/new guidance below.
+
+### 36. 🔴 EDS-delivered `<img>` carry width/height attrs — the global reset MUST set `height: auto`
+The feature-tabs screenshot (intrinsic 1920×1258, landscape) rendered **677×1258** — width constrained to the column but height stuck at the intrinsic attribute value, stretching it vertically. Cause: the EDS media pipeline emits `<img width="1920" height="1258">`; the foundation reset had `img { max-width: 100% }` but no `height: auto`, so the height attribute won the cascade. This is invisible on prototypes (raw `<img>`, no attrs) and only appears post-pipeline — a silent, EDS-specific distortion. Fix: `img { … height: auto; }` in styles/styles.css.
+**Proposed:** Step 3 (Foundation) document reset MUST include `img { max-width: 100%; height: auto; }`. Add to the Checklist. (The prototype's own reset won't show the bug — it's introduced by the pipeline's width/height attributes.)
+
+### 37. 🟠 Anti-pattern #13 reinforced — parallel block agents drop the `.wrap` on 4 of 10 blocks
+The prototype wraps every section's content in `.wrap` (max-width 1180 + 24px padding) over a full-bleed section. Agents preserved it on the full-bleed band blocks (compare/integrations/stats/faq/final — the bg made it obvious) but **dropped it on the plain-background blocks** (hero, proof, feature-tabs, value-cards), which rendered full-bleed flush-left/edge-to-edge (`panelW = 1280`, hero text at x=0). The cue is weakest exactly where the section background is the page background. Fix: max-width content wrap on each (`.hero-grid` keeps the section full-bleed for the `--wash` bg; the others constrain the block element).
+**Proposed:** strengthen anti-pattern #13 and the Step 7 brief — state that EVERY block constrains content to `--maxw` with side padding, **including plain-background sections** (the easiest to forget); the only thing that stays full-bleed is a section *background*. Consider adding the wrap to the Step 8 scaffold.
+
+### 38. 🟠 Shared prototype primitives applied via a global class need per-block CSS (or a global rule) — agents miss them
+The prototype's `.eyebrow` (uppercase, purple) is a single global rule reused across sections. Each block agent re-lifts its own section CSS, so most styled their eyebrow — but the **hero agent dropped it** (eyebrow rendered dark/lowercase). Same class of issue as the stars below. When a visual primitive lives in a global selector the prototype shares across sections, a per-section agent can omit it.
+**Proposed:** Step 2/Step 7 — when the audit finds a shared global class (`.eyebrow`, `.pill`, `.chip`), either lift it once into styles.css as a documented primitive OR list it explicitly in every owning agent's brief so none drop it.
+
+### 39. 🟡 `<span>`-dependent styling breaks — EDS strips `<span>` in block cells
+The hero trust line used `<span class="stars">★★★★★</span>` for the orange color. EDS strips `<span>` (and its class) inside block cells (da rule §3.9), so the stars rendered in the inherited muted color. Fix: the block JS re-wraps the leading ★ run in a `.stars` span itself (don't depend on an authored span surviving).
+**Proposed:** cross-reference the da-content "block cells strip `<span>`" rule in Step 8 — any styling that depends on a `<span>`/class inside a block cell must be re-created in `decorate()`, not authored. (Relates to the buttons convention, which uses `<strong>`/`<em>` precisely because those survive.)
+
+**Implemented (#36–39):** On test-8 (the page) — #36 global img `height:auto`, #37 max-width wraps on hero/proof/feature-tabs/value-cards, #38 `.hero .eyebrow`, #39 hero.js star-wrap. In the skill (here on `snowflake-blocks`) — #36 → Step 3 reset + Checklist; #37 → anti-pattern #13 strengthened (plain-background sections) + Checklist; #39 → Checklist (re-create span styling in decorate); #38 → this finding (lift shared global primitives once, or list them per-agent brief).
+
+---
+
 ## Findings (SEO audit — all pages, test-1…test-7)
 
 Source: a marketing/SEO audit workflow over all 8 deployed pages (per-page reports
