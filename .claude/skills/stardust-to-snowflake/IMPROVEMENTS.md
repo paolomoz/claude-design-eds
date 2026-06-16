@@ -56,6 +56,8 @@ Festool's two main sections both use `class="section"` (`section` + `section tin
 The DA token lives in repo `.env`. Test subbranches branch from `snowflake-blocks`, so if `.gitignore` doesn't ignore `.env` on the **parent**, every new test branch re-exposes the token (had to re-add the ignore on both test-1 and test-2). Fixed once on `snowflake-blocks` so all subbranches inherit it. Also gitignore `qa/` (the local QA harness) and keep `samples/` out of commits.
 **Proposed:** add an early skill step / bootstrap line: "ensure `.gitignore` excludes `.env`, `.env.*`, `qa/` before the first commit; the token must never enter git." Pair with the existing token-expiry caveat (dev tokens ~24h; a 401 with empty body = expired → refresh).
 
+**Implemented (#14–16):** all three applied to SKILL.md — #14 Step 7 brief + anti-pattern 16 + checklist; #15 Step 2 naming rules + checklist; #16 "Running headless" token-hygiene note. Parent `.gitignore` now excludes `.env`/`qa/` so test subbranches inherit it.
+
 ---
 
 ## Findings (test-1)

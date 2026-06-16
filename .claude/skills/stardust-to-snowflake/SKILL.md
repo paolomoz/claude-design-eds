@@ -87,6 +87,8 @@ The **Sprinkle integration** section below assumes the cloud sprinkle UI + cone 
 
 The content payload is a **body fragment** either way (see Step 9). The headless deploy needs the **code branch pushed to GitHub** so the branch preview (`<branch>--<repo>--<org>.aem.page`) renders with your blocks. See `da-deploy-protocol.md` for the full curl contract.
 
+**Token hygiene (#16).** The IMS token typically lives in repo `.env` as `DA_TOKEN`. Before the first commit, make sure `.gitignore` excludes `.env`, `.env.*`, and `qa/` (the local QA harness) **on the branch you'll branch tests from** — otherwise every test subbranch re-exposes the token. Keep `samples/` out of commits too. Dev tokens last ~24h; a `401` with an empty body means expired → refresh and retry (the write is idempotent).
+
 ## Sprinkle integration
 
 When invoked through the snowflake sprinkle (`.claude/skills/stardust-to-snowflake/snowflake.shtml`), the user drives the conversion through four stepper panels: **Scoop** (target repo + branch), **Sprinkle** (file selection), **Swirl** (conversion), **Serve** (results). The Scoop and Swirl panels emit licks; the Sprinkle panel scans the filesystem itself through the bridge file APIs and never reaches the agent.
@@ -327,6 +329,7 @@ A useful pattern: dispatch the `Explore` subagent at thoroughness=quick with thi
 
 Naming rules:
 - Block name = the prototype's `<section class="X">` value, kebab-cased (`hero`, `work`, `closing`, `approach`).
+- **Never name a block after a reserved EDS class** (#15). `section`, `default-content`, `block-content`, `wrap`, and `button` are used by the runtime's section/decoration DOM — a block named `section` collides with `<div class="section">` and breaks decoration. When the prototype's section class is generic/reserved (Festool uses `class="section"` twice), derive a semantic name from the section's `data-screen-label` / intent instead (`new-products`, `discover`) and carry any modifier like `tinted` as a block variant.
 - When the same section appears on multiple pages with identical visual treatment, build ONE block and use it everywhere. The classic example: `closing` CTA at the end of every page.
 - When a section appears on multiple pages but looks different (e.g. home `hero` vs case-study `case-hero` vs service `service-hero`), they are different blocks. Prefix with the page archetype.
 - When two sections within one prototype share the same visual treatment but different copy (e.g. case-study `discovery` and `decisions` are both 2-col prose with eyebrow + headline), it is fine to merge into one block (`case-prose-2col`) with a single text variant cell ("tinted" / "default"). Use your judgment.
@@ -602,6 +605,8 @@ The brief template:
 >
 > **Images — `<image-slot>` placeholders (#2)**: claude-design prototypes use `<image-slot>` custom elements as image drop-targets; there are usually NO real image assets. Treat each image as an **optional** authored cell holding a `<picture>`/`<img>` (`const pic = cell.querySelector('picture, img'); if (pic) …`). When the cell is empty, fall back to the prototype's background treatment (e.g. dark `--ink`, or a placeholder rectangle) via the block CSS so the section still looks right with no image. Leave image cells EMPTY in the authoring snippet.
 >
+> **Scroll-reveal / JS-hidden content (#14)**: if the prototype hides content behind a class an inline `<script>` toggles on scroll (`.reveal { opacity:0 }` + an IntersectionObserver that adds `.in`), do NOT lift the `opacity:0` — the prototype script does not run in EDS, so the content would be **permanently invisible**. Render it visible; drop the reveal (keep only hover/`:hover` transitions). Honor `prefers-reduced-motion`.
+>
 > **Buttons**: do NOT manufacture button anchors. Author CTAs as `<strong><a>` (primary) or `<em><a>` (secondary) in the content page; in block JS, clone the cell's child nodes into a `.actions` wrapper. Block CSS only overrides global button styles when something is genuinely different (e.g. larger size). Text links with flourish (wavelength underline) are NOT buttons — leave as plain `<a>` and style per-block.
 >
 > **EDS block convention**: each block at `blocks/<name>/<name>.{js,css}`. JS exports `default async function decorate(block)`. Block input is `<div class="block-name"><div>row<div>cell</div></div>…</div>`. CSS scoped under `.block-name`. Inline SVG markup per-block (no shared utility). Honor `prefers-reduced-motion`.
@@ -763,6 +768,9 @@ Claude-design prototypes use `<image-slot>` drop-targets, not `<img>` with real 
 **15. Loading the footer twice (block + static fragment).**
 The AuthorKit `lazy.js` lazy-loads `utils/footer.js` → `loadBlock(footer)`. With static chrome fragments (this skill) and no `blocks/footer`, that throws and renders a visible "Error" box between the last section and the footer. Remove the `utils/footer.js` import from `lazy.js` during Runtime bootstrap.
 
+**16. Lifting a JS-toggled `opacity:0` reveal.**
+Prototypes often hide sections with `.reveal { opacity:0 }` and reveal them via an inline-`<script>` IntersectionObserver. That script doesn't run in EDS, so the lifted `opacity:0` makes the content **permanently invisible** — and it looks fine in the prototype, so it's easy to miss. Render content visible; drop the reveal. (Same root cause as anti-pattern 5 and the fragment-JS rule: prototype `<script>` never executes after conversion.)
+
 ## Checklist (per page)
 
 - [ ] Each section in the prototype `<main>` has a corresponding block call in the content page.
@@ -783,6 +791,8 @@ The AuthorKit `lazy.js` lazy-loads `utils/footer.js` → `loadBlock(footer)`. Wi
 - [ ] SVG markup is inline in the block JS (no shared waves utility).
 - [ ] Block JS does NOT manufacture button anchors with custom classes.
 - [ ] `prefers-reduced-motion: reduce` honored on any animation.
+- [ ] No JS-toggled `opacity:0` reveal lifted from the prototype — content renders visible (prototype scroll-reveal script doesn't run in EDS).
+- [ ] No block named after a reserved EDS class (`section`, `default-content`, `block-content`, `wrap`, `button`).
 - [ ] `head.html` is untouched. No font `<link>`, `<script>`, `<style>`, or `<link rel="preload" as="font">` lines added. All `@font-face` declarations live in `styles/styles.css`. Brand woff2(s) live in `styles/fonts/`.
 - [ ] Body defaults to a metric-matched system fallback (`arial, sans-serif` for sans brand, `times, "Times New Roman", serif` for serif). `body.session` switches to the brand stack via `var(--font-body)`.
 - [ ] An override `@font-face` named after the system font (e.g. `"Arial"`) declares `size-adjust` / `ascent-override` / `descent-override`. For variable brands, lift the calibration from `@fontsource-variable/<name>`; for non-variable brands, **compute** it from the woff2 with fonttools. Result: zero CLS on font swap.
