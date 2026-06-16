@@ -39,6 +39,46 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
   headless deploy (#10) all worked from the skill as written.
 - **New findings surfaced:** #14, #15, #16 below.
 
+### test-3 — Beehive Brewing (`samples/Beer maker Utah design`)
+- Branch: `snowflake-blocks-test-3` (off `snowflake-blocks`)
+- DA: `https://da.live/#/paolomoz/claude-design-eds/snowflake-blocks/test-3`
+- Preview: `https://snowflake-blocks-test-3--claude-design-eds--paolomoz.aem.page/snowflake-blocks/test-3`
+- Outcome: ✅ faithful end-to-end render incl. the **interactive beer selector**
+  (click a beer → glass fill + detail + strength bar update) and the **count-up
+  stats**. 5 blocks (hero, marquee, lineup, story, taproom) + 2 chrome fragments.
+- Prototype type: **`<x-dc>` document-content** — everything inline-styled, with
+  template `{{ }}` bindings, a `<sc-for>` loop, `<sc-if>`, and a JS `Component`
+  class driving state. The hardest input shape; exercised the new inline-style
+  lifting + interactive-block paths.
+- **Skill fixes validated:** #1 (`<x-dc>` handling), #2 (no real images — kept
+  inline SVG/CSS), #4 (no footer error box), #7/#10/#11/#13/#14/#15 all held —
+  body fragment, headless deploy, non-variable Anton, story capped at `--maxw`
+  while lineup/taproom are padded-full (matching the prototype), reveal dropped,
+  no reserved-class block names. The improved skill carried this hard case.
+- **New findings surfaced:** #17, #18, #19, #20 below.
+
+---
+
+## Findings (test-3)
+
+### 17. 🟠 Component-driven prototypes → authorable rows + block JS (block JS *can* run)
+Beehive's logic lives in a `<script type="text/x-dc">` `Component` class: state (`active` beer), a `baseBeers()` data array, a `<sc-for>` list loop, `{{ activeBeer.* }}` bindings, count-up via IntersectionObserver. The conversion pattern that worked:
+- **Data → authorable rows.** The 5 beers became 5 block rows (`name | style | abv | ibu | notes | blurb | glass-color`); the stats became `number | label` rows.
+- **Behavior → block JS.** Unlike static *fragments*, **block JS runs** — so `decorate()` wires the click-to-select interactivity, builds the glass gradient from the authored color, and runs the count-up observer. State that lived in the component becomes local state in the block.
+- Template bindings (`{{ }}`), `<sc-for>`, `<sc-if>` are NOT EDS syntax — read them as "loop over these rows" / "show one state"; render the default/active state and drive the rest from JS.
+**Proposed:** add a short "Interactive / component-driven sections" subsection to Step 7/8: data→rows, behavior→block JS, and the explicit reminder that **block JS runs** (only fragments can't) so interactivity is fine.
+
+### 18. 🟡 Lifting an all-inline-styled (`<x-dc>`) section is mechanical but heavy
+Every element carries `style="…"`; there's no class to scope under. The reliable method: rebuild the section DOM with **new semantic class names**, move each element's inline style into the block CSS under `.<block> .<name>`, and copy the needed `@keyframes` from the prototype's `<helmet><style>`. Parallel agents handled one section each well. No skill change beyond #1's pointer, but worth noting the per-element-style reality so estimates are realistic.
+
+### 19. 🟠 QA screenshots: a 100vh hero breaks the "tall window" capture
+The local QA recipe (#8) suggested a tall capture window. A `min-height:100vh` hero then becomes *window-tall* (e.g. 7800px), pushing its centered content far down and off the top crop — looked like the hero text was missing. **Fix:** screenshot at a realistic viewport (e.g. 1440×900) and `scrollIntoView()` each section (Playwright), rather than one giant-window capture. Keep the wide-viewport width check (#13) as a separate 1600px pass.
+**Proposed:** amend the "Local QA" recipe — capture at a normal viewport and scroll per section; reserve the tall capture only for short pages.
+
+### 20. 🟠 EDS CSP blocks inline event handlers — forms in fragments can't `onsubmit`
+The footer had a newsletter `<form onsubmit="return false">`. EDS's delivered CSP is `script-src 'nonce-…' 'strict-dynamic' 'unsafe-inline'` — with `strict-dynamic`, `'unsafe-inline'` is ignored, so **inline `on*` handlers don't fire** (and `<script>` in fragments never runs). A real `<form>` would then submit and reload. **Fix:** render such controls non-submitting — a `<div>` wrapper with `<button type="button">`, no `<form>`/`onsubmit`. (Generalizes #5: not just `<script>`, but inline handlers too.)
+**Proposed:** add to Step 6 (fragments): "no `<form onsubmit>` / inline `on*` — CSP blocks them; render decorative controls as non-submitting (`type="button"`, no `<form>`)."
+
 ---
 
 ## Findings (test-2)
