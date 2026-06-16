@@ -666,7 +666,9 @@ Agents do not need to coordinate on shared blocks — the brief tells them which
  * Authoring rows (positional):
  *   1. <picture> background image
  *   2. eyebrow text
- *   3. <h2> headline (use <strong> for emphasis colored wavelength)
+ *   3. headline — render as a REAL heading element, never a bare <div>: the
+ *      hero/lead block's headline becomes the page's single <h1>; every other
+ *      section title becomes <h2> (sub-items <h3>). (use <strong> for emphasis)
  *   4. body paragraph
  *   5. CTA links — wrap primary in <strong>, secondary in <em>; the EDS link
  *      decorator applies .btn.btn-primary / .btn.btn-secondary
@@ -688,6 +690,8 @@ export default async function decorate(block) {
 }
 ```
 
+**Headings — exactly one `<h1>` per page + a real outline (#35).** Prototype headlines are usually styled `<div>`/`<span>`s with no heading semantics. Promote them: the hero/lead block renders its headline as the page's **single `<h1>`**; every other section title renders as `<h2>` (sub-items `<h3>`). Never leave a headline as a bare `<div>` — the `<h1>` is the strongest on-page relevance signal, it's the source of the page `<title>` (#34), and the outline drives crawlers, AI answer engines, and screen readers (WCAG). This applies to **interactive blocks too**: a flow/quiz/dashboard renders its lead title as `<h1>` in its server-visible markup, not just after JS. (Symptom this prevents: a converted page with zero `<h*>` elements, or sibling `<h2>`s with no `<h1>`.)
+
 **Interactive blocks (#28).** When the prototype section is a stateful component (a selector, a filter, a form that mutates data, a multi-step flow), reproduce it as **one self-contained interactive block that owns the state** — block JS runs, so this is fully supported:
 - **Data → keyed authorable rows.** For heterogeneous data, key each row by its first cell (`account | id | name | …`, `txn | date | desc | …`) and parse by key. Homogeneous lists are just one row per item.
 - **Behavior → local state + targeted re-render.** Hold a mutable `state` object; write small `render*()` functions (e.g. `renderCards()`, `renderList()`) and re-invoke only the affected one on each interaction — the manual equivalent of a React re-render. A form that mutates data validates, updates `state`, re-renders the affected parts (cards, totals, `<option>`s), and shows a confirmation.
@@ -697,7 +701,7 @@ export default async function decorate(block) {
 
 ### 9. Content page scaffold
 
-Content pages contain only the body sections — no metadata block for header/footer. The static fragments are loaded automatically by `postlcp.js` from `fragments/header.html` and `fragments/footer.html` on the same code origin. No per-page configuration is needed.
+**Every content page MUST begin with a `metadata` block (#34).** At minimum it carries a **Title** (~50–60 chars: brand + primary keyword/location, derived from the page's real `<h1>` — NEVER a block or section name) and a **Description** (~150–160 chars summarising the page). Skip it and EDS derives `<title>` from the first content cell — junk like `<title>Hero</title>` / `<title>Quiz</title>` — and emits no description; and because EDS **mirrors Title/Description into `og:`/`twitter:`**, that junk poisons social/AI share cards too. Authoring this one block resolves title, description, og:title, og:description, twitter:title and twitter:description at once. `header: off` / `footer: off` / `Robots` rows go in the same block when needed (the pipeline extracts the block wherever it sits in `<main>` — first or last). The static header/footer fragments still load automatically via `postlcp.js`; no other per-page configuration is required.
 
 **The content page is a DA *body fragment* (#7).** The DA Source API (the headless deploy path) requires the document to start at `<body>` — **no `<!DOCTYPE>`, no `<html>`, no `<head>`** (the pipeline injects head/scripts/styles from Code Bus). Emit exactly:
 
@@ -706,13 +710,20 @@ Content pages contain only the body sections — no metadata block for header/fo
   <header></header>
   <main>
     <div>
-      <div class="block-name">
-        <div><div>cell content</div><div>cell content</div></div>
+      <div class="metadata">
+        <div><div>Title</div><div>Brand — primary keyword / location (≤60 chars, from the &lt;h1&gt;)</div></div>
+        <div><div>Description</div><div>A 150–160 character summary of the page.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="hero">
+        <div><div><h1>The page's lead headline</h1></div></div>
+        <div><div>body copy</div></div>
         <div><div><strong><a href="/path">Primary CTA</a></strong> <em><a href="/path">Secondary CTA</a></em></div></div>
       </div>
     </div>
     <div>
-      <!-- next section -->
+      <!-- next section: its title decorates to <h2> -->
     </div>
   </main>
   <footer></footer>
@@ -721,7 +732,7 @@ Content pages contain only the body sections — no metadata block for header/fo
 
 (Only the **mount-based** deploy tolerates a full `<!DOCTYPE html><html>…</html>` document — it strips `<head>` on ingestion. For the Source-API/`curl` path, emit the body fragment above. Before any DA write, run `node tools/da/sanitise.js <file>` to encode non-ASCII — `® · – —`, accents, emoji — to HTML entities, or DA corrupts them to U+FFFD.)
 
-To suppress header/footer on a specific page, add a `metadata` block with `header: off` and/or `footer: off`:
+To suppress header/footer on a specific page, add `header: off` and/or `footer: off` rows to that same `metadata` block:
 
 ```html
     <div>
@@ -835,7 +846,8 @@ A block that builds its own layout/view wrapper (common for interactive blocks t
 - [ ] **Content page is a body fragment** for the Source-API deploy: starts at `<body>`, **no `<!DOCTYPE>`/`<html>`/`<head>`** — EDS injects the project `head.html` at delivery. (Only the mount deploy tolerates a full doc.)
 - [ ] Ran `node tools/da/sanitise.js` on the content before any DA write (non-ASCII → entities).
 - [ ] `<header></header>` and `<footer></footer>` are EMPTY (static fragments load automatically via `postlcp.js`).
-- [ ] No `metadata` block needed for header/footer. Only add one if suppressing them (`header: off` / `footer: off`).
+- [ ] **Page begins with a `metadata` block** (#34): real Title (≤60 chars, from the `<h1>`, never a block name) + Description (~155 chars). `header: off` / `footer: off` / `Robots` rows go in the same block when needed.
+- [ ] **Exactly one `<h1>` per page** (#35): the hero/lead headline is `<h1>`; section titles are `<h2>`/`<h3>`; no headline left as a bare `<div>` (interactive blocks included — the lead title is `<h1>` in server-visible markup).
 - [ ] Real image URLs are fully qualified; `<image-slot>` placeholders → empty cells with a block CSS background fallback.
 - [ ] Each block reproduces the prototype's max-width container; **no unintended full-width content at a wide (≥1600px) viewport**.
 - [ ] No `<style>` or `<script>` tags in the content page.

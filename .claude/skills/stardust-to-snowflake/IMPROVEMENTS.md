@@ -107,6 +107,28 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
 
 ---
 
+## Findings (SEO audit — all pages, test-1…test-7)
+
+Source: a marketing/SEO audit workflow over all 8 deployed pages (per-page reports
+in `seo-audit/test-*.md`, synthesis + skeptical validation in
+`seo-audit/SKILL-FIXES.md`). Eight systemic issues surfaced (P0×2, P1×2, P2×2,
+P3×2). The **two P0s are implemented below**; P1–P3 (favicon + `<html lang>`,
+JSON-LD, `noindex` for signed-in views, server-visible semantic skeleton for
+interactive blocks, non-404 share image, no `#` placeholder links) remain queued
+in `SKILL-FIXES.md`.
+
+### 34. 🔴 Per-page `metadata` block is MANDATORY (Title + Description) — never a block-name `<title>`
+The skill *forbade* a per-page metadata block (Step 9 opened "Content pages contain only the body sections — no metadata block…"; the Checklist said "No metadata block needed"). Consequence on **7 of 8 pages**: with no Title/Description authored, EDS derives `<title>` from the first content cell → junk like `<title>Hero</title>`, `<title>Quiz</title>`, `<title>Dashboard</title>`, `<title>Site Nav</title>` — non-unique, keyword-free — and since EDS mirrors Title/Description into `og:`/`twitter:`, the junk also poisons share/AI cards; missing descriptions force Google to synthesise snippets. **Control:** test-6 (Meridian) was the only page that authored a metadata block → the only page with a correct `<title>` + real description + complete OG, proving the fix end-to-end. Verified live: test-7 `<title>Quiz</title>`, `og:title=Quiz`.
+**Implemented:** Step 9 now *requires* a `metadata` block as part of every content page (Title ≤60 chars from the real `<h1>`, never a block name; Description ~155 chars; `header/footer/Robots` rows in the same block); scaffold DOM + Checklist updated. One block resolves title/description/og/twitter at once.
+
+### 35. 🔴 Promote one cell to `<h1>` and section titles to `<h2>`/`<h3>` — pages had zero headings
+**7 of 8 pages contained zero `<h*>` elements**; test-6 had sibling `<h2>`s but **no `<h1>`** — so even the "good" page had a broken outline. The Step 8 JSDoc listed "`<h2>` headline" as a comment but the example DOM and real blocks emitted headlines as bare `<div>`s, and nothing forced a single `<h1>`. The `<h1>` is the strongest on-page relevance signal, the source of the page `<title>` (#34), and the document outline crawlers / AI engines / screen readers rely on.
+**Implemented:** Step 8 JSDoc + a new "Headings" rule require the hero/lead headline to render as the page's **single `<h1>`** and section titles as `<h2>`/`<h3>` (interactive blocks included — lead title is `<h1>` in server-visible markup); never leave a headline as a bare `<div>`. Scaffold DOM (`<h1>` in the hero) + Checklist updated.
+
+**Implemented (#34–35):** #34 → Step 9 (mandatory metadata block) + scaffold + Checklist; #35 → Step 8 JSDoc + Headings rule + scaffold + Checklist. **Validated by rebuilding test-1 as `test-1-seo`** (branch `snowflake-blocks-test-1-seo`).
+
+---
+
 ## Findings (test-6)
 
 ### 32. 🔴 A block must not inject a `<main>` element — it collides with the foundation section reset
