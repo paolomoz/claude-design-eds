@@ -1,0 +1,54 @@
+.integrations {
+  background: var(--grad-brand);
+  color: #fff;
+  padding: 84px 0;
+}
+
+.integrations .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.integrations .center {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+}
+
+.integrations .center h2 {
+  color: #fff;
+}
+
+.integrations .center p {
+  color: rgb(255 255 255 / 90%);
+}
+
+.integrations .integ-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto 30px;
+}
+
+.integrations .integ-logos div {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 16%);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.integrations .integ-cta {
+  text-align: center;
+}
+
+.integrations a.btn-primary {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: var(--md);
+}

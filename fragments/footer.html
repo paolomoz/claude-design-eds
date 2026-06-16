@@ -1,0 +1,67 @@
+<style>
+  footer.footer {
+    display: block;
+    background: #16151a;
+    color: #b8b4bd;
+    padding: 60px 0 40px;
+    margin-top: 0;
+  }
+  .knack-foot-in { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .knack-foot-grid { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 30px; }
+  .knack-foot-brand img { height: 28px; filter: brightness(0) invert(1); margin-bottom: 14px; }
+  .knack-foot-brand p { color: #8a8690; max-width: 260px; }
+  .knack-foot-grid h4 {
+    color: #fff;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .knack-foot-grid ul { list-style: none; padding: 0; display: grid; gap: 9px; font-size: 0.92rem; }
+  .knack-foot-grid ul a { color: #b8b4bd; }
+  .knack-foot-grid ul a:hover { color: #fff; }
+  .knack-foot-bot {
+    border-top: 1px solid #2a2830;
+    margin-top: 40px;
+    padding-top: 24px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #8a8690;
+  }
+
+  @media (max-width: 900px) {
+    .knack-foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<div class="knack-foot-in">
+  <div class="knack-foot-grid">
+    <div class="knack-foot-brand">
+      <img src="/img/knack/knack-logo.svg" alt="Knack" width="110" height="28">
+      <p>The most secure app and database builder for businesses.</p>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul><li><a href="#">Features</a></li><li><a href="#">Pricing</a></li><li><a href="#">Integrations</a></li><li><a href="#">Security</a></li></ul>
+    </div>
+    <div>
+      <h4>Solutions</h4>
+      <ul><li><a href="#">Work Orders</a></li><li><a href="#">Project Mgmt</a></li><li><a href="#">Financial Ops</a></li><li><a href="#">Inventory</a></li></ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul><li><a href="#">Docs</a></li><li><a href="#">Templates</a></li><li><a href="#">Blog</a></li><li><a href="#">Support</a></li></ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul><li><a href="#">About</a></li><li><a href="#">Customers</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul>
+    </div>
+  </div>
+  <div class="knack-foot-bot">
+    <span>© 2026 Knack. All rights reserved.</span>
+    <span>Privacy · Terms · Security</span>
+  </div>
+</div>

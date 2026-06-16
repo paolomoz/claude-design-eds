@@ -1,0 +1,55 @@
+.components {
+  padding: 84px 0;
+}
+
+.components .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.components .center {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+}
+
+.components .grid6 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+.components .ccard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px;
+  box-shadow: var(--sm);
+}
+
+.components .ccard .ic {
+  margin-bottom: 12px;
+  color: var(--primary);
+}
+
+.components .ccard .ic svg {
+  width: 26px;
+  height: 26px;
+}
+
+.components .ccard h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.components .ccard p {
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+@media (width >= 900px) {
+  .components .grid6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

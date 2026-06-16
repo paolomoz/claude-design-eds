@@ -1,0 +1,29 @@
+.final {
+  background: var(--grad-brand);
+  color: #fff;
+  text-align: center;
+  padding: 84px 0;
+}
+
+.final .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.final h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #fff;
+}
+
+.final p {
+  color: rgb(255 255 255 / 92%);
+  font-size: 1.15rem;
+  margin: 14px 0 28px;
+}
+
+.final a.btn-primary {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: var(--md);
+}

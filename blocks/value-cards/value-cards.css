@@ -1,0 +1,58 @@
+.value-cards .center {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+}
+
+.value-cards .cards3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.value-cards .vcard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: var(--sm);
+  transition: transform 0.2s var(--e-enter), box-shadow 0.2s var(--e-enter);
+}
+
+.value-cards .vcard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--md);
+}
+
+.value-cards .vcard .ic {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--grad-coral);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.value-cards .vcard h3 {
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+@media (width >= 900px) {
+  .value-cards .cards3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .value-cards .vcard {
+    transition: none;
+  }
+
+  .value-cards .vcard:hover {
+    transform: none;
+  }
+}

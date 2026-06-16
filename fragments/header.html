@@ -1,0 +1,73 @@
+<style>
+  header.header { display: block; }
+
+  .knack-promo {
+    background: var(--primary-dark);
+    color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 10px;
+  }
+  .knack-promo b { color: #ffd6ec; }
+
+  .knack-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 85%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .knack-nav-in {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 72px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .knack-nav-in .knack-logo { height: 30px; width: auto; }
+  .knack-nav-links { display: flex; gap: 26px; margin-left: 8px; }
+  .knack-nav-links a { font-size: 0.95rem; font-weight: 500; color: #3a3640; }
+  .knack-nav-links a:hover { color: var(--primary); }
+  .knack-nav-cta { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+  .knack-nav-cta .knack-link-sec { font-weight: 600; color: var(--primary); font-size: 0.95rem; }
+  .knack-nav-cta a.knack-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    padding: 12px 22px;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 6px 18px rgb(255 52 154 / 32%);
+    transition: transform 0.18s ease;
+  }
+  .knack-nav-cta a.knack-btn:hover { transform: translateY(-2px); }
+
+  @media (max-width: 900px) {
+    .knack-nav-links { display: none; }
+    .knack-nav-in { gap: 16px; }
+  }
+</style>
+
+<div class="knack-promo">⚡ New Customer Offer — <b>Get 65% off Starter Plans</b> for a limited time.</div>
+<div class="knack-nav">
+  <div class="knack-nav-in">
+    <a href="/" aria-label="Knack home"><img class="knack-logo" src="/img/knack/knack-logo.svg" alt="Knack" width="110" height="30"></a>
+    <nav class="knack-nav-links">
+      <a href="#">Solutions</a>
+      <a href="#">Product</a>
+      <a href="#">Pricing</a>
+      <a href="#">Resources</a>
+    </nav>
+    <div class="knack-nav-cta">
+      <a class="knack-link-sec" href="#">Talk to sales</a>
+      <a class="knack-btn" href="#">Start Building For Free</a>
+    </div>
+  </div>
+</div>

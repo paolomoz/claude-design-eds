@@ -1,2 +1,13 @@
 helix-importer-ui
 *.min.js
+
+# Vendored AuthorKit runtime (authored for @adobe/eslint-config-helix, not airbnb)
+deps/
+scripts/ak.js
+scripts/lazy.js
+scripts/postlcp.js
+scripts/scripts.js
+scripts/utils/
+tools/
+blocks/fragment/
+samples
