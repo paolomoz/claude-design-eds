@@ -87,6 +87,40 @@ Status legend: 🔴 blocker / bug · 🟠 missing guidance · 🟡 nice-to-have 
 - **New findings surfaced:** #27, #28 below. (Goal of this run: reproduce the
   *interactive* JSX, not just static markup.)
 
+### test-6 — Meridian Airways (`samples/Virgin Atlantic`)
+- Branch: `snowflake-blocks-test-6` (off `snowflake-blocks`)
+- DA: `https://da.live/#/paolomoz/claude-design-eds/snowflake-blocks/test-6`
+- Preview: `https://snowflake-blocks-test-6--claude-design-eds--paolomoz.aem.page/snowflake-blocks/test-6`
+- Outcome: ✅ faithful render **with the full multi-step booking flow reproduced** —
+  search → flight results (live cabin price toggle) → seat map → boarding-pass
+  confirmation, all in one interactive `booking` block. + 3 marketing blocks
+  (destinations, cabins, loyalty) + 2 chrome fragments. Verified the whole flow
+  end-to-end on the **deployed** page (header/footer fragments, 4 generated
+  flights, seat pick, confirmation hash) with zero page errors.
+- Prototype type: **React/JSX app** — a linear booking *flow* (4 sequential views
+  swapped by a `view` state), brand tokens in `<style>`, Bricolage Grotesque
+  (opsz) display + Albert Sans body.
+- **Skill fixes validated:** #28 (stateful view → one block), #24 (JSX pre-render),
+  #30 (opsz font), #31 (footer margin) — all held.
+- **New findings surfaced:** #32, #33 below. (Goal of this run: reproduce the
+  *interactive* multi-step flow.)
+
+---
+
+## Findings (test-6)
+
+### 32. 🔴 A block must not inject a `<main>` element — it collides with the foundation section reset
+The `booking` block swaps 4 views via `block.replaceChildren(viewEl)`. The view wrapper was first ported literally from the React component as `<main class="md-flow-page">`. The runtime foundation reset hides undecorated sections with `main > div { display: none }` (and re-shows decorated ones with `main div.section { display: block }`). An injected `<main>` makes its child `<div>`s direct children of *a* `main`, so they matched `main > div` and rendered `display:none` — the whole flow came up blank/partial. It is **silent**: lint passes, no console error; only the missing content reveals it (QA caught it as a `waitForSelector` timeout on a `hidden` element). A normal block injecting plain `<div>`s scoped under itself never trips this, because those divs are not direct children of `main`. Fix: make the view wrapper a `<section>` (switched all three `el('main', …)` → `el('section', …)`).
+**Proposed:** add an anti-pattern — when a block injects its own layout/view wrapper, never use `<main>` (or a bare top-level `<div>` that the section reset matches); use a `<section>` or keep nodes scoped under the block element. Do not port a prototype's `<main>` wrapper literally.
+
+### 33. 🟠 Sequential in-page flow → ONE block with an internal view state machine (not multiple pages)
+Meridian is a *linear* booking flow (search → results → seats → confirm) whose views are **sequential and not independently addressable** — you always enter from search. This is the inverse decomposition from #29 (independently-addressable views with different chrome → multiple pages). Here all four views are one EDS page + one `booking` block with `state.view` and a `render()` dispatcher that `replaceChildren()`s the active view. **Decision rule:** addressable-with-own-chrome → multiple pages (#29); sequential-from-one-entry → one block.
+- Page-specific detail (kept here, not promoted to core): because the block *is* the home view's hero and the marketing sections (destinations/cabins/loyalty) below it belong to the home view only, the block hides its **sibling sections** when it leaves search — it walks up to its owning section (the ancestor whose parent is `<main>`) and toggles `display` on each `nextElementSibling`; the header/footer fragments stay as persistent chrome.
+- Minor QA nuance: when asserting computed style right after a Playwright click, move the mouse off the element and let CSS transitions settle, or a mid-`transition`/`:hover` read gives a false negative (a picked seat read as un-highlighted until the 0.12s background transition finished).
+**Proposed:** extend #29 in the interactive-blocks guidance — distinguish *sequential flow* (one block, internal `state.view` + `render()` dispatcher, single page) from *independently-addressable views* (multiple pages, #29).
+
+**Implemented (#32–33):** #32 → Anti-patterns (new); #33 → Step 8 interactive-blocks note (flow vs pages, cross-ref #29).
+
 ---
 
 ## Findings (test-5)

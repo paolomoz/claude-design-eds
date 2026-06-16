@@ -692,7 +692,8 @@ export default async function decorate(block) {
 - **Data → keyed authorable rows.** For heterogeneous data, key each row by its first cell (`account | id | name | …`, `txn | date | desc | …`) and parse by key. Homogeneous lists are just one row per item.
 - **Behavior → local state + targeted re-render.** Hold a mutable `state` object; write small `render*()` functions (e.g. `renderCards()`, `renderList()`) and re-invoke only the affected one on each interaction — the manual equivalent of a React re-render. A form that mutates data validates, updates `state`, re-renders the affected parts (cards, totals, `<option>`s), and shows a confirmation.
 - This mirrors lifting state to a parent in React: if several widgets share data, put them in **one** block rather than trying to sync state across blocks. (Cross-block coordination, if ever needed, is a DOM `CustomEvent`.)
-- **QA the behavior, not just the paint** — see Local QA: drive each control and assert the state change.
+- **Sequential flow vs. addressable views — pick the right decomposition (#33).** A *sequential* flow whose views are entered from one starting point and are not independently addressable (search → results → seats → confirm; an onboarding wizard; a checkout) is **one block** with a `state.view` field and a `render()` dispatcher that `replaceChildren()`s the active view. This is the inverse of #29: *independently-addressable* views with **different chrome** become **multiple pages**. Rule of thumb — sequential-from-one-entry → one block; addressable-with-own-chrome → pages.
+- **QA the behavior, not just the paint** — see Local QA: drive each control and assert the state change. (When asserting computed style right after a click, move the pointer off the element and let CSS transitions settle first, or a mid-`transition`/`:hover` read gives a false negative.)
 
 ### 9. Content page scaffold
 
@@ -824,6 +825,9 @@ The AuthorKit `lazy.js` lazy-loads `utils/footer.js` → `loadBlock(footer)`. Wi
 
 **16. Lifting a JS-toggled `opacity:0` reveal.**
 Prototypes often hide sections with `.reveal { opacity:0 }` and reveal them via an inline-`<script>` IntersectionObserver. That script doesn't run in EDS, so the lifted `opacity:0` makes the content **permanently invisible** — and it looks fine in the prototype, so it's easy to miss. Render content visible; drop the reveal. (Same root cause as anti-pattern 5 and the fragment-JS rule: prototype `<script>` never executes after conversion.)
+
+**17. Injecting a `<main>` element from block JS.**
+A block that builds its own layout/view wrapper (common for interactive blocks that swap views, #33) must NOT use `<main>` — or a bare top-level `<div>` that the foundation reset matches. The reset hides undecorated sections with `main > div { display:none }`; an injected `<main>` makes its child `<div>`s direct children of *a* `main`, so they get `display:none` and the view renders **blank/partial**. It's **silent** — lint passes, no console error; only the missing content shows it. Use a `<section>` (or keep injected nodes scoped under the block element, which never trips `main > div`). Don't port a prototype's `<main>` wrapper literally into block-injected DOM.
 
 ## Checklist (per page)
 
