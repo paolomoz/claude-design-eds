@@ -47,7 +47,9 @@ export default async function decorate(block) {
   if (trustCell) {
     const trust = document.createElement('div');
     trust.className = 'trust';
-    trust.innerHTML = trustCell.innerHTML;
+    // EDS strips <span> in block cells, so wrap the leading star run ourselves
+    // to restore the orange .stars styling.
+    trust.innerHTML = trustCell.innerHTML.replace(/^(\s*★+)/, '<span class="stars">$1</span>');
     copy.append(trust);
   }
 

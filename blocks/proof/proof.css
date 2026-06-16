@@ -1,5 +1,7 @@
 .proof {
-  padding: 48px 0;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 48px 24px;
 }
 
 .proof p {

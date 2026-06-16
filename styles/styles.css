@@ -92,6 +92,10 @@ a {
 img {
   display: block;
   max-width: 100%;
+
+  /* EDS delivers <img> with width/height attributes; keep aspect when CSS
+     constrains the width (prevents vertical stretch). */
+  height: auto;
 }
 
 button {
