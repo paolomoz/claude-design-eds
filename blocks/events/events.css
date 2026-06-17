@@ -1,0 +1,126 @@
+/* events — Veranstaltungen 4-up card grid.
+   Lifted verbatim from the prototype's section.events (home-proposed.html
+   lines 182-194), scoped under .events. Full-bleed --color-surface background;
+   content constrained to .wrap / --maxw. Global tokens + button system live in
+   styles/styles.css — referenced, not redefined. */
+
+.events {
+  background: var(--color-surface);
+  padding: var(--section-pad) 0;
+}
+
+/* Content wrap — recreates the prototype's .wrap so the surface stays
+   full-bleed while the content is constrained. */
+.events .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header: h2 + "Alle Veranstaltungen" text-link. */
+.events .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Plain text-link (btn-text equivalent from the prototype). */
+.events .all-link {
+  color: var(--color-primary-deep);
+  font-weight: 600;
+  font-size: var(--fs-13);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.events .all-link::after {
+  content: " →";
+}
+
+/* 4-up grid → 2 → 1. */
+.events .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap);
+}
+
+@media (width <= 820px) {
+  .events .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 520px) {
+  .events .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.events .event {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+}
+
+.events .event .date {
+  flex: none;
+  width: 56px;
+  text-align: center;
+  padding-right: 14px;
+  border-right: 1px solid var(--color-border);
+}
+
+.events .event .date .d {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary-deep);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.events .event .date .m {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.events .event .body .kicker {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.events .event .body h4 {
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 4px 0 6px;
+}
+
+.events .event .body .meta {
+  font-size: var(--fs-12);
+  color: var(--color-muted);
+}
+
+@media (width <= 720px) {
+  .events {
+    padding: var(--section-pad-sm) 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .events * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

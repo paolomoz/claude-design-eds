@@ -1,0 +1,152 @@
+/* audience — audience-tab section.
+   CSS lifted verbatim from the prototype's .audience rules (home-proposed.html,
+   lines 119-135), scoped under the .audience block class. Global tokens + the
+   button system live in styles/styles.css. The section background bleeds
+   full-width; the content is constrained to var(--maxw) by the inner .wrap. */
+
+.audience {
+  background: #fff;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0;
+}
+
+/* Max-width container — content stays within the page width while the section
+   background bleeds full-bleed (the section background here is just #fff). */
+.audience .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.audience .tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.audience .atab {
+  flex: 1;
+  min-width: 180px;
+  padding: 18px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.audience .atab:hover {
+  color: var(--color-text);
+}
+
+.audience .atab.is-active {
+  color: var(--color-primary-deep);
+  border-bottom-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.audience .atab .sub {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+  text-transform: none;
+  color: var(--color-muted);
+}
+
+.audience .atab.is-active .sub {
+  color: var(--color-primary-deep);
+  opacity: 0.85;
+}
+
+.audience .aud-panel {
+  padding: 32px 0 40px;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.audience .aud-panel .label {
+  font-size: var(--fs-13);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Prototype panel title is .aud-panel h3; the block promotes it to <h2> for the
+   page outline, so the prototype's h3 type treatment is applied to the h2. */
+.audience .aud-panel h2 {
+  font-size: 22px;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.audience .aud-panel p {
+  color: var(--color-muted);
+  margin: 0 0 18px;
+  max-width: 520px;
+}
+
+.audience .aud-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.audience .aud-paths a {
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.audience .aud-paths a:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  text-decoration: none;
+}
+
+.audience .aud-paths .aud-arrow {
+  flex: none;
+}
+
+@media (width <= 820px) {
+  .audience .aud-panel {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (width <= 520px) {
+  .audience .aud-paths {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience .aud-paths a {
+    transition: none;
+  }
+}

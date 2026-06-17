@@ -1,0 +1,36 @@
+<style>
+  /* Hirslanden footer — lifted from the prototype, scoped under .footer.
+     The host <footer> gets class "footer"; content wrapped in <div class="footer">
+     so the dark-background root selector matches (postlcp sets el.className). */
+  footer.footer { background: #1f1c19; }
+  .footer { background: #1f1c19; color: rgb(255 255 255 / 78%); padding: 56px 0 28px; font-size: 14px; }
+  .footer .wrap { max-width: var(--maxw, 1280px); margin: 0 auto; padding: 0 24px; }
+  .footer .grid { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); gap: 32px; }
+  .footer h5 { font-size: var(--fs-13); text-transform: uppercase; letter-spacing: 1.2px; color: #fff; font-weight: 600; margin: 0 0 14px; }
+  .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .footer a { color: rgb(255 255 255 / 78%); font-size: 14px; }
+  .footer a:hover { color: #fff; }
+  .footer .f-brand .logo-w img { filter: brightness(0) invert(1); height: 34px; width: auto; margin-bottom: 16px; }
+  .footer .f-brand p { font-size: var(--fs-13); color: rgb(255 255 255 / 60%); max-width: 280px; margin: 0 0 12px; }
+  .footer .f-brand .phone { color: #fff; font-weight: 600; font-size: 15px; letter-spacing: .3px; }
+  .footer .f-bottom { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgb(255 255 255 / 12%); display: flex; justify-content: space-between; font-size: var(--fs-12); color: rgb(255 255 255 / 50%); flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 820px) {
+    .footer .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+<div class="footer">
+  <div class="wrap">
+    <div class="grid">
+      <div class="f-brand">
+        <div class="logo-w"><img src="https://main--claude-design-eds--paolomoz.aem.page/img/hirslanden/hirslanden-logo.png" alt="Hirslanden" width="188" height="54"></div>
+        <p>16 Privatkliniken, 300+ Kompetenzzentren, 3 000+ Ärztinnen und Ärzte — von der Geburt bis ins hohe Alter.</p>
+        <a class="phone" href="tel:+41848333999">Healthline · 0848 333 999</a>
+      </div>
+      <div><h5>Für Patienten</h5><ul><li><a href="/de/corporate/kliniken-und-zentren/kliniken">Kliniksuche</a></li><li><a href="/de/corporate/aerzte">Ärztesuche</a></li><li><a href="/de/corporate/ueber-uns/kontakt/healthline">Healthline</a></li><li><a href="/de/corporate/internationale-patienten">Internationale Patienten</a></li></ul></div>
+      <div><h5>Für Fachpersonen</h5><ul><li><a href="/de/corporate/zuweiserportal">Zuweiserportal</a></li><li><a href="/de/corporate/fortbildung">Fortbildung</a></li><li><a href="/de/corporate/forschung">Forschung</a></li></ul></div>
+      <div><h5>Unternehmen</h5><ul><li><a href="/de/corporate/ueber-uns">Über uns</a></li><li><a href="/de/corporate/jobs-und-karriere/karrierepfade">Jobs & Karriere</a></li><li><a href="/de/corporate/medien-und-news">Medien</a></li><li><a href="/de/corporate/ueber-uns/hingabe">Hingabe</a></li></ul></div>
+      <div><h5>Hilfe</h5><ul><li><a href="/de/corporate/ueber-uns/kontakt">Kontakt</a></li><li><a href="/de/corporate/faq">FAQ</a></li><li><a href="/de/corporate/kliniken-und-zentren/hirslanden-in-ihrer-naehe">Standorte</a></li></ul></div>
+    </div>
+    <div class="f-bottom"><span>© 2026 Hirslanden AG, ein Unternehmen der Mediclinic Gruppe</span><span><a href="/de/corporate/impressum">Impressum</a> · <a href="/de/corporate/datenschutz">Datenschutz</a> · <a href="/de/corporate/cookies">Cookies</a></span></div>
+  </div>
+</div>

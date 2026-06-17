@@ -1,0 +1,124 @@
+/* Schwerpunkte 4-up — lifted from home-proposed.html, scoped under .services */
+
+/* Section background stays full-bleed; content is wrapped */
+main .section.services-container,
+.services {
+  background: var(--color-surface);
+}
+
+/* Recreate the prototype's max-width wrap */
+.services .wrap {
+  max-width: var(--maxw, 1280px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.services .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.services .head h2 {
+  margin: 0;
+}
+
+/* "Alle Themen" text link (.btn-text — a styled text link, not a button) */
+.services .btn-text {
+  color: var(--color-primary-deep);
+  font-weight: 600;
+  font-size: var(--fs-13);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.services .btn-text::after {
+  content: " →";
+}
+
+.services .btn-text:hover {
+  text-decoration: underline;
+}
+
+.services .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--grid-gap);
+}
+
+.services .svc {
+  background: #fff;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+}
+
+.services .svc .img {
+  aspect-ratio: 5 / 3;
+  background: #eee;
+  overflow: hidden;
+}
+
+.services .svc .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.services .svc .body {
+  padding: 16px 18px 18px;
+}
+
+.services .svc .kicker {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-primary-deep);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.services .svc h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.services .svc p {
+  font-size: var(--fs-13);
+  color: var(--color-muted);
+  margin: 0 0 12px;
+}
+
+.services .svc a {
+  font-size: var(--fs-12);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-primary-deep);
+}
+
+@media (width <= 980px) {
+  .services .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 520px) {
+  .services .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

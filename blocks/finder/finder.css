@@ -1,0 +1,169 @@
+/* finder block — lifted verbatim from the prototype's section.finder
+   (home-proposed.html lines 137-153), scoped under .finder.
+   Dark --color-secondary band, white text, two-column grid with a white card.
+   Global tokens + button system live in styles/styles.css. */
+
+/* The dark band is full-bleed (the section owns the background); the CONTENT
+   is wrapped to --maxw. EDS appends the block's children directly to the
+   .finder div, so .finder is both the band and the grid wrap. */
+.finder {
+  background: var(--color-secondary);
+  color: #fff;
+  padding: 48px 0;
+}
+
+/* Content wrap — constrained to --maxw, full-bleed band stays behind it. */
+.finder .wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 48px;
+  align-items: start;
+  max-width: var(--maxw, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (width <= 980px) {
+  .finder .wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+.finder .lead-side h2 {
+  color: #fff;
+  margin-top: 10px;
+}
+
+.finder .lead-side .eyebrow {
+  color: #83c8e5;
+}
+
+.finder .lead-side p {
+  color: rgb(255 255 255 / 85%);
+  margin: 14px 0 0;
+  max-width: 360px;
+  font-size: 15px;
+}
+
+.finder .finder-card {
+  background: #fff;
+  color: var(--color-text);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+.finder .finder-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.finder .finder-tab {
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: var(--fs-13);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  cursor: pointer;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font-family: inherit;
+}
+
+.finder .finder-tab.is-active {
+  color: var(--color-primary-deep);
+  border-bottom-color: var(--color-primary);
+}
+
+.finder .finder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+@media (width <= 560px) {
+  .finder .finder-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.finder .field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.finder .field input,
+.finder .field select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-input);
+  background: #fff;
+  color: var(--color-text);
+  font-family: inherit;
+}
+
+.finder .field input:focus,
+.finder .field select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.finder .finder-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.finder .finder-actions .hint {
+  font-size: var(--fs-12);
+  color: var(--color-muted);
+}
+
+/* The "Suchen" control is a non-submitting <button>, not an anchor, so the
+   global a.btn rules don't reach it — restate the primary-button paint here. */
+.finder .finder-actions button.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  font-size: var(--fs-13);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border: 1.5px solid transparent;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.finder .finder-actions button.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.finder .finder-actions button.btn-primary:hover {
+  background: var(--color-primary-deep);
+  border-color: var(--color-primary-deep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finder .finder-actions button.btn {
+    transition: none;
+  }
+}
