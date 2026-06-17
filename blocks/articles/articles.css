@@ -1,0 +1,139 @@
+/*
+ * articles — content-marketing blog card grid.
+ * CSS lifted verbatim from the home-C-cinematic prototype (.s/.art-head +
+ * .art-grid/.art/.art-img/.art-body/.art-tag/.art-title/.art-excerpt/
+ * .art-date), scoped under .articles. Brand tokens are global in styles.css.
+ */
+
+/* Section padding (.s) + centered max-width container.
+   The section background, if any, stays full-bleed; the CONTENT is wrapped. */
+.articles {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+
+.articles .articles-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* .art-head */
+.articles .art-head {
+  max-width: 60ch;
+}
+
+.articles .art-head .eyebrow {
+  font-family: var(--heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.articles .art-head h2 {
+  margin-top: 10px;
+}
+
+/* .art-grid */
+.articles .art-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.articles .art {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.articles .art-img {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+
+  /* Fallback cover when no image is authored. */
+  background: var(--forest-tint);
+}
+
+.articles .art-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s;
+}
+
+.articles .art:hover .art-img img {
+  transform: scale(1.05);
+}
+
+.articles .art-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.articles .art-tag {
+  font-family: var(--label);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.articles .art-title {
+  margin-top: 10px;
+  font-family: var(--heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* the title is wrapped in an <a>; keep it inheriting ink color */
+.articles .art-body a {
+  color: inherit;
+}
+
+.articles .art-excerpt {
+  flex: 1;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #6b675e;
+}
+
+.articles .art-date {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: #9a958a;
+}
+
+/* 2-col <= 980 */
+@media (width <= 980px) {
+  .articles .art-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 1-col <= 640 */
+@media (width <= 640px) {
+  .articles .art-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articles .art-img img {
+    transition: none;
+  }
+
+  .articles .art:hover .art-img img {
+    transform: none;
+  }
+}

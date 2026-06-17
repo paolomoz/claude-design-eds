@@ -1,0 +1,135 @@
+/*
+ * credit-chooser — audience-routing card grid.
+ * CSS lifted verbatim from home-C-cinematic.html (.s/.s__head + the .chooser__*
+ * / .credit* rules) and scoped under .credit-chooser. BEM `__` names from the
+ * prototype are kebab-cased here to satisfy stylelint-config-standard. Page
+ * background stays full-bleed; the content is wrapped to the page max-width
+ * (var(--container)). Global tokens + button system live in styles/styles.css.
+ */
+
+/* Section vertical rhythm (proto .s). The block paints on the page bg. */
+.credit-chooser {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+
+/* Max-width content wrap — proto sections center their content at --container. */
+.credit-chooser .credit-head,
+.credit-chooser .chooser-grid {
+  max-width: var(--container);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 28px;
+  padding-left: 28px;
+}
+
+/* Section head (proto .s__head). */
+.credit-chooser .credit-head {
+  max-width: calc(60ch + 56px);
+}
+
+.credit-chooser .credit-head .eyebrow {
+  font-family: var(--heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.credit-chooser .credit-head h2 {
+  margin-top: 10px;
+}
+
+/* Card grid (proto .chooser__grid). */
+.credit-chooser .chooser-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 40px;
+}
+
+/* Whole-card anchor (proto .credit). */
+.credit-chooser .credit {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.credit-chooser .credit:hover {
+  border-color: var(--forest);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgb(33 28 28 / 8%);
+}
+
+/* Icon chip — forest-tint bg, so an empty (no-image) chip still reads (#2). */
+.credit-chooser .credit-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--forest-tint);
+  border-radius: var(--radius);
+}
+
+.credit-chooser .credit-icon img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.credit-chooser .credit-title {
+  font-family: var(--heading);
+  font-size: 1.06rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.credit-chooser .credit-meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.86rem;
+  color: #6b675e;
+}
+
+.credit-chooser .credit-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--label);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+/* Responsive: 2-col <=980, 1-col <=640 (proto breakpoints). */
+@media (width <= 980px) {
+  .credit-chooser .chooser-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .credit-chooser .chooser-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Honor reduced-motion — drop the hover lift transition. */
+@media (prefers-reduced-motion: reduce) {
+  .credit-chooser .credit {
+    transition: none;
+  }
+
+  .credit-chooser .credit:hover {
+    transform: none;
+  }
+}

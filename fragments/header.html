@@ -1,0 +1,153 @@
+<style>
+  header.header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 40;
+    padding: 16px max(28px, calc((100vw - 1200px) / 2));
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* Solidified state (scroll). Fragment JS is inert, so we keep the page
+     loaded in the solid state via a permanent class on the host element. */
+  header.header.ce-solid {
+    background: rgb(245 243 237 / 95%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  header.header .ce-nav {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  header.header .ce-nav__logo img {
+    display: block;
+    width: auto;
+    height: 38px;
+  }
+
+  header.header .ce-nav__links {
+    display: flex;
+    gap: 24px;
+    margin-left: 18px;
+    font-family: var(--body);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  header.header .ce-nav__links a {
+    color: var(--ink);
+    transition: color 0.3s;
+  }
+
+  header.header .ce-nav__links a:hover {
+    color: var(--forest);
+  }
+
+  header.header .ce-nav__spacer {
+    flex: 1;
+  }
+
+  header.header .ce-nav__account {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-family: var(--body);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  header.header .ce-nav__account > a:first-child {
+    color: var(--ink);
+  }
+
+  header.header .ce-btn {
+    display: inline-flex;
+    gap: 0.5em;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    background: var(--forest);
+    color: var(--on-forest);
+    font-family: var(--label);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+
+  header.header .ce-btn:hover {
+    background: var(--forest-deep);
+  }
+
+  /* Checkbox-hack mobile menu (fragment JS is inert) */
+  header.header .ce-nav__toggle,
+  header.header .ce-burger {
+    display: none;
+  }
+
+  @media (width <= 640px) {
+    header.header .ce-nav__links,
+    header.header .ce-nav__account {
+      display: none;
+    }
+
+    header.header .ce-burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: auto;
+      cursor: pointer;
+    }
+
+    header.header .ce-burger span {
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    header.header .ce-nav__toggle:checked ~ .ce-nav__links {
+      position: fixed;
+      inset: 64px 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0;
+      padding: 12px 28px;
+      background: rgb(245 243 237 / 98%);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    header.header .ce-nav__toggle:checked ~ .ce-nav__links a {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+</style>
+
+<div class="ce-nav">
+  <input class="ce-nav__toggle" type="checkbox" id="ce-nav-toggle" aria-hidden="true" hidden>
+  <a class="ce-nav__logo" href="/"><img src="https://main--claude-design-eds--paolomoz.aem.page/img/cecreditsonline/ce-logo.png" alt="CE Credits Online"></a>
+  <div class="ce-nav__links">
+    <a href="/pages/courses">Courses</a>
+    <a href="/pages/university-partners">University Partners</a>
+    <a href="/blogs/news">Blog</a>
+    <a href="/pages/about-us">About Us</a>
+    <a href="/pages/faq">FAQ</a>
+  </div>
+  <div class="ce-nav__spacer"></div>
+  <div class="ce-nav__account">
+    <a href="/account/login">Log in</a>
+    <a class="ce-btn" href="/pages/courses">Enroll Now</a>
+  </div>
+  <label class="ce-burger" for="ce-nav-toggle" aria-label="Menu"><span></span><span></span><span></span></label>
+</div>

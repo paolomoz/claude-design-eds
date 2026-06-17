@@ -1,0 +1,55 @@
+/* trust-stats — forest-green full-bleed stat row.
+   Lifted from prototype .spine / .spine__row / .spine__cell / .spine__num /
+   .spine__lab (home-C-cinematic.html lines 80-86), scoped under .trust-stats.
+   The band background bleeds full-width; the cells stay within --container via
+   the recreated inner wrap (proto .spine__row.container). */
+
+.trust-stats {
+  background: var(--forest);
+  color: #fff;
+}
+
+/* Recreate the prototype's max-width inner wrap so the green bleeds full-width
+   but the cells stay within --container. */
+.trust-stats .trust-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.trust-stats .trust-stats-cell {
+  padding: 40px 24px;
+  text-align: center;
+  border-right: 1px solid rgb(255 255 255 / 18%);
+}
+
+.trust-stats .trust-stats-cell:last-child {
+  border-right: 0;
+}
+
+.trust-stats .trust-stats-num {
+  font-family: var(--heading);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.trust-stats .trust-stats-lab {
+  font-size: 0.9rem;
+  color: #dce6dc;
+  margin-top: 10px;
+}
+
+@media (width <= 980px) {
+  .trust-stats .trust-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Drop the 2nd cell's right border so the 2-col grid has no centre rule
+     (proto line 158). */
+  .trust-stats .trust-stats-cell:nth-child(2) {
+    border-right: 0;
+  }
+}

@@ -1,0 +1,41 @@
+/* University Partners — centered accreditation logo strip.
+   CSS lifted verbatim from home-C-cinematic.html (.s/.s__head L88-89,
+   .uni/.uni__logos/.uni__logos img L131-134), scoped under
+   .university-partners. Global tokens + button system live in styles.css. */
+
+/* .s vertical rhythm + .uni centered */
+.university-partners {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+  text-align: center;
+}
+
+/* Centered max-width wrap (recreates the prototype's content container). */
+.university-partners .university-partners-content {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* .s__head h2 spacing */
+.university-partners h2 {
+  margin-top: 10px;
+}
+
+/* .uni__logos */
+.university-partners .university-partners-logos {
+  max-width: 920px;
+  margin: 34px auto 0;
+}
+
+/* .uni__logos img — desaturated, slightly dimmed logoset. */
+.university-partners .university-partners-logos img {
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) opacity(0.85);
+}
+
+/* Secondary CTA spacing (proto: inline margin-top:26px wrapper). */
+.university-partners .university-partners-cta {
+  margin-top: 26px;
+}

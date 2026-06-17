@@ -1,0 +1,134 @@
+<style>
+  footer.footer {
+    padding: 60px max(28px, calc((100vw - 1200px) / 2)) 32px;
+    background: var(--ink);
+    color: #cfcbc2;
+    font-family: var(--body);
+  }
+
+  footer.footer .ce-foot__top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 36px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer.footer .ce-foot h4 {
+    margin: 0 0 14px;
+    color: #fff;
+    font-family: var(--label);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  footer.footer .ce-foot a {
+    display: block;
+    margin-bottom: 9px;
+    color: #cfcbc2;
+    font-size: 0.92rem;
+  }
+
+  footer.footer .ce-foot a:hover {
+    color: #fff;
+  }
+
+  footer.footer .ce-foot__brand img {
+    display: block;
+    height: 34px;
+    margin-bottom: 16px;
+    filter: brightness(0) invert(1);
+  }
+
+  footer.footer .ce-foot__contact {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  footer.footer .ce-foot__contact a {
+    display: inline;
+    margin: 0;
+    color: #cfcbc2;
+  }
+
+  footer.footer .ce-foot__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 22px;
+    border-top: 1px solid rgb(255 255 255 / 14%);
+    font-size: 0.82rem;
+    color: #9a958a;
+  }
+
+  footer.footer .ce-foot__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  footer.footer .ce-foot__legal a {
+    color: #9a958a;
+  }
+
+  footer.footer .ce-foot__legal a:hover {
+    color: #fff;
+  }
+
+  @media (width <= 980px) {
+    footer.footer .ce-foot__top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width <= 640px) {
+    footer.footer .ce-foot__top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="ce-foot__top">
+  <div class="ce-foot ce-foot__brand">
+    <img src="https://main--claude-design-eds--paolomoz.aem.page/img/cecreditsonline/ce-logo.png" alt="CE Credits Online">
+    <div class="ce-foot__contact">
+      23224 NE 156th Pl.<br>
+      Woodinville, WA 98077<br>
+      Phone: 425.788.7275<br>
+      <a href="mailto:support@cecreditsonline.org">support@cecreditsonline.org</a><br>
+      Office hours: Mon-Fri 8:00AM-5:00PM PST
+    </div>
+  </div>
+  <div class="ce-foot">
+    <h4>Explore</h4>
+    <a href="/pages/courses">Courses</a>
+    <a href="/pages/university-partners">University Partners</a>
+    <a href="/blogs/news">Blog</a>
+    <a href="/pages/what-teachers-say-about-ce-credits-online">What Teachers Say</a>
+  </div>
+  <div class="ce-foot">
+    <h4>Company</h4>
+    <a href="/pages/about-us">About Us</a>
+    <a href="/pages/faq">FAQ's</a>
+    <a href="/pages/contact">Support</a>
+  </div>
+  <div class="ce-foot">
+    <h4>Account</h4>
+    <a href="/account/login">Log in</a>
+    <a href="/account/register">Create account</a>
+    <a href="/cart">Cart</a>
+  </div>
+</div>
+<div class="ce-foot__bottom">
+  <span>&copy; 2026 CE Credits Online &mdash; a dba of The Riesling Group, Inc.</span>
+  <span class="ce-foot__legal">
+    <a href="/policies/privacy-policy">Privacy Policy</a>
+    <a href="/policies/refund-policy">Refund Policy</a>
+    <a href="/policies/terms-of-service">Terms of Service</a>
+  </span>
+</div>

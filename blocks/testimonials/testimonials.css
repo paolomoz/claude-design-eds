@@ -1,0 +1,124 @@
+/*
+ * testimonials block — quote grid on an #EAE7DE band.
+ * CSS lifted verbatim from the prototype (home-C-cinematic.html):
+ *   .s / .s__head (lines 88-89)
+ *   .tst / .tst__grid / .quote / .quote__stars / .quote__text / .quote__by (lines 111-117)
+ *   .btn-ghost (line 48)
+ * scoped under .testimonials. Class names are kebab-cased (stylelint-standard
+ * rejects BEM __); the visual treatment is identical to the prototype. Global
+ * tokens + button system live in styles/styles.css.
+ */
+
+/* full-bleed band: the section background stays full width, the content wraps.
+   The AuthorKit runtime (ak.js) groups blocks under .block-content, so target
+   the section that contains this block one level down. */
+main .section:has(.block-content > .testimonials) {
+  background: #eae7de;
+}
+
+/* .s padding lifted from proto line 88 */
+.testimonials {
+  padding-top: var(--pad);
+  padding-bottom: var(--pad);
+}
+
+/* max-width content wrap (recreates the prototype's .container) */
+.testimonials .testimonials-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* .s__head lifted from proto line 89 */
+.testimonials .head-wrap {
+  max-width: 60ch;
+}
+
+.testimonials .head-wrap h2 {
+  margin-top: 10px;
+}
+
+.testimonials .eyebrow {
+  font-family: var(--heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+/* .tst__grid lifted from proto line 113 */
+.testimonials .quote-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+
+/* .quote lifted from proto line 114 */
+.testimonials .quote {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* .quote__stars lifted from proto line 115 */
+.testimonials .stars {
+  color: var(--forest);
+  letter-spacing: 2px;
+}
+
+/* .quote__text lifted from proto line 116 */
+.testimonials .quote-text {
+  flex: 1;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #3a3a3a;
+}
+
+/* .quote__by lifted from proto line 117 */
+.testimonials .quote-by {
+  margin-top: 16px;
+  font-family: var(--label);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a857a;
+}
+
+.testimonials .grid-foot {
+  margin-top: 26px;
+}
+
+/* .btn-ghost lifted from proto line 48 — a plain text link, NOT a button. */
+.testimonials a.btn-ghost {
+  padding: 0;
+  background: transparent;
+  font-family: var(--label);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+/* responsive: 2-col <=980, 1-col <=640 (lifted from proto media queries) */
+@media (width <= 980px) {
+  .testimonials .quote-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .testimonials {
+    --pad: 52px;
+  }
+
+  .testimonials .quote-grid {
+    grid-template-columns: 1fr;
+  }
+}
