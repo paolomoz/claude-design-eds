@@ -1,0 +1,101 @@
+<style>
+  .wbb-foot,
+  .wbb-foot *,
+  .wbb-foot *::before,
+  .wbb-foot *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .wbb-foot {
+    background: #000;
+    color: #fff;
+    padding: 48px;
+    border-top: 1px solid #222;
+    font-family: "Public Sans", arial, sans-serif;
+  }
+  .wbb-foot a { color: inherit; text-decoration: none; }
+
+  .wbb-foot-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+  .wbb-foot-wordmark {
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .wbb-foot-wordmark .pip { background: #efd024; color: #000; padding: 4px 8px; margin-right: 6px; }
+  .wbb-foot-sub { color: rgb(255 255 255 / 60%); font-size: 13px; margin-top: 12px; max-width: 32ch; }
+  .wbb-foot-email {
+    margin-top: 16px;
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    letter-spacing: 0.12em;
+  }
+  .wbb-foot-email a { color: #efd024; }
+  .wbb-foot-pillar h4 {
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #efd024;
+    margin-bottom: 12px;
+  }
+  .wbb-foot-pillar ul { list-style: none; display: grid; gap: 8px; font-size: 14px; }
+  .wbb-foot-pillar a:hover { color: #efd024; }
+  .wbb-foot-legal {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    border-top: 1px solid #222;
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: rgb(255 255 255 / 50%);
+  }
+
+  @media (max-width: 760px) {
+    .wbb-foot-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  }
+</style>
+<div class="wbb-foot">
+  <div class="wbb-foot-grid">
+    <div class="wbb-foot-brand">
+      <div class="wbb-foot-wordmark"><span class="pip">»</span>WASATCH BACK</div>
+      <p class="wbb-foot-sub">Beer for the high country. Brewed in Heber Valley, poured in Park City. Est 1996.</p>
+      <p class="wbb-foot-email">General inquiry: <a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></p>
+    </div>
+    <div class="wbb-foot-pillar">
+      <h4>The brewery</h4>
+      <ul>
+        <li><a href="/the-brewery">Our story</a></li>
+        <li><a href="/the-brewery#brewers">The brewers</a></li>
+        <li><a href="/the-brewery#process">How we brew</a></li>
+        <li><a href="/press">Press</a></li>
+      </ul>
+    </div>
+    <div class="wbb-foot-pillar">
+      <h4>Taprooms</h4>
+      <ul>
+        <li><a href="/taprooms#heber-valley">Heber Valley</a></li>
+        <li><a href="/taprooms#park-city">Park City</a></li>
+        <li><a href="/private-events">Private events</a></li>
+        <li><a href="/taprooms">Hours + directions</a></li>
+      </ul>
+    </div>
+    <div class="wbb-foot-pillar">
+      <h4>Beer</h4>
+      <ul>
+        <li><a href="/beers">The lineup</a></li>
+        <li><a href="/beers#powder-day">What's on now</a></li>
+        <li><a href="/beers#tabernacle">Year-round</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbb-foot-legal">
+    <span>© 2026 Wasatch Back Beerworks LLC.</span>
+    <span>Heber Valley · Park City · Utah</span>
+  </div>
+</div>

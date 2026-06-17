@@ -1,0 +1,114 @@
+<style>
+  .wbb-chrome,
+  .wbb-chrome *,
+  .wbb-chrome *::before,
+  .wbb-chrome *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .wbb-chrome { font-family: "Public Sans", arial, sans-serif; color: #000; }
+  .wbb-chrome a { color: inherit; text-decoration: none; }
+
+  .wbb-eyebrow {
+    background: #efd024;
+    color: #000;
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .wbb-eyebrow .pip { display: inline-flex; gap: 8px; align-items: center; }
+  .wbb-eyebrow .pip::before { content: ""; width: 8px; height: 8px; background: #000; }
+
+  .wbb-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #fff;
+    border-bottom: 1px solid #000;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .wbb-wordmark {
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .wbb-wordmark .pip { background: #000; color: #efd024; padding: 2px 6px; margin-right: 6px; }
+
+  .wbb-nav ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    font-family: "Bebas Neue", system-ui, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .wbb-nav a { padding: 6px 0; border-bottom: 2px solid transparent; display: inline-block; }
+  .wbb-nav a:hover,
+  .wbb-nav a.active { border-bottom-color: #efd024; }
+
+  /* CSS-only mobile menu (fragment JS is inert) */
+  .wbb-nav-toggle { position: absolute; left: -9999px; }
+  .wbb-burger {
+    display: none;
+    width: 32px;
+    height: 18px;
+    position: relative;
+    cursor: pointer;
+  }
+  .wbb-burger span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #000;
+  }
+  .wbb-burger span:nth-child(1) { top: 0; }
+  .wbb-burger span:nth-child(2) { top: 8px; }
+  .wbb-burger span:nth-child(3) { top: 16px; }
+
+  @media (max-width: 760px) {
+    .wbb-burger { display: block; }
+    .wbb-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid #000;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .wbb-nav ul { flex-direction: column; gap: 0; padding: 0 32px; }
+    .wbb-nav li { border-top: 1px solid rgb(0 0 0 / 10%); }
+    .wbb-nav a { padding: 14px 0; width: 100%; }
+    .wbb-nav-toggle:checked ~ .wbb-nav { max-height: 320px; }
+  }
+</style>
+<div class="wbb-chrome">
+  <div class="wbb-eyebrow">
+    <span class="pip">EST 1996 · WASATCH BACK BEERWORKS</span>
+    <span>TWO TAPROOMS · HEBER VALLEY + PARK CITY</span>
+  </div>
+  <div class="wbb-bar">
+    <a href="/" class="wbb-wordmark"><span class="pip">»</span>WASATCH BACK</a>
+    <input type="checkbox" id="wbb-nav-toggle" class="wbb-nav-toggle" aria-hidden="true">
+    <nav class="wbb-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/beers">Beers</a></li>
+        <li><a href="/the-brewery">The Brewery</a></li>
+        <li><a href="/taprooms" class="active">Taprooms</a></li>
+      </ul>
+    </nav>
+    <label class="wbb-burger" for="wbb-nav-toggle" aria-label="Menu"><span></span><span></span><span></span></label>
+  </div>
+</div>

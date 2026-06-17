@@ -1,0 +1,52 @@
+/*
+ * Contact Strip block
+ * Lifted verbatim from the stardust prototype (taprooms.html, .contact-strip
+ * section, lines 148-153), scoped under .contact-strip.
+ * Full-bleed yellow band; content wrapped at --maxw.
+ */
+
+.contact-strip {
+  padding: var(--pad-d);
+  background: var(--primary);
+  color: var(--ground);
+}
+
+.contact-strip .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+}
+
+.contact-strip h2 {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.contact-strip p {
+  font-size: 1.05rem;
+  margin-top: 8px;
+}
+
+/* The mailto CTA — the prototype's own .btn (black bg, white text). It is a
+   channel value, not a strong/em chip, so it is authored as a plain <a>. */
+.contact-strip a {
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  padding: 14px 22px;
+  background: #000;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+@media (width <= 760px) {
+  .contact-strip .wrap {
+    grid-template-columns: 1fr;
+  }
+}

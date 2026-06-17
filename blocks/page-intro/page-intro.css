@@ -1,0 +1,54 @@
+/*
+ * page-intro (hero / lead)
+ * CSS lifted verbatim from the stardust prototype (taprooms.html, .page-intro),
+ * scoped under .page-intro. Global tokens live in styles/styles.css.
+ */
+
+.page-intro {
+  padding: var(--pad-d);
+  background: var(--bg);
+  border-bottom: 1px solid var(--ground);
+}
+
+/* Recreate the prototype's max-width wrap so content stays at --maxw on wide
+   viewports; the section background stays full-bleed, the content is wrapped. */
+.page-intro .wrap {
+  max-width: var(--maxw, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.page-intro .page-intro-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--pad-d);
+  align-items: end;
+}
+
+.page-intro .page-intro-eyebrow {
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.page-intro h1 {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.page-intro .page-intro-lede {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  max-width: 42ch;
+}
+
+@media (width <= 760px) {
+  .page-intro .page-intro-grid {
+    grid-template-columns: 1fr;
+  }
+}
