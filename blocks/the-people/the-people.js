@@ -49,32 +49,40 @@ function asLink(el) {
   return el.matches('a') ? el : el.querySelector('a');
 }
 
-/* Segment the flat node list into one group per heading (#52/#73): a heading
-   opens a new half; everything after it (until the next heading) belongs to it. */
+/* Segment the flat node list into one group per heading (#52/#73/#76). The
+   eyebrow PRECEDES its heading in this layout, so a heading can't be the only
+   thing that opens a half — buffer any text seen before a heading as the
+   pending eyebrow and attach it to the half that heading opens. After a half's
+   body/CTA, the next bare text is the FOLLOWING half's eyebrow, not this one's
+   teaser — re-buffer it so it lands on the next heading. */
 function segment(nodes) {
   const groups = [];
   let current = null;
+  let pendingEyebrow = null;
   nodes.forEach((el) => {
-    if (asHeading(el)) {
+    const h = asHeading(el);
+    if (h) {
       current = {
-        heading: asHeading(el),
-        eyebrow: null,
+        heading: h,
+        eyebrow: pendingEyebrow,
         teaser: null,
         link: null,
         media: null,
       };
+      pendingEyebrow = null;
       groups.push(current);
+      return;
     }
-    if (!current) return;
     const m = asMedia(el);
-    if (m) { current.media = m; return; }
-    if (asHeading(el)) return;
+    if (m) { if (current) current.media = m; return; }
     const a = asLink(el);
-    if (a) { current.link = a; return; }
-    if (el.textContent.trim()) {
-      if (!current.eyebrow) current.eyebrow = el;
-      else if (!current.teaser) current.teaser = el;
-    }
+    if (a) { if (current) current.link = a; return; }
+    if (!el.textContent.trim()) return;
+    // Text BEFORE any heading, or AFTER the open half already has its body/CTA,
+    // belongs to the NEXT half — buffer it as that half's eyebrow. The first
+    // text after a heading (before its CTA) is this half's teaser/body.
+    if (!current || current.teaser || current.link) pendingEyebrow = el;
+    else current.teaser = el;
   });
   return groups;
 }
