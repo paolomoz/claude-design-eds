@@ -96,9 +96,21 @@ function analyse() {
     const cs = getComputedStyle(h);
     // the first QUOTED (named) family in the stack, and whether it actually loaded
     // — a named --display face with no @font-face silently falls back (#65/#66).
+    // Detect with a WIDTH PROBE, never document.fonts.check: that returns true for
+    // ANY family name the page references, installed or not (#77), so it false-
+    // passes. The named face "loaded" iff its glyph widths differ from a
+    // guaranteed-absent name at the same size/weight.
     const named = (cs.fontFamily.match(/"([^"]+)"|'([^']+)'/) || [])[1];
     let fontLoaded = true;
-    try { fontLoaded = named ? document.fonts.check(`${cs.fontSize} "${named}"`) : true; } catch { fontLoaded = true; }
+    if (named) {
+      const probeW = (fam) => {
+        const s = document.createElement('span');
+        s.style.cssText = `position:absolute;left:-9999px;visibility:hidden;white-space:nowrap;font-size:${cs.fontSize};font-weight:${cs.fontWeight};font-family:${fam}`;
+        s.textContent = (h.textContent.trim().slice(0, 24) || 'Agw1996');
+        document.body.appendChild(s); const w = s.getBoundingClientRect().width; s.remove(); return w;
+      };
+      fontLoaded = probeW(`"${named}",monospace`) !== probeW('__no_such_face__,monospace');
+    }
     return {
       tag: h.tagName.toLowerCase(),
       text: h.textContent.trim().slice(0, 32),

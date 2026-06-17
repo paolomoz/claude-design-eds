@@ -838,9 +838,14 @@ for (const n of ['hero','quick','used','stats','service','offers','brands','loca
 
 Cross-check each flag against the prototype: full-bleed is correct only where the prototype section has no inner max-width wrapper.
 
-## Step 10 — Visual diff & reconcile (optional, recommended)
+## Step 10 — Visual + structural diff & reconcile (optional, recommended)
 
-After deploy, reconcile the EDS page against the source prototype *visually*. Eyeballing alone misses the silent post-pipeline regressions this skill keeps re-learning (#36 stretched images, #37 dropped wraps, #38 dropped shared primitives, #39 stripped spans) — they pass lint and throw no error. `tools/da/visual-diff.mjs` renders BOTH at a fixed viewport with reduced motion, screenshots them, and emits a **structured metrics report + advisory red flags**. It is *not* a pixel diff — computed-style measurements (container widths/offsets, image natural-vs-rendered dims, heading/eyebrow colors) are the signal; pixels are noise (fonts, animation, dynamic mock data).
+After deploy, reconcile the EDS page against the source prototype with **two complementary probes — run BOTH** (#78). They catch disjoint failure classes; either alone gives a false "looks fine":
+
+1. **`tools/da/visual-diff.mjs` — the PIXEL/layout probe.** Reasons about rendered geometry: stretched images (#36), dropped max-width wraps (#37), blank renders (#40), surface/ground colour flips (#59). Good at "this looks broken." STRUCTURALLY BLIND to "the right text is in the wrong slot" or "one CTA is gone" — those keep full pixels and plausible colours, so no flag fires.
+2. **`tools/da/content-diff.mjs` — the STRUCTURAL content+type probe.** Extracts an ordered, role-classified inventory ({heading, eyebrow, cta+href, body}) from each `<main>` — classifying by computed style + tag so the prototype's `.ds-*` DOM and the EDS block DOM compare symmetrically — and DIFFS them: `MISSING CTA/HEADING/EYEBROW` (🔴 dropped content — caught the `the-place` CTA), `ROLE SWAP` (🔴 same text, wrong slot — caught the `the-people` eyebrow↔body scramble #76), `MISSING BODY`/`EXTRA` (🟡 placeholder→real-copy or invented prose), and `FONT FORK` (🟠 a matched line whose rendered FACE differs, by **width probe** not `document.fonts.check` — the #77 method, grouped into one advisory). This is the layer the pixel probe can't see.
+
+Neither is a pixel diff — both use computed-style/geometry measurements; pixels are noise (fonts, animation, dynamic mock data).
 
 ```bash
 # Prereq: a RENDERABLE prototype. Static → serve from its own dir so relative
@@ -851,6 +856,12 @@ node tools/da/visual-diff.mjs \
   "http://localhost:8791/<prototype>.html" \
   "https://<branch>--<repo>--<owner>.aem.page/<path>" \
   --sections ".hero,.feature-tabs,.compare"   # optional per-section shots
+
+# Structural content + typography diff (same two URLs). Use the LIVE/harness EDS
+# URL so blocks are decorated; a raw content .plain.html has no roles to classify.
+node tools/da/content-diff.mjs \
+  "http://localhost:8791/<prototype>.html" \
+  "https://<branch>--<repo>--<owner>.aem.page/<path>"   # --json to dump both inventories
 ```
 
 Read the output:
@@ -866,7 +877,14 @@ Read the output:
 - **`SURFACE/GROUND MISMATCH` (#59):** a heading that matches the proto by text but renders a materially different color (luminance flipped dark↔light) means its band rendered on the wrong ground (e.g. a light intro band fused into a dark scene, #58). Check the owning block's section background.
 - **GAP flags are WHOLE-PAGE, independent of `--sections` (#54):** `IMAGERY GAP` (#47) and `CONTENT GAP` (#49) are computed page-wide; `--sections` only chooses which per-section *screenshots* are saved. So a focused `--sections .hero` run whose hero looks perfect can STILL fire a GAP pointing at a defect in a *different* block (e.g. services dropping 3/4 cards). Never dismiss a GAP flag as "outside my section" — when either fires, run an UNSCOPED full-page diff (or a per-section diff on the suspect block) and locate the dropped/duplicated content before trusting the focused pass.
 
-Fix the flagged few, then re-run until red flags are "none" (or justified) and the metrics line up. The red-flag list doubles as a regression checklist — it is seeded from the findings above, so a new silent regression is worth adding both a fix AND a probe signal.
+**Reading `content-diff` (#78):**
+- **`MISSING CTA/HEADING/EYEBROW` (🔴):** real dropped content — FIX. A missing eyebrow is most often a segmentation drop (#76, the eyebrow precedes its heading); a missing CTA means the block never authored/rendered the link cell. These are the failures the pixel probe cannot see (full pixels, plausible colours) — treat 🔴 as blocking.
+- **`ROLE SWAP` (🔴):** the same text rendered under a different role (body painted as eyebrow, eyebrow folded into a teaser) — the #76 mis-classification class. FIX the owning block's node segmentation.
+- **`MISSING BODY` / `EXTRA` (🟡):** body prose dropped, or EDS copy with no proto source. Usually fine — a prototype placeholder ("two paragraphs of prose live here…") legitimately becomes real authored copy. CONFIRM it's an intended rewrite, not lost/hallucinated prose.
+- **`FONT FORK` (🟠):** matched lines whose rendered FACE differs (width probe). A `proto X→sys` means the prototype named font X but never loaded it and fell back to system — EDS self-hosting the intended fallback is then CORRECT (#77), not a bug. Confirm the fork is intended; if instead EDS is the one falling back, ship the missing `@font-face`. The probe groups all forked lines into ONE advisory (a proprietary→fallback swap fires on every display line).
+- The summary line counts nodes per role on each side — a large `headings`/`cta` count delta is itself a fast dropped-section signal before reading individual flags.
+
+Fix the flagged few, then re-run BOTH probes until visual red flags are "none" (or justified) and content-diff shows **0 structural 🔴** (🟡/🟠 confirmed intended). The flag lists double as a regression checklist — seeded from the findings above, so a new silent regression is worth adding both a fix AND a probe signal.
 
 ## Anti-patterns (lessons paid for the hard way)
 
