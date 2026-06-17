@@ -1,0 +1,139 @@
+<style>
+  /* Wasatch Back Beerworks — site header (static fragment, prefix: wbb-).
+     The prototype's scroll "is-stuck" state and the JS burger toggle are
+     re-implemented CSS-only: the header is fixed with a solid ink ground and
+     a goldspike hairline; the mobile nav uses a checkbox hack. */
+  header.header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    background: var(--ink);
+    border-bottom: 1px solid var(--ink-line);
+    color: var(--paper);
+  }
+
+  header.header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, var(--goldspike) 38%, var(--goldspike) 62%, transparent 100%);
+    opacity: 0.5;
+  }
+
+  .wbb-header-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--s-16) var(--s-32);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-32);
+  }
+
+  .wbb-wordmark {
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: var(--t-21);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--paper);
+  }
+
+  .wbb-spike {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: var(--goldspike);
+    transform: rotate(45deg);
+  }
+
+  .wbb-nav {
+    display: flex;
+    gap: var(--s-24);
+    align-items: center;
+  }
+
+  .wbb-nav a {
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: var(--t-13);
+    text-decoration: none;
+    color: var(--paper);
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 220ms var(--ease-out-q);
+  }
+
+  .wbb-nav a:hover,
+  .wbb-nav a[aria-current="page"] { border-bottom-color: var(--goldspike); }
+
+  .wbb-nav-toggle { display: none; }
+
+  .wbb-nav-burger {
+    display: none;
+    background: transparent;
+    border: 0;
+    padding: 12px;
+    cursor: pointer;
+    color: var(--paper);
+  }
+
+  .wbb-nav-burger svg { display: block; }
+
+  @media (max-width: 640px) {
+    .wbb-header-inner { padding: 12px 16px; }
+
+    .wbb-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--ink);
+      border-bottom: 1px solid var(--ink-line);
+      flex-direction: column;
+      gap: 0;
+      padding: 8px 16px 16px;
+    }
+
+    .wbb-nav-toggle:checked ~ .wbb-nav { display: flex; }
+
+    .wbb-nav a {
+      font-size: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--ink-line);
+      width: 100%;
+    }
+
+    .wbb-nav a:last-child { border-bottom: 0; }
+
+    .wbb-nav-burger {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+</style>
+
+<input type="checkbox" id="wbb-nav-toggle" class="wbb-nav-toggle" aria-hidden="true">
+<div class="wbb-header-inner">
+  <a class="wbb-wordmark" href="/">
+    <span class="wbb-spike" aria-hidden="true"></span>
+    WASATCH BACK
+  </a>
+  <label class="wbb-nav-burger" for="wbb-nav-toggle" aria-label="Toggle navigation">
+    <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><path d="M0 1h22M0 7h22M0 13h22" stroke="currentColor" stroke-width="2"/></svg>
+  </label>
+  <nav class="wbb-nav" aria-label="Primary">
+    <a href="/" aria-current="page">Home</a>
+    <a href="/beers">Beers</a>
+    <a href="/the-brewery">The Brewery</a>
+    <a href="/taprooms">Taprooms</a>
+  </nav>
+</div>

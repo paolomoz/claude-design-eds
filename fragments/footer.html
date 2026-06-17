@@ -1,0 +1,175 @@
+<style>
+  /* Wasatch Back Beerworks — site footer (static fragment, prefix: wbb-). */
+  footer.footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--s-64) 0 var(--s-32);
+  }
+
+  .wbb-footer-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--s-32);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.5fr;
+    gap: var(--s-48);
+  }
+
+  .wbb-footer h4,
+  .wbb-footer-h4 {
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: var(--t-12);
+    color: var(--granite-soft);
+    margin: 0 0 var(--s-16);
+  }
+
+  .wbb-wordmark-lg {
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: var(--t-28);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wbb-spike {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: var(--goldspike);
+    transform: rotate(45deg);
+  }
+
+  .wbb-tagline {
+    margin-top: var(--s-16);
+    font-family: var(--serif);
+    font-size: var(--t-16);
+    opacity: 0.85;
+    max-width: 30ch;
+  }
+
+  .wbb-email {
+    margin-top: var(--s-24);
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: var(--t-16);
+    color: var(--goldspike);
+  }
+
+  .wbb-email a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wbb-footer nav a {
+    color: var(--paper);
+    text-decoration: none;
+    display: block;
+    padding: 4px 0;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: var(--t-13);
+    border-bottom: 1px solid transparent;
+    width: max-content;
+    transition: border-color 220ms var(--ease-out-q);
+  }
+
+  .wbb-footer nav a:hover { border-bottom-color: var(--goldspike); }
+
+  .wbb-tap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-24);
+  }
+
+  .wbb-tap {
+    font-family: var(--serif);
+    font-size: var(--t-13);
+    line-height: 1.55;
+    opacity: 0.85;
+  }
+
+  .wbb-tap b {
+    display: block;
+    font-family: var(--display);
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    font-size: var(--t-14);
+    color: var(--goldspike);
+    opacity: 1;
+    margin-bottom: 4px;
+  }
+
+  .wbb-tap em {
+    font-style: italic;
+    opacity: 0.55;
+  }
+
+  .wbb-colophon {
+    max-width: var(--container);
+    margin: var(--s-48) auto 0;
+    padding: var(--s-24) var(--s-32) 0;
+    border-top: 1px solid var(--ink-line);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--display);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: var(--t-10);
+    color: var(--granite);
+  }
+
+  @media (max-width: 1024px) {
+    .wbb-footer-inner { grid-template-columns: 1fr 1fr; }
+    .wbb-tap-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .wbb-footer-inner { grid-template-columns: 1fr; gap: var(--s-32); }
+    .wbb-colophon { flex-direction: column; gap: 8px; padding: var(--s-24) var(--s-16) 0; }
+  }
+</style>
+
+<div class="wbb-footer">
+  <div class="wbb-footer-inner">
+    <div>
+      <span class="wbb-wordmark-lg"><span class="wbb-spike" aria-hidden="true"></span>WASATCH BACK</span>
+      <p class="wbb-tagline">Brewing on the east slope since 1996. Six beers, two taprooms, one range.</p>
+      <p class="wbb-email"><a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></p>
+    </div>
+    <nav aria-label="Footer">
+      <p class="wbb-footer-h4">The site</p>
+      <a href="/">Home</a>
+      <a href="/beers">Beers</a>
+      <a href="/the-brewery">The Brewery</a>
+      <a href="/taprooms">Taprooms</a>
+    </nav>
+    <div>
+      <p class="wbb-footer-h4">Taprooms</p>
+      <div class="wbb-tap-grid">
+        <div class="wbb-tap">
+          <b>Heber Valley</b>
+          <em>[ address placeholder ]</em><br>
+          Heber City, UT<br>
+          <em>[ phone placeholder ]</em>
+        </div>
+        <div class="wbb-tap">
+          <b>Park City</b>
+          <em>[ address placeholder ]</em><br>
+          Park City, UT<br>
+          <em>[ phone placeholder ]</em>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wbb-colophon">
+    <span>&copy; 1996&ndash;2026 Wasatch Back Beerworks</span>
+    <span>Heber Valley &middot; Park City &middot; Utah</span>
+  </div>
+</div>

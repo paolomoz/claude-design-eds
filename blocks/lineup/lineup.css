@@ -1,0 +1,202 @@
+/* Lineup — the six-beer substrate grid.
+   CSS lifted verbatim from home-proposed.html (.ds-section / .ds-section-head /
+   .ds-beer-grid / .ds-beer + per-beer substrate rules, lines 357-415) and
+   scoped under .lineup. Global tokens + button system live in styles/styles.css. */
+
+/* The section background (if any) stays full-bleed; the CONTENT is wrapped to
+   --container, recreating the prototype's .ds-section max-width/padding. */
+.lineup .lineup-wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--s-96) var(--s-32);
+}
+
+.lineup .lineup-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-24);
+  margin-bottom: var(--s-48);
+  padding-bottom: var(--s-16);
+  border-bottom: 1px solid var(--ink);
+}
+
+.lineup .lineup-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  letter-spacing: 0.2em;
+  color: var(--ink);
+}
+
+.lineup .lineup-head h2 {
+  font-size: var(--t-49);
+  color: var(--ink);
+}
+
+.lineup .lineup-more {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-13);
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--goldspike);
+  padding-bottom: 2px;
+}
+
+.lineup .lineup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.lineup .lineup-beer {
+  background: var(--substrate);
+  color: var(--paper);
+  padding: var(--s-32);
+  display: grid;
+  grid-template-rows: 1fr auto auto auto;
+  min-height: 320px;
+  text-decoration: none;
+  transition: transform 280ms var(--ease-out-q);
+  position: relative;
+  overflow: hidden;
+}
+
+.lineup .lineup-beer[data-ink="dark"] {
+  color: var(--ink);
+}
+
+.lineup .lineup-beer:hover {
+  transform: translateY(-2px);
+}
+
+.lineup .lineup-beer .lineup-beer-vernacular {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--t-13);
+  line-height: 1.5;
+  align-self: end;
+  max-width: 32ch;
+  opacity: 0.85;
+}
+
+.lineup .lineup-beer .lineup-beer-name {
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: var(--t-37);
+  line-height: 0.95;
+  margin-top: var(--s-24);
+}
+
+.lineup .lineup-beer .lineup-beer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-12);
+  margin-top: var(--s-8);
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--t-13);
+}
+
+.lineup .lineup-beer .lineup-badge {
+  display: inline-block;
+  margin-top: var(--s-12);
+  padding: 4px 8px;
+  border: 1px solid currentcolor;
+  font-family: var(--display);
+  font-size: var(--t-10);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  align-self: flex-start;
+  width: max-content;
+}
+
+.lineup .lineup-beer .lineup-beer-num {
+  position: absolute;
+  top: var(--s-16);
+  right: var(--s-24);
+  font-family: var(--display);
+  font-size: var(--t-12);
+  letter-spacing: 0.18em;
+  opacity: 0.55;
+}
+
+.lineup .lineup-beer[data-beer="goldspike"] {
+  --substrate: var(--substrate-goldspike);
+
+  color: var(--ink);
+}
+
+.lineup .lineup-beer[data-beer="antelope"] {
+  --substrate: var(--substrate-antelope);
+
+  color: var(--ink);
+}
+
+.lineup .lineup-beer[data-beer="powder-day"] {
+  --substrate: var(--substrate-powder-day);
+
+  color: var(--ink);
+}
+
+.lineup .lineup-beer[data-beer="tabernacle"] {
+  --substrate: var(--substrate-tabernacle);
+
+  color: var(--paper);
+}
+
+.lineup .lineup-beer[data-beer="cutthroat"] {
+  --substrate: var(--substrate-cutthroat);
+
+  color: var(--paper);
+}
+
+.lineup .lineup-beer[data-beer="hoarfrost"] {
+  --substrate: var(--substrate-hoarfrost);
+
+  color: var(--paper);
+}
+
+/* tablet — 2 columns @1024 (prototype's 900px breakpoint maps to its layout;
+   brief specifies 2-col @1024) */
+@media (width <= 1024px) {
+  .lineup .lineup-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lineup .lineup-wrap {
+    padding: var(--s-64) var(--s-24);
+  }
+}
+
+/* mobile — 1 column @640 */
+@media (width <= 640px) {
+  .lineup .lineup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lineup .lineup-wrap {
+    padding: var(--s-48) var(--s-16);
+  }
+
+  .lineup .lineup-head h2 {
+    font-size: var(--t-37);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineup .lineup-beer {
+    transition: none;
+  }
+
+  .lineup .lineup-beer:hover {
+    transform: none;
+  }
+}

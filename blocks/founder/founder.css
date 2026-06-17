@@ -1,0 +1,98 @@
+/* ===========================================================
+   FOUNDER — fade-to-page portrait
+   Lifted verbatim from the stardust prototype .ds-founder,
+   scoped under .founder. Plain-bg section: the content is
+   wrapped in the --container max-width; the section is full-bleed.
+   ============================================================ */
+
+.founder .founder-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--s-128) var(--s-32);
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: var(--s-96);
+  align-items: center;
+}
+
+.founder .founder-portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  max-width: 480px;
+}
+
+.founder .founder-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+.founder .founder-copy .founder-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  letter-spacing: 0.2em;
+  color: var(--sunburn);
+}
+
+.founder .founder-copy h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(40px, 4.8vw, 64px);
+  margin: var(--s-16) 0 var(--s-24);
+  max-width: 18ch;
+}
+
+.founder .founder-copy p {
+  font-family: var(--serif);
+  font-size: var(--t-21);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+.founder .founder-copy p + p {
+  margin-top: var(--s-16);
+}
+
+.founder .founder-sig {
+  display: inline-block;
+  margin-top: var(--s-32);
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: var(--t-12);
+  color: var(--granite);
+  border-top: 1px solid var(--granite-soft);
+  padding-top: var(--s-12);
+}
+
+@media (width <= 1024px) {
+  .founder .founder-inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-32);
+    padding: var(--s-64) var(--s-24);
+  }
+}
+
+@media (width <= 640px) {
+  .founder .founder-inner {
+    padding: var(--s-48) var(--s-16);
+  }
+
+  .founder .founder-portrait {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder *,
+  .founder *::before,
+  .founder *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}

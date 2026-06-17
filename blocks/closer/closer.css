@@ -1,0 +1,87 @@
+/* ===========================================================
+   CLOSER BAND — cinematic atmospheric, biggest type on page
+   Lifted from prototype .ds-closer-band, scoped under .closer
+   =========================================================== */
+.closer {
+  position: relative;
+  color: var(--paper);
+  padding: 180px var(--s-32);
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.closer .closer-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/img/wbb/home-hero-wide.jpg");
+  background-size: cover;
+  background-position: center 70%;
+  filter: brightness(0.42) contrast(1.05);
+  z-index: -2;
+}
+
+.closer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(198 58 46 / 16%) 0%, rgb(26 22 18 / 68%) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.closer .closer-wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.closer .closer-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  color: var(--goldspike);
+  letter-spacing: 0.32em;
+  display: inline-block;
+  padding: var(--s-12) var(--s-24);
+  border-top: 1px solid rgb(232 184 48 / 55%);
+  border-bottom: 1px solid rgb(232 184 48 / 55%);
+  margin: 0;
+}
+
+.closer h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(56px, 10vw, 156px);
+  line-height: 0.9;
+  color: var(--paper);
+  max-width: 14ch;
+  margin: var(--s-32) auto 0;
+  text-shadow: 0 8px 40px rgb(0 0 0 / 55%);
+}
+
+.closer .closer-sig {
+  display: inline-block;
+  margin-top: var(--s-48);
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: var(--t-12);
+  color: rgb(245 241 234 / 75%);
+}
+
+/* ----------------------------------------- responsive */
+@media (width <= 1024px) {
+  .closer {
+    padding: 120px var(--s-24);
+  }
+}
+
+@media (width <= 640px) {
+  .closer {
+    padding: 80px var(--s-16);
+  }
+
+  .closer h2 {
+    font-size: clamp(40px, 13vw, 80px);
+  }
+}

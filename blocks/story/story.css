@@ -1,0 +1,140 @@
+/* ===========================================================
+   STORY BAND — full-bleed brewery interior
+   Lifted from home-proposed.html (.ds-story-cinematic, lines 499-562),
+   scoped under .story.
+   ============================================================ */
+.story {
+  position: relative;
+  color: var(--paper);
+  padding: 220px 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Photo on -bg with filter; scrim on a separate pseudo so the filter doesn't dim it. */
+.story .story-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/img/wbb/brewery-mash-tun.jpg");
+  background-size: cover;
+  background-position: center 58%;
+  filter: saturate(0.55) brightness(0.32);
+  z-index: -2;
+}
+
+/* Wide elliptical dark wash centered on the type column, then a near-opaque
+   scrim band across the body-text region (45-75% vertical). The photograph
+   reads as atmospheric texture top and bottom; the body band is opaque enough
+   that paper text clears AA on every underlying pixel. */
+.story::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 35% 50%, rgb(26 22 18 / 55%) 0%, rgb(26 22 18 / 78%) 60%, rgb(26 22 18 / 92%) 100%),
+    linear-gradient(180deg,
+      rgb(26 22 18 / 60%) 0%,
+      rgb(26 22 18 / 55%) 22%,
+      rgb(26 22 18 / 78%) 42%,
+      rgb(26 22 18 / 92%) 55%,
+      rgb(26 22 18 / 90%) 75%,
+      rgb(26 22 18 / 88%) 100%);
+  pointer-events: none;
+}
+
+.story .story-inner {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--s-32);
+  display: grid;
+  gap: var(--s-32);
+}
+
+/* Eyebrow — base display treatment + story (goldspike) override. */
+.story .story-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  color: var(--goldspike);
+  letter-spacing: 0.24em;
+}
+
+.story .story-inner h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(48px, 7vw, 116px);
+  color: var(--paper);
+  text-shadow: 0 6px 36px rgb(0 0 0 / 55%);
+  max-width: 18ch;
+  line-height: 0.92;
+}
+
+.story .story-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-48);
+  margin-top: var(--s-24);
+}
+
+.story .story-body p {
+  font-family: var(--serif);
+  font-size: var(--t-21);
+  line-height: 1.55;
+  color: rgb(245 241 234 / 85%);
+  max-width: 40ch;
+}
+
+.story .story-closer {
+  margin-top: var(--s-48);
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--t-37);
+  color: var(--paper);
+  border-top: 1px solid rgb(232 184 48 / 55%);
+  padding-top: var(--s-24);
+  max-width: 24ch;
+}
+
+/* Responsive — lines 684-685 (tablet) and 711-715 (mobile). */
+@media (width <= 900px) {
+  .story {
+    padding: 140px 0;
+  }
+
+  .story .story-body {
+    grid-template-columns: 1fr;
+    gap: var(--s-24);
+  }
+}
+
+@media (width <= 640px) {
+  .story {
+    padding: 100px 0;
+  }
+
+  .story .story-inner {
+    padding: 0 var(--s-16);
+  }
+
+  .story .story-inner h2 {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+
+  .story .story-body p {
+    font-size: var(--t-16);
+  }
+
+  .story .story-closer {
+    font-size: var(--t-21);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

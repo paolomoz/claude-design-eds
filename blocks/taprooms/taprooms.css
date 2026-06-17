@@ -1,0 +1,174 @@
+/* taprooms — section head + photographic two-panel diptych.
+   Tokens (--paper, --ink, --goldspike, --sunburn, --display, --serif, type/space
+   scale, --container, --ease-out-q) are defined globally in styles/styles.css. */
+
+/* ---- section-head wrap (max-width content rail; background stays full-bleed) */
+.taprooms .taprooms-head-wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--s-32) var(--s-32);
+}
+
+.taprooms .ds-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-24);
+  margin-bottom: var(--s-32);
+}
+
+.taprooms .ds-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  letter-spacing: 0.2em;
+  color: var(--ink);
+}
+
+.taprooms .ds-section-head h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-37);
+  color: var(--ink);
+}
+
+.taprooms .ds-section-head .ds-more {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-13);
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--goldspike);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+
+/* ---- diptych (full bleed) */
+.taprooms .ds-taprooms-diptych {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  background: var(--ink);
+  position: relative;
+}
+
+/* center hairline rule in goldspike */
+.taprooms .ds-taprooms-diptych::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--goldspike) 30%, var(--goldspike) 70%, transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.taprooms .ds-tap-panel {
+  position: relative;
+  min-height: 660px;
+  display: flex;
+  align-items: flex-end;
+  color: var(--paper);
+  overflow: hidden;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.taprooms .ds-tap-panel-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+  transition: transform 800ms var(--ease-out-q);
+}
+
+/* bottom-weighted veil: photo carries the upper third; type band (55-100%) is dark */
+.taprooms .ds-tap-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 0%, rgb(26 22 18 / 6%) 32%, rgb(26 22 18 / 55%) 52%, rgb(26 22 18 / 82%) 70%, rgb(26 22 18 / 92%) 88%, rgb(26 22 18 / 95%) 100%),
+    linear-gradient(90deg, rgb(26 22 18 / 40%) 0%, rgb(26 22 18 / 8%) 55%, transparent 100%);
+  z-index: -1;
+  transition: opacity 400ms var(--ease-out-q);
+}
+
+.taprooms .ds-tap-panel:hover .ds-tap-panel-bg { transform: scale(1.04); }
+.taprooms .ds-tap-panel:hover::before { opacity: 0.75; }
+
+.taprooms .ds-tap-content {
+  position: relative;
+  padding: var(--s-48);
+  max-width: 480px;
+}
+
+.taprooms .ds-tap-content .ds-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--t-12);
+  color: var(--goldspike);
+  letter-spacing: 0.24em;
+}
+
+.taprooms .ds-tap-content h3 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(40px, 5vw, 72px);
+  color: var(--paper);
+  margin: var(--s-12) 0 var(--s-8);
+  text-shadow: 0 4px 24px rgb(0 0 0 / 50%);
+}
+
+.taprooms .ds-tap-content .ds-tap-est {
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: var(--t-12);
+  color: var(--sunburn);
+  margin-bottom: var(--s-24);
+}
+
+.taprooms .ds-tap-content .ds-tap-blurb {
+  font-family: var(--serif);
+  font-size: var(--t-16);
+  line-height: 1.55;
+  color: rgb(245 241 234 / 88%);
+  max-width: 38ch;
+  margin-bottom: var(--s-24);
+}
+
+.taprooms .ds-tap-content .ds-tap-cta {
+  display: inline-block;
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: var(--t-13);
+  color: var(--paper);
+  border-bottom: 2px solid var(--goldspike);
+  padding-bottom: 4px;
+}
+
+/* ---- responsive: 1-col, drop the center rule */
+@media (width <= 1024px) {
+  .taprooms .ds-taprooms-diptych {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .taprooms .ds-taprooms-diptych::after { display: none; }
+  .taprooms .ds-tap-panel { min-height: 480px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taprooms .ds-tap-panel-bg,
+  .taprooms .ds-tap-panel::before { transition: none; }
+
+  .taprooms .ds-tap-panel:hover .ds-tap-panel-bg { transform: none; }
+}
