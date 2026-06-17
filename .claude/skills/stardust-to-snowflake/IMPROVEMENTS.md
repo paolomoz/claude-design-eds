@@ -200,7 +200,19 @@ After segmentation the "cells" are bare sibling elements (`<img>`/`<a>`/`<h3>`),
 test-17 ran `--sections .hero`; the hero matched cleanly, but the page-wide CONTENT/IMAGERY GAP flags pointed at the services block dropping 3/4 cards. An agent focused on the named section can rationalise GAP flags as "outside my section". 
 **Implemented:** Step 10 — GAP flags are whole-page (computed regardless of `--sections`, which only picks screenshots); when either fires, run an unscoped full-page diff and locate the dropped block before trusting the focused pass. convert.workflow.js validate prompt updated.
 
-**Implemented (#40–54):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 55. 🟠 Cloning a headline cell's childNodes into a live heading nests `<h1>` in `<h1>`
+test-18's story-hero cloned each slide cell's *childNodes* into its live `<h1>`; the cells wrapped text in their own `<h1>` (per #35/#42), producing `<h1><h1>…</h1></h1>` — a duplicate heading at 2× font. Caught by the visual-diff (second h1 at doubled size).
+**Implemented:** Step 8 — unwrap first: `const inner = cell.querySelector('h1..h6') || cell; clone inner.childNodes`. Assert one `<h1>`, 0 descendant headings in the live headline.
+
+### 56. 🟠 A multi-row head leaks fragments into the item grid (inverse of #52)
+story-cards took "the first no-image row" as the head; the head was authored as 3 separate rows (eyebrow / heading / CTA), so the section heading + CTA became bogus 22px cards. Recurs on any section-header authored multi-row.
+**Implemented:** Step 8 — the head is everything BEFORE the first content/image cell; collect ALL leading no-image rows. Local-QA: grid holds exactly the expected count; section heading at section-title size.
+
+### 57. 🟠 Carousel/rotator lead emits N server `<h1>`s — author one h1, rest h2
+A rotating hero with N slide headlines each as `<h1>` delivers N `<h1>`s (the block rotates one live `<h1>` post-JS, but crawlers see all N) — violates #35. test-18 had 6.
+**Implemented:** Step 8 + #35 — author the first slide's headline as the page `<h1>`, the rest as `<h2>` (block reads headings generically so the carousel still works). Local-QA: `<h1>` count in the content file = 1. (Applied to test-18.)
+
+**Implemented (#40–57):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
 
 ---
 
