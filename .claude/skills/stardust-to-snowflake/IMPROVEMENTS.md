@@ -236,7 +236,11 @@ All 6 test-20 blocks were generated with multi-row index contracts (`rows[0]=eye
 test-21's beer-rail rendered 0 of 10 cards: each beer is ONE delimited `<p>` line (`Furious · IPA · 6.7% · Year-round`) with no per-card heading, so #52's heading-boundary segmentation found only the section `<h2>` → zero card boundaries, and #50 is framed for data lists not card tiles. Silent (the section heading still shows); caught only by the #49 CONTENT GAP / a card-count assert.
 **Implemented:** Step 8 #52 rule — segmentation order: (1) per-card heading boundary, ELSE (2) one card per delimited `<p>` line (split on `·`: name / meta / trailing-keyword badge), ELSE (3) one-row-per-unit. Assert the count even when no per-card headings were found.
 
-**Implemented (#40–63):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 64. 🟠 Card segmentation keyed on `<picture>` collapses N cards to 1 on image-less content (reinforces #52)
+test-22's featured-beers keyed card boundaries on the can `<picture>`, but the content is image-less (#2) so all 3 beers collapsed into 1 — even though each had a per-card `<h3>`. The sibling events.js (heading boundary, picture as hint) was fine. Caught by #49.
+**Implemented:** Step 8 #52 — never use `<picture>` as the primary card boundary; segment on the per-card heading first, picture only a media hint. A grid rendering 1-of-N is the symptom.
+
+**Implemented (#40–64):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
