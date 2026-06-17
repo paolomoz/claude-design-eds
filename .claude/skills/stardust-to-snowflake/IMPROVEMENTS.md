@@ -542,6 +542,11 @@ PUT + `admin.hlx.page` preview via `curl`.
 **Proposed:** split SKILL.md into "methodology" (input → blocks → content →
 deploy) and "sprinkle integration", so the methodology is usable headlessly,
 and document the curl-based DA deploy as the non-sprinkle path.
+**Update (Slicc removal):** the sprinkle/cone host integration was subsequently
+removed entirely (the `## Sprinkle integration` section, the mount transport in
+da-deploy-protocol.md, `snowflake.shtml`, and `DA-INTEGRATION-PLAN.md` deleted)
+ahead of moving the skill into the `stardust` plugin. The headless DA Source API
+deploy is now the only documented path.
 
 ### 11. 🟠 Font step assumes variable fonts (`@fontsource-variable`)
 Barlow is a **non-variable** Google font (named weights). The skill's Step 4

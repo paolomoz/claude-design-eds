@@ -31,7 +31,7 @@ This skill depends on the `aem` skill from `ai-ecoverse/skills` for the EDS-spec
 upskill ai-ecoverse/skills --skill aem
 ```
 
-The skill is installed to `/workspace/skills/aem/SKILL.md`. The sprinkle-driven flow auto-detects this on load and fires the `install-deps` lick when missing (see Sprinkle integration). When invoked from chat, run the command yourself before starting any of the steps below.
+Run the command above before starting any of the steps below.
 
 ## Runtime bootstrap (vanilla aem-boilerplate targets)
 
@@ -83,224 +83,21 @@ samples            # reference prototypes, not project code
 ```
 Your generated blocks + `styles/styles.css` still lint clean under airbnb (expand any single-line multi-declaration CSS rules the prototype used). Alternatively, adopt the author-kit `eslint.config.js` (helix) wholesale.
 
-## Running headless (no sprinkle)
+## Deploy (DA Source API, from a local agent)
 
-The **Sprinkle integration** section below assumes the cloud sprinkle UI + cone runtime (`mount`, `write_file`, `sprinkle send`, `scoop_wait`). **Steps 1–9 are the runtime-agnostic methodology** and work unchanged from a local agent (Claude Code / CLI). Only the deploy transport differs:
+**Steps 1–9 are the conversion methodology**; deploy is the one transport-specific step. From a local agent (Claude Code / CLI), each converted page deploys headlessly:
 
-| | Sprinkle / cone | Headless (local agent) |
-|---|---|---|
-| Code | committed in cone, pushed | `git push` the branch → AEM Code Sync builds it |
-| Content write | `write_file /mnt/da/...` | DA Source API: `PUT admin.da.live/source/<org>/<repo>/<path>.html` (multipart, field name **`data`**, `type=text/html`) |
-| Make live | `mount refresh` | `POST admin.hlx.page/preview/<org>/<repo>/<branch>/<path>` (then optionally `/live/...`) |
-| Sanitise | `tools/da/sanitise.js` | same — run it before the PUT |
-| Auth | provider OAuth | IMS token (`DA_TOKEN`) — see the `da-content` / `da-auth` skills |
+| Stage | How |
+|---|---|
+| Code | `git push` the branch → AEM Code Sync builds it |
+| Sanitise | `tools/da/sanitise.js` — run it before the write (DA corrupts raw UTF-8) |
+| Content write | DA Source API: `PUT admin.da.live/source/<org>/<repo>/<path>.html` (multipart, field name **`data`**, `type=text/html`) |
+| Make live | `POST admin.hlx.page/preview/<org>/<repo>/<branch>/<path>` (then optionally `/live/...`) |
+| Auth | IMS token (`DA_TOKEN`) — see the `da-content` / `da-auth` skills |
 
-The content payload is a **body fragment** either way (see Step 9). The headless deploy needs the **code branch pushed to GitHub** so the branch preview (`<branch>--<repo>--<org>.aem.page`) renders with your blocks. See `da-deploy-protocol.md` for the full curl contract.
+The content payload is a **body fragment** (see Step 9). The deploy needs the **code branch pushed to GitHub** so the branch preview (`<branch>--<repo>--<org>.aem.page`) renders with your blocks. See `da-deploy-protocol.md` for the full curl contract.
 
 **Token hygiene (#16).** The IMS token typically lives in repo `.env` as `DA_TOKEN`. Before the first commit, make sure `.gitignore` excludes `.env`, `.env.*`, and `qa/` (the local QA harness) **on the branch you'll branch tests from** — otherwise every test subbranch re-exposes the token. Keep `samples/` out of commits too. Dev tokens last ~24h; a `401` with an empty body means expired → refresh and retry (the write is idempotent).
-
-## Sprinkle integration
-
-When invoked through the snowflake sprinkle (`.claude/skills/stardust-to-snowflake/snowflake.shtml`), the user drives the conversion through four stepper panels: **Scoop** (target repo + branch), **Sprinkle** (file selection), **Swirl** (conversion), **Serve** (results). The Scoop and Swirl panels emit licks; the Sprinkle panel scans the filesystem itself through the bridge file APIs and never reaches the agent.
-
-Push updates with: `sprinkle send snowflake '<json>'`.
-
-### Lick: `install-deps` (auto-fired on load when prerequisites missing)
-
-Payload: empty.
-
-The sprinkle fires this on open if `/workspace/skills/aem/SKILL.md` is absent. The Connect button stays disabled until the dependency is confirmed installed.
-
-**Run `upskill` in the cone, never in a scoop.** Scoops are sandboxed and cannot write under `/workspace`, so `upskill ai-ecoverse/skills --skill aem` will fail in a scoop with no useful diagnostic. The cone has the filesystem access required to install the skill into `/workspace/skills/`.
-
-Steps (executed in the cone):
-
-1. Run `upskill ai-ecoverse/skills --skill aem`.
-2. Verify `/workspace/skills/aem/SKILL.md` now exists.
-3. On success: `sprinkle send snowflake '{"type":"deps-installed"}'` — the sprinkle re-checks and unlocks the Connect button.
-4. On failure: `sprinkle send snowflake '{"type":"deps-error","message":"<reason>"}'` — the sprinkle shows a Retry link.
-
-### Lick: `connect-repo` (Scoop panel)
-
-Payload: `{ repo: "<owner>/<name>", branch: "<branch>", daSpace: "<daOrg>/<daRepo>", daPath: "/<path>" }`.
-
-Split `repo` on `/` into `<owner>` and `<name>` (e.g. `ai-ecoverse/snowflake` → owner `ai-ecoverse`, name `snowflake`). These names are reused throughout the rest of the flow — the local clone always lives at `/workspace/<name>`.
-
-The `branch` field is pre-filled with a fresh short hash on each sprinkle load. Treat the value as authoritative — the user may have replaced it with an existing branch name they want to target.
-
-`daSpace` contains the DA space in `<daOrg>/<daRepo>` format. `daPath` is the sub-path within that DA repo where content will be written (defaults to `/<branch>`).
-
-Steps:
-
-1. If `/workspace/<name>/.git` doesn't exist, clone there: `git clone https://github.com/<owner>/<name> /workspace/<name>`. Always use the repo basename as the directory — the upload step depends on this.
-2. `git fetch origin` to sync remote refs.
-3. Resolve `<branch>` in this order:
-   - Local branch `<branch>` exists → `git checkout <branch>`.
-   - Remote branch `origin/<branch>` exists → `git checkout -b <branch> origin/<branch>` (tracks remote).
-   - Otherwise → create it from the origin default branch: `git checkout -b <branch> origin/main` (fall back to `origin/master` when main is absent).
-4. **Mount the DA space.** Split `daSpace` on `/` into `<daOrg>` and `<daRepo>`. Run:
-   ```bash
-   mount --source da://<daOrg>/<daRepo> /mnt/da
-   ```
-   Verify with `mount list` — confirm `/mnt/da` appears in the output. If the mount probe fails with `EACCES`, push an error telling the user to authenticate via Settings → Providers → Adobe (or `oauth-token adobe`) and retry.
-5. Push: `sprinkle send snowflake '{"type":"repo-connected","daMount":"/mnt/da"}'` so the UI advances to the Sprinkle panel.
-
-On any failure, push `sprinkle send snowflake '{"type":"error","message":"<reason>"}'` and let the user retry from the Scoop panel.
-
-### Sprinkle panel — no lick
-
-The Sprinkle panel walks the chosen folder on its own using `slicc.readDir` and `slicc.stat`, filters `.html` files, and renders the tree directly. There is no agent round-trip for file discovery; trust the `files` payload that arrives with `start-conversion`.
-
-### Lick: `start-conversion` (Swirl panel)
-
-Payload: `{ files: ["<absolute path>", ...], daPath: "/<path>" }` — every entry is an `.html` path the sprinkle has already verified via the bridge. `daPath` is the DA sub-path where content pages are deployed. No re-validation needed.
-
-**Do not use `scoop_wait` for this lick.** Perform the conversion work directly in the cone or dispatch a fire-and-forget scoop; do not gate progress on a wait timer. Completion is signalled by the `conversion-complete` sprinkle push, not by scoop resolution.
-
-The conversion runs in two phases: a one-time **site setup** that produces site-wide artifacts, then a **per-file loop** that scaffolds each page. **Do not collapse the two — running site-setup tasks per-file silently overwrites prior work; skipping them entirely leaves the site without global tokens, fonts, buttons, or header/footer and every page renders unstyled.**
-
-#### Phase 1 — site setup (run ONCE for the whole batch, before any per-file work)
-
-Run Steps 1–6 from the [Steps](#steps) section below in order. None of them are per-file:
-
-1. **Audit** (Step 1) — cross-file section inventory of every prototype.
-2. **Decide names + reuse** (Step 2) — lock block naming and reuse decisions across the whole batch.
-3. **Foundation** (Step 3) — write `styles/styles.css` with `:root` tokens, reset, and the EDS section scaffold.
-4. **Self-host fonts** (Step 4) — fetch woff2 files into `styles/fonts/`, write `@font-face` declarations in `styles/styles.css`, and set up the `body.session` metric-matched fallback pattern.
-5. **Button system** (Step 5) — append the global button CSS to `styles/styles.css`.
-6. **Chrome** (Step 6) — extract the header and footer from the prototype as static HTML fragments. Write `fragments/header.html` and `fragments/footer.html` at the repo root. These are raw HTML with an inline `<style>` block — no EDS authoring shape, no block JS. They are committed to GitHub (code) and served from the code origin.
-
-Phase 1 produces no `conversion-progress` events; the Swirl panel just shows the bar at 0 / N until the first per-file event in Phase 2.
-
-#### Phase 2 — per-file conversion
-
-For each file in `files`, in order, push two `conversion-progress` events around **only the per-page work (Steps 7–9: block JS scaffold + content page scaffold)**. The global setup is already done.
-
-```
-sprinkle send snowflake '{"type":"conversion-progress","file":"<path>","status":"running","current":<i>,"total":<N>}'
-# ...run Steps 7–9 below for this file...
-sprinkle send snowflake '{"type":"conversion-progress","file":"<path>","status":"done","current":<i>,"total":<N>}'
-```
-
-`current` is 1-based; `total` is `files.length`. Use `"status":"error"` on per-file failure and continue with the rest — a single bad file shouldn't abort the batch.
-
-When all files are processed, commit and push to the branch resolved during `connect-repo` (and optionally open a PR), then advance the UI to the Serve panel by emitting:
-
-```
-sprinkle send snowflake '{"type":"conversion-complete","files":["<basename1>","<basename2>",...],"branch":"<branch>","branchUrl":"https://github.com/<owner>/<name>/tree/<branch>","blocks":<N>,"prUrl":"<optional>"}'
-```
-
-`files` are the converted page basenames **without** the `.html` extension (e.g. `home` for `home.html`). `branchUrl` becomes the "View on GitHub" link in the Serve panel's branch card. `blocks` is the total EDS blocks generated.
-
-Note: Static fragments (`fragments/header.html`, `fragments/footer.html`) are committed to the GitHub branch along with block code — they are NOT deployed to DA. They don't appear in the `files` array and are not part of the deploy sequence.
-
-The conversion handler ends here. The sprinkle renders the Serve panel with the Documents section (pages to deploy to DA), all stages pending, and **immediately fires a `start-deploy` lick** to re-engage the cone for the actual deployment — see the next section.
-
-### Lick: `start-deploy` (auto-fired by the sprinkle after `conversion-complete`)
-
-Payload: `{ files: ["<basename>", ...], branch: "<branch>", daSpace: "<daOrg>/<daRepo>", daPath: "/<path>" }` — the page basenames and branch the sprinkle just received in `conversion-complete`, plus the DA target fields from state. `<owner>` and `<name>` are still the values resolved during `connect-repo`.
-
-This lick exists so the deploy sequence is event-driven and cannot be silently skipped. **Begin the write → refresh → live sequence as soon as you receive it; do not wait for any further user input.**
-
-**Only content pages are deployed to DA.** Static fragments (header/footer) are code committed to the GitHub branch — they don't go through the DA deploy flow. Every `deploy-progress` event MUST carry `kind: "page"` so the sprinkle routes the update correctly.
-
-#### Prerequisites
-
-The DA mount at `/mnt/da` MUST already be active (established during `connect-repo`). Verify with `mount list` before starting. If the mount is gone (e.g. session expired), re-mount:
-
-```bash
-mount --source da://<daOrg>/<daRepo> /mnt/da
-```
-
-Split `daSpace` on `/` to get `<daOrg>` and `<daRepo>`.
-
-#### URL templates
-
-| Kind | Local path                           | Mount write path              | DA Edit URL (`daUrl`)                                      | Live URL (`liveUrl`)                                            |
-| ---- | ------------------------------------ | ----------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
-| page | `/workspace/<name>/content/<n>.html` | `/mnt/da/<daPath>/<n>.html` | `https://da.live/edit#/<daOrg>/<daRepo>/<daPath>/<n>` | `https://<branch>--<daRepo>--<daOrg>.aem.live/<daPath>/<n>` |
-
-The local file has the `.html` extension; mount write paths include `.html`; the DA Edit and Live URLs do NOT include the extension. Use the branch host prefix (`<branch>--<daRepo>--<daOrg>`) for `liveUrl`, never `main--`.
-
-#### Sequence per item
-
-For each page (sequential), run three stages in order. Skip subsequent stages on a stage failure for that item; other items keep going.
-
-**1. Write** — sanitise non-ASCII characters first, then write via the DA mount. DA strips `<head>` on ingestion and parses without a charset declaration, so any multibyte UTF-8 sequence (`·`, `–`, `→`, accented letters, emoji) gets corrupted to U+FFFD. The repo ships `tools/da/sanitise.js`, a zero-dependency Node script that rewrites all non-ASCII code points to named or numeric HTML entities in-place — entities survive the round-trip unchanged.
-
-```bash
-node tools/da/sanitise.js <local path>          # in-place, idempotent
-```
-
-Then read the sanitised content and write it to the mount:
-
-```bash
-cat <local path>
-# Use write_file to write the content:
-write_file /mnt/da/<daPath>/<relative>.html <content>
-```
-
-This applies to **every** deployed file — both pages and fragments. Skipping the sanitise step is the most common cause of corrupted typography in the deployed pages. The script is idempotent (running it twice is a no-op), so you can safely call it before each write without checking whether the file is already clean.
-
-Surround the write with:
-
-```
-sprinkle send snowflake '{"type":"deploy-progress","kind":"<kind>","file":"<n>","stage":"write","status":"running"}'
-# ...sanitise + write_file...
-sprinkle send snowflake '{"type":"deploy-progress","kind":"<kind>","file":"<n>","stage":"write","status":"done","daUrl":"<DA Edit URL>"}'
-```
-
-The `daUrl` activates the "DA Edit" button on that item's row.
-
-**2. Refresh** — confirm the write landed on the DA backend. Run:
-
-```bash
-mount refresh /mnt/da
-```
-
-Parse the output — it prints a structured summary like `Refreshed /mnt/da: +2 -1 ~3 (47 unchanged, 0 errors)`. If `0 errors` appears → success. If errors > 0, mark the item as `error`.
-
-```
-sprinkle send snowflake '{"type":"deploy-progress","kind":"<kind>","file":"<n>","stage":"refresh","status":"running"}'
-# ...mount refresh...
-sprinkle send snowflake '{"type":"deploy-progress","kind":"<kind>","file":"<n>","stage":"refresh","status":"done"}'
-```
-
-**This is the critical confirmation step.** Without it, a write could be cached locally in the mount layer but not yet synced to the DA backend. Do NOT skip this or collapse it into the write stage.
-
-**3. Live** — DA content is live immediately after a confirmed refresh (no separate publish API call). Resolve the live URL and report:
-
-```
-sprinkle send snowflake '{"type":"deploy-progress","kind":"<kind>","file":"<n>","stage":"live","status":"done","liveUrl":"<Live URL>"}'
-```
-
-On any failure, send `"status":"error"` with an optional `"message"` and move on — one bad item must not block the rest.
-
-#### Mount persistence
-
-Do NOT unmount `/mnt/da` after deploy. The mount stays active for:
-- Ongoing bidirectional sync (user edits in DA UI → `mount refresh` → local view updates)
-- Subsequent conversions without re-mounting
-- Manual edits via `write_file /mnt/da/...` from chat
-
-#### Error handling
-
-| Error | Detection | Response |
-|---|---|---|
-| `EACCES: da access denied` | Write or refresh | Push error for the item; suggest re-authenticating via Adobe provider |
-| `EBUSY: remote modified since last read` | Write conflict | Re-read the mount path (`read_file`), retry write once |
-| `EFBIG: body exceeds maxBodyBytes` | Write of very large page (>5 MB) | Report per-item error, continue with others |
-| `mount refresh` reports errors > 0 | Refresh output parsing | Mark affected item as `error`, continue with others |
-
-#### Completion
-
-When every item (fragments + pages) has reached its final stage, emit:
-
-```
-sprinkle send snowflake '{"type":"deploy-complete"}'
-```
-
-This is currently a no-op visually but reserved for future "all done" celebration / stats refresh.
 
 ## The one rule that drives everything else
 
