@@ -817,7 +817,10 @@ Read the output:
 - **Metrics JSON** — compare `proto` vs `eds`: `eyebrows`/`headings` colors (catches #38 — a primitive styled in the prototype but dropped in one block), `images` dims, and `contentBoxes` (each block's content width + left offset; a wrapped block sits at left ≈ (viewport−maxw)/2 + padding, a dropped-wrap block at left ≈ 0).
 - **Screenshots** in the `--out` dir (default `qa/`): open the full-page pair and any per-section shots and confirm fidelity.
 
-Fix the flagged few, then re-run until red flags are "none" and the metrics line up. The red-flag list doubles as a regression checklist — it is seeded from the findings above, so a new silent regression is worth adding both a fix AND a probe signal.
+- **Justified vs defect `STRETCHED IMAGE` (#45):** a stretch flag is JUSTIFIED — leave the CSS — when (a) the image is an `object-fit: cover` intentional full-bleed background/watermark, OR (b) the SAME flag appears on the proto side of the diff (a faithful lift of the prototype's own `height:Npx; padding; box-sizing:border-box` rule). "Fixing" a faithful flag only makes the EDS diverge. Treat it as a real defect ONLY when the proto renders the image at its natural AR but the EDS does not.
+- **Pre-deploy URL gate (#44):** `grep -rn "http://localhost\|aem\.page/img\|aem\.live/img" blocks/` MUST be empty. Block JS that injects fixed imagery (logos/icons/watermarks) must reference assets root-relative `/img/...`; an absolute origin baked into block JS passes local QA (the dev server is localhost:3000) but 404s in every real environment.
+
+Fix the flagged few, then re-run until red flags are "none" (or justified) and the metrics line up. The red-flag list doubles as a regression checklist — it is seeded from the findings above, so a new silent regression is worth adding both a fix AND a probe signal.
 
 ## Anti-patterns (lessons paid for the hard way)
 
@@ -849,6 +852,9 @@ Naming + reuse decisions look small but ripple through every block and content p
 
 **9. Generic placeholder image paths.**
 `/img/case-studies/foo.jpg` will 404 unless those images are uploaded. Use the prototype host URL so what you author renders correctly in EDS preview from day one.
+
+**9b. Absolute-origin image URLs baked into block JS (#44).**
+Block JS that injects fixed/non-authored imagery (logos, icons, watermarks) must reference committed assets root-relative — `/img/<brand>/x.png` — NEVER an absolute origin (`http://localhost:3000/img/...`, a branch `--…aem.page/img/...` host). An absolute origin passes local QA (the dev server *is* localhost:3000, so it loads) but 404s on every real environment. Gate before deploy: `grep -rn "http://localhost\|aem\.page/img\|aem\.live/img" blocks/` must be empty. (Authored content `<img src>` for *uploaded* assets is the #9 case — different rule.)
 
 **10. Touching `head.html` for fonts (preload included).**
 Google Fonts `<link>` tags, Adobe Fonts script tags, any CDN-hosted stylesheet, AND `<link rel="preload" as="font">` lines all belong out of `head.html`. The first three add DNS/handshake hops and external coupling; the preload looks helpful but it's not — the metric-matched `body.session` pattern (principle 3) makes preload irrelevant for CLS, and adding it splits font discovery between two files. Declare `@font-face` in `styles/styles.css` only. Document any non-self-hostable proprietary font and the CLS trade-off it imposes.
