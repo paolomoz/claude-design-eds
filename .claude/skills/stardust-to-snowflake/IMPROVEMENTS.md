@@ -248,7 +248,11 @@ test-23 lifted `--display: "Hebden Incised", …` but self-hosted only the body 
 The probe compared color (#59) and size but not font, so the #65 fallback produced no flag (sizes/colors matched; only glyphs differed). Same blind-spot class as #47/#49/#59.
 **Implemented:** `visual-diff.mjs` captures the first named family per heading + whether it loaded (`document.fonts.check`), and emits a `FONT MISMATCH` advisory when a text-matched heading's named face loaded in the proto but not the EDS. Step 10 red-flags list updated.
 
-**Implemented (#40–66):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 67. 🟠 Block CSS `background-image: url()` is an absolute-origin leak — and #9 contradicted #44
+3 of 5 #44 leaks on test-24 were CSS `background-image: url("https://…aem.page/img/…")` (full-bleed section washes), not JS — and anti-pattern #9 / the Step-9 "fully-qualified host URL" rule actively told the agent to bake exactly that absolute origin. The #44 grep gate caught it reactively, but the generation-time instruction was contradictory.
+**Implemented:** anti-pattern 9b broadened to cover block CSS `background-image: url()` AND JS literals; #9 and the Step-9 image rule now carve out that the fully-qualified host applies ONLY to AUTHORED content `<img>` for uploaded assets — fixed block-code imagery (backgrounds/watermarks/fallbacks) is always root-relative. Resolves the #9↔#44 contradiction (#67).
+
+**Implemented (#40–67):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
