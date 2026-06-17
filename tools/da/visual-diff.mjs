@@ -188,6 +188,17 @@ function redFlags(eds, proto) {
     if (pN >= 3 && eN < Math.max(1, pN * 0.5)) {
       flags.push(`IMAGERY GAP (#47): prototype renders ${pN} images, EDS renders ${eN}. Likely image-less content using CSS fallbacks (#2) — EYEBALL the screenshots to confirm the fallbacks render intentionally (not a missing-asset regression). Not a defect by itself.`);
     }
+    // Content gap (#49): the EDS dropped/duplicated authored content. Metrics-only
+    // checks can't see a missing section or a dropped CTA; a heading/contentBox
+    // count or main-height shortfall vs the proto is a reliable signal.
+    const hp = proto.headings.length;
+    const he = eds.headings.length;
+    const cp = proto.contentBoxes.length;
+    const ce = eds.contentBoxes.length;
+    const mhRatio = proto.mainHeight && eds.mainHeight ? eds.mainHeight / proto.mainHeight : 1;
+    if (hp - he >= 3 || (cp >= 4 && ce < cp * 0.6) || mhRatio < 0.6) {
+      flags.push(`CONTENT GAP (#49): proto ${hp} headings / ${cp} content-boxes / main ${proto.mainHeight}px vs EDS ${he} / ${ce} / ${eds.mainHeight}px. The EDS likely DROPPED or duplicated authored content (a missing section, a dropped CTA) — eyeball the section pair; metrics-only checks (stretch/flush/blank) can't see this.`);
+    }
   }
   eds.images.filter((i) => i.failedToLoad).forEach((i) => {
     flags.push(`IMAGE DID NOT LOAD (#43): ${i.src} rendered ${i.rendered} but natural 0x0. In the local harness, rewrite absolute aem.page image URLs to root-relative /img/... so the asset loads and the stretch check has real dimensions.`);
