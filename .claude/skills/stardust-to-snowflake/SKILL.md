@@ -855,14 +855,20 @@ Neither is a pixel diff — both use computed-style/geometry measurements; pixel
 node tools/da/visual-diff.mjs \
   "http://localhost:8791/<prototype>.html" \
   "https://<branch>--<repo>--<owner>.aem.page/<path>" \
-  --sections ".hero,.feature-tabs,.compare"   # optional per-section shots
+  --profile eds --sections ".hero,.feature-tabs,.compare"   # optional per-section shots
 
 # Structural content + typography diff (same two URLs). Use the LIVE/harness EDS
 # URL so blocks are decorated; a raw content .plain.html has no roles to classify.
 node tools/da/content-diff.mjs \
   "http://localhost:8791/<prototype>.html" \
-  "https://<branch>--<repo>--<owner>.aem.page/<path>"   # --json to dump both inventories
+  "https://<branch>--<repo>--<owner>.aem.page/<path>" \
+  --profile eds   # --json to dump both inventories
 ```
+
+Both probes are owned by the **`stardust-diff`** skill (`/stardust-diff`) and share
+`tools/da/diff-profiles.mjs`. The `--profile eds` flag supplies the EDS/DA remediation
+language used in the flag messages below; the comparison engines are stack-agnostic
+(`--profile generic` for non-EDS builds).
 
 Read the output:
 - **Red flags (advisory)** — `BLANK RENDER` (hidden/empty page → #40, a `body{display:none}` gate or harness load failure — fix before trusting anything else); `IMAGE DID NOT LOAD` (rendered box, natural 0×0 → #43, the harness `<img>` 404'd); `STRETCHED IMAGE` (raster aspect ≠ natural → #36, add `height:auto`); `FLUSH-LEFT TEXT` (a left-anchored heading/para at left≈0 → #37, the owning block dropped its max-width wrap). A clean page prints "none".

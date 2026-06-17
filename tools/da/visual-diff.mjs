@@ -36,20 +36,22 @@
  * advisory for the agent), 1 error.
  */
 
-/* eslint-disable import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax, brace-style, object-curly-newline, max-len */
+/* eslint-disable import/no-extraneous-dependencies, import/extensions, no-await-in-loop, no-restricted-syntax, brace-style, object-curly-newline, max-len */
 /* standalone dev tool: playwright is a devDependency; sequential page ops use awaited loops by design */
 import { chromium } from 'playwright';
 import { mkdirSync } from 'fs';
 import { resolve } from 'path';
+import { resolveProfile } from './diff-profiles.mjs';
 
 function parseArgs(argv) {
   const [, , proto, eds, ...rest] = argv;
-  const opts = { out: 'qa/vdiff', width: 1280, sections: [] };
+  const opts = { out: 'qa/vdiff', width: 1280, sections: [], profile: 'eds' };
   for (let i = 0; i < rest.length; i += 1) {
     const a = rest[i];
     if (a === '--out') { opts.out = rest[i += 1]; }
     else if (a === '--width') { opts.width = Number(rest[i += 1]); }
     else if (a === '--sections') { opts.sections = (rest[i += 1] || '').split(',').map((s) => s.trim()).filter(Boolean); }
+    else if (a === '--profile') { opts.profile = rest[i += 1]; }
   }
   return { proto, eds, opts };
 }
@@ -193,39 +195,39 @@ async function capture(browser, url, tag, opts) {
   return metrics;
 }
 
-function redFlags(eds, proto) {
+function redFlags(eds, proto, prof) {
   const flags = [];
+  const S = prof.source; const T = prof.target; const H = prof.hints;
   if (eds.blankRender) {
-    flags.push(`BLANK RENDER: the EDS page is hidden/empty (main height ${eds.mainHeight}px, text ${eds.textLen} chars). NOT a pass — likely a foundation body{display:none}/body.appear gate the runtime never satisfies (use the body.session font gate, no display gate), or the harness failed to load. Fix before trusting any other result.`);
+    flags.push(`BLANK RENDER: the ${T} page is hidden/empty (main height ${eds.mainHeight}px, text ${eds.textLen} chars). NOT a pass. ${H.BLANK_RENDER}`);
     return flags; // every other metric is meaningless on a blank page
   }
-  // Imagery gap (#47): the EDS renders far fewer images than the prototype —
-  // usually because image-less claude-design/stardust content (#2) relies on CSS
-  // fallbacks. Expected, but a broken fallback looks identical to "red flags none",
-  // so force an eyeball rather than a silent pass. Advisory, not a defect.
+  // Imagery gap: the target renders far fewer images than the source — often an
+  // image-less content fallback. Expected, but a broken fallback looks identical
+  // to "red flags none", so force an eyeball rather than a silent pass.
   if (proto) {
     const pN = proto.images.length;
     const eN = eds.images.length;
     if (pN >= 3 && eN < Math.max(1, pN * 0.5)) {
-      flags.push(`IMAGERY GAP (#47): prototype renders ${pN} images, EDS renders ${eN}. Likely image-less content using CSS fallbacks (#2) — EYEBALL the screenshots to confirm the fallbacks render intentionally (not a missing-asset regression). Not a defect by itself.`);
+      flags.push(`IMAGERY GAP: ${S} renders ${pN} images, ${T} renders ${eN}. ${H.IMAGERY_GAP}`);
     }
-    // Content gap (#49): the EDS dropped/duplicated authored content. Metrics-only
+    // Content gap: the target dropped/duplicated authored content. Metrics-only
     // checks can't see a missing section or a dropped CTA; a heading/contentBox
-    // count or main-height shortfall vs the proto is a reliable signal.
+    // count or main-height shortfall vs the source is a reliable signal.
     const hp = proto.headings.length;
     const he = eds.headings.length;
     const cp = proto.contentBoxes.length;
     const ce = eds.contentBoxes.length;
-    // a proto whose <main> measures ~0 (sticky/scroll-choreography artifact) makes
+    // a source whose <main> measures ~0 (sticky/scroll-choreography artifact) makes
     // the height/box ratios meaningless — caveat #60: trust only the heading delta then.
     const protoBlankish = proto.blankRender || proto.mainHeight < 50;
     const mhRatio = !protoBlankish && proto.mainHeight && eds.mainHeight ? eds.mainHeight / proto.mainHeight : 1;
     if (hp - he >= 3 || (!protoBlankish && cp >= 4 && ce < cp * 0.6) || mhRatio < 0.6) {
-      flags.push(`CONTENT GAP (#49): proto ${hp} headings / ${cp} content-boxes / main ${proto.mainHeight}px vs EDS ${he} / ${ce} / ${eds.mainHeight}px. The EDS likely DROPPED or duplicated authored content (a missing section, a dropped CTA) — eyeball the section pair; metrics-only checks (stretch/flush/blank) can't see this.`);
+      flags.push(`CONTENT GAP: ${S} ${hp} headings / ${cp} content-boxes / main ${proto.mainHeight}px vs ${T} ${he} / ${ce} / ${eds.mainHeight}px. ${H.CONTENT_GAP}`);
     }
-    // Surface/ground mismatch (#59): a matched heading rendered on the wrong
-    // ground (dark band vs light band) — the probe records colors but never
-    // compared them, so a full inversion printed "none".
+    // Surface/ground mismatch: a matched heading rendered on the wrong ground
+    // (dark band vs light band) — the probe records colors but never compared
+    // them, so a full inversion printed "none".
     const lum = (c) => {
       const m = (c || '').match(/(\d+)\D+(\d+)\D+(\d+)/);
       return m ? 0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3] : null;
@@ -237,27 +239,27 @@ function redFlags(eds, proto) {
       const lp = lum(pc);
       const le = lum(h.color);
       if (lp !== null && le !== null && Math.abs(lp - le) > 90) {
-        flags.push(`SURFACE/GROUND MISMATCH (#59): heading "${h.text}" is ${h.color} in EDS vs ${pc} in proto (luminance ${Math.round(le)} vs ${Math.round(lp)}) — a band likely rendered on the wrong ground (dark vs light). Check the owning block's section background.`);
+        flags.push(`SURFACE/GROUND MISMATCH: heading "${h.text}" is ${h.color} in ${T} vs ${pc} in ${S} (luminance ${Math.round(le)} vs ${Math.round(lp)}). ${H.SURFACE_GROUND}`);
       }
     });
-    // Font mismatch (#66): a named display/body face that loaded in the proto but
-    // not the EDS = a missing @font-face silently falling back to serif/sans (#65).
+    // Font mismatch: a named display/body face that loaded in the source but not
+    // the target = a missing @font-face silently falling back to serif/sans.
     const pFont = new Map(proto.headings.map((h) => [h.text.toLowerCase(), h]));
     eds.headings.forEach((h) => {
       const p = pFont.get(h.text.toLowerCase());
       if (p && p.fontLoaded && !h.fontLoaded && h.family) {
-        flags.push(`FONT MISMATCH (#66): heading "${h.text}" wants "${h.family}" but it did NOT load in EDS (silent serif/sans fallback). Ship an @font-face for every named --display/--body family (#65), self-hosted + root-relative.`);
+        flags.push(`FONT MISMATCH: heading "${h.text}" wants "${h.family}" but it did NOT load in ${T} (silent fallback). ${H.FONT_MISMATCH}`);
       }
     });
   }
   eds.images.filter((i) => i.failedToLoad).forEach((i) => {
-    flags.push(`IMAGE DID NOT LOAD (#43): ${i.src} rendered ${i.rendered} but natural 0x0. In the local harness, rewrite absolute aem.page image URLs to root-relative /img/... so the asset loads and the stretch check has real dimensions.`);
+    flags.push(`IMAGE DID NOT LOAD: ${i.src} rendered ${i.rendered} but natural 0x0. ${H.IMAGE_NO_LOAD}`);
   });
   eds.images.filter((i) => i.stretched).forEach((i) => {
-    flags.push(`STRETCHED IMAGE (#36): ${i.src} natural ${i.natural} → rendered ${i.rendered}. Add 'height: auto' to the img reset / block CSS.`);
+    flags.push(`STRETCHED IMAGE: ${i.src} natural ${i.natural} → rendered ${i.rendered}. ${H.STRETCHED}`);
   });
   eds.flushText.forEach((f) => {
-    flags.push(`FLUSH-LEFT TEXT (#37): <${f.tag}> "${f.text}" sits at left ${f.left}px (no padding). Likely a dropped max-width .wrap (max-width: var(--maxw); margin: 0 auto; padding: 0 24px) on the owning block.`);
+    flags.push(`FLUSH-LEFT TEXT: <${f.tag}> "${f.text}" sits at left ${f.left}px (no padding). ${H.FLUSH_LEFT}`);
   });
   return flags;
 }
@@ -265,25 +267,26 @@ function redFlags(eds, proto) {
 async function main() {
   const { proto, eds, opts } = parseArgs(process.argv);
   if (!proto || !eds) {
-    process.stderr.write('usage: node tools/da/visual-diff.mjs <prototypeURL> <edsURL> [--out dir] [--width px] [--sections a,b]\n');
+    process.stderr.write('usage: node tools/da/visual-diff.mjs <sourceURL> <buildURL> [--profile eds|generic] [--out dir] [--width px] [--sections a,b]\n');
     process.exit(1);
   }
+  const prof = resolveProfile(opts.profile);
   mkdirSync(resolve(opts.out), { recursive: true });
   const browser = await chromium.launch();
   let report;
   try {
     const [protoM, edsM] = [await capture(browser, proto, 'proto', opts), await capture(browser, eds, 'eds', opts)];
-    report = { viewport: opts.width, out: opts.out, proto: protoM, eds: edsM, redFlags: redFlags(edsM, protoM) };
+    report = { viewport: opts.width, out: opts.out, proto: protoM, eds: edsM, redFlags: redFlags(edsM, protoM, prof) };
   } finally {
     await browser.close();
   }
 
   const f = report.redFlags;
-  process.stdout.write(`\nVisual diff @ ${opts.width}px — screenshots in ${opts.out}/\n`);
-  process.stdout.write(`\nEDS red flags (advisory): ${f.length ? '' : 'none'}\n`);
+  process.stdout.write(`\nVisual diff @ ${opts.width}px (profile "${prof.name}") — screenshots in ${opts.out}/\n`);
+  process.stdout.write(`\n${prof.target} red flags (advisory): ${f.length ? '' : 'none'}\n`);
   f.forEach((x) => process.stdout.write(`  • ${x}\n`));
-  process.stdout.write('\nFull metrics JSON (compare proto vs eds: heading colors, eyebrow colors, image dims, full-bleed):\n');
-  process.stdout.write(`${JSON.stringify({ proto: report.proto, eds: report.eds }, null, 1)}\n`);
+  process.stdout.write(`\nFull metrics JSON (compare ${prof.source} vs ${prof.target}: heading colors, eyebrow colors, image dims, full-bleed):\n`);
+  process.stdout.write(`${JSON.stringify({ [prof.source]: report.proto, [prof.target]: report.eds }, null, 1)}\n`);
 }
 
 main().catch((e) => { process.stderr.write(`visual-diff error: ${e.message}\n`); process.exit(1); });

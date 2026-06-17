@@ -34,25 +34,30 @@
  * Exit codes: 0 ran (flags are advisory, they do NOT fail the run), 1 error.
  */
 
-/* eslint-disable import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax, brace-style, object-curly-newline, max-len, no-plusplus, newline-per-chained-call, no-continue, no-multi-spaces */
+/* eslint-disable import/no-extraneous-dependencies, import/extensions, no-await-in-loop, no-restricted-syntax, brace-style, object-curly-newline, max-len, no-plusplus, newline-per-chained-call, no-continue, no-multi-spaces */
 /* standalone dev tool: playwright is a devDependency; sequential page ops use awaited loops by design */
 import { chromium } from 'playwright';
+import { resolveProfile } from './diff-profiles.mjs';
 
 function parseArgs(argv) {
   const [, , proto, eds, ...rest] = argv;
-  const opts = { main: 'main', width: 1280, json: false };
+  const opts = { main: null, width: 1280, json: false, profile: 'eds' };
   for (let i = 0; i < rest.length; i += 1) {
     const a = rest[i];
     if (a === '--main') { opts.main = rest[i += 1]; }
     else if (a === '--width') { opts.width = Number(rest[i += 1]); }
     else if (a === '--json') { opts.json = true; }
+    else if (a === '--profile') { opts.profile = rest[i += 1]; }
   }
   return { proto, eds, opts };
 }
 
-// Runs IN the page. Returns the ordered role-classified content inventory.
+// Runs IN the page (serialized by Playwright, so it takes ONE arg). args =
+// [mainSel, eyebrow{maxFontPx,maxLen}] — the content root + label classifier
+// thresholds from the active profile. Returns the role-classified inventory.
 /* eslint-disable no-undef */
-function inventory(mainSel) {
+function inventory(args) {
+  const [mainSel, eyebrow] = args;
   const root = document.querySelector(mainSel) || document.querySelector('main') || document.body;
   const ARROWS = /[→➔➜›⇒➤>]+/g;
   const clean = (s) => (s || '').replace(/\s+/g, ' ').trim();
@@ -119,7 +124,7 @@ function inventory(mainSel) {
     const cs = getComputedStyle(el);
     const item = { order: order++, text: own, key: norm(own), ...face(norm(own), cs) };
     if (/^h[1-6]$/.test(tag)) item.role = 'heading';
-    else if (cs.textTransform === 'uppercase' && parseFloat(cs.fontSize) <= 18 && own.length <= 48) item.role = 'eyebrow';
+    else if (cs.textTransform === 'uppercase' && parseFloat(cs.fontSize) <= eyebrow.maxFontPx && own.length <= eyebrow.maxLen) item.role = 'eyebrow';
     else item.role = 'body';
     out.push(item);
   });
@@ -128,7 +133,7 @@ function inventory(mainSel) {
 }
 /* eslint-enable no-undef */
 
-async function grab(browser, url, opts) {
+async function grab(browser, url, opts, prof) {
   const ctx = await browser.newContext({ viewport: { width: opts.width, height: 1000 }, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'networkidle' });
@@ -139,55 +144,53 @@ async function grab(browser, url, opts) {
     window.scrollTo(0, 0);
   });
   await page.waitForTimeout(400);
-  const inv = await page.evaluate(inventory, opts.main);
+  const inv = await page.evaluate(inventory, [opts.main || prof.mainDefault, prof.eyebrow]);
   await ctx.close();
   return inv;
 }
 
-// A matched line counts as a real face change only above this width delta —
-// below it is sub-pixel / weight noise between two system fallbacks (#77).
-const FONT_DELTA = 0.10;
-
-// Diff: consume each proto item against the first unused EDS item with the same
-// key (duplicates count correctly), classifying the outcome by role.
-function diff(protoItems, edsItems) {
+// Diff: consume each source item against the first unused target item with the
+// same key (duplicates count correctly), classifying the outcome by role. All
+// stack-specific labels (S/T) + remediation hints (H) come from the profile.
+function diff(srcItems, tgtItems, prof) {
   const flags = [];
   const matched = []; // {proto, eds} pairs for the font pass
-  const used = new Array(edsItems.length).fill(false);
-  const findEds = (key, role) => {
+  const S = prof.source; const T = prof.target; const H = prof.hints;
+  const used = new Array(tgtItems.length).fill(false);
+  const findTgt = (key, role) => {
     let fallback = -1;
-    for (let i = 0; i < edsItems.length; i++) {
-      if (used[i] || edsItems[i].key !== key || !key) continue;
-      if (edsItems[i].role === role) return i; // exact role match preferred
+    for (let i = 0; i < tgtItems.length; i++) {
+      if (used[i] || tgtItems[i].key !== key || !key) continue;
+      if (tgtItems[i].role === role) return i; // exact role match preferred
       if (fallback < 0) fallback = i; // same text, other role
     }
     return fallback;
   };
 
-  protoItems.forEach((p) => {
+  srcItems.forEach((p) => {
     if (!p.key) return;
-    const i = findEds(p.key, p.role);
+    const i = findTgt(p.key, p.role);
     if (i < 0) {
-      const where = `proto ${p.role} "${p.text.slice(0, 48)}"`;
-      if (p.role === 'cta') flags.push({ sev: '🔴', kind: 'MISSING CTA', msg: `${where}${p.href ? ` → ${p.href}` : ''} has no EDS link. A dropped call-to-action — author the CTA row + render it in the owning block.` });
-      else if (p.role === 'heading') flags.push({ sev: '🔴', kind: 'MISSING HEADING', msg: `${where} has no EDS heading of the same text. A dropped/renamed section title.` });
-      else if (p.role === 'eyebrow') flags.push({ sev: '🔴', kind: 'MISSING EYEBROW', msg: `${where} has no EDS match. Often a segmentation drop (#76) — the eyebrow precedes its heading and got dropped, or the block never authored it.` });
-      else flags.push({ sev: '🟡', kind: 'MISSING BODY', msg: `${where.slice(0, 70)}… not found in EDS. Often fine (a prototype placeholder rewritten to real copy) — confirm it's not dropped prose.` });
+      const where = `${S} ${p.role} "${p.text.slice(0, 48)}"`;
+      if (p.role === 'cta') flags.push({ sev: '🔴', kind: 'MISSING CTA', msg: `${where}${p.href ? ` → ${p.href}` : ''} has no ${T} link. ${H.MISSING_CTA}` });
+      else if (p.role === 'heading') flags.push({ sev: '🔴', kind: 'MISSING HEADING', msg: `${where} has no ${T} heading of the same text. ${H.MISSING_HEADING}` });
+      else if (p.role === 'eyebrow') flags.push({ sev: '🔴', kind: 'MISSING EYEBROW', msg: `${where} has no ${T} match. ${H.MISSING_EYEBROW}` });
+      else flags.push({ sev: '🟡', kind: 'MISSING BODY', msg: `${where.slice(0, 70)}… not found in ${T}. ${H.MISSING_BODY}` });
       return;
     }
     used[i] = true;
-    const e = edsItems[i];
+    const e = tgtItems[i];
     if (e.role !== p.role) {
-      flags.push({ sev: '🔴', kind: 'ROLE SWAP', msg: `"${p.text.slice(0, 40)}" is a ${p.role} in the proto but a ${e.role} in EDS — mis-classified slot (the #76 class: body painted as eyebrow, eyebrow folded into a teaser, etc.).` });
+      flags.push({ sev: '🔴', kind: 'ROLE SWAP', msg: `"${p.text.slice(0, 40)}" is a ${p.role} in the ${S} but a ${e.role} in ${T} — ${H.ROLE_SWAP}` });
     }
     matched.push({ p, e });
   });
 
-  // EXTRA: EDS content with no proto source — invented copy to verify (advisory).
-  edsItems.forEach((e, i) => {
+  // EXTRA: target content with no source — invented copy to verify (advisory).
+  tgtItems.forEach((e, i) => {
     if (used[i] || !e.key) return;
-    if (e.role === 'body') flags.push({ sev: '🟡', kind: 'EXTRA', msg: `EDS body "${e.text.slice(0, 48)}" has no proto source — invented/placeholder-filled copy; confirm it's intended.` });
-    else flags.push({ sev: '🟠', kind: 'EXTRA', msg: `EDS ${e.role} "${e.text.slice(0, 48)}" has no proto source — unexpected ${e.role}.` });
+    if (e.role === 'body') flags.push({ sev: '🟡', kind: 'EXTRA', msg: `${T} body "${e.text.slice(0, 48)}" has no ${S} source — ${H.EXTRA_BODY}` });
+    else flags.push({ sev: '🟠', kind: 'EXTRA', msg: `${T} ${e.role} "${e.text.slice(0, 48)}" has no ${S} source — ${H.EXTRA}` });
   });
 
   // FONT FORK: matched lines whose rendered FACE differs (width probe, #77). A
@@ -195,12 +198,12 @@ function diff(protoItems, edsItems) {
   // GROUP them into one advisory rather than N near-identical paragraphs — the
   // agent/user decides whether the fork is intended.
   const forks = matched
-    .filter(({ p, e }) => p.w && e.w && Math.abs(1 - e.w / p.w) > FONT_DELTA)
+    .filter(({ p, e }) => p.w && e.w && Math.abs(1 - e.w / p.w) > prof.fontDelta)
     .map(({ p, e }) => ({ role: p.role, text: p.text.slice(0, 28), from: p.family, to: e.family, pct: Math.round((e.w / p.w - 1) * 100) }));
   if (forks.length) {
-    const shown = forks.slice(0, 8).map((f) => `${f.role} "${f.text}": proto ${f.from} vs EDS ${f.to} (${f.pct}%)`).join('; ');
+    const shown = forks.slice(0, 8).map((f) => `${f.role} "${f.text}": ${S} ${f.from} vs ${T} ${f.to} (${f.pct}%)`).join('; ');
     const more = forks.length > 8 ? ` (+${forks.length - 8} more)` : '';
-    flags.push({ sev: '🟠', kind: 'FONT FORK (#77)', msg: `${forks.length} matched line(s) render a DIFFERENT face: ${shown}${more}. A "→sys" on the proto side means it named a font it never loaded and fell back — EDS self-hosting the intended fallback is then CORRECT; confirm the fork is intended, else ship the missing @font-face.` });
+    flags.push({ sev: '🟠', kind: 'FONT FORK', msg: `${forks.length} matched line(s) render a DIFFERENT face: ${shown}${more}. ${H.FONT_FORK}` });
   }
 
   return { flags, matchedCount: matched.length };
@@ -214,24 +217,25 @@ function summarise(inv) {
 async function main() {
   const { proto, eds, opts } = parseArgs(process.argv);
   if (!proto || !eds) {
-    process.stderr.write('usage: node tools/da/content-diff.mjs <prototypeURL> <edsURL> [--main sel] [--width px] [--json]\n');
+    process.stderr.write('usage: node tools/da/content-diff.mjs <sourceURL> <buildURL> [--profile eds|generic] [--main sel] [--width px] [--json]\n');
     process.exit(1);
   }
+  const prof = resolveProfile(opts.profile);
   const browser = await chromium.launch();
-  let protoInv; let edsInv;
+  let srcInv; let tgtInv;
   try {
-    protoInv = await grab(browser, proto, opts);
-    edsInv = await grab(browser, eds, opts);
+    srcInv = await grab(browser, proto, opts, prof);
+    tgtInv = await grab(browser, eds, opts, prof);
   } finally {
     await browser.close();
   }
 
-  const { flags } = diff(protoInv.items, edsInv.items);
-  process.stdout.write(`\nContent diff @ ${opts.width}px (root "${opts.main}")\n`);
-  process.stdout.write(`  proto: ${summarise(protoInv)}\n`);
-  process.stdout.write(`  eds:   ${summarise(edsInv)}\n`);
+  const { flags } = diff(srcInv.items, tgtInv.items, prof);
+  process.stdout.write(`\nContent diff @ ${opts.width}px (profile "${prof.name}", root "${opts.main || prof.mainDefault}")\n`);
+  process.stdout.write(`  ${prof.source}: ${summarise(srcInv)}\n`);
+  process.stdout.write(`  ${prof.target}: ${summarise(tgtInv)}\n`);
 
-  if ((protoInv.items.length < 3 || edsInv.items.length < 3)) {
+  if ((srcInv.items.length < 3 || tgtInv.items.length < 3)) {
     process.stdout.write('\n⚠ one side has almost no content — a blank/failed render; fix that before trusting the diff.\n');
   }
 
@@ -243,7 +247,7 @@ async function main() {
 
   if (opts.json) {
     process.stdout.write('\nInventories JSON:\n');
-    process.stdout.write(`${JSON.stringify({ proto: protoInv, eds: edsInv }, null, 1)}\n`);
+    process.stdout.write(`${JSON.stringify({ [prof.source]: srcInv, [prof.target]: tgtInv }, null, 1)}\n`);
   }
 }
 
