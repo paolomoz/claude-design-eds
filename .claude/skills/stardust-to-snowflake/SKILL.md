@@ -468,6 +468,8 @@ body { font-family: arial, sans-serif; }
 body.session { font-family: var(--font-body); }
 ```
 
+**Keep `body` VISIBLE — never gate display on `body.appear` (#40).** The font gate is the `body` → `body.session` font swap above; `ak.js` adds `body.session`. Do NOT port the aem-boilerplate pattern `body { display: none } body.appear { display: block }` into the foundation: the static-chrome runtime never adds `appear`, so every OFF-pipeline render (the Local-QA harness, the `visual-diff` probe) stays permanently hidden/zero-height — and a blank page silently passes most checks. (The probe now emits a `BLANK RENDER` red flag as a backstop, but the foundation must not introduce the gate in the first place.)
+
 The metric-override values come from the `@fontsource-variable/<name>` package's published calibration — fetch their CSS:
 
 ```bash
@@ -541,6 +543,8 @@ a.btn-primary:hover::after, a.btn-accent:hover::after { transform: translateX(4p
 
 .btn-group { display: inline-flex; flex-wrap: wrap; gap: 16px; align-items: center; }
 ```
+
+**Surface-aware variants: scope to the BLOCK class, not just the section (#41).** When a button/link/text treatment differs on dark vs light surfaces, the prototype's dark-surface cue (e.g. `.hero`, `.cta-dark`) becomes a **block class** after conversion — a `<div class="hero">` nested inside the `<div class="section">`. So an override written as `main .section.hero a.btn-secondary` never matches (the `.hero` is one level below `.section`), and the on-dark CTA silently renders dark-on-dark. Scope on-dark overrides to BOTH: `main .section.dark a.btn-secondary, main .hero a.btn-secondary { … }`. QA any block on a dark background for secondary/ghost-CTA contrast (light outline + light text) — the button "exists" in metrics, so only contrast/eyeball catches this.
 
 **Block JS pattern — just clone the cell:**
 
@@ -682,13 +686,20 @@ export default async function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  // 1. Read each row positionally
+  // 1. Read content by QUERYING, not by hard row index, for lead/hero blocks (#42):
+  //    const h = block.querySelector('h1, h2');           // the heading
+  //    const ps = [...block.querySelectorAll('p')];
+  //    const lede = ps.find((p) => !p.querySelector('a')); // first link-free <p>
+  //    const ctaP = ps.find((p) => p.querySelector('a'));  // link-bearing <p>
+  //    const pic = block.querySelector('picture, img');
   // 2. Build the prototype's DOM (with prototype-style class names)
   // 3. For CTA rows, clone the cell's child nodes into a .actions wrapper —
   //    do NOT manufacture button anchors with custom classes.
   // 4. block.replaceChildren(...newMarkup);
 }
 ```
+
+**Lead/hero blocks: query content, don't hard-index rows (#42).** A hero that reads `rows[3]=headline, rows[4]=lede, rows[5]=CTA` breaks the moment the content shape differs — and the mandatory-metadata / single-`<h1>` SEO rework (#34/#35) actively **consolidates** the headline + lede + CTAs into ONE cell, so the fixed indices come back `undefined` and the hero `.wrap` (the LCP element and the only `<h1>`) renders EMPTY with no error. Decorate lead blocks by querying (`block.querySelector('h1,h2')`; first link-free `<p>` = lede; link-bearing `<p>` = CTAs; `picture` from anywhere) so they tolerate BOTH the rich multi-row shape and the consolidated single-cell shape. Local-QA check: after decoration, assert the hero's inner wrap is non-empty and contains the `<h1>`.
 
 **Headings — exactly one `<h1>` per page + a real outline (#35).** Prototype headlines are usually styled `<div>`/`<span>`s with no heading semantics. Promote them: the hero/lead block renders its headline as the page's **single `<h1>`**; every other section title renders as `<h2>` (sub-items `<h3>`). Never leave a headline as a bare `<div>` — the `<h1>` is the strongest on-page relevance signal, it's the source of the page `<title>` (#34), and the outline drives crawlers, AI answer engines, and screen readers (WCAG). This applies to **interactive blocks too**: a flow/quiz/dashboard renders its lead title as `<h1>` in its server-visible markup, not just after JS. (Symptom this prevents: a converted page with zero `<h*>` elements, or sibling `<h2>`s with no `<h1>`.)
 

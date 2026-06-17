@@ -60,6 +60,16 @@ function analyse() {
   const vw = window.innerWidth;
   const round = (n) => Math.round(n);
 
+  // Blank-render guard: an off-pipeline render can stay hidden (e.g. a foundation
+  // body{display:none}/body.appear gate the runtime never satisfies) — the page
+  // is empty but every other metric is trivially "fine", so the probe would
+  // false-pass. Detect a hidden/zero-height/textless <main> explicitly.
+  const mainEl = document.querySelector('main');
+  const bodyHidden = getComputedStyle(document.body).display === 'none';
+  const mainH = mainEl ? mainEl.getBoundingClientRect().height : 0;
+  const textLen = mainEl ? mainEl.innerText.trim().length : 0;
+  const blankRender = bodyHidden || mainH < 5 || textLen < 20;
+
   const images = [...document.querySelectorAll('img')].map((img) => {
     const r = img.getBoundingClientRect();
     const nW = img.naturalWidth; const nH = img.naturalHeight;
@@ -125,7 +135,7 @@ function analyse() {
     return { sel: (el.className || '').toString().trim().split(/\s+/)[0], width: round(r.width), left: round(r.left) };
   });
 
-  return { viewport: vw, images, headings, eyebrows, flushText, contentBoxes: boxes };
+  return { viewport: vw, blankRender, mainHeight: round(mainH), textLen, images, headings, eyebrows, flushText, contentBoxes: boxes };
 }
 /* eslint-enable no-undef */
 
@@ -159,6 +169,10 @@ async function capture(browser, url, tag, opts) {
 
 function redFlags(eds) {
   const flags = [];
+  if (eds.blankRender) {
+    flags.push(`BLANK RENDER: the EDS page is hidden/empty (main height ${eds.mainHeight}px, text ${eds.textLen} chars). NOT a pass — likely a foundation body{display:none}/body.appear gate the runtime never satisfies (use the body.session font gate, no display gate), or the harness failed to load. Fix before trusting any other result.`);
+    return flags; // every other metric is meaningless on a blank page
+  }
   eds.images.filter((i) => i.stretched).forEach((i) => {
     flags.push(`STRETCHED IMAGE (#36): ${i.src} natural ${i.natural} → rendered ${i.rendered}. Add 'height: auto' to the img reset / block CSS.`);
   });

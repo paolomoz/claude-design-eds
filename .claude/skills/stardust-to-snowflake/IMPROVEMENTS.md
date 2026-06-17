@@ -134,6 +134,28 @@ The hero trust line used `<span class="stars">★★★★★</span>` for the or
 
 ---
 
+## Findings (30-prototype hardening loop, test-9…test-38)
+
+Autonomous loop converting 30 diverse stardust prototypes, each validated with
+`tools/da/visual-diff.mjs`, fixed, and generalised into the skill. Surfaced (even
+by a mis-targeted iter-1 run) three foundational issues:
+
+### 40. 🔴 Foundation must NOT gate `body` display on `body.appear` — off-pipeline renders go blank (and the probe false-passes)
+A scaffold agent reused the aem-boilerplate pattern `body { display: none } body.appear { display: block }` as a font gate. But the snowflake static-chrome runtime's `ak.js` adds `body.session` (font swap) — it never adds `body.appear`. So every OFF-pipeline render (the Local-QA harness #8 and the visual-diff probe #36–39) stays permanently hidden/zero-height. Worse, `visual-diff.mjs` had no blank guard: it screenshotted a hidden page, still saw headings in the (hidden) DOM, and printed "red flags: none" — a silent FALSE PASS that would invalidate all local validation across the loop.
+**Implemented:** (a) `tools/da/visual-diff.mjs` now emits a `BLANK RENDER` red flag (and suppresses all other metrics) when `body` is `display:none` / `<main>` is zero-height / has <20 chars of text. (b) Skill: Step 4 foundation — keep `body` VISIBLE; font-gate ONLY via `body { font: <fallback> } body.session { var(--font-body) }` (ak.js adds `body.session`); never port the boilerplate `body{display:none}/body.appear` gate (the static-chrome runtime doesn't drive `appear`).
+
+### 41. 🟠 Surface-aware button/link overrides keyed to the SECTION class silently miss (the prototype's dark-surface class becomes a BLOCK class)
+A dark-surface ghost-button override targeted `main .section.hero a.btn-secondary` / `.section.dark …`. In EDS the section is `<div class="section">` and the block is a nested `<div class="hero">`, so `.section.hero` never matches — the secondary CTA rendered dark-on-dark (near-invisible). Invisible in metrics (the button exists); only contrast/eyeball catches it.
+**Implemented:** Step 5 (button system) / Step 7 brief — when a button/link/text variant is surface-aware, scope the on-dark override to BOTH the section state AND the dark *block* class (`.section.dark a.btn-secondary, .hero a.btn-secondary …`), because the prototype's dark-surface selector usually becomes a block class one level below the section after conversion.
+
+### 42. 🟠 Lead/hero blocks must decorate by QUERYING content, not hard row indices — the #34/#35 SEO rework collides with index-based decorate()
+A hero block hard-indexed `rows[3]=headline, rows[4]=lede, rows[5]=CTA` (the rich prototype shape). The SEO-rebuilt content page (#34/#35: single `<h1>`, real metadata) consolidates headline+lede+CTAs into ONE cell, so the index lookups were `undefined` and the hero `.wrap` (the LCP element + the only `<h1>`) rendered EMPTY, silently. This collides directly with the mandatory-metadata/single-`<h1>` rework, which pushes content toward the consolidated shape.
+**Implemented:** Step 8 + the #35 Headings rule — lead/hero blocks decorate by querying content (`block.querySelector('h1,h2…')`; first link-free `<p>` = lede; link-bearing `<p>` = CTAs; `picture` from anywhere), tolerating BOTH the rich multi-row shape and the consolidated single-cell shape. Local-QA: assert the hero inner wrap is non-empty and contains the `<h1>` after decoration.
+
+**Implemented (#40–42):** #40 → visual-diff blank guard + Step 4; #41 → Step 5/7; #42 → Step 8. (Tooling: convert.workflow.js arg-parse + fail-fast hardened so a bad invocation aborts instead of improvising.)
+
+---
+
 ## Findings (SEO audit — all pages, test-1…test-7)
 
 Source: a marketing/SEO audit workflow over all 8 deployed pages (per-page reports
