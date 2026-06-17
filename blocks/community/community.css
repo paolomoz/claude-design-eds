@@ -1,0 +1,161 @@
+/*
+ * community block — GIVES + NEWSLETTER
+ * CSS lifted verbatim from the stardust prototype (.ds-give + .ds-newsletter,
+ * .ds-section--loud, .ds-btn-primary), scoped under .community.
+ * Section background (#050505) is full-bleed; the CONTENT is wrapped to
+ * --content. Global tokens + button system live in styles/styles.css.
+ */
+
+/* Full-bleed loud section background (.ds-section--loud). */
+main .section.community-container,
+.community {
+  background: #050505;
+}
+
+/* Section padding from .ds-section. */
+.community {
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Content wrap (.ds-section__inner), constrained to --content. */
+.community .community-wrap {
+  max-width: var(--content);
+  margin: 0 auto;
+}
+
+/* ---- .ds-give ---------------------------------------------------------- */
+.community .community-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.community .community-eyebrow {
+  margin: 0 0 var(--space-2);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* .ds-give__lead */
+.community .community-lead {
+  margin: 0 0 var(--space-3);
+  font-family: var(--display);
+  font-size: var(--fs-3xl);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* Red middot (prototype: <em style="color:var(--primary);font-style:normal">). */
+.community .community-dot {
+  color: var(--primary);
+  font-style: normal;
+}
+
+/* .ds-give__body */
+.community .community-body {
+  max-width: 540px;
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.community .community-cta {
+  margin: 0;
+}
+
+/* ---- .ds-newsletter ---------------------------------------------------- */
+.community .community-newsletter {
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  scroll-margin-top: var(--space-5);
+}
+
+/* .ds-newsletter__label */
+.community .community-newsletter-label {
+  margin: 0 0 var(--space-2);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* .ds-newsletter__title */
+.community .community-newsletter-title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--display);
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+}
+
+/* .ds-newsletter form (inert div wrapper in EDS). */
+.community .community-form {
+  display: flex;
+  gap: var(--space-1);
+}
+
+/* .ds-newsletter input */
+.community .community-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  color: var(--text);
+  font: inherit;
+}
+
+.community .community-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* .ds-newsletter button */
+.community .community-subscribe {
+  padding: 12px 22px;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.community .community-subscribe:hover {
+  background: var(--primary-deep);
+}
+
+/* ---- responsive (prototype @media max-width:1024px) -------------------- */
+@media (width <= 1024px) {
+  .community .community-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (width <= 640px) {
+  .community {
+    padding: var(--space-4) var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community .community-subscribe {
+    transition: none;
+  }
+}

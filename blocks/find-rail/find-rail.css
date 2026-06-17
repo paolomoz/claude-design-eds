@@ -1,0 +1,103 @@
+/*
+ * find-rail — lifted from stardust prototype surly-mode-a-2 (home-proposed.html
+ * .ds-find, lines 260-283). Two-column find-a-retailer rail on --bg:
+ * left = eyebrow + display title + body + red pill CTA, right = 4-col grid of
+ * 13 state chips with the MN home state rendered filled red.
+ * Scoped under .find-rail; global tokens + button system live in styles/styles.css.
+ */
+
+/* Section background stays full-bleed; the CONTENT is wrapped to --content. */
+.find-rail {
+  background: var(--bg);
+}
+
+.find-rail .find-rail-inner {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.find-rail .find-rail-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6) 0;
+}
+
+.find-rail .find-rail-eyebrow {
+  margin-bottom: var(--space-2);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.find-rail .find-rail-title {
+  font-family: var(--display);
+  font-size: var(--fs-display);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.find-rail .find-rail-title em {
+  color: var(--primary);
+  font-style: normal;
+}
+
+.find-rail .find-rail-body {
+  max-width: 480px;
+  margin: var(--space-3) 0 var(--space-4);
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+}
+
+/* CTA renders via the global button system (.btn.btn-primary from <strong><a>). */
+
+.find-rail .find-rail-states {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1) var(--space-2);
+}
+
+.find-rail .find-rail-state {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  font-family: var(--sub);
+  font-size: var(--fs-base);
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.find-rail .find-rail-state:hover {
+  border-color: var(--primary);
+  background: var(--surface);
+}
+
+.find-rail .find-rail-state.is-home {
+  background: var(--primary);
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+@media (width <= 1024px) {
+  .find-rail .find-rail-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (width <= 640px) {
+  .find-rail .find-rail-inner {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .find-rail .find-rail-states {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

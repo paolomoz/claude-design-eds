@@ -1,0 +1,192 @@
+<style>
+  header.header {
+    display: block;
+  }
+
+  .ds-utility {
+    background: #060606;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--fs-xs);
+  }
+
+  .ds-utility__row {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 10px var(--space-4);
+    display: flex;
+    gap: var(--space-4);
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .ds-utility a {
+    color: var(--text-muted);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .ds-utility a:hover {
+    color: var(--text);
+  }
+
+  .ds-utility a[data-emphasis="thc"] {
+    color: var(--accent);
+  }
+
+  .ds-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ds-header__row {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-4);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .ds-nav {
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--fs-sm);
+  }
+
+  .ds-nav--right {
+    justify-content: flex-end;
+  }
+
+  .ds-nav a {
+    color: var(--text);
+    position: relative;
+    padding: 6px 0;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  .ds-nav a:hover,
+  .ds-nav a[aria-current="page"] {
+    color: var(--primary);
+  }
+
+  .ds-logo {
+    display: block;
+  }
+
+  .ds-logo img {
+    height: 44px;
+  }
+
+  /* CSS-only mobile menu (checkbox hack — prototype JS toggle is inert in EDS) */
+  .ds-nav-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ds-nav-burger {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--fs-xs);
+    justify-self: end;
+  }
+
+  .ds-nav-panel {
+    display: none;
+    background: var(--surface);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+  }
+
+  .ds-nav-panel a {
+    display: block;
+    padding: 10px 0;
+    color: var(--text);
+    font-family: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 640px) {
+    .ds-utility__row {
+      font-size: 10px;
+      gap: var(--space-2);
+      justify-content: flex-start;
+      padding: 8px var(--space-2);
+    }
+
+    .ds-header__row {
+      padding: var(--space-2);
+    }
+
+    .ds-nav {
+      display: none;
+    }
+
+    .ds-nav-burger {
+      display: inline-flex;
+    }
+
+    .ds-nav-toggle:checked ~ .ds-nav-panel {
+      display: block;
+    }
+
+    .ds-logo img {
+      height: 36px;
+    }
+  }
+</style>
+
+<div class="ds-utility">
+  <div class="ds-utility__row">
+    <a href="https://drinksurly.com/" data-emphasis="thc">Surly THC Shop</a>
+    <a href="/#newsletter">Newsletter sign-up</a>
+    <a href="https://surlybrewing.com/beer-hall-and-beer-garden/">Beer Hall location &amp; hours</a>
+    <a href="https://www.exploretock.com/surly-brewing-co-minneapolis/">Large party reservations</a>
+    <a href="https://surlybrewing.com/surly-news/">Surly News</a>
+  </div>
+</div>
+
+<div class="ds-header">
+  <input class="ds-nav-toggle" type="checkbox" id="ds-nav-toggle" aria-hidden="true" />
+  <div class="ds-header__row">
+    <nav class="ds-nav" aria-label="Primary">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/our-story">Our Story</a>
+      <a href="/beer">Beers + Bev</a>
+      <a href="/find">Find</a>
+    </nav>
+    <a class="ds-logo" href="/" aria-label="Surly Brewing Co. — home"><img src="/img/surly/logo.svg" alt="Surly Brewing Co." /></a>
+    <nav class="ds-nav ds-nav--right" aria-label="Secondary">
+      <a href="https://surlybrewing.com/beer-hall/">Beer Hall</a>
+      <a href="https://surlybrewing.com/events/">Events</a>
+      <a href="https://shop.surlybrewing.com/">Shop</a>
+    </nav>
+    <label class="ds-nav-burger" for="ds-nav-toggle" aria-label="Toggle menu">Menu</label>
+  </div>
+  <nav class="ds-nav-panel" aria-label="Mobile">
+    <a href="/">Home</a>
+    <a href="/our-story">Our Story</a>
+    <a href="/beer">Beers + Bev</a>
+    <a href="/find">Find</a>
+    <a href="https://surlybrewing.com/beer-hall/">Beer Hall</a>
+    <a href="https://surlybrewing.com/events/">Events</a>
+    <a href="https://shop.surlybrewing.com/">Shop</a>
+  </nav>
+</div>

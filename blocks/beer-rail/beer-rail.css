@@ -1,0 +1,174 @@
+/*
+ * beer-rail — lifted verbatim from stardust prototype surly-mode-a-2
+ * (home-proposed.html .ds-beers + .ds-cans + .ds-can, lines 203-258),
+ * scoped under .beer-rail. Global tokens + button system live in styles.css.
+ */
+
+/* Loud ground (#050505). The head + rail carry their own --content max-width
+   wrap inside, so the block background reads full-bleed within the section. */
+.beer-rail {
+  position: relative;
+  padding: var(--space-7) 0 var(--space-6);
+  overflow: hidden;
+  background: #050505;
+}
+
+.beer-rail .beer-rail-head {
+  display: flex;
+  gap: var(--space-4);
+  align-items: end;
+  justify-content: space-between;
+  max-width: var(--content);
+  margin: 0 auto var(--space-5);
+  padding: 0 var(--space-4);
+}
+
+.beer-rail .beer-rail-eyebrow {
+  margin-bottom: var(--space-2);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.beer-rail .beer-rail-title {
+  font-family: var(--display);
+  font-size: var(--fs-3xl);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.beer-rail .beer-rail-more {
+  padding: 12px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.beer-rail .beer-rail-more:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.beer-rail .beer-rail-cans {
+  display: flex;
+  gap: var(--space-4);
+  padding: 0 var(--space-4) var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--space-4);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.beer-rail .beer-rail-cans::-webkit-scrollbar {
+  height: 6px;
+}
+
+.beer-rail .beer-rail-cans::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 6px;
+}
+
+.beer-rail .beer-rail-can {
+  display: flex;
+  flex: 0 0 220px;
+  flex-direction: column;
+  align-items: center;
+  min-height: 360px;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, #181818 0%, var(--bg) 100%);
+  text-align: center;
+  scroll-snap-align: start;
+  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.beer-rail .beer-rail-can:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.beer-rail .beer-rail-can img {
+  width: auto;
+  height: 220px;
+  margin-bottom: var(--space-2);
+  object-fit: contain;
+}
+
+/* Fallback when the can image cell is empty / the asset is missing. */
+.beer-rail .beer-rail-can-img-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 220px;
+  margin-bottom: var(--space-2);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.beer-rail .beer-rail-name {
+  margin-bottom: 4px;
+  font-family: var(--display);
+  font-size: var(--fs-md);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.beer-rail .beer-rail-meta {
+  font-family: var(--sub);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.beer-rail .beer-rail-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--sub);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.beer-rail .beer-rail-badge-new {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+.beer-rail .beer-rail-badge-limited {
+  background: var(--primary);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beer-rail .beer-rail-cans {
+    scroll-behavior: auto;
+  }
+}
+
+@media (width <= 640px) {
+  .beer-rail {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .beer-rail .beer-rail-can {
+    flex: 0 0 70vw;
+    min-height: auto;
+  }
+
+  .beer-rail .beer-rail-can img {
+    height: 180px;
+  }
+}

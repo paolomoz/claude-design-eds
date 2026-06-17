@@ -1,0 +1,122 @@
+<style>
+  footer.footer {
+    display: block;
+    background: #060606;
+    border-top: 1px solid var(--border);
+    padding: var(--space-6) var(--space-4) var(--space-4);
+  }
+
+  footer.footer .ds-footer__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: var(--space-5);
+  }
+
+  footer.footer .ds-footer__brand img {
+    width: 200px;
+    margin-bottom: var(--space-2);
+  }
+
+  footer.footer .ds-footer__tag {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    max-width: 320px;
+  }
+
+  footer.footer .ds-footer__col h4 {
+    font-family: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-xs);
+    color: var(--accent);
+    margin-bottom: var(--space-2);
+  }
+
+  footer.footer .ds-footer__col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  footer.footer .ds-footer__col li {
+    margin-bottom: 10px;
+  }
+
+  footer.footer .ds-footer__col a {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  footer.footer .ds-footer__col a:hover {
+    color: var(--text);
+  }
+
+  footer.footer .ds-footer__bottom {
+    max-width: var(--container);
+    margin: var(--space-5) auto 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: var(--fs-xs);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1024px) {
+    footer.footer .ds-footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    footer.footer .ds-footer__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="ds-footer__inner">
+  <div class="ds-footer__brand">
+    <img src="/img/surly/logo.svg" alt="Surly Brewing Co." />
+    <p class="ds-footer__tag">Independent Minnesota craft brewery. Beer Hall in Prospect Park, Minneapolis. Distributed in 13 states.</p>
+  </div>
+  <div class="ds-footer__col">
+    <h4>Visit</h4>
+    <ul>
+      <li><a href="https://surlybrewing.com/beer-hall/">Beer Hall</a></li>
+      <li><a href="https://surlybrewing.com/events/">Events</a></li>
+      <li><a href="https://www.exploretock.com/surly-brewing-co-minneapolis/">Reservations</a></li>
+      <li><a href="https://surlybrewing.com/private-events/">Private events</a></li>
+    </ul>
+  </div>
+  <div class="ds-footer__col">
+    <h4>Find</h4>
+    <ul>
+      <li><a href="/find">Find Surly</a></li>
+      <li><a href="https://shop.surlybrewing.com/">Shop</a></li>
+      <li><a href="https://surlybrewing.com/distributors/">Distributors</a></li>
+      <li><a href="https://drinksurly.com/">Surly THC Shop</a></li>
+    </ul>
+  </div>
+  <div class="ds-footer__col">
+    <h4>Surly</h4>
+    <ul>
+      <li><a href="/our-story">Our Story</a></li>
+      <li><a href="https://surlybrewing.com/jobs/">Careers</a></li>
+      <li><a href="https://surlybrewing.com/press/">Press</a></li>
+      <li><a href="https://surlybrewing.com/privacy/">Privacy</a></li>
+      <li><a href="mailto:beer@surlybrewing.com">beer@surlybrewing.com</a></li>
+    </ul>
+  </div>
+</div>
+<div class="ds-footer__bottom">
+  <span>&copy; 2026 Surly Brewing Co., Minneapolis MN</span>
+  <span>Drink responsibly. 21+ only.</span>
+</div>

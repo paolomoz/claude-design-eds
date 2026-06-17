@@ -1,0 +1,60 @@
+/* ============ DESTINATION ============ */
+.destination {
+  position: relative;
+  min-height: 60vh;
+
+  /* dark fallback under the gradient in case the image is missing */
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(180deg, rgb(10 10 10 / 20%) 0%, rgb(10 10 10 / 85%) 100%),
+    url("/img/surly/beerhallgarden.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: grid;
+  align-items: end;
+}
+
+.destination .destination-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+  width: 100%;
+}
+
+.destination .destination-sticker {
+  background: #141414;
+  color: var(--text);
+  border-left: 4px solid var(--primary);
+  padding: var(--space-4) var(--space-5);
+  max-width: 560px;
+}
+
+.destination .destination-eyebrow {
+  font-family: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: var(--fs-sm);
+  color: var(--accent);
+  margin-bottom: var(--space-2);
+}
+
+.destination .destination-title {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--fs-2xl);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-2);
+}
+
+.destination .destination-body {
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.destination .destination-ctas {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}

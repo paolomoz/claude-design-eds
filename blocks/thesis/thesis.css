@@ -1,0 +1,94 @@
+/*
+ * Thesis Block — quiet brand-voice pull-quote.
+ * CSS lifted verbatim from stardust prototype surly-mode-a-2 (home-proposed.html
+ * lines 177-201: .ds-section--quiet + .ds-thesis), scoped under .thesis.
+ * Global tokens + button system live in styles/styles.css — referenced, not redefined.
+ */
+
+/* Section paint stays full-bleed; the CONTENT is wrapped (#37). */
+.thesis {
+  background: var(--bg);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Max-width content wrap (.ds-section__inner). */
+.thesis .thesis-inner {
+  max-width: var(--content);
+  margin: 0 auto;
+}
+
+/* 2-col grid (.ds-thesis). */
+.thesis .thesis-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+  padding: var(--space-5) 0;
+}
+
+/* LEFT — large display lead (.ds-thesis-lead). */
+.thesis .thesis-lead {
+  margin: 0;
+  font-family: var(--display);
+  font-size: var(--fs-display-lg);
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+/* The emphasis word renders in --primary, font-style normal (.ds-thesis-lead em). */
+.thesis .thesis-lead em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+/* RIGHT — body prose (.ds-thesis-body). */
+.thesis .thesis-body {
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.thesis .thesis-body p {
+  margin: 0 0 var(--space-2);
+}
+
+.thesis .thesis-body strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Wavelength-underlined text link — NOT a button (.ds-thesis-more). */
+.thesis .thesis-more {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding-bottom: 4px;
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--primary);
+}
+
+/* Collapse to 1col under 1024px. */
+@media (width <= 1024px) {
+  .thesis .thesis-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+@media (width <= 640px) {
+  .thesis {
+    padding: var(--space-4) var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thesis * {
+    transition: none !important;
+  }
+}

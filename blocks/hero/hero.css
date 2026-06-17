@@ -1,37 +1,119 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * hero — lifted verbatim from the surly stardust prototype's .ds-hero
+ * (home-proposed.html lines 126-175), scoped under .hero.
+ *
+ * The photographic background bleeds full-width; the cream sticker is held
+ * inside a max-width wrap so the content stays within the page measure (#37).
+ * Global tokens + the button system live in styles/styles.css — referenced here.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  min-height: 78vh;
+  display: grid;
+  align-items: end;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+/* Full-bleed background layer — gradient over the photo. Falls back to the
+   --bg gradient alone when the image cell is empty. */
+.hero .hero-bg {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgb(10 10 10 / 25%) 0%, rgb(10 10 10 / 85%) 100%),
+    var(--bg);
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-bg picture,
+.hero .hero-bg img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-@media (width >= 900px) {
+/* Max-width wrap — constrains the sticker while the photo bleeds full-width. */
+.hero .hero-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+/* Torn cream sticker — clip-path polygon reproduced verbatim from the prototype. */
+.hero .hero-sticker {
+  position: relative;
+  max-width: 760px;
+  margin: var(--space-6) var(--space-4) var(--space-7);
+  padding: var(--space-5) var(--space-6);
+  background: #f3ebd9;
+  color: #0a0a0a;
+  clip-path: polygon(
+    0% 6%, 4% 0%, 18% 4%, 36% 0%, 52% 5%, 70% 1%, 88% 4%, 100% 0%,
+    99% 12%, 100% 28%, 97% 48%, 100% 64%, 99% 82%, 100% 100%,
+    82% 96%, 60% 100%, 38% 95%, 18% 99%, 0% 100%, 2% 80%, 0% 62%, 3% 42%, 0% 22%
+  );
+}
+
+.hero .hero-eyebrow {
+  margin-bottom: var(--space-2);
+  font-family: var(--sub);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.hero .hero-title {
+  margin-bottom: var(--space-3);
+  font-family: var(--display);
+  font-size: var(--fs-display);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: #0a0a0a;
+}
+
+.hero .hero-date {
+  margin-bottom: var(--space-3);
+  font-family: var(--sub);
+  font-size: var(--fs-xl);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+}
+
+.hero .hero-lockup {
+  font-family: var(--display);
+  font-size: var(--fs-xl);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+}
+
+/* CTA spacing — the red pill itself is the global a.btn.btn-primary. */
+.hero .hero-actions {
+  margin-top: var(--space-3);
+}
+
+@media (width <= 640px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 80vh;
+  }
+
+  .hero .hero-sticker {
+    margin: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+@media (width <= 375px) {
+  .hero .hero-title {
+    font-size: var(--fs-2xl);
   }
 }

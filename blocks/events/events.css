@@ -1,0 +1,145 @@
+/* ============ EVENTS (lifted from prototype .ds-section--quiet + .ds-events + .ds-event) ============ */
+
+/* The section background (if any) stays full-bleed; the CONTENT is wrapped.
+   Recreate the prototype's --content constraint with the standard wrap. */
+.events {
+  background: var(--bg);
+  padding: var(--space-6, 64px) var(--space-4, 32px);
+}
+
+.events .events-inner {
+  max-width: var(--content, 1180px);
+  margin: 0 auto;
+}
+
+/* Head row: eyebrow + section title + outline pill link
+   (lifted from .ds-beers__head, padding/margin from the inline override) */
+.events .events-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.events .events-eyebrow {
+  font-family: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: var(--fs-sm);
+  color: var(--primary);
+  margin-bottom: var(--space-2);
+}
+
+.events .events-title {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--fs-3xl);
+  letter-spacing: 0.01em;
+}
+
+/* outline pill — lifted from .ds-section__more */
+.events a.events-more {
+  font-family: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--fs-sm);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.events a.events-more:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Card grid — lifted from .ds-events */
+.events .events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+/* Card — lifted from .ds-event */
+.events .event {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.events .event:hover {
+  border-color: var(--primary);
+}
+
+/* mono accent day label — lifted from .ds-event__day */
+.events .event-day {
+  font-family: var(--mono);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+}
+
+/* event title — lifted from .ds-event__title */
+.events .event-title {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: var(--fs-xl);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin: 6px 0;
+}
+
+/* body — lifted from .ds-event__body */
+.events .event-body {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  margin: 0;
+}
+
+/* wavelength-underlined text link — lifted from .ds-event__link
+   (plain per-block link, NOT a button) */
+.events a.event-link {
+  margin-top: var(--space-2);
+  align-self: start;
+  font-family: var(--sub);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--fs-xs);
+  color: var(--text);
+  border-bottom: 1px solid var(--primary);
+  padding-bottom: 3px;
+}
+
+/* ============ RESPONSIVE (lifted from prototype @media rules) ============ */
+@media (width <= 1024px) {
+  .events .events-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width <= 640px) {
+  .events {
+    padding: var(--space-4) var(--space-2);
+  }
+
+  .events .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ MOTION RESPECT ============ */
+@media (prefers-reduced-motion: reduce) {
+  .events * {
+    transition: none !important;
+  }
+}
