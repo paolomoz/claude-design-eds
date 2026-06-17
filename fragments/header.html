@@ -1,0 +1,141 @@
+<style>
+  /* Stripe header chrome — lifted from prototype, scoped to .stripe- prefix.
+     Sticky topnav with backdrop blur. Mobile menu re-implemented CSS-only
+     (checkbox hack) since fragment <script> is inert. */
+  header.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 88%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5edf5;
+  }
+
+  .stripe-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    height: 64px;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .stripe-nav .wordmark {
+    font: 500 24px/1 "Söhne", "Helvetica Neue", arial, sans-serif;
+    color: #0d1738;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .stripe-nav-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+
+  .stripe-nav-links a {
+    color: #0d1738;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .stripe-nav-links a:hover {
+    color: #533afd;
+  }
+
+  .stripe-nav-auth {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .stripe-nav-auth .signin {
+    color: #0d1738;
+    font-size: 15px;
+    text-decoration: none;
+  }
+
+  .stripe-nav-auth .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 18px;
+    font: 400 16px/1 "Söhne", "Helvetica Neue", arial, sans-serif;
+    border-radius: 4px;
+    background: #533afd;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .stripe-nav-auth .btn:hover {
+    background: #3d28d8;
+  }
+
+  /* CSS-only mobile menu */
+  .stripe-nav-toggle,
+  .stripe-nav-burger {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .stripe-nav-links,
+    .stripe-nav-auth .signin {
+      display: none;
+    }
+
+    .stripe-nav-burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: auto;
+      cursor: pointer;
+    }
+
+    .stripe-nav-burger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #0d1738;
+      margin: 2px auto;
+    }
+
+    .stripe-nav-toggle:checked ~ .stripe-nav-links {
+      display: grid;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid #e5edf5;
+      padding: 16px 24px 20px;
+      gap: 14px;
+    }
+  }
+</style>
+<input type="checkbox" id="stripe-nav-toggle" class="stripe-nav-toggle" hidden>
+<div class="stripe-nav">
+  <a class="wordmark" href="/" aria-label="Stripe home">stripe</a>
+  <nav aria-label="Primary">
+    <ul class="stripe-nav-links">
+      <li><a href="/#solutions">Products</a></li>
+      <li><a href="/#audiences">Solutions</a></li>
+      <li><a href="/#developers">Developers</a></li>
+      <li><a href="/#news">Resources</a></li>
+      <li><a href="https://stripe.com/en-it/pricing">Pricing</a></li>
+    </ul>
+  </nav>
+  <div class="stripe-nav-auth">
+    <a class="signin" href="https://dashboard.stripe.com/login">Sign in</a>
+    <a class="btn" href="https://stripe.com/en-it/contact/sales">Contact sales <span class="chev">&rsaquo;</span></a>
+  </div>
+  <label class="stripe-nav-burger" for="stripe-nav-toggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </label>
+</div>

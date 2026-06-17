@@ -1,0 +1,153 @@
+/* solutions — bento product grid. CSS lifted from home-C-cinematic.html
+   (lines 156-167; responsive 234-236 / 250-253), scoped under .solutions.
+   Global tokens + button system live in styles/styles.css. */
+
+/* content wrap (full-bleed section, wrapped content) */
+.solutions .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.solutions .section-head {
+  max-width: 64ch;
+  margin-bottom: 40px;
+}
+
+.solutions .section-head h2 {
+  font-size: var(--heading-xl);
+  letter-spacing: -0.022em;
+  margin-bottom: 12px;
+}
+
+.solutions .bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.solutions .cell {
+  background: var(--athens);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-card);
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.18s, transform 0.18s cubic-bezier(0.42, 0, 0, 1);
+}
+
+.solutions .cell:hover {
+  border-color: var(--g-peri);
+  transform: translateY(-2px);
+}
+
+.solutions .cell h3 {
+  font-size: 20px;
+  font-weight: 425;
+  letter-spacing: -0.012em;
+}
+
+.solutions .cell p {
+  font-size: 15px;
+  flex: 1;
+}
+
+.solutions .cell.feature {
+  grid-column: span 2;
+  grid-row: span 2;
+  padding: 0;
+  overflow: clip;
+  position: relative;
+  background: #fff;
+}
+
+.solutions .cell.feature .feature-copy {
+  padding: 26px;
+  position: relative;
+  z-index: 1;
+  max-width: 46ch;
+}
+
+.solutions .cell.feature img {
+  position: absolute;
+  right: -8%;
+  bottom: -4%;
+  width: 62%;
+  border-radius: 10px 0 0;
+  box-shadow: var(--shadow-card);
+}
+
+/* fallback for an empty feature image cell */
+.solutions .cell.feature .feature-fallback {
+  position: absolute;
+  right: -8%;
+  bottom: -4%;
+  width: 62%;
+  aspect-ratio: 308 / 525;
+  border-radius: 10px 0 0;
+  background: linear-gradient(160deg, var(--g-peri), var(--g-blurple));
+  box-shadow: var(--shadow-card);
+}
+
+/* chevron text-link (lifted from global .chevlink in the prototype) */
+.solutions .chevlink {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.solutions .cell .chevlink {
+  margin-top: auto;
+}
+
+.solutions .chevlink .chev {
+  display: inline-block;
+  transition: margin 0.18s;
+}
+
+.solutions .chevlink:hover .chev {
+  margin-left: 2px;
+}
+
+@media (width <= 1024px) {
+  .solutions .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .solutions .cell.feature {
+    grid-column: span 2;
+    grid-row: span 1;
+    min-height: 300px;
+  }
+}
+
+@media (width <= 640px) {
+  .solutions .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions .cell.feature {
+    grid-column: span 1;
+  }
+
+  .solutions .cell.feature img,
+  .solutions .cell.feature .feature-fallback {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solutions .cell {
+    transition: none;
+  }
+
+  .solutions .cell:hover {
+    transform: none;
+  }
+}

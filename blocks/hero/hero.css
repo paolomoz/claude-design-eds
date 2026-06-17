@@ -1,37 +1,144 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * Hero block — lifted verbatim from home-C-cinematic.html (CSS lines 120-140),
+ * scoped under .hero. Tokens (--g-*, --heading-xxl, --shadow-card, --slate, …)
+ * and the button system live in styles/styles.css.
+ *
+ * The ribbon (.hero-ribbon) is full-bleed; the content (.wrap.hero-grid) stays
+ * at --max-width. The section's own vertical padding comes from the prototype's
+ * `section[data-section="hero"]` rule.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  overflow: clip;
+  padding: 88px 0 96px;
+}
+
+/* full-bleed gradient ribbon */
+.hero .hero-ribbon {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 75% at 86% -12%, var(--g-orange) 0%, transparent 62%),
+    radial-gradient(50% 64% at 102% 32%, var(--g-pink) 0%, transparent 64%),
+    radial-gradient(42% 54% at 74% 18%, var(--g-magenta) 0%, transparent 60%),
+    radial-gradient(46% 60% at 96% 64%, var(--g-peri) 0%, transparent 64%),
+    radial-gradient(34% 44% at 70% 50%, var(--g-blurple) 0%, transparent 58%);
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 72% 100%);
+  filter: saturate(1.06);
+}
+
+.hero .hero-ribbon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(28px);
+}
+
+/* content wrap — keeps content at --max-width while the ribbon goes full-bleed */
+.hero .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero .hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.hero .gdp-ticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  color: var(--slate);
+  font: 500 12px / 1.4 var(--mono-font-family);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero .gdp-ticker b {
+  color: var(--color-fg);
+  font-weight: 500;
 }
 
 .hero h1 {
-  max-width: 1200px;
+  margin-bottom: 18px;
+  font-size: clamp(44px, 6.2vw, var(--heading-xxl));
+  letter-spacing: -0.025em;
+}
+
+.hero .sub {
+  max-width: 54ch;
+  margin-bottom: 30px;
+  font-size: 19px;
+}
+
+.hero .hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero .hero-visual {
+  position: relative;
+}
+
+.hero .hero-visual img {
+  width: min(420px, 100%);
   margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
 }
 
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+/* fallback plate when no image is authored */
+.hero .hero-visual:empty {
+  width: min(420px, 100%);
+  margin-left: auto;
+  aspect-ratio: 696 / 487;
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 120% at 80% 0%, var(--g-pink) 0%, transparent 60%),
+    linear-gradient(135deg, var(--g-peri), var(--g-blurple));
+  box-shadow: var(--shadow-card);
 }
 
-.hero img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+@media (width <= 1024px) {
+  .hero .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero .hero-visual img {
+    margin: 0;
+  }
+
+  .hero .hero-visual:empty {
+    margin: 0;
+  }
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+@media (width <= 640px) {
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero .hero-ribbon {
+    clip-path: polygon(55% 0, 100% 0, 100% 46%, 80% 52%);
+  }
+}
+
+/* This hero carries no animation; nothing to disable. The smooth-scroll /
+   register motion the prototype gated on prefers-reduced-motion lives in
+   styles.css and the (dropped) JS choreography, not in this block. The rule
+   is kept as an explicit no-op anchor so future motion added here is gated. */
+@media (prefers-reduced-motion: reduce) {
+  .hero * {
+    animation: none;
+    transition: none;
   }
 }

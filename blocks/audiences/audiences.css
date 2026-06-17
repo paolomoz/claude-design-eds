@@ -1,0 +1,87 @@
+/* ——— audiences ———
+   Lifted from home-C-cinematic.html (.section-head, .aud-grid, .aud,
+   .proof-row; responsive at 1024px), scoped under .audiences.
+   Global tokens + button system live in styles/styles.css. */
+
+/* content wrap — section background (none here) stays full-bleed; content is
+   constrained. Mirrors the prototype's .wrap. */
+.audiences .wrap {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.audiences .section-head {
+  max-width: 64ch;
+  margin-bottom: 40px;
+}
+
+.audiences .section-head h2 {
+  margin-bottom: 12px;
+  font-size: var(--heading-xl);
+  letter-spacing: -0.022em;
+}
+
+.audiences .aud-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.audiences .aud {
+  padding: 28px;
+  background: #fff;
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+.audiences .aud .kicker {
+  font: 500 12px / 1 var(--mono-font-family);
+  color: var(--color-accent);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.audiences .aud h3 {
+  margin: 12px 0 10px;
+  font-size: 21px;
+  font-weight: 425;
+  letter-spacing: -0.012em;
+}
+
+.audiences .aud p {
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.audiences .proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  align-items: baseline;
+  padding-top: 22px;
+  border-top: 1px solid var(--mist);
+}
+
+.audiences .proof-row .lbl {
+  font-size: var(--body-sm);
+  color: var(--slate);
+}
+
+.audiences .proof-row a {
+  font-size: 15px;
+  font-weight: 425;
+  color: var(--color-fg);
+}
+
+.audiences .proof-row a:hover {
+  color: var(--color-accent);
+}
+
+@media (width <= 1024px) {
+  .audiences .aud-grid {
+    grid-template-columns: 1fr;
+  }
+}

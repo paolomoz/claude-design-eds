@@ -1,0 +1,89 @@
+/* ——— news ——— */
+
+/* Content wrap — recreates the prototype's max-width box.
+   The section background (if any) stays full-bleed; the CONTENT is wrapped. */
+.news .wrap {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.news .section-head {
+  max-width: 64ch;
+  margin-bottom: 40px;
+}
+
+.news .section-head h2 {
+  font-size: var(--heading-xl);
+  letter-spacing: -0.022em;
+  margin-bottom: 12px;
+}
+
+.news .news-rows {
+  display: grid;
+  gap: 0;
+}
+
+.news .news-row {
+  display: grid;
+  grid-template-columns: 170px 1fr auto;
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-top: 1px solid var(--mist);
+}
+
+.news .news-row:last-child {
+  border-bottom: 1px solid var(--mist);
+}
+
+.news .news-row .tag {
+  font: 500 12px/1.5 var(--mono-font-family);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.news .news-row h3 {
+  font-size: 19px;
+  font-weight: 425;
+  letter-spacing: -0.01em;
+}
+
+.news .news-row p {
+  font-size: 14px;
+  margin-top: 6px;
+  max-width: 70ch;
+}
+
+/* Styled text link (chevron link) — a plain <a>, not a button. */
+.news .chevlink {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.news .chevlink .chev {
+  display: inline-block;
+  font-weight: 400;
+  transform: translateY(-0.5px);
+  transition: margin 0.18s;
+}
+
+.news .chevlink:hover .chev {
+  margin-left: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news .chevlink .chev {
+    transition: none;
+  }
+}
+
+/* ——— responsive (prototype line 254) ——— */
+@media (width <= 640px) {
+  .news .news-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

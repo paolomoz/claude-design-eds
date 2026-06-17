@@ -1,0 +1,43 @@
+/* ——— AI banner ——— */
+.ai-banner .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ai-banner .ai-inner {
+  border-radius: var(--radius-card);
+  background: linear-gradient(95deg, #0d1738 38%, #122054 60%, #5d0252 92%);
+  color: #c9d4ea;
+  padding: 44px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ai-banner .ai-inner h2 {
+  color: #fff;
+  font-size: var(--heading-md);
+  letter-spacing: -0.015em;
+  max-width: 26ch;
+}
+
+.ai-banner .ai-inner .actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* on the dark panel, drop the secondary outline box-shadow */
+.ai-banner .ai-inner a.btn-secondary {
+  box-shadow: none;
+}
+
+@media (width <= 640px) {
+  .ai-banner .ai-inner {
+    padding: 28px;
+  }
+}

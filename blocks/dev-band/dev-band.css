@@ -1,0 +1,124 @@
+/*
+ * dev-band block CSS — lifted verbatim from
+ * stardust/prototypes/home-C-cinematic.html (meter lines 105–106;
+ * dev band lines 186–199; responsive line 238), scoped under .dev-band.
+ *
+ * The dark surface is full-bleed (--color-fg); the content is wrapped in
+ * .wrap (max-width + horizontal padding). Global tokens + button system
+ * live in styles/styles.css — referenced here, not redefined. The on-dark
+ * secondary-button override (main .dev-band a.btn-secondary) is also in
+ * styles/styles.css.
+ */
+
+.dev-band {
+  /* full-bleed dark surface */
+  padding: var(--section-padding) 0;
+  background: var(--color-fg);
+  color: #aab6d4;
+}
+
+.dev-band .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.dev-band h2 {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: var(--heading-xl);
+  letter-spacing: -0.022em;
+}
+
+.dev-band .dev-grid > * {
+  min-width: 0;
+}
+
+.dev-band .dev-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.dev-band .dev-copy p {
+  max-width: 52ch;
+  margin-bottom: 24px;
+}
+
+.dev-band .dev-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.dev-band .dev-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.dev-band .dev-stats .num {
+  color: #fff;
+  font: 350 38px / 1 var(--heading-font-family);
+  font-variant-numeric: tabular-nums;
+}
+
+.dev-band .dev-stats .cap {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* throughput meters (prototype lines 105–106) */
+.dev-band .meter {
+  max-width: 180px;
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 3px;
+  background: #1d2a52;
+  overflow: hidden;
+}
+
+.dev-band .meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--g-peri), var(--g-blurple));
+}
+
+.dev-band .code-panel {
+  padding: 22px 24px;
+  border: 1px solid #1d2a52;
+  border-radius: var(--radius-card);
+  background: #0a1129;
+  color: #8aa3e8;
+  font: 500 13px / 1.7 var(--mono-font-family);
+  overflow-x: auto;
+}
+
+.dev-band .code-panel .k {
+  color: #6ee7c8;
+}
+
+.dev-band .code-panel .s {
+  color: #ffb4dd;
+}
+
+.dev-band .code-panel .c {
+  color: #4a5d96;
+}
+
+/* responsive (prototype line 238) */
+@media (width <= 1024px) {
+  .dev-band .dev-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .dev-band .code-panel code {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+}

@@ -1,0 +1,86 @@
+/* ——— cta-band — closing CTA band on the athens tint ——— */
+
+/* Full-bleed tint; content is wrapped to max-width by .wrap. */
+main .section.cta-band-container,
+.cta-band {
+  background: var(--athens);
+}
+
+.cta-band .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cta-band .cta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.cta-band .cta-grid h2 {
+  margin-bottom: 10px;
+  font-size: var(--heading-lg);
+  letter-spacing: -0.02em;
+}
+
+.cta-band .cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.cta-band .mini-tiles {
+  display: grid;
+  gap: 14px;
+}
+
+.cta-band .mini {
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-card);
+}
+
+.cta-band .mini h3 {
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 425;
+}
+
+.cta-band .mini p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Chevron text link (prototype .chevlink) — a plain styled <a>, not a button. */
+.cta-band .mini .chevlink {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.cta-band .mini .chevlink .chev {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  transition: transform 0.18s var(--ease-expo);
+}
+
+.cta-band .mini .chevlink:hover .chev {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-band .mini .chevlink .chev {
+    transition: none;
+  }
+}
+
+@media (width <= 1024px) {
+  .cta-band .cta-grid {
+    grid-template-columns: 1fr;
+  }
+}

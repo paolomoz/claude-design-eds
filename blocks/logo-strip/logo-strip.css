@@ -1,0 +1,30 @@
+/* ——— logo strip ———
+   Lifted verbatim from home-C-cinematic.html (CSS lines 142-145),
+   scoped under .logo-strip. The hairline border + vertical padding live on
+   the band; the content is re-wrapped in .wrap (max-width, centered). */
+
+.logo-strip {
+  padding: 28px 0;
+  border-top: 1px solid var(--mist);
+  border-bottom: 1px solid var(--mist);
+}
+
+.logo-strip .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.logo-strip .logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 44px;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.logo-strip .logos .logo {
+  font: 500 17px/1 var(--heading-font-family);
+  color: #7a8ba3;
+  letter-spacing: -0.01em;
+}

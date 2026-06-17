@@ -1,0 +1,117 @@
+/*
+ * Live Proof block — stat-grid proof section on an --athens tint.
+ * CSS lifted from home-C-cinematic.html (lines 147-154), scoped under .live-proof.
+ * Global tokens + button system live in styles/styles.css — referenced, not redefined.
+ */
+
+/* The section background stays full-bleed; the CONTENT is wrapped. */
+main .section.live-proof-container {
+  background: var(--athens);
+}
+
+/* Re-create the prototype's centered max-width content column. */
+.live-proof .live-proof-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.live-proof .proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.live-proof .proof-head h2 {
+  font-size: var(--heading-lg);
+  letter-spacing: -0.02em;
+}
+
+/* Leading pulse dot, re-created in JS. */
+.live-proof .pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  vertical-align: middle;
+  flex: none;
+  animation: live-proof-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes live-proof-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(83 58 253 / 35%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgb(83 58 253 / 0%);
+  }
+}
+
+/* Chevron text-link to enterprise — a styled text link, NOT a button. */
+.live-proof .chevlink {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-accent);
+}
+
+.live-proof .chevlink .chev {
+  display: inline-block;
+  font-weight: 400;
+  transform: translateY(-0.5px);
+  transition: transform 0.18s;
+}
+
+.live-proof .chevlink:hover .chev {
+  transform: translate(2px, -0.5px);
+}
+
+.live-proof .stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.live-proof .stat {
+  border-top: 1px solid var(--mist);
+  padding-top: 18px;
+}
+
+.live-proof .stat .num {
+  font: 350 clamp(34px, 3.6vw, 52px) / 1.05 var(--heading-font-family);
+  color: var(--color-fg);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.live-proof .stat .cap {
+  font-size: var(--body-sm);
+  margin-top: 8px;
+  max-width: 24ch;
+}
+
+/* Responsive: prototype collapses to 2-col at 1024px and stays 2-col on phones. */
+@media (width <= 1024px) {
+  .live-proof .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .live-proof .stat-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-proof .pulse {
+    animation: none;
+  }
+}
