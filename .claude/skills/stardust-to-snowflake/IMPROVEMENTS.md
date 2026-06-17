@@ -220,7 +220,19 @@ test-19's pipeline block fused a light `data-ground="dust"` intro (navy heading)
 The probe stores each heading/eyebrow color but `redFlags()` only checked blank/imagery/content/load/stretch/flush — no proto-vs-EDS color comparison, so a full ground inversion (a matched h2 navy→cream) passed silently. Same blind spot #47/#49 closed for other metrics.
 **Implemented:** `visual-diff.mjs` matches headings by text across proto/EDS and emits a `SURFACE/GROUND MISMATCH` advisory when a matched heading's luminance differs by >90 (dark↔light). Step 10 red-flags list updated.
 
-**Implemented (#40–59):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 60. 🟡 visual-diff heading count was skewed by the prototype's chrome headings + a proto blank-measure artifact
+test-20's proto reported 20 headings vs EDS 14 (a false CONTENT GAP): the 6 extra were the proto's nav/footer chrome headings (chrome is fragments in EDS, outside `<main>`). Also the proto's sticky/scroll-choreography hero made the proto's own `<main>` measure 0px (blankRender on the proto side), making height/box ratios meaningless.
+**Implemented:** `visual-diff.mjs` scopes heading analysis to `<main>` (chrome excluded); when the proto measures blank-ish (`blankRender` or main <50px) the height/contentBox ratios are skipped and only the heading delta is trusted.
+
+### 61. 🟠 Card grids that alternate ground lose the rhythm when no surface marker survives — reconstruct by index
+The prototype's 2nd feature card has `--dark`, but that marker doesn't survive into DA content, so a block that flips dark only on an authored marker rendered every card light (the dark card's white heading went dark-on-light). Caught by #59.
+**Implemented:** Step 8 — fall back to the positional pattern (`dark = marker ?? i%2===1`); scope on-dark overrides to `.card.dark` (#41).
+
+### 62. 🔴 META: co-generated block JS + content must DEFAULT to the DA-flattened single-cell contract
+All 6 test-20 blocks were generated with multi-row index contracts (`rows[0]=eyebrow…`) but the co-generated content delivered each block as ONE row with ONE flat cell — so every block read its whole cell as `rows[0]` and rendered 1-of-N (jumbled hero, one-card grids), invisible to lint. This is the systemic root cause behind #42/#48/#50/#52/#53/#55/#56. `tutorial.js` (the one block that flattened up front) survived unchanged — proving flatten-first is the safe default.
+**Implemented:** Step 8 + the convert.workflow.js block brief — flatten-first is the DEFAULT contract (`block.querySelectorAll(':scope > div > div > *')`, segment/classify by content); one-cell-per-row is only a fallback. Checklist assertion: after decorate the rendered count = authored count (hero non-empty + has `<h1>`; card grid holds N, never 1). Turns "classify by content" from a per-block post-hoc fix into a generation-time default.
+
+**Implemented (#40–62):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 

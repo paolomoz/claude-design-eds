@@ -90,7 +90,9 @@ function analyse() {
     };
   });
 
-  const headings = [...document.querySelectorAll('h1, h2, h3')].map((h) => {
+  // scope to <main> so the prototype's nav/footer chrome headings don't skew the
+  // proto-vs-EDS count (chrome is fragments in EDS, outside main) — #60.
+  const headings = [...(mainEl || document).querySelectorAll('h1, h2, h3')].map((h) => {
     const cs = getComputedStyle(h);
     return {
       tag: h.tagName.toLowerCase(),
@@ -195,8 +197,11 @@ function redFlags(eds, proto) {
     const he = eds.headings.length;
     const cp = proto.contentBoxes.length;
     const ce = eds.contentBoxes.length;
-    const mhRatio = proto.mainHeight && eds.mainHeight ? eds.mainHeight / proto.mainHeight : 1;
-    if (hp - he >= 3 || (cp >= 4 && ce < cp * 0.6) || mhRatio < 0.6) {
+    // a proto whose <main> measures ~0 (sticky/scroll-choreography artifact) makes
+    // the height/box ratios meaningless — caveat #60: trust only the heading delta then.
+    const protoBlankish = proto.blankRender || proto.mainHeight < 50;
+    const mhRatio = !protoBlankish && proto.mainHeight && eds.mainHeight ? eds.mainHeight / proto.mainHeight : 1;
+    if (hp - he >= 3 || (!protoBlankish && cp >= 4 && ce < cp * 0.6) || mhRatio < 0.6) {
       flags.push(`CONTENT GAP (#49): proto ${hp} headings / ${cp} content-boxes / main ${proto.mainHeight}px vs EDS ${he} / ${ce} / ${eds.mainHeight}px. The EDS likely DROPPED or duplicated authored content (a missing section, a dropped CTA) — eyeball the section pair; metrics-only checks (stretch/flush/blank) can't see this.`);
     }
     // Surface/ground mismatch (#59): a matched heading rendered on the wrong
