@@ -1,0 +1,144 @@
+<style>
+  footer.footer {
+    display: block;
+    margin-top: var(--spacing-2xl);
+    border-top: 1px solid var(--color-mist);
+    padding-block: var(--section-padding);
+    background: var(--color-bg);
+  }
+
+  footer.footer .footer-wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-inline: var(--spacing-lg);
+  }
+
+  footer.footer .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-xl);
+  }
+
+  footer.footer .footer-grid h3 {
+    font-family: var(--body-font-family);
+    font-size: var(--body-sm);
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-fg);
+  }
+
+  footer.footer .footer-grid ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  footer.footer .footer-grid a {
+    color: var(--color-slate-deep);
+    text-decoration: none;
+    font-size: var(--body-sm);
+    transition: color 0.3s var(--ease-micro);
+  }
+
+  footer.footer .footer-grid a:hover {
+    color: var(--color-accent);
+  }
+
+  footer.footer .footer-legal {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-mist);
+    color: var(--color-slate);
+    font-size: 13px;
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+  }
+
+  footer.footer .footer-legal svg {
+    height: 22px;
+    width: auto;
+  }
+
+  @media (max-width: 1024px) {
+    footer.footer .footer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    footer.footer .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<div class="footer-wrap">
+  <div class="footer-grid">
+    <nav aria-label="Products and pricing">
+      <h3>Products and pricing</h3>
+      <ul>
+        <li><a href="https://stripe.com/en-it/pricing">Pricing</a></li>
+        <li><a href="https://stripe.com/en-it/payments">Payments</a></li>
+        <li><a href="https://stripe.com/en-it/billing">Billing</a></li>
+        <li><a href="https://stripe.com/en-it/connect">Connect</a></li>
+        <li><a href="https://stripe.com/en-it/issuing">Issuing</a></li>
+        <li><a href="https://stripe.com/en-it/terminal">Terminal</a></li>
+        <li><a href="https://stripe.com/en-it/radar">Radar</a></li>
+        <li><a href="https://stripe.com/en-it/atlas">Atlas</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Solutions">
+      <h3>Solutions</h3>
+      <ul>
+        <li><a href="https://stripe.com/en-it/enterprise">Enterprises</a></li>
+        <li><a href="https://stripe.com/en-it/startups">Start-ups</a></li>
+        <li><a href="https://stripe.com/en-it/use-cases/platforms">Platforms</a></li>
+        <li><a href="https://stripe.com/en-it/use-cases/ecommerce">E-commerce</a></li>
+        <li><a href="https://stripe.com/en-it/use-cases/saas">SaaS</a></li>
+        <li><a href="https://stripe.com/en-it/use-cases/marketplaces">Marketplaces</a></li>
+        <li><a href="https://stripe.com/en-it/crypto">Crypto</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Developers">
+      <h3>Developers</h3>
+      <ul>
+        <li><a href="https://docs.stripe.com">Documentation</a></li>
+        <li><a href="https://docs.stripe.com/api">API reference</a></li>
+        <li><a href="https://status.stripe.com">API status</a></li>
+        <li><a href="https://docs.stripe.com/changelog">Changelog</a></li>
+        <li><a href="https://github.com/stripe">Stripe on GitHub</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Resources">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="https://stripe.com/en-it/guides">Guides</a></li>
+        <li><a href="https://stripe.com/en-it/customers">Customer stories</a></li>
+        <li><a href="https://stripe.com/en-it/blog">Blog</a></li>
+        <li><a href="https://stripe.com/sessions">Sessions</a></li>
+        <li><a href="https://press.stripe.com">Stripe Press</a></li>
+        <li><a href="https://stripe.com/en-it/partners">Partner ecosystem</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Company">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="https://stripe.com/en-it/about">About Stripe</a></li>
+        <li><a href="https://stripe.com/en-it/newsroom">Newsroom</a></li>
+        <li><a href="https://stripe.com/en-it/jobs">Jobs</a></li>
+        <li><a href="https://stripe.com/en-it/annual-updates/2025">Annual updates</a></li>
+        <li><a href="https://stripe.com/en-it/privacy">Privacy &amp; terms</a></li>
+        <li><a href="https://stripe.com/en-it/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-legal">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 25" aria-label="Stripe" role="img"><path fill="#50617a" fill-rule="evenodd" d="M59.6444 14.2813h-8.062c.1843 1.9296 1.5983 2.5476 3.2032 2.5476 1.6352 0 2.9534-.3656 4.0453-.9506v3.3179c-1.1186.7115-2.5964 1.1068-4.5645 1.1068-4.011 0-6.8218-2.5122-6.8218-7.4783 0-4.19441 2.3837-7.52509 6.3017-7.52509 3.912 0 5.9537 3.28038 5.9537 7.49819 0 .3982-.0372 1.261-.0556 1.4835Zm-5.9241-5.62407c-1.0294 0-2.1739.72812-2.1739 2.58387h4.2573c0-1.85362-1.0721-2.58387-2.0834-2.58387ZM40.9547 20.3052c-1.4084 0-2.2682-.5944-2.8463-1.0187l-.0086 4.5577-4.0177.8546-.0017-19.348h3.5377l.2092 .9927c.5567-.5189 1.5748-1.2596 3.1533-1.2596 2.8261 0 5.4889 2.5471 5.4889 7.2326 0 5.1153-2.6342 7.4887-5.5148 7.4887Zm-.9332-11.18c-.9255 0-1.5042.3378-1.9242.7989l.0238 5.9982c.3905.4233.9546.7642 1.9004.7642 1.4895 0 2.4888-1.6222 2.4888-3.7926 0-2.1087-1.0148-3.7687-2.4888-3.7687ZM28.0959 5.45122h4.0339V19.5278h-4.0339V5.45122Zm0-4.59542L32.1298 0v3.27263l-4.0339.85779V.8558Zm-4.1781 9.1257v9.5463h-4.0177V5.45122h3.4748l.2533 1.18781c.94-1.72921 2.8201-1.37829 3.3544-1.18781v3.69448c-.5111-.16519-2.1146-.40578-3.0648.97927ZM14.3458 14.5904c0 2.3688 2.5356 1.6313 3.0503 1.4253v3.2698c-.5354.2944-1.5063.5329-2.8201.5329-2.3851 0-4.1742-1.7562-4.1742-4.1351l.0181-12.8919 3.9236-.83399.0023 3.49341h3.0521v3.42561h-3.0521v5.7139ZM10.1817 15.2701c0 2.8961-2.30498 4.5512-5.65049 4.5512-1.38683 0-2.90284-.2698-4.39936-.9131v-3.8268c1.35114.7345 3.07215 1.2855 4.40292 1.2855.89566 0 1.54128-.2406 1.54128-.9827C6.07585 13.4665 0 14.1815 0 9.76783c0-2.84875 2.17572-4.55244 5.43943-4.55244 1.33282 0 2.66492.20509 3.99771.73591v3.77468c-1.22402-.66067-2.77752-1.03531-3.99771-1.03531-.84185 0-1.36493.24264-1.36493.86753 0 1.80552 6.1072 .94732 6.1072 5.7119Z" clip-rule="evenodd"/></svg>
+    <span>© 2026 Stripe. Captured-content prototype for design review; links point at the live site.</span>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+/* commerce-stats — lifted from en-it-C-cinematic.html (proto CSS 314-335),
+   scoped under .commerce-stats. Global tokens live in styles/styles.css. */
+
+/* Section background stays full-bleed; content is wrapped. */
+main .section.commerce-stats-container,
+.commerce-stats {
+  background: var(--color-bg);
+}
+
+/* Re-created max-width wrap (proto .wrap). */
+.commerce-stats .wrap {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.commerce-stats h2 {
+  font-size: var(--heading-xl);
+}
+
+.commerce-stats .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-mist);
+}
+
+.commerce-stats .stat .stat-display {
+  display: block;
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: clamp(34px, 4vw, 56px);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--color-fg);
+}
+
+.commerce-stats .stat p {
+  color: var(--color-slate-deep);
+  font-size: var(--body-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.commerce-stats .commerce-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+}
+
+.commerce-stats .commerce-strip img {
+  width: 100%;
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Fallback for empty/missing image cells. */
+.commerce-stats .commerce-strip .img-cell:empty {
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  background: var(--color-mist);
+}
+
+@media (width <= 1024px) {
+  .commerce-stats .stats-grid,
+  .commerce-stats .commerce-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .commerce-stats .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

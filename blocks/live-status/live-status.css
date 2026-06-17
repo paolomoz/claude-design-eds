@@ -1,0 +1,124 @@
+/* live-status — thin tinted live-systems band (role: band).
+   CSS lifted verbatim from en-it-C-cinematic.html (lines 443-502),
+   scoped under .live-status. Global tokens live in styles/styles.css. */
+
+/* The section background stays full-bleed; the CONTENT is wrapped. */
+.live-status {
+  padding-block: var(--spacing-lg);
+  border-block: 1px solid var(--color-mist);
+  background: var(--color-ghost);
+}
+
+.live-status .live-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.live-status .live-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.live-status .live-chrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-slate-deep);
+}
+
+.live-status .pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 99999px;
+  background: #00d66f; /* captured pulse green — live indicators only */
+}
+
+.live-status .live-main {
+  flex: 1;
+  min-width: 280px;
+}
+
+.live-status .live-main .cap {
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--color-slate-deep);
+  letter-spacing: 0.02em;
+}
+
+.live-status .live-main .val {
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: clamp(30px, 3.4vw, 48px);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--color-fg);
+}
+
+.live-status .live-companions {
+  display: flex;
+  gap: var(--spacing-2xl);
+}
+
+.live-status .live-companions .c .n {
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: 21px;
+  color: var(--color-fg);
+  display: block;
+}
+
+.live-status .live-companions .c p {
+  font-size: 12.5px;
+  color: var(--color-slate-deep);
+  margin-top: 2px;
+}
+
+/* ——— periodic sweep ——— */
+.live-status .live-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.live-status .live-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(83 58 253 / 7%) 50%, transparent 70%);
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.live-status .live-sweep.sweep::after {
+  transition: transform 1.7s var(--ease-out-cubic);
+  transform: translateX(100%);
+}
+
+/* ——— pulse ——— */
+@media (prefers-reduced-motion: no-preference) {
+  .live-status .pulse-dot {
+    animation: live-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes live-pulse {
+  0%,
+  100% { box-shadow: 0 0 0 0 rgb(0 214 111 / 45%); }
+  50% { box-shadow: 0 0 0 8px rgb(0 214 111 / 0%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-status .live-sweep::after { display: none; }
+}
+
+@media (width <= 768px) {
+  .live-status .live-row { gap: var(--spacing-lg); }
+  .live-status .live-companions { gap: var(--spacing-lg); }
+}

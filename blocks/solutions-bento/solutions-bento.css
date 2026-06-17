@@ -1,0 +1,122 @@
+/* solutions-bento — lifted from en-it-C-cinematic.html (CSS lines 279-312),
+   scoped under .solutions-bento. Global tokens + button system live in
+   styles/styles.css — referenced here, not redefined. */
+
+/* Content wrap (the section background, if any, stays full-bleed). */
+.solutions-bento {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.solutions-bento h2 {
+  font-size: var(--heading-xl);
+  max-width: 22ch;
+}
+
+.solutions-bento .section-kicker {
+  color: var(--color-slate-deep);
+  font-size: var(--body);
+  margin-top: var(--spacing-sm);
+}
+
+/* ——— bento ——— */
+.solutions-bento .bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 230px;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  perspective: 900px;
+}
+
+.solutions-bento .bento-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--color-ghost);
+  border-radius: var(--radius);
+  padding: var(--spacing-lg);
+  text-decoration: none;
+  color: var(--color-fg);
+  overflow: hidden;
+  box-shadow: rgb(23 23 23 / 6%) 0 3px 6px 0;
+  transition: box-shadow 0.3s var(--ease-micro), transform 0.3s var(--ease-micro);
+}
+
+.solutions-bento .bento-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.solutions-bento .bento-card h3 {
+  font-size: var(--heading-sm);
+  font-weight: 425;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
+  max-width: 24ch;
+}
+
+.solutions-bento .bento-card .bento-art {
+  position: absolute;
+  inset: 0 0 28%;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.95;
+}
+
+.solutions-bento .bento-card .bento-art.art-contain {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center 12%;
+  inset: 6% 6% 30%;
+}
+
+.solutions-bento .bento-card .bento-scrim {
+  position: absolute;
+  inset: auto 0 0;
+  height: 55%;
+  z-index: 0;
+  background: linear-gradient(to top, rgb(248 250 253 / 96%) 35%, rgb(248 250 253 / 0%));
+}
+
+.solutions-bento .bento-payments {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.solutions-bento .bento-payments h3 {
+  font-size: var(--heading-md);
+  font-weight: 400;
+}
+
+/* Responsive: 2 cols <=1024px, 1 col <=640px. */
+@media (width <= 1024px) {
+  .solutions-bento .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .solutions-bento .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions-bento .bento-payments {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+/* Honor reduced-motion: drop the hover lift transition/transform. */
+@media (prefers-reduced-motion: reduce) {
+  .solutions-bento .bento-card {
+    transition: box-shadow 0.3s var(--ease-micro);
+  }
+
+  .solutions-bento .bento-card:hover {
+    transform: none;
+  }
+}

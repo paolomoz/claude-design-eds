@@ -1,37 +1,76 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/* ───────────────────────────────────────────────────────────────
+ * hero — lifted from en-it-C-cinematic.html section[data-section="hero"]
+ * (proto CSS lines 228-260), scoped under .hero. Split layout: a
+ * decorative aurora image bleeds from the right column; copy + CTAs sit
+ * in the left. Global tokens + button system live in styles/styles.css.
+ * ─────────────────────────────────────────────────────────────── */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  overflow: hidden;
+  padding-block: calc(var(--section-padding) + 16px);
+}
+
+/* content wrap (proto .wrap) — full-bleed section, wrapped content */
+.hero .hero-grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.hero .hero-aurora {
+  position: absolute;
+  top: -120px;
+  right: -180px;
+  width: min(72vw, 1100px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* CSS fallback when no image is authored */
+.hero span.hero-aurora {
+  height: min(72vw, 1100px);
+  background: radial-gradient(closest-side, rgb(83 58 253 / 18%), rgb(83 58 253 / 0%));
+}
+
+.hero .hero-copy {
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  font-size: var(--heading-xxl);
+  max-width: 26ch;
 }
 
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+/* captured highlight-span gesture, solid color (gradient-text ban third form) */
+.hero h1 .hl {
+  color: var(--color-accent);
 }
 
-.hero img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+.hero .hero-ctas {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  flex-wrap: wrap;
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+/* collapse to a single column; the aurora drops into normal flow above */
+@media (width <= 900px) {
+  .hero .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero .hero-aurora {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 130%;
+    margin: -22% -15% -30% auto;
+    order: -1;
   }
 }

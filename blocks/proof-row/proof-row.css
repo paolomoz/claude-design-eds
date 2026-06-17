@@ -1,0 +1,51 @@
+/* ——— proof row ——— (lifted from en-it-C-cinematic.html, scoped under .proof-row) */
+.proof-row {
+  border-bottom: 1px solid var(--color-mist);
+  padding-block: var(--spacing-2xl);
+}
+
+/* prototype content wrap (.wrap): max-width + centered + side padding */
+.proof-row .proof-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.proof-row .proof-line {
+  font-size: var(--body);
+  color: var(--color-slate-deep);
+}
+
+.proof-row .proof-line .stat-display {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(26px, 2.6vw, 38px);
+  color: var(--color-fg);
+}
+
+.proof-row .proof-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-md) var(--spacing-2xl);
+  margin-top: var(--spacing-xl);
+}
+
+.proof-row .proof-logos span {
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--color-slate-deep);
+  transition: color 0.3s var(--ease-micro);
+}
+
+.proof-row .proof-logos span:hover {
+  color: var(--color-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proof-row .proof-logos span {
+    transition: none;
+  }
+}

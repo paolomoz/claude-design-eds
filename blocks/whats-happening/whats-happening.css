@@ -1,0 +1,194 @@
+/* ——— what's happening ——— */
+
+/* Full-bleed section background; the content is wrapped to max-width. */
+main .section.whats-happening-container {
+  background: var(--color-ghost);
+}
+
+.whats-happening {
+  padding-block: var(--section-padding);
+}
+
+.whats-happening .wh-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.whats-happening .wh-title {
+  font-size: var(--heading-xl);
+}
+
+.whats-happening .section-kicker {
+  color: var(--color-slate-deep);
+  font-size: var(--body);
+  margin-top: var(--spacing-sm);
+}
+
+.whats-happening .arrow-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 425;
+  transition: color 0.3s var(--ease-micro);
+}
+
+.whats-happening .arrow-link:hover {
+  color: var(--color-accent-deep);
+}
+
+.whats-happening .arrow-link::after {
+  content: " →";
+}
+
+/* ——— news grid (mobile-first: 1 → 2 → 3 cols) ——— */
+.whats-happening .news-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.whats-happening .news-card {
+  background: var(--color-bg);
+  border-radius: var(--radius);
+  padding: var(--spacing-lg);
+  box-shadow: rgb(23 23 23 / 6%) 0 3px 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.whats-happening .news-card h3 {
+  font-size: var(--heading-sm);
+  font-weight: 425;
+}
+
+.whats-happening .news-card p {
+  color: var(--color-slate-deep);
+  font-size: var(--body-sm);
+}
+
+.whats-happening .news-card .arrow-link {
+  margin-top: auto;
+  font-size: var(--body-sm);
+}
+
+/* ——— sessions band (dark) ——— */
+.whats-happening .sessions-band {
+  margin-top: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: var(--color-midnight);
+}
+
+.whats-happening .sessions-band .band-art {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+.whats-happening .sessions-band .band-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 36ch;
+}
+
+.whats-happening .sessions-band h3 {
+  font-size: var(--heading-md);
+  font-weight: 400;
+  color: #fff;
+}
+
+.whats-happening .sessions-band .band-cta {
+  margin-top: var(--spacing-md);
+  max-width: none;
+}
+
+/* ——— book row ——— */
+.whats-happening .book-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-mist);
+  font-size: var(--body-sm);
+  color: var(--color-slate-deep);
+}
+
+.whats-happening .book-row img {
+  width: 56px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  box-shadow: var(--shadow-chip);
+}
+
+.whats-happening .book-row .book-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--color-slate);
+}
+
+.whats-happening .book-row h3 {
+  font-size: var(--body);
+  font-weight: 425;
+  color: var(--color-fg);
+}
+
+.whats-happening .book-row .arrow-link {
+  font-size: var(--body-sm);
+}
+
+/* Empty / missing image fallback so cards never ship a broken box. */
+.whats-happening .sessions-band:not(:has(.band-art)) {
+  background: var(--color-midnight);
+}
+
+/* ——— reveal (CSS-only, content stays visible by default) ——— */
+@media (prefers-reduced-motion: no-preference) {
+  .whats-happening .news-card,
+  .whats-happening .sessions-band,
+  .whats-happening .book-row {
+    animation: wh-rise var(--enter-duration, 600ms) var(--ease-expo) both;
+  }
+
+  .whats-happening .news-card:nth-child(2) {
+    animation-delay: var(--enter-stagger, 100ms);
+  }
+
+  .whats-happening .news-card:nth-child(3) {
+    animation-delay: calc(var(--enter-stagger, 100ms) * 2);
+  }
+}
+
+@keyframes wh-rise {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ——— tablet: 2 columns ——— */
+@media (width >= 600px) {
+  .whats-happening .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ——— desktop: 3 columns ——— */
+@media (width >= 900px) {
+  .whats-happening .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
