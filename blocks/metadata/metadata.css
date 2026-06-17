@@ -1,0 +1,27 @@
+/*
+ * Metadata Block (role: band) — non-visual.
+ *
+ * The delivery pipeline lifts this block to <head>; metadata.js removes it
+ * off-pipeline. This CSS exists so that, in the brief instant before JS runs
+ * (or if JS is blocked), the raw Title/Description key/value rows never flash
+ * as stray content. It also carries the prototype's max-width content wrap so
+ * the block honors the site's layout contract — the section background, if any,
+ * stays full-bleed while the CONTENT is wrapped.
+ */
+
+/* Keep the band out of the visual flow until metadata.js removes it. */
+.metadata {
+  display: none;
+}
+
+/* Max-width content wrap lifted from the prototype's .container
+   (max-width:1140px; margin:0 auto; padding-inline:24px). Applies should the
+   band ever render — the section ground stays full-bleed, the content is wrapped. */
+.metadata > div {
+  max-width: var(--max-width, 1140px);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg, 24px);
+}
+
+/* No motion to gate — the band is non-visual and JS-removed. prefers-reduced-motion
+   needs no override here; the global reset already covers scroll-behavior. */

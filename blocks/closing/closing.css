@@ -1,0 +1,67 @@
+/* closing band — lifted from home-proposed.html section[data-section="closing-band"] */
+
+.closing {
+  padding-bottom: var(--section-padding);
+}
+
+/* full-bleed rule across the band */
+.closing .closing-rule {
+  width: 100%;
+  height: 2px;
+  border: 0;
+  background: var(--wave-ink);
+  opacity: 0.9;
+}
+
+/* max-width content wrap (recreates the prototype .container) */
+.closing .closing-grid {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.closing .closing-text h2 {
+  max-width: 16ch;
+}
+
+.closing .closing-sub {
+  margin-top: var(--spacing-md);
+  color: var(--color-muted);
+  max-width: 44ch;
+}
+
+.closing .actions {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.closing .closing-notes {
+  display: grid;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+}
+
+.closing .closing-notes .note {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  font-weight: 500;
+  color: var(--color-muted);
+  padding: 14px 16px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-control);
+  line-height: 1.5;
+}
+
+@media (width >= 900px) {
+  .closing .closing-grid {
+    grid-template-columns: 7fr 5fr;
+  }
+}

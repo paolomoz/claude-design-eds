@@ -1,0 +1,155 @@
+/* customers-index — "At every scale" customer proof section.
+   CSS lifted verbatim from prototype home-proposed.html, scoped under
+   .customers-index. Global tokens + button system live in styles/styles.css. */
+
+/* content wrap — recreate the prototype's .container max-width frame.
+   The section background (none here / plain) stays full-bleed; only the
+   CONTENT is constrained. */
+.customers-index .wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+/* chapter running-head (lifted from the prototype's named document device) */
+.customers-index .chapter-head {
+  border-top: 1px solid var(--color-line);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-md);
+}
+
+.customers-index .chapter-head .running {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-fg);
+  font-weight: 500;
+}
+
+.customers-index .chapter-head .folio {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.customers-index h2 {
+  margin-top: var(--spacing-lg);
+  max-width: 24ch;
+}
+
+.customers-index .chapter-lede {
+  margin-top: var(--spacing-md);
+  color: var(--color-muted);
+  max-width: 58ch;
+}
+
+/* case index */
+.customers-index .case-index {
+  margin-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-line);
+}
+
+.customers-index .case-row {
+  display: grid;
+  grid-template-columns: 230px 1fr auto;
+  align-items: baseline;
+  gap: var(--spacing-lg);
+  padding: 22px 8px;
+  border-bottom: 1px solid var(--color-line);
+  text-decoration: none;
+  transition: background var(--dur-state) var(--ease-snap);
+}
+
+.customers-index .case-row:hover { background: var(--color-surface); }
+
+.customers-index .case-row .name {
+  font-size: var(--heading-sm);
+  font-weight: 500;
+  font-variation-settings: 'wght' 500;
+  letter-spacing: -0.01em;
+}
+
+.customers-index .case-row .claim {
+  font-size: var(--body-sm);
+  color: var(--color-muted);
+  max-width: 56ch;
+}
+
+/* gesture text-link (plain styled <a> content, not a button) */
+.customers-index .gesture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--label);
+  font-weight: 425;
+  font-variation-settings: 'wght' 425;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.customers-index .gesture .arr { transition: transform var(--dur-state) var(--ease-snap); }
+
+.customers-index .case-row:hover .gesture {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.customers-index .case-row:hover .gesture .arr { transform: translateX(3px); }
+
+/* tracks */
+.customers-index .tracks {
+  margin-top: var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+
+.customers-index .track .tag {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.customers-index .track p {
+  margin-top: var(--spacing-sm);
+  font-size: var(--body-sm);
+  color: var(--color-muted);
+  max-width: 48ch;
+}
+
+@media (width <= 768px) {
+  .customers-index .tracks { grid-template-columns: 1fr; }
+}
+
+@media (width <= 640px) {
+  .customers-index .case-row .name { font-size: var(--body); }
+
+  /* gestures move to their own row so long named gestures never overflow */
+  .customers-index .case-row {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+
+  .customers-index .case-row .claim {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .customers-index .case-row .gesture {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .customers-index .case-row,
+  .customers-index .gesture .arr { transition: none; }
+}

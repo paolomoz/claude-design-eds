@@ -1,0 +1,71 @@
+<style>
+  footer.footer {
+    border-top: 1px solid var(--color-line);
+    padding: 32px 0 40px;
+    margin-top: var(--section-padding);
+  }
+
+  footer.footer .colophon-inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--spacing-lg);
+  }
+
+  footer.footer .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--spacing-md) var(--spacing-xl);
+    justify-content: space-between;
+  }
+
+  footer.footer .wordmark {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-fg);
+  }
+
+  footer.footer .wordmark svg { height: 20px; width: auto; }
+
+  footer.footer .directory {
+    font-family: var(--mono-font-family);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-muted);
+    line-height: 2;
+  }
+
+  footer.footer .directory a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  footer.footer .directory a:hover { color: var(--color-fg); }
+  footer.footer .directory span { white-space: nowrap; }
+
+  footer.footer .smallprint {
+    margin-top: var(--spacing-md);
+    font-family: var(--mono-font-family);
+    font-size: 11px;
+    font-weight: 500;
+    color: #7d8ba4;
+  }
+</style>
+
+<div class="colophon-inner">
+  <div class="colophon">
+    <a class="wordmark" href="/" aria-label="Stripe home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="20" fill="currentColor" viewBox="0 0 60 25" role="img" aria-label="Stripe logo"><path fill-rule="evenodd" d="M59.6444 14.2813h-8.062c.1843 1.9296 1.5983 2.5476 3.2032 2.5476 1.6352 0 2.9534-.3656 4.0453-.9506v3.3179c-1.1186.7115-2.5964 1.1068-4.5645 1.1068-4.011 0-6.8218-2.5122-6.8218-7.4783 0-4.19441 2.3837-7.52509 6.3017-7.52509 3.912 0 5.9537 3.28038 5.9537 7.49819 0 .3982-.0372 1.261-.0556 1.4835Zm-5.9241-5.62407c-1.0294 0-2.1739.72812-2.1739 2.58387h4.2573c0-1.85362-1.0721-2.58387-2.0834-2.58387ZM40.9547 20.303c-1.4411 0-2.322-.6087-2.9133-1.0417l-.0088 4.6271-4.1181.8755-.0014-19.19053h3.7543l.0864 1.01784c.6035-.52914 1.6114-1.29157 3.2256-1.29162 2.8925 0 5.6162 2.6052 5.6162 7.39971 0 5.2327-2.6948 7.6029-5.9509 7.6029Zm-.959-11.39568c-.9504 0-1.5474.34692-1.9786.81834l.0244 6.13894c.4017.4361.9831.786 1.9542.786 1.5314 0 2.5589-1.6588 2.5589-3.8847 0-2.1622-1.0431-3.85858-2.5589-3.85858ZM26.6359 6.30311h4.1357V20.0086h-4.1357V6.30311Zm0-4.66537L30.7716.76129v3.35545l-4.1357.87753V1.63774Zm-4.2266 9.07726v9.2932h-4.1181V6.30311h3.6306l.1466 1.18054c.9777-1.72106 2.9525-1.37232 3.5128-1.18054v3.78809c-.5369-.1735-2.2192-.4259-3.1719.5705ZM12.4271 15.2227c0 2.4279 2.5985 1.6724 3.1256 1.4622v3.3528c-.5481.3014-1.5434.5457-2.8895.5457-2.4429 0-4.27569-1.7986-4.27569-4.235l.01853-13.20084 4.02096-.85478.0011 3.57363h3.1267v3.5104h-3.1278v5.84549ZM8.06893 15.8665c0 2.9659-2.36025 4.6585-5.78617 4.6585-1.42026 0-2.97276-.2761-4.50554-.9362v-3.9326c1.38384.7523 3.14724 1.3163 4.50974 1.3163.91682 0 1.57772-.2464 1.57772-1.0058 0-1.9631-6.26107-1.2238-6.26107-5.7852 0-2.91699 2.22763-4.66206 5.56932-4.66206 1.36493 0 2.72916.20991 4.0941.75331v3.87875c-1.25335-.6767-2.84426-1.0601-4.09551-1.0601-.86191 0-1.39787.2489-1.39787.8929 0 1.8505 6.29528 .9708 6.29528 5.8824Z" clip-rule="evenodd"/></svg>
+    </a>
+    <p class="directory">
+      <span><a href="/pricing">Products &amp; pricing</a></span> &middot;
+      <span><a href="/use-cases/saas">Solutions</a></span> &middot;
+      <span><a href="/connect">Integrations &amp; custom solutions</a></span> &middot;
+      <span><a href="https://docs.stripe.com">Developers</a></span> &middot;
+      <span><a href="/guides">Resources</a></span> &middot;
+      <span><a href="/about">Company</a></span> &middot;
+      <span><a href="/support">Support</a></span>
+    </p>
+  </div>
+  <p class="smallprint">&copy; Stripe</p>
+</div>

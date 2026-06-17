@@ -1,0 +1,96 @@
+/* backbone-stats — full-bleed dark "vault" band (prototype: home-proposed.html
+   section[data-section="backbone-stats"], lines 310-343). The vault background
+   bleeds full-width; the inner .wrap holds content to --max-width. */
+
+.backbone-stats {
+  background: var(--color-vault);
+  color: #fff;
+  padding-bottom: var(--section-padding);
+  margin-top: var(--section-padding);
+}
+
+/* inner content wrap — recreates the prototype's .container */
+.backbone-stats .wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+/* chapter-head (mono running label + folio, white-tinted top rule) */
+.backbone-stats .chapter-head {
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-md);
+}
+
+.backbone-stats .running {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  font-weight: 500;
+  color: #fff;
+}
+
+.backbone-stats .folio {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  font-weight: 500;
+  color: rgb(246 249 252 / 60%);
+}
+
+.backbone-stats h2 {
+  margin-top: var(--spacing-lg);
+  max-width: 24ch;
+  color: #fff;
+  line-height: 1.16;
+}
+
+/* gradient rule */
+.backbone-stats .gradient-rule {
+  width: 96px;
+  height: 2px;
+  border: 0;
+  background: var(--wave-ink);
+  margin: var(--spacing-lg) 0 0;
+}
+
+/* stat-ledger — 4 rows: mono figure + caption, grid 220px / 1fr */
+.backbone-stats .stat-ledger {
+  margin-top: var(--spacing-xl);
+}
+
+.backbone-stats .stat-ledger .row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: baseline;
+  gap: var(--spacing-lg);
+  padding: 18px 0;
+  border-bottom: 1px solid rgb(255 255 255 / 14%);
+}
+
+.backbone-stats .stat-ledger .row:first-child {
+  border-top: 1px solid rgb(255 255 255 / 14%);
+}
+
+.backbone-stats .stat-ledger .fig {
+  font-family: var(--mono-font-family);
+  font-size: var(--heading-md);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.backbone-stats .stat-ledger .cap {
+  font-size: var(--body-sm);
+  line-height: 1.5;
+  color: rgb(246 249 252 / 78%);
+}
+
+@media (width <= 600px) {
+  .backbone-stats .stat-ledger .row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+}

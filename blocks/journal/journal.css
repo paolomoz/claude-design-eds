@@ -1,0 +1,120 @@
+/* journal — full-bleed tinted cross-link band (prototype: data-section="journal") */
+
+/* Full-bleed surface band. Background bleeds edge-to-edge; the inner .wrap
+   re-creates the prototype .container (max-width, centered, 24px gutters). */
+.journal.block {
+  background: var(--color-surface);
+  margin-top: var(--section-padding);
+  padding-bottom: var(--section-padding);
+}
+
+.journal .wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+/* chapter running-head */
+.journal .chapter-head {
+  border-top: 1px solid #d8e3ee;
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-md);
+}
+
+.journal .chapter-head .running {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-fg);
+  font-weight: 500;
+}
+
+.journal .chapter-head .folio {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.journal h2 {
+  margin-top: var(--spacing-lg);
+  max-width: 24ch;
+}
+
+/* entry list */
+.journal .journal-list {
+  margin-top: var(--spacing-xl);
+}
+
+.journal .journal-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: var(--spacing-lg);
+  padding: 20px 8px;
+  border-bottom: 1px solid #dde7f0;
+  text-decoration: none;
+  transition: background var(--dur-state) var(--ease-snap);
+}
+
+.journal .journal-entry:hover {
+  background: #eef3f9;
+}
+
+.journal .journal-entry .headline {
+  font-size: var(--body);
+  font-weight: 500;
+  font-variation-settings: 'wght' 500;
+  letter-spacing: -0.005em;
+  color: var(--color-fg);
+}
+
+/* gesture text-link with trailing arrow */
+.journal .journal-entry .gesture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--label);
+  font-weight: 425;
+  font-variation-settings: 'wght' 425;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.journal .journal-entry .gesture .arr {
+  transition: transform var(--dur-state) var(--ease-snap);
+}
+
+.journal .journal-entry:hover .gesture {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.journal .journal-entry:hover .gesture .arr {
+  transform: translateX(3px);
+}
+
+@media (width <= 640px) {
+  .journal .journal-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .journal .journal-entry .gesture {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal .journal-entry,
+  .journal .journal-entry .gesture .arr {
+    transition: none;
+  }
+
+  .journal .journal-entry:hover .gesture .arr {
+    transform: none;
+  }
+}

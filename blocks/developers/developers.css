@@ -1,0 +1,136 @@
+/* developers — section block. Tokens + button system live in styles/styles.css. */
+
+/* max-width content wrap (background, if any, stays full-bleed) */
+.developers .developers-inner {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* chapter running-head */
+.developers .chapter-head {
+  border-top: 1px solid var(--color-line);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-md);
+}
+
+.developers .chapter-head .running {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-fg);
+  font-weight: 500;
+}
+
+.developers .chapter-head .folio {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.developers h2 {
+  margin-top: var(--spacing-lg);
+  max-width: 24ch;
+}
+
+.developers .chapter-lede {
+  margin-top: var(--spacing-md);
+  color: var(--color-muted);
+  max-width: 58ch;
+}
+
+/* gesture link in the plate head */
+.developers .gesture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--label);
+  font-weight: 425;
+  font-variation-settings: 'wght' 425;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.developers .gesture .arr {
+  transition: transform var(--dur-state) var(--ease-snap);
+}
+
+.developers .gesture:hover {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.developers .gesture:hover .arr {
+  transform: translateX(3px);
+}
+
+/* developers plate */
+.developers .dev-plate {
+  margin-top: var(--spacing-xl);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.developers .dev-plate .plate-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.developers .dev-plate .plate-head .mono {
+  font-size: 12px;
+  color: var(--color-muted);
+  font-family: var(--mono-font-family);
+}
+
+.developers .dev-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.developers .dev-col {
+  padding: 24px;
+}
+
+.developers .dev-col + .dev-col {
+  border-left: 1px solid var(--color-line);
+}
+
+.developers .dev-col h3 {
+  font-size: var(--body);
+}
+
+.developers .dev-col p {
+  margin-top: var(--spacing-sm);
+  font-size: var(--body-sm);
+  color: var(--color-muted);
+}
+
+/* internal vertical rules become horizontal on narrow viewports */
+@media (width <= 1024px) {
+  .developers .dev-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .developers .dev-col + .dev-col {
+    border-left: 0;
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .developers .gesture .arr {
+    transition: none;
+  }
+}

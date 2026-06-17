@@ -1,0 +1,152 @@
+/* solutions-index — Stripe "solutions ledger" section.
+   CSS lifted verbatim from the prototype, scoped under .solutions-index.
+   Global tokens + button system live in styles/styles.css. */
+
+/* content wrap (recreates the prototype's .container) */
+.solutions-index {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+/* chapter running-head: mono kicker + folio */
+.solutions-index .chapter-head {
+  border-top: 1px solid var(--color-line);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-md);
+}
+
+.solutions-index .chapter-head .running {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-fg);
+  font-weight: 500;
+}
+
+.solutions-index .chapter-head .folio {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.solutions-index .intro h2 {
+  font-size: var(--heading-lg);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  font-variation-settings: 'wght' 300;
+  margin-top: var(--spacing-lg);
+  max-width: 24ch;
+}
+
+.solutions-index .chapter-lede {
+  margin-top: var(--spacing-md);
+  color: var(--color-muted);
+  max-width: 58ch;
+}
+
+/* ledger of solution rows */
+.solutions-index .ledger {
+  margin-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-line);
+}
+
+.solutions-index .ledger-row {
+  display: grid;
+  grid-template-columns: 48px 230px 1fr auto;
+  align-items: baseline;
+  gap: var(--spacing-lg);
+  padding: 22px 8px;
+  border-bottom: 1px solid var(--color-line);
+  text-decoration: none;
+  transition: background var(--dur-state) var(--ease-snap);
+}
+
+.solutions-index .ledger-row:hover { background: var(--color-surface); }
+
+.solutions-index .ledger-row .idx {
+  font-family: var(--mono-font-family);
+  font-size: var(--label);
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.solutions-index .ledger-row:hover .idx { color: var(--color-accent); }
+
+.solutions-index .ledger-row .name {
+  font-size: var(--heading-sm);
+  font-weight: 500;
+  font-variation-settings: 'wght' 500;
+  letter-spacing: -0.01em;
+}
+
+.solutions-index .ledger-row .claim {
+  font-size: var(--body-sm);
+  color: var(--color-muted);
+  max-width: 52ch;
+}
+
+/* gesture: styled text link (NOT a chip), arrow re-created in JS */
+.solutions-index .ledger-row .gesture {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--label);
+  font-weight: 425;
+  font-variation-settings: 'wght' 425;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.solutions-index .ledger-row .gesture .arr {
+  transition: transform var(--dur-state) var(--ease-snap);
+}
+
+.solutions-index .ledger-row:hover .gesture {
+  color: var(--color-accent-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.solutions-index .ledger-row:hover .gesture .arr { transform: translateX(3px); }
+
+/* re-rowing: claim spans below name at tablet */
+@media (width <= 768px) {
+  .solutions-index .ledger-row { grid-template-columns: 36px 1fr auto; }
+
+  .solutions-index .ledger-row .claim {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+}
+
+/* re-rowing: gesture moves to its own row so long names never overflow */
+@media (width <= 640px) {
+  .solutions-index .ledger-row {
+    grid-template-columns: 36px 1fr;
+    row-gap: 6px;
+  }
+
+  .solutions-index .ledger-row .name { font-size: var(--body); }
+
+  .solutions-index .ledger-row .claim {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .solutions-index .ledger-row .gesture {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solutions-index .ledger-row,
+  .solutions-index .ledger-row .gesture .arr { transition: none; }
+}
