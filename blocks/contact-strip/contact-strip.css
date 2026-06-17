@@ -1,0 +1,43 @@
+/* contact-strip — full-bleed yellow band with a centered max-width container.
+   Lifted from the taprooms prototype (.contact-strip / .contact-inner). */
+
+.contact-strip {
+  padding: var(--pad-d);
+  background: var(--primary);
+  color: var(--ground);
+}
+
+.contact-strip .contact-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+}
+
+.contact-strip .contact-copy h2,
+.contact-strip .contact-copy h3 {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.contact-strip .contact-copy p {
+  font-size: 1.05rem;
+  margin-top: 8px;
+}
+
+.contact-strip .actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (width <= 760px) {
+  .contact-strip .contact-inner {
+    grid-template-columns: 1fr;
+  }
+}

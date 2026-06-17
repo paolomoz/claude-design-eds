@@ -1,0 +1,48 @@
+/* page-intro (hero) — lifted from taprooms.html prototype (CSS lines 50-56) */
+
+/* Block: full-bleed band — padding + bottom border. The inner wrapper re-adds
+   horizontal gutter, matching the sibling contact-strip convention. */
+.page-intro {
+  padding: var(--pad-d);
+  background: var(--bg);
+  border-bottom: 1px solid var(--ground);
+}
+
+/* Centered max-width wrapper holding the content. */
+.page-intro .page-intro-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--pad-d);
+  align-items: end;
+}
+
+.page-intro h1 {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.page-intro .page-intro-eyebrow {
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.page-intro p {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  max-width: 42ch;
+}
+
+@media (width <= 760px) {
+  .page-intro .page-intro-inner {
+    grid-template-columns: 1fr;
+  }
+}

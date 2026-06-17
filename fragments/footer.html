@@ -1,0 +1,133 @@
+<style>
+  footer.footer {
+    --wb-ground: #000;
+    --wb-primary: #efd024;
+    --wb-display: "Bebas Neue", system-ui, sans-serif;
+
+    display: block;
+    background: var(--wb-ground);
+    color: #fff;
+    padding: 48px;
+    border-top: 1px solid #222;
+    margin-top: 0;
+  }
+
+  footer.footer .wb-foot-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  footer.footer .wb-foot-wordmark {
+    font-family: var(--wb-display);
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  footer.footer .wb-foot-wordmark .pip {
+    background: var(--wb-primary);
+    color: #000;
+    padding: 4px 8px;
+    margin-right: 6px;
+  }
+
+  footer.footer .wb-foot-sub {
+    color: rgb(255 255 255 / 60%);
+    font-size: 13px;
+    margin-top: 12px;
+    max-width: 32ch;
+  }
+
+  footer.footer .wb-foot-email {
+    margin-top: 16px;
+    font-family: var(--wb-display);
+    letter-spacing: 0.12em;
+  }
+
+  footer.footer .wb-foot-email a { color: var(--wb-primary); }
+
+  footer.footer .wb-foot-pillar h4 {
+    font-family: var(--wb-display);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wb-primary);
+    margin-bottom: 12px;
+  }
+
+  footer.footer .wb-foot-pillar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  footer.footer .wb-foot-pillar a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  footer.footer .wb-foot-pillar a:hover { color: var(--wb-primary); }
+
+  footer.footer .wb-foot-legal {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    border-top: 1px solid #222;
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: rgb(255 255 255 / 50%);
+  }
+
+  @media (max-width: 760px) {
+    footer.footer .wb-foot-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+<div class="wb-foot-grid">
+  <div class="wb-foot-brand">
+    <div class="wb-foot-wordmark"><span class="pip">»</span>WASATCH BACK</div>
+    <p class="wb-foot-sub">Beer for the high country. Brewed in Heber Valley, poured in Park City. Est 1996.</p>
+    <p class="wb-foot-email">General inquiry: <a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></p>
+  </div>
+  <div class="wb-foot-pillar">
+    <h4>The brewery</h4>
+    <ul>
+      <li><a href="/the-brewery">Our story</a></li>
+      <li><a href="/the-brewery#brewers">The brewers</a></li>
+      <li><a href="/the-brewery#process">How we brew</a></li>
+      <li><a href="/press">Press</a></li>
+    </ul>
+  </div>
+  <div class="wb-foot-pillar">
+    <h4>Taprooms</h4>
+    <ul>
+      <li><a href="/taprooms#heber-valley">Heber Valley</a></li>
+      <li><a href="/taprooms#park-city">Park City</a></li>
+      <li><a href="/private-events">Private events</a></li>
+      <li><a href="/taprooms">Hours + directions</a></li>
+    </ul>
+  </div>
+  <div class="wb-foot-pillar">
+    <h4>Beer</h4>
+    <ul>
+      <li><a href="/beers">The lineup</a></li>
+      <li><a href="/beers#powder-day">What's on now</a></li>
+      <li><a href="/beers#tabernacle">Year-round</a></li>
+    </ul>
+  </div>
+</div>
+<div class="wb-foot-legal">
+  <span>© 2026 Wasatch Back Beerworks LLC.</span>
+  <span>Heber Valley · Park City · Utah</span>
+</div>
