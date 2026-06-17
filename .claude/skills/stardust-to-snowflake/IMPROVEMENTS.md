@@ -260,7 +260,11 @@ Two test-25 blocks (hero, testimonials) hard-coded `:scope > div > div > *` and 
 The hero produced 7 jumbled slides with 0 CTAs: it assumed eyebrow→heading order (#51), but this content authored heading-FIRST then label/CTAs, so post-heading text opened spurious slides that stole the heading slot.
 **Implemented:** Step 8 — segment slides ONLY on the heading boundary; fold everything between two headings into the open slide regardless of order (first non-link run = eyebrow, links = CTAs). Local-QA: slide count == heading count, CTA count == authored.
 
-**Implemented (#40–69):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 70. 🟡 Marker/badge injection must be idempotent — strip a matching leading glyph before prepending
+test-26's channel-archive prepended a `▶` to a section h2 that already began with `▶` → `▶ ▶ Latest signal`. Silent (lint clean); caught by the visual-diff text-match. The same block already stripped it for card links but not the title.
+**Implemented:** Step 8 (near #55) — when decorate() prepends a fixed marker (glyph/badge/`CH NN`) to authored heading/link text, strip a matching leading occurrence first, consistently at every injection site.
+
+**Implemented (#40–70):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
