@@ -1,0 +1,192 @@
+<style>
+  /* Analytics Rockstar — bottom telemetry strip + footer (lifted from prototype) */
+  footer.footer {
+    --ar-bg: #050913;
+    --ar-line: rgb(122 215 208 / 18%);
+    --ar-line-soft: rgb(122 215 208 / 8%);
+    --ar-fg: #f3f6fb;
+    --ar-fg-dim: #8fa3c7;
+    --ar-fg-dimmer: #4f6189;
+    --ar-orange: #f29823;
+    --ar-magenta: #cf2f5a;
+    --ar-teal-soft: #7ad7d0;
+    --ar-navy: #0d1b3d;
+    --ar-signal: #4ade80;
+    --ar-display: "Roboto Condensed", "Roboto Condensed Fallback", arial, sans-serif;
+    --ar-mono: ui-monospace, "SF Mono", "JetBrains Mono", menlo, monospace;
+
+    display: block;
+    background: var(--ar-bg);
+    color: var(--ar-fg);
+  }
+
+  footer.footer .bottom-strip {
+    background: var(--ar-navy);
+    border-top: 1px solid var(--ar-line);
+    padding: 18px 24px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    color: var(--ar-fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  footer.footer .bottom-strip .cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  footer.footer .bottom-strip .cell .k { color: var(--ar-fg-dimmer); }
+  footer.footer .bottom-strip .cell .v { color: var(--ar-fg); font-weight: 700; }
+
+  footer.footer .bottom-strip .cell .ph {
+    color: var(--ar-orange);
+    font-size: 9px;
+    padding: 1px 6px;
+    border: 1px dashed var(--ar-orange);
+    border-radius: 2px;
+  }
+
+  footer.footer .bottom-strip .pulse {
+    width: 8px;
+    height: 8px;
+    background: var(--ar-signal);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--ar-signal);
+    animation: ar-foot-pulse 1.6s ease-in-out infinite;
+  }
+
+  footer.footer .bottom-strip .right { margin-left: auto; }
+
+  @keyframes ar-foot-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  footer.footer .foot-main {
+    border-top: 1px solid var(--ar-line);
+    padding: 56px 24px;
+  }
+
+  footer.footer .foot-main .grid {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 32px;
+  }
+
+  footer.footer .foot-main h4 {
+    font-family: var(--ar-display);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ar-orange);
+    margin: 0 0 14px;
+  }
+
+  footer.footer .foot-main ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  footer.footer .foot-main ul a {
+    color: var(--ar-fg);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  footer.footer .foot-main ul a:hover { color: var(--ar-teal-soft); }
+
+  footer.footer .foot-main .brand .wm {
+    font-family: var(--ar-display);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  footer.footer .foot-main .brand .wm .em { color: var(--ar-magenta); }
+
+  footer.footer .foot-main .brand p {
+    color: var(--ar-fg-dim);
+    font-size: 13px;
+    max-width: 36ch;
+    margin: 0;
+  }
+
+  footer.footer .foot-main .legal {
+    max-width: 1320px;
+    margin: 28px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--ar-line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--ar-mono);
+    font-size: 11px;
+    color: var(--ar-fg-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    footer.footer .bottom-strip .pulse { animation: none; }
+  }
+
+  @media (max-width: 1000px) {
+    footer.footer .foot-main .grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    footer.footer .foot-main .grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="bottom-strip">
+  <span class="cell"><span class="pulse"></span><span>BROADCAST · LIVE</span></span>
+  <span class="cell"><span class="k">station</span><span class="v">AR · 14</span></span>
+  <span class="cell"><span class="k">last_emission</span><span class="v">2026-05-08T17:42:08Z</span></span>
+  <span class="cell"><span class="k">channels</span><span class="v">9 of 9</span></span>
+  <span class="cell"><span class="k">latency</span><span class="v">42ms</span></span>
+  <span class="cell"><span class="ph">PLACEHOLDER · telemetry illustrative</span></span>
+  <span class="cell right"><span class="k">⌥</span><span>built on aem.edge.delivery</span></span>
+</div>
+
+<div class="foot-main">
+  <div class="grid">
+    <div class="brand">
+      <div class="wm">ANALYTICS <span class="em">ROCKSTAR</span> 🤘</div>
+      <p>Eric Matisoff's blog — Adobe Analytics, CJA, and AEP. The deeper cuts from the Rockstars sessions.</p>
+    </div>
+    <div>
+      <h4>▶ CHANNELS</h4>
+      <ul><li><a href="/channels">All articles</a></li><li><a href="/topics">Topics</a></li><li><a href="/subscribe">Subscribe (email)</a></li><li><a href="/rss">RSS feed</a></li></ul>
+    </div>
+    <div>
+      <h4>▶ ROCKSTARS</h4>
+      <ul><li><a href="/rockstars/2026-submissions">2026 submissions</a></li><li><a href="/rockstars/summit-recaps">Summit recaps</a></li><li><a href="/rockstars/london">London Rockstar</a></li></ul>
+    </div>
+    <div>
+      <h4>▶ BROADCAST</h4>
+      <ul><li><a href="https://www.linkedin.com/in/ericmatisoff/">LinkedIn</a></li><li><a href="https://bsky.app/">BlueSky</a></li><li><a href="https://github.com/">GitHub</a></li><li><a href="/contact">Email</a></li></ul>
+    </div>
+  </div>
+  <div class="legal">
+    <span>© 2026 Eric Matisoff · Analytics Rockstar · station ar-14 · live since 2014</span>
+    <span>signal carried by aem.edge.delivery.services</span>
+  </div>
+</div>

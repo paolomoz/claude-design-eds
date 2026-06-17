@@ -1,0 +1,132 @@
+/*
+ * bio-stack — author-bio "host telemetry" band.
+ * CSS lifted verbatim from the stardust prototype (home-F-telemetry, the
+ * `.bio-stack` rules) and scoped under `.bio-stack`. Tokens + the button
+ * system live in styles/styles.css — referenced here, not redefined.
+ */
+
+.bio-stack {
+  padding: 120px 0;
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    var(--panel) 60%,
+    var(--navy) 100%
+  );
+  border-top: 1px solid var(--line);
+}
+
+.bio-stack .pane {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 56px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 48px 56px;
+  border-left: 6px solid var(--teal);
+}
+
+.bio-stack .meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--fg-dim);
+}
+
+.bio-stack .meta .label {
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.bio-stack .meta .row {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line-soft);
+  display: flex;
+  justify-content: space-between;
+}
+
+.bio-stack .meta .row .k {
+  color: var(--fg-dimmer);
+}
+
+.bio-stack .meta .row .v {
+  color: var(--fg);
+}
+
+.bio-stack .meta .row .v.m {
+  color: var(--magenta);
+}
+
+.bio-stack .meta .row .v.o {
+  color: var(--orange);
+}
+
+.bio-stack .meta .row .v.s {
+  color: var(--signal);
+}
+
+.bio-stack h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+}
+
+.bio-stack h2 .em {
+  color: var(--orange);
+}
+
+.bio-stack p {
+  font-size: 17px;
+  color: var(--fg-dim);
+  line-height: 1.6;
+  margin: 0 0 14px;
+  max-width: 60ch;
+}
+
+.bio-stack .ctas {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.bio-stack .ctas a {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 12px 20px;
+  border: 1px solid var(--fg);
+  color: var(--fg);
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.bio-stack .ctas a:hover {
+  background: var(--fg);
+  color: var(--navy);
+}
+
+.bio-stack .ctas a.primary {
+  background: var(--magenta);
+  border-color: var(--magenta);
+}
+
+.bio-stack .ctas a.primary:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--navy);
+}
+
+@media (width <= 1000px) {
+  .bio-stack .pane {
+    grid-template-columns: 1fr;
+    padding: 28px;
+  }
+}

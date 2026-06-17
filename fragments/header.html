@@ -1,0 +1,153 @@
+<style>
+  /* Analytics Rockstar — instrument top bar (lifted from prototype .bezel-top) */
+  header.header {
+    --ar-bg: #050913;
+    --ar-panel: #0a1126;
+    --ar-line: rgb(122 215 208 / 18%);
+    --ar-line-soft: rgb(122 215 208 / 8%);
+    --ar-fg: #f3f6fb;
+    --ar-fg-dim: #8fa3c7;
+    --ar-orange: #f29823;
+    --ar-magenta: #cf2f5a;
+    --ar-navy: #0d1b3d;
+    --ar-signal: #4ade80;
+    --ar-display: "Roboto Condensed", "Roboto Condensed Fallback", arial, sans-serif;
+    --ar-mono: ui-monospace, "SF Mono", "JetBrains Mono", menlo, monospace;
+  }
+
+  header.header .bezel-top {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: stretch;
+    background: var(--ar-panel);
+    border-bottom: 1px solid var(--ar-line);
+    font-family: var(--ar-mono);
+    font-size: 12px;
+    height: 56px;
+  }
+
+  header.header .bezel-top .seg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+    border-right: 1px solid var(--ar-line-soft);
+  }
+
+  header.header .bezel-top .seg.brand {
+    font-family: var(--ar-display);
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  header.header .bezel-top .seg.brand .em {
+    color: var(--ar-magenta);
+  }
+
+  header.header .bezel-top .seg.brand .horn {
+    color: var(--ar-orange);
+    margin-left: 4px;
+  }
+
+  header.header .bezel-top .seg .k {
+    color: var(--ar-fg-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+
+  header.header .bezel-top .seg .v {
+    color: var(--ar-fg);
+    font-weight: 700;
+  }
+
+  header.header .bezel-top .seg .v.ok {
+    color: var(--ar-signal);
+  }
+
+  header.header .bezel-top .seg .v .ms {
+    color: var(--ar-fg-dim);
+    font-weight: 400;
+  }
+
+  header.header .bezel-top .pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ar-signal);
+    box-shadow: 0 0 6px var(--ar-signal);
+    animation: ar-bezel-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes ar-bezel-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  header.header .bezel-top nav {
+    margin-left: auto;
+    display: flex;
+  }
+
+  header.header .bezel-top nav a {
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    font-family: var(--ar-display);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ar-fg-dim);
+    border-left: 1px solid var(--ar-line-soft);
+    transition: color 0.15s, background 0.15s;
+    text-decoration: none;
+  }
+
+  header.header .bezel-top nav a:hover {
+    color: var(--ar-orange);
+    background: rgb(242 152 35 / 6%);
+  }
+
+  header.header .bezel-top nav a.cta {
+    background: var(--ar-magenta);
+    color: var(--ar-fg);
+    border-left: 1px solid var(--ar-magenta);
+  }
+
+  header.header .bezel-top nav a.cta:hover {
+    background: var(--ar-orange);
+    color: var(--ar-navy);
+    border-left-color: var(--ar-orange);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    header.header .bezel-top .pulse { animation: none; }
+  }
+
+  @media (max-width: 1000px) {
+    header.header .bezel-top nav { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    header.header .bezel-top .seg.detail { display: none; }
+  }
+</style>
+
+<div class="bezel-top">
+  <div class="seg brand">ANALYTICS <span class="em">ROCKSTAR</span> <span class="horn">🤘</span></div>
+  <div class="seg detail"><span class="pulse"></span><span class="k">signal</span><span class="v ok">live · ok</span></div>
+  <div class="seg detail"><span class="k">latency</span><span class="v">42<span class="ms">ms</span></span></div>
+  <div class="seg detail"><span class="k">host</span><span class="v">blog.ericmatisoff.com</span></div>
+  <nav aria-label="Primary">
+    <a href="#dashboard">Channels</a>
+    <a href="#topics">Filters</a>
+    <a href="#bio">About</a>
+    <a href="/subscribe" class="cta">▶ Subscribe</a>
+  </nav>
+</div>

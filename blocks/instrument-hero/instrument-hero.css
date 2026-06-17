@@ -1,0 +1,259 @@
+/*
+ * instrument-hero — full-bleed dark "instrument" hero with a breathing-dots
+ * canvas background and a broadcast lower-third (telemetry tape + headline +
+ * telemetry tiles). CSS lifted verbatim from the stardust prototype
+ * (home-F-telemetry, section.instrument), scoped under .instrument-hero.
+ * Global tokens + button system live in styles/styles.css.
+ */
+
+/* ============ HERO — full-bleed canvas ============ */
+.instrument-hero {
+  position: relative;
+  min-height: 92vh;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.instrument-hero canvas.field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+.instrument-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgb(5 9 19 / 60%) 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* max-width wrap — background bleeds full-width, content stays constrained */
+.instrument-hero .broadcast-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+/* Lower-third style hero copy */
+.instrument-hero .lower-third {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: end;
+  min-height: calc(92vh - 144px);
+}
+
+.instrument-hero .top-tape {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--fg-dim);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+
+.instrument-hero .top-tape .led {
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+  border-radius: 50%;
+  box-shadow: 0 0 4px var(--signal);
+}
+
+.instrument-hero .top-tape .cell .k {
+  color: var(--fg-dimmer);
+  margin-right: 6px;
+}
+
+.instrument-hero .top-tape .cell .v {
+  color: var(--fg);
+}
+
+.instrument-hero .top-tape .cell .v.m {
+  color: var(--magenta);
+}
+
+.instrument-hero .top-tape .cell .v.t {
+  color: var(--teal-soft);
+}
+
+.instrument-hero .stack {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 56px;
+  align-items: end;
+}
+
+.instrument-hero .broadcast-headline {
+  background: var(--navy);
+  border: 1px solid var(--line);
+  padding: 32px 36px 36px;
+  border-left: 6px solid var(--magenta);
+  backdrop-filter: blur(8px);
+  background-color: rgb(13 27 61 / 78%);
+}
+
+.instrument-hero .broadcast-headline .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.instrument-hero .broadcast-headline .label::before {
+  content: "● LIVE";
+  background: var(--magenta);
+  color: var(--fg);
+  padding: 3px 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.instrument-hero .broadcast-headline h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(48px, 6.5vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  margin: 0 0 20px;
+  color: var(--fg);
+}
+
+.instrument-hero .broadcast-headline h1 .em {
+  color: var(--orange);
+}
+
+.instrument-hero .broadcast-headline h1 .horn {
+  display: inline-block;
+  transform: translateY(-8px);
+  color: var(--magenta);
+}
+
+.instrument-hero .broadcast-headline p {
+  font-family: var(--body);
+  font-size: 18px;
+  color: var(--teal-soft);
+  margin: 0 0 22px;
+  max-width: 56ch;
+  line-height: 1.5;
+}
+
+.instrument-hero .broadcast-headline .ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* override the global button to the prototype's smaller 13px chip */
+.instrument-hero .broadcast-headline .ctas a.btn {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 13px 22px;
+  border-radius: 2px;
+}
+
+/* Telemetry tiles on the right side of the lower-third */
+.instrument-hero .telemetry-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.instrument-hero .telemetry-tile {
+  background: rgb(10 17 38 / 86%);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  padding: 16px 18px;
+  position: relative;
+  overflow: hidden;
+  border-left: 3px solid var(--teal);
+}
+
+.instrument-hero .telemetry-tile.m {
+  border-left-color: var(--magenta);
+}
+
+.instrument-hero .telemetry-tile.o {
+  border-left-color: var(--orange);
+}
+
+.instrument-hero .telemetry-tile .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.instrument-hero .telemetry-tile .top .ph {
+  color: var(--orange);
+  font-size: 9px;
+  padding: 2px 6px;
+  border: 1px dashed var(--orange);
+  border-radius: 2px;
+}
+
+.instrument-hero .telemetry-tile .val {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--fg);
+  margin-top: 8px;
+}
+
+.instrument-hero .telemetry-tile .val .unit {
+  font-size: 14px;
+  color: var(--fg-dim);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-left: 4px;
+}
+
+.instrument-hero .telemetry-tile .delta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--signal);
+}
+
+.instrument-hero .telemetry-tile .delta.down {
+  color: var(--magenta);
+}
+
+.instrument-hero .telemetry-tile .spark {
+  margin-top: 10px;
+  height: 24px;
+  width: 100%;
+}
+
+@media (width <= 1000px) {
+  .instrument-hero .stack {
+    grid-template-columns: 1fr;
+  }
+}

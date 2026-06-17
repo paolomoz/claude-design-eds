@@ -1,0 +1,98 @@
+/* ============ TOPIC FILTER STRIP ============ */
+
+/* Panel background bleeds full-width; the .row is constrained to the page max-width. */
+.filter-strip {
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+}
+
+.filter-strip .row {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-strip .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--fg-dim);
+}
+
+.filter-strip .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 7px 13px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--fg-dim);
+  transition: all 0.15s;
+}
+
+.filter-strip .chip:hover {
+  color: var(--fg);
+  border-color: var(--teal);
+}
+
+.filter-strip .chip.on {
+  background: var(--teal);
+  color: var(--navy);
+  border-color: var(--teal);
+}
+
+.filter-strip .chip .count {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 1px 6px;
+  background: rgb(122 215 208 / 12%);
+  border-radius: 2px;
+  color: var(--teal-soft);
+}
+
+.filter-strip .chip.on .count {
+  background: rgb(13 27 61 / 30%);
+  color: var(--navy);
+}
+
+.filter-strip .chip.m {
+  border-color: var(--magenta);
+  color: var(--magenta);
+}
+
+.filter-strip .chip.m .count {
+  background: rgb(207 47 90 / 12%);
+  color: var(--magenta);
+}
+
+.filter-strip .chip.o {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.filter-strip .chip.o .count {
+  background: rgb(242 152 35 / 12%);
+  color: var(--orange);
+}
+
+.filter-strip .meta {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-dim);
+}
+
+.filter-strip .meta .v {
+  color: var(--signal);
+}
