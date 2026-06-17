@@ -1,37 +1,188 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * hero — primary pitch (Stardust home-A-cinematic header.hero).
+ * CSS lifted verbatim from the prototype (lines 99-228), scoped under .hero.
+ * Global tokens + button system live in styles/styles.css — referenced here.
+ * The prototype's data-cin reveal states (opacity:0) are intentionally dropped:
+ * the cinematic GSAP runtime does not run in EDS, so content renders visible.
+ */
 
 .hero {
+  background: var(--ink-deep);
+  padding: 140px 0 84px;
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+}
+
+/* content wrap — recreate the prototype's .container max-width */
+.hero .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.hero .pre-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--dust-50);
+  letter-spacing: 0.18em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.hero .pre-eyebrow .hex { color: var(--amber-light); }
+.hero .pre-eyebrow .sep { color: var(--dust-30); }
+
+.hero .pre-eyebrow .tag {
+  color: var(--amber);
+  letter-spacing: 0.22em;
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  color: var(--dust);
+  max-width: 14ch;
 }
 
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+.hero .lede {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(24px, 3.4vw, 40px);
+  color: var(--amber-light);
+  line-height: 1.15;
+  margin: 28px 0 0;
+  letter-spacing: -0.01em;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-body {
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--dust-72);
+  margin: 26px 0 0;
+  max-width: 62ch;
+  line-height: 1.6;
+}
+
+/* seed display panel */
+.hero .seed-display-large {
+  margin-top: 40px;
+  background: linear-gradient(180deg, rgb(232 185 94 / 4%), rgb(232 185 94 / 2%));
+  border: 1px solid var(--dust-08);
+  border-radius: var(--r-card);
+  padding: 24px clamp(20px, 3vw, 36px);
+  font-family: var(--mono);
+  font-size: clamp(13px, 1.4vw, 18px);
+  line-height: 1.4;
+  color: var(--dust-72);
+  display: flex;
+  gap: clamp(8px, 1.2vw, 14px);
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.hero .seed-display-large .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--dust-50);
   width: 100%;
-  height: 100%;
+  margin-bottom: 10px;
+  display: block;
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
-  }
+.hero .seed-display-large .label .pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--amber);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  box-shadow: 0 0 0 4px rgb(232 185 94 / 18%);
+}
+
+.hero .seed-display-large .token {
+  font-size: clamp(20px, 2.6vw, 32px);
+  color: var(--dust);
+  font-weight: 500;
+}
+
+.hero .seed-display-large .arrow {
+  color: var(--amber);
+  font-size: clamp(20px, 2.6vw, 32px);
+}
+
+.hero .seed-display-large .hex {
+  color: var(--amber-light);
+  font-weight: 600;
+  font-size: clamp(22px, 2.8vw, 36px);
+  letter-spacing: 0.05em;
+}
+
+.hero .seed-display-large .term {
+  font-size: clamp(13px, 1.2vw, 16px);
+  color: var(--dust-50);
+}
+
+/* chip row */
+.hero .chip-row {
+  margin-top: 28px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.hero .chip {
+  border-radius: var(--r-chip);
+  padding: 9px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dust);
+  border: 1px solid var(--dust-15);
+  background: rgb(6 10 20 / 40%);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hero .chip.solid {
+  background: var(--ink);
+  border-color: transparent;
+}
+
+.hero .chip.amber {
+  background: var(--amber);
+  color: var(--ink);
+  border-color: transparent;
+}
+
+.hero .chip .op { color: var(--amber); }
+
+.hero .chip .swatches {
+  display: inline-flex;
+  gap: 3px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.hero .chip .swatches i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* CTAs — the global button system (styles.css) paints .btn.primary/.secondary
+   from the authored <strong><a> / <em><a> emphasis. Only the row layout is local. */
+.hero .actions {
+  margin-top: 36px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .seed-display-large .label .pulse { box-shadow: 0 0 0 4px rgb(232 185 94 / 18%); }
 }

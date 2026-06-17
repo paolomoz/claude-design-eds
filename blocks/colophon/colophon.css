@@ -1,0 +1,57 @@
+/*
+ * Colophon block — Times-italic pre-footer brand seal on the one light band.
+ * CSS lifted verbatim from the prototype's .colophon rules
+ * (home-A-cinematic.html, lines 402-430), scoped under .colophon.
+ *
+ * The prototype's section.colophon is the single light (--dust) surface.
+ * Here the --dust band is full-bleed (the block fills the section); the
+ * content is wrapped to --maxw via .colophon-inner. Per-block colour
+ * overrides keep eyebrow/manifesto/foot legible on the light surface
+ * (eyebrow + manifesto use --amber-deep; foot uses muted ink).
+ */
+
+/* full-bleed light band — escape the global section padding/centering */
+.colophon {
+  margin: 0 calc(-1 * var(--pad));
+  padding: 96px var(--pad) 84px;
+  text-align: center;
+  background: var(--dust);
+  color: var(--deep-ink);
+}
+
+/* content wrapped to the prototype max-width */
+.colophon .colophon-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.colophon .equation-eyebrow {
+  margin-bottom: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+}
+
+.colophon .equation-eyebrow .ink-mark { color: var(--deep-ink); }
+
+.colophon .manifesto {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--amber-deep);
+}
+
+.colophon .equation {
+  margin-top: 36px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgb(26 31 56 / 50%);
+}

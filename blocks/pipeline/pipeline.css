@@ -1,0 +1,156 @@
+/*
+ * pipeline block — merges the prototype's loop-section intro (the head)
+ * with the pipeline-scene (the body) into one coherent product-flow section.
+ * Rendered on --ink-deep with top/bottom rules (pipeline-scene treatment).
+ * CSS lifted verbatim from stardust/prototypes/home-A-cinematic.html, scoped
+ * under .pipeline. Global tokens + button system live in styles/styles.css.
+ */
+
+/* full-bleed surface: pipeline-scene treatment (ink-deep + top/bottom rules) */
+.pipeline {
+  background: var(--ink-deep);
+  border-bottom: 1px solid var(--dust-08);
+  padding: 84px 0;
+}
+
+/*
+ * loop-head — the prototype's section.band[data-ground="dust"] intro: a
+ * full-bleed LIGHT band with dark navy text, distinct from the dark scene below.
+ * Negative margins pull it out of the block's own padding to span full width.
+ * The dust-ground color overrides live at the END of this file so they follow
+ * (and override) the base .eyebrow/.head rules (no-descending-specificity).
+ */
+.pipeline .loop-head {
+  background: var(--dust);
+  color: var(--deep-ink);
+  margin: -84px 0 84px;
+  padding: 84px 0;
+}
+
+/* content wrap — recreate the prototype .container */
+.pipeline .pipeline-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* head — lifted from section.band .eyebrow / .head (the loop intro) */
+.pipeline .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust-72);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pipeline .eyebrow .num { color: var(--amber); }
+.pipeline .eyebrow .sep { color: var(--dust-30); }
+
+.pipeline .eyebrow .right {
+  margin-left: auto;
+  color: var(--amber);
+}
+
+.pipeline .head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin: 28px 0 0;
+}
+
+.pipeline .head h2 { max-width: 18ch; }
+
+.pipeline .head .lede {
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--dust-72);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+/* pipeline row — lifted verbatim from .pipeline-row, rendered lit/static */
+.pipeline .pipeline-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  margin-bottom: 56px;
+}
+
+.pipeline .pipeline-row .lead {
+  color: var(--dust-50);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-right: 6px;
+}
+
+.pipeline .pipeline-row .pill {
+  background: var(--ink);
+  border: 1px solid var(--dust-15);
+  border-radius: var(--r-pill);
+  padding: 12px 22px;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+.pipeline .pipeline-row .arrow {
+  color: var(--amber);
+  font-family: var(--mono);
+  padding: 0 4px;
+}
+
+/* 3-card grid — lifted from .three / .card */
+.pipeline .three {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.pipeline .card {
+  background: var(--ink-soft);
+  color: var(--dust);
+  border-radius: var(--r-card);
+  padding: 36px;
+  border: 1px solid var(--dust-08);
+}
+
+.pipeline .card .tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 18px;
+}
+
+.pipeline .card h3 {
+  color: inherit;
+  margin-bottom: 14px;
+}
+
+.pipeline .card p {
+  color: var(--dust-72);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+@media (width >= 900px) {
+  .pipeline .three { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* dust-ground color overrides for the loop-head band (after the base rules) */
+.pipeline .loop-head h2 { color: var(--deep-ink); }
+.pipeline .loop-head .lede { color: rgb(26 31 56 / 72%); }
+.pipeline .loop-head em { color: var(--amber-deep); }
+.pipeline .loop-head .eyebrow { color: rgb(26 31 56 / 72%); }
+.pipeline .loop-head .eyebrow .num { color: var(--amber-deep); }
+.pipeline .loop-head .eyebrow .sep { color: rgb(26 31 56 / 30%); }
+.pipeline .loop-head .eyebrow .right { color: var(--amber-deep); }

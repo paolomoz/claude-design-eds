@@ -1,0 +1,72 @@
+/*
+ * before-after block (role: band)
+ * CSS lifted verbatim from the prototype section.ba-band rules
+ * (home-A-cinematic.html lines 231-252, 631-644), scoped under .before-after.
+ * Parallax / data-cin entrance dropped; hover filter retained.
+ * The dark band + top rule are full-bleed; the .ba-pair content is wrapped to
+ * --maxw by the EDS section scaffold (main .section > div).
+ */
+
+/* Full-bleed dark band with top rule. The .block-content wrapper is already
+   constrained to --maxw by the section scaffold; the band paints behind it. */
+main .section.before-after-container {
+  background: var(--ink-deep);
+  border-top: 1px solid var(--dust-08);
+}
+
+.before-after {
+  padding: 48px 0 64px;
+}
+
+.before-after .ba-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (width <= 720px) {
+  .before-after .ba-pair { grid-template-columns: 1fr; }
+}
+
+.before-after .ba-pair figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink-soft);
+  border: 1px solid var(--dust-08);
+  border-radius: var(--r-card);
+}
+
+.before-after .ba-pair figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 280ms ease;
+}
+
+.before-after .ba-pair figure.before img { filter: saturate(0.96) brightness(0.96); }
+.before-after .ba-pair figure.after img { filter: saturate(1.02); }
+
+.before-after .ba-pair figure figcaption {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dust);
+  background: rgb(6 10 20 / 78%);
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+}
+
+.before-after .ba-pair figure.after figcaption {
+  color: var(--ink);
+  background: var(--amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .before-after .ba-pair figure img { transition: none; }
+}

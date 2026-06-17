@@ -1,0 +1,118 @@
+/* canonical-brand — section 03 "THE AI-FACING BRAND".
+   Dark ink band; content wrapped to --maxw, background full-bleed.
+   Lifted from prototype section.band[data-ground="ink"] #canonical-brand. */
+
+.canonical-brand {
+  padding: 112px 0;
+  background: var(--ink-deep);
+  color: var(--dust);
+}
+
+/* Content wrap — band background stays full-bleed, content is centered. */
+.canonical-brand .cb-wrap {
+  max-width: var(--maxw, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Eyebrow */
+.canonical-brand .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust-72);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Head */
+.canonical-brand .head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+
+.canonical-brand .head h2 {
+  max-width: 18ch;
+  color: var(--dust);
+}
+
+.canonical-brand .head .lede {
+  font-size: clamp(16px, 1.4vw, 19px);
+  color: var(--dust-72);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+
+/* Stat trio */
+.canonical-brand .stat-trio {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.canonical-brand .stat {
+  background: var(--ink-soft);
+  color: var(--dust);
+  border-radius: var(--r-card);
+  padding: 44px 36px;
+  border: 1px solid var(--dust-08);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.canonical-brand .stat .tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.canonical-brand .stat .figure {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(72px, 9vw, 128px);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--dust);
+}
+
+.canonical-brand .stat .figure .num {
+  display: inline-block;
+  min-width: 1.2ch;
+}
+
+.canonical-brand .stat .figure .unit {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 0.35em;
+  font-weight: 400;
+  color: var(--amber-light);
+  margin-left: 8px;
+}
+
+.canonical-brand .stat h3 {
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--dust);
+}
+
+.canonical-brand .stat p {
+  color: var(--dust-72);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+@media (width >= 900px) {
+  .canonical-brand .stat-trio {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

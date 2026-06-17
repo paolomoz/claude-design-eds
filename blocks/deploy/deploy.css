@@ -1,0 +1,176 @@
+/* deploy block — lifted from home-A-cinematic.html section.band#deploy
+   (dark / data-ground="ink"). Global tokens + button system live in
+   styles/styles.css; this file only owns the section's own paint. */
+
+.deploy {
+  background: var(--ink-deep);
+  padding: 112px 0;
+  color: var(--dust);
+}
+
+/* max-width content wrap (prototype .container) */
+.deploy .deploy-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.deploy .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust-72);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.deploy .eyebrow .num { color: var(--amber); }
+.deploy .eyebrow .sep { color: var(--dust-30); }
+
+.deploy .eyebrow .right {
+  margin-left: auto;
+  color: var(--amber);
+}
+
+.deploy .head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+
+.deploy .head h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.032em;
+  font-size: clamp(40px, 7vw, 96px);
+  line-height: 0.96;
+  max-width: 18ch;
+}
+
+.deploy .head h2 em {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--amber-light);
+}
+
+/* two-card layout */
+.deploy .two {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.deploy .card {
+  background: var(--ink-soft);
+  color: var(--dust);
+  border-radius: var(--r-card);
+  padding: 36px;
+  border: 1px solid var(--dust-08);
+}
+
+.deploy .card .tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 18px;
+}
+
+.deploy .card h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  font-size: 22px;
+  line-height: 1.2;
+  color: inherit;
+  margin: 0 0 14px;
+}
+
+.deploy .card h3 em {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--amber-light);
+}
+
+.deploy .card p {
+  margin: 0;
+  color: var(--dust-72);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.deploy .card p + p { margin-top: 12px; }
+
+/* plain amber mono text link (NOT a button) */
+.deploy .card .text-link {
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.deploy .card .text-link:hover { text-decoration: underline; }
+
+/* code block */
+.deploy .code-block {
+  background: var(--ink);
+  border: 1px solid var(--dust-08);
+  border-radius: 14px;
+  padding: 20px 24px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--dust);
+  line-height: 1.8;
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.deploy .code-block .prompt {
+  color: var(--amber);
+  margin-right: 6px;
+}
+
+.deploy .code-block .cmd { color: var(--dust); }
+.deploy .code-block .arg { color: var(--amber-light); }
+
+/* Times-italic tail line */
+.deploy .tail {
+  margin-top: 56px;
+  margin-bottom: 0;
+  font-family: var(--italic);
+  font-style: italic;
+  color: var(--amber-light);
+  font-size: clamp(22px, 2.6vw, 32px);
+  text-align: center;
+}
+
+.deploy .tail .link {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dust-72);
+  margin-left: 14px;
+}
+
+.deploy .tail .link a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.deploy .tail .link a:hover { text-decoration: underline; }
+
+@media (width >= 900px) {
+  .deploy .two { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,108 @@
+/* seed-section — dark manifesto band, lifted from the stardust cinematic
+   prototype (section.band[data-ground="ink"] #seed-section). CSS scoped under
+   .seed-section. Global tokens + button system live in styles/styles.css.
+   data-cin reveal states intentionally dropped. */
+
+/* The band background is full-bleed; the CONTENT is wrapped to --maxw.
+   This block only ever renders on the dark (ink) ground. */
+.seed-section {
+  padding: 112px 0;
+  background: var(--ink-deep);
+}
+
+.seed-section .seed-section-wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* Eyebrow — mono label row with amber number + right-aligned meta. */
+.seed-section .eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dust-72);
+}
+
+.seed-section .eyebrow .num { color: var(--amber); }
+.seed-section .eyebrow .sep { color: var(--dust-30); }
+
+.seed-section .eyebrow .right {
+  margin-left: auto;
+  color: var(--amber);
+}
+
+/* Head — title, pivot, lede. */
+.seed-section .head {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+
+.seed-section .head .title { max-width: 18ch; }
+
+.seed-section .head .pivot {
+  margin-top: 12px;
+  font-family: var(--display);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--dust-72);
+}
+
+.seed-section .head .pivot .arrow {
+  margin: 0 14px;
+  color: var(--amber);
+}
+
+.seed-section .head .lede {
+  max-width: 60ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.6;
+  color: var(--dust-72);
+}
+
+/* Three-card grid — single column on mobile, three columns from 900px. */
+.seed-section .three {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.seed-section .card {
+  padding: 36px;
+  border: 1px solid var(--dust-08);
+  border-radius: var(--r-card);
+  background: var(--ink-soft);
+  color: var(--dust);
+}
+
+.seed-section .card .tag {
+  margin-bottom: 18px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.seed-section .card h3 {
+  margin-bottom: 14px;
+  color: inherit;
+}
+
+.seed-section .card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--dust-72);
+}
+
+@media (width >= 900px) {
+  .seed-section .three { grid-template-columns: repeat(3, 1fr); }
+}

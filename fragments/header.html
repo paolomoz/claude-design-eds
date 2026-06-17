@@ -1,0 +1,63 @@
+<style>
+  .sd-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(6 10 20 / 86%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(245 240 230 / 8%);
+  }
+
+  .sd-nav .sd-nav-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 64px);
+  }
+
+  .sd-nav .sd-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    gap: 24px;
+    font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .sd-nav .sd-nav-mark {
+    font-family: "SF Pro Display", -apple-system, blinkmacsystemfont, system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: #f5f0e6;
+  }
+
+  .sd-nav .sd-nav-meta {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+  }
+
+  .sd-nav .sd-nav-meta a { color: rgb(245 240 230 / 72%); }
+  .sd-nav .sd-nav-meta a:hover { color: #f5f0e6; }
+
+  .sd-nav .sd-nav-meta a .op {
+    color: #e8b95e;
+    margin-left: 4px;
+  }
+</style>
+<div class="sd-nav">
+  <div class="sd-nav-inner">
+    <div class="sd-nav-row">
+      <a class="sd-nav-mark" href="/">Stardust</a>
+      <div class="sd-nav-meta">
+        <a href="/docs">Docs</a>
+        <a href="https://github.com/adobe/skills">GitHub <span class="op">&rsaquo;</span></a>
+      </div>
+    </div>
+  </div>
+</div>
