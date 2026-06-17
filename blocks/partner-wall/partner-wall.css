@@ -1,0 +1,219 @@
+/*
+ * Partner wall block
+ * Lifted verbatim from the prototype's .ds-partners section, scoped under
+ * .partner-wall. Global tokens + button system live in styles/styles.css.
+ */
+
+/* White background stays full-bleed; the content is constrained by .wrap. */
+.partner-wall {
+  background: var(--color-bg);
+  padding: var(--section-padding) var(--spacing-lg);
+}
+
+.partner-wall .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ── Section head ─────────────────────────────────────────────── */
+.partner-wall .partner-wall-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.partner-wall .partner-wall-head-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* ── Eyebrow (bracketed) ──────────────────────────────────────── */
+.partner-wall .partner-wall-eyebrow {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.partner-wall .partner-wall-eyebrow.is-bracketed::before {
+  content: "[";
+  margin-right: 2px;
+}
+
+.partner-wall .partner-wall-eyebrow.is-bracketed::after {
+  content: "]";
+  margin-left: 2px;
+}
+
+/* ── Italic section headline with upright <strong> run ────────── */
+.partner-wall .partner-wall-headline {
+  font-family: var(--heading-font-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--heading-lg);
+  line-height: 1.2;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.partner-wall .partner-wall-headline strong {
+  font-style: normal;
+  font-weight: 400;
+  color: inherit;
+}
+
+/* ── Paneled 3-col grid ───────────────────────────────────────── */
+.partner-wall .partner-wall-panel {
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-card);
+  background: var(--color-bg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.partner-wall .partner-wall-tile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  color: var(--color-accent);
+  text-decoration: none;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  border-right: 1px solid var(--color-border-card);
+  border-bottom: 1px solid var(--color-border-card);
+  transition: background var(--dur-fast) var(--ease-out);
+  min-height: 96px;
+}
+
+.partner-wall .partner-wall-tile:hover {
+  background: var(--color-tint);
+}
+
+.partner-wall .partner-wall-tile:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+/* Right edge of each row has no right border */
+.partner-wall .partner-wall-tile:nth-child(3n) {
+  border-right: none;
+}
+
+/* Bottom row has no bottom border */
+.partner-wall .partner-wall-tile:nth-last-child(-n + 3) {
+  border-bottom: none;
+}
+
+.partner-wall .partner-wall-name {
+  flex: 1 1 auto;
+  padding-right: var(--spacing-md);
+}
+
+.partner-wall .partner-wall-chev {
+  color: var(--color-accent);
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ── Foot · centered tertiary text link ───────────────────────── */
+.partner-wall .partner-wall-foot {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+}
+
+.partner-wall .partner-wall-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--color-accent);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness var(--dur-fast) var(--ease-out);
+}
+
+.partner-wall .partner-wall-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.partner-wall .partner-wall-link-chev {
+  font-size: 1.15em;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+/* ── Tablet (≤900px) · 2-col with rebuilt border logic ────────── */
+@media (width <= 900px) {
+  .partner-wall .partner-wall-panel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .partner-wall .partner-wall-tile:nth-child(3n) {
+    border-right: 1px solid var(--color-border-card);
+  }
+
+  .partner-wall .partner-wall-tile:nth-child(2n) {
+    border-right: none;
+  }
+
+  .partner-wall .partner-wall-tile:nth-last-child(-n + 3) {
+    border-bottom: 1px solid var(--color-border-card);
+  }
+
+  .partner-wall .partner-wall-tile:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+
+  .partner-wall .partner-wall-tile:nth-last-child(1):nth-child(odd) {
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .partner-wall .partner-wall-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ── Mobile (≤600px) · single column ──────────────────────────── */
+@media (width <= 600px) {
+  .partner-wall {
+    padding: var(--section-padding-mobile) var(--spacing-md);
+  }
+
+  .partner-wall .partner-wall-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .partner-wall .partner-wall-tile {
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-border-card) !important;
+  }
+
+  .partner-wall .partner-wall-tile:last-child {
+    border-bottom: none !important;
+  }
+}
+
+/* ── Honor reduced-motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .partner-wall .partner-wall-tile,
+  .partner-wall .partner-wall-link {
+    transition: none;
+  }
+}

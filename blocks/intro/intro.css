@@ -1,0 +1,99 @@
+/* ───────────────────────────────────────────────────────────
+   Intro band · Core Text Editorial-Width
+   Lifted verbatim from home-proposed.html (.ds-intro), scoped
+   under .intro. White background full-bleed; content wrapped
+   and centered to the editorial column.
+   ─────────────────────────────────────────────────────────── */
+
+.intro {
+  background: var(--color-bg);
+  text-align: center;
+  padding-block: var(--section-padding-mobile);
+}
+
+@media (width >= 600px) {
+  .intro {
+    padding-block: var(--section-padding-tablet);
+  }
+}
+
+@media (width >= 900px) {
+  .intro {
+    padding-block: var(--section-padding);
+  }
+}
+
+/* Recreate the prototype's narrow editorial wrap. The section
+   background stays full-bleed; only the CONTENT is constrained. */
+.intro .wrap {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.intro .intro-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-accent);
+}
+
+/* Eyebrow · re-created as a styled span in decorate() */
+.intro .intro-eyebrow {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-accent);
+  margin: 0;
+}
+
+/* Display headline with mixed-weight gesture */
+.intro .intro-headline {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: var(--heading-xxl);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-display);
+  color: var(--color-accent);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.intro .intro-headline strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.intro .intro-body {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--color-fg);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.intro .actions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Mobile: CTAs stack full-width */
+@media (width <= 640px) {
+  .intro .actions {
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .intro .actions a {
+    width: 100%;
+    justify-content: center;
+  }
+}

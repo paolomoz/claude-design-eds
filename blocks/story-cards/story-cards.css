@@ -1,0 +1,223 @@
+/*
+ * story-cards — Community Stories section.
+ * CSS lifted verbatim from home-proposed.html (.ds-stories, .ds-section-head,
+ * .ds-story-card, .ds-eyebrow, .ds-headline-italic, .ds-btn-tertiary,
+ * .ds-chev-circle) and scoped under .story-cards. Global tokens + button
+ * system live in styles/styles.css — referenced, not redefined.
+ */
+
+main .section.story-cards-container {
+  background: var(--color-bg);
+  padding: var(--section-padding) var(--spacing-lg);
+}
+
+/* Content wrap — full-bleed background, constrained content. */
+.story-cards .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ── Section head: eyebrow + italic h2 on the left, tertiary link right ── */
+.story-cards .story-cards-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.story-cards .story-cards-head-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.story-cards .story-cards-eyebrow {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.story-cards .story-cards-title {
+  font-family: var(--heading-font-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--heading-lg);
+  line-height: 1.2;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+/* ── Tertiary "See all stories" text link (underlined, with chevron) ── */
+.story-cards .story-cards-tertiary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--color-accent);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness var(--dur-fast) var(--ease-out);
+}
+
+.story-cards .story-cards-tertiary:hover {
+  text-decoration-thickness: 2px;
+}
+
+.story-cards .story-cards-tertiary-chev {
+  font-size: 1.15em;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+/* ── Cards grid (3-col → 2-col tablet → 1-col mobile) ── */
+.story-cards .story-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+.story-cards .story-cards-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.story-cards .story-cards-card:hover {
+  border-color: var(--color-accent);
+}
+
+.story-cards .story-cards-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-tint);
+  overflow: hidden;
+}
+
+.story-cards .story-cards-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.story-cards .story-cards-card-body {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  flex: 1 1 auto;
+}
+
+.story-cards .story-cards-card-byline {
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: var(--letter-spacing-eyebrow);
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.story-cards .story-cards-card-title {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: var(--heading-md);
+  line-height: 1.3;
+  color: var(--color-accent);
+  text-wrap: balance;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.story-cards .story-cards-card-title strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.story-cards .story-cards-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.story-cards .story-cards-card-title a:hover {
+  text-decoration: underline;
+}
+
+.story-cards .story-cards-card-foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-xs);
+}
+
+/* ── Circular chevron link ── */
+.story-cards .story-cards-chev-circle {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-accent);
+  color: var(--color-accent);
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.story-cards .story-cards-chev-circle:hover {
+  background: var(--color-tint);
+}
+
+.story-cards .story-cards-chev-circle:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Empty image cell fallback (no authored image). */
+.story-cards .story-cards-card-image:empty {
+  background: var(--color-tint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-cards .story-cards-tertiary,
+  .story-cards .story-cards-card,
+  .story-cards .story-cards-chev-circle {
+    transition: none;
+  }
+}
+
+/* Tablet — 2 columns. */
+@media (width >= 600px) {
+  .story-cards .story-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop — 3 columns. */
+@media (width >= 900px) {
+  .story-cards .story-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
