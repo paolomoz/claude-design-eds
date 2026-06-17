@@ -252,7 +252,15 @@ The probe compared color (#59) and size but not font, so the #65 fallback produc
 3 of 5 #44 leaks on test-24 were CSS `background-image: url("https://…aem.page/img/…")` (full-bleed section washes), not JS — and anti-pattern #9 / the Step-9 "fully-qualified host URL" rule actively told the agent to bake exactly that absolute origin. The #44 grep gate caught it reactively, but the generation-time instruction was contradictory.
 **Implemented:** anti-pattern 9b broadened to cover block CSS `background-image: url()` AND JS literals; #9 and the Step-9 image rule now carve out that the fully-qualified host applies ONLY to AUTHORED content `<img>` for uploaded assets — fixed block-code imagery (backgrounds/watermarks/fallbacks) is always root-relative. Resolves the #9↔#44 contradiction (#67).
 
-**Implemented (#40–67):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 68. 🟠 Node collector must CASCADE (cells → direct children → bare cell text), not a single selector (extends #62)
+Two test-25 blocks (hero, testimonials) hard-coded `:scope > div > div > *` and rendered EMPTY (blank hero box; height-0 testimonials = the CONTENT GAP) because this hand-authored content placed copy as DIRECT children of the block and quote/attribution as BARE CELL TEXT. #62 only covered the nested-cell run.
+**Implemented:** Step 8 — cascade collector: (1) `:scope>div>div>*`; else (2) direct element children; else (3) read each cell's own text. Local-QA: assert every block's content container is non-empty post-decorate (a 0-node mismatch otherwise renders a silent blank box).
+
+### 69. 🟠 Carousel slide segmentation must be HEADING-boundary driven and order-agnostic (generalises #51)
+The hero produced 7 jumbled slides with 0 CTAs: it assumed eyebrow→heading order (#51), but this content authored heading-FIRST then label/CTAs, so post-heading text opened spurious slides that stole the heading slot.
+**Implemented:** Step 8 — segment slides ONLY on the heading boundary; fold everything between two headings into the open slide regardless of order (first non-link run = eyebrow, links = CTAs). Local-QA: slide count == heading count, CTA count == authored.
+
+**Implemented (#40–69):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
