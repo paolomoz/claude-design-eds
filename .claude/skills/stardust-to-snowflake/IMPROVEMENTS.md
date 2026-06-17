@@ -188,7 +188,15 @@ test-15 broke the same two blocks again: the real authored shape is neither a `<
 page-intro took the first link-free `<p>` as the lede, but the short eyebrow line is also a link-free `<p>` and comes first, so eyebrow and lede swapped. Recurs on any lead/intro with both a small eyebrow and a body paragraph.
 **Implemented:** Step 8 #42 heuristic refined — the canonical lead order is eyebrow → heading → lede; the eyebrow is the short/uppercase line BEFORE the heading, the lede the sentence AFTER it; classify by document order/length, not "first paragraph".
 
-**Implemented (#40–51):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 52. 🟠 Repeating card/tile grids: DA flattens N units into ONE cell — segment by the repeating heading, don't iterate rows
+test-16 dropped beer cards (0 rendered) and a whole taproom tile (only 1 of 2) because featured-beer/the-people decorated one-DOM-row-per-unit, but DA collapsed each N-up grid into a SINGLE cell with all units' elements as flat siblings. Distinct from #48/#50 (which flatten WITHIN one unit). Caught by the #49 CONTENT GAP heading-count delta.
+**Implemented:** Step 8 repeating-groups rule — detect `rows.length===1` with multiple headings, segment the flat siblings into one group per repeating heading (boundary = the MOST FREQUENT heading tag, so the lone section-title `h2` isn't mistaken for a card; cards are `h3`). Support both flat and one-row-per-unit shapes. Local-QA: grid must hold the expected count (not 0/1).
+
+### 53. 🟡 Cell classifiers must match the element ITSELF or a descendant
+After segmentation the "cells" are bare sibling elements (`<img>`/`<a>`/`<h3>`), so `cell.querySelector('img')` returns null and the content vanishes. 
+**Implemented:** Step 8 — classify with `el.matches(sel) || el.querySelector(sel)`; extract with `el.tagName==='IMG' ? el : el.querySelector('img')` (likewise A / Hn).
+
+**Implemented (#40–53):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
 
 ---
 
