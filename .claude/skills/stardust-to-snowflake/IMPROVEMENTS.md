@@ -272,7 +272,11 @@ test-27: all 6 blocks used `:scope > div > div > *`; the content authored each e
 Two test-27 bands matched only `picture`/`querySelector('picture')`; a bare authored `<img>` (harness / un-pipelined / pasted URL) was dropped → empty media box.
 **Implemented:** Step 8 #53 — every media test uses `picture, img` (`el.matches('picture, img') ? el : el.querySelector('picture, img')`).
 
-**Implemented (#40–72):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 73. 🟠 One-row-per-card grids: group by ROW in authored order — media-before-tag shifts every image by one
+test-29's articles authored cards one-row-per-card (fields media→tag→heading→excerpt→date), but the flat heading-gap heuristic assumed tag→media→heading and pulled "trailing media + the text node before it" as each card's lead — so each card's image was attributed to the PREVIOUS card and the first card's image dropped. A 1-of-N image SHIFT that passes a card-count check; caught only by the IMAGERY GAP delta + an eyeball that each image matches its title.
+**Implemented:** Step 8 card-segmentation tier 0 — detect ≥2 `:scope>div` rows each with a card heading, group per ROW from `[...row.children]` in authored order (no assumed field order); flat heading-gap is the fallback. Local-QA: each card's image src matches its own title.
+
+**Implemented (#40–73):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
