@@ -1,0 +1,50 @@
+/* AI band — lifted verbatim from home-C-cinematic.html <style> (lines 184-190,
+   responsive 264), scoped under .ai-band. Tokens come from styles/styles.css. */
+
+.ai-band {
+  padding-block: 0;
+}
+
+.ai-band .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.ai-band .plate {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: var(--color-midnight);
+  border-radius: var(--radius);
+}
+
+.ai-band .plate img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+.ai-band .plate .pad {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 56px;
+}
+
+.ai-band .plate h2 {
+  max-width: 24ch;
+  font-size: var(--heading-lg);
+}
+
+@media (width <= 640px) {
+  .ai-band .plate .pad {
+    padding: 32px;
+  }
+}

@@ -1,0 +1,89 @@
+/* News — lifted from home-C-cinematic.html (section.news + .news-grid),
+   scoped under .news. Global tokens + button system live in styles/styles.css. */
+
+.news {
+  padding-block: var(--section-padding);
+}
+
+/* Content wrap — full-bleed section, max-width centered content. */
+.news .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.news .news-head h2 {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-xl);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.news .lede {
+  margin-top: 14px;
+  max-width: 65ch;
+  color: var(--color-slate);
+  text-wrap: pretty;
+}
+
+.news .news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.news article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 2px solid var(--color-fg);
+  padding-top: 18px;
+}
+
+.news article h3 {
+  font-family: var(--heading-font-family);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.news article p {
+  color: var(--color-slate);
+  font-size: var(--body-sm);
+  text-wrap: pretty;
+}
+
+/* Plain text link with a trailing arrow — NOT a button. */
+.news article .arrow-link {
+  margin-top: auto;
+  color: var(--color-accent);
+  font-weight: 425;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.news article .arrow-link::after {
+  content: " →";
+}
+
+.news article .arrow-link:hover::after {
+  margin-left: 2px;
+}
+
+/* Responsive — prototype lines 253 / 262. */
+@media (width <= 1024px) {
+  .news .news-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width <= 640px) {
+  .news .news-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,42 @@
+/*
+ * Closing block — reusable end-of-page CTA band.
+ * Lifted from prototypes/home-C-cinematic.html <style> lines 232-236,
+ * scoped under .closing. Global tokens + button system live in styles.css.
+ */
+
+/* Section background stays full-bleed; the content is wrapped. */
+main .section.closing {
+  background: var(--color-frost);
+  border-top: 1px solid var(--color-hairline);
+}
+
+/* Re-create the prototype's max-width wrap (.wrap). */
+.closing .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.closing .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closing h2 {
+  font-size: var(--heading-xl);
+}
+
+.closing p {
+  max-width: 50ch;
+  margin-top: 10px;
+  color: var(--color-slate);
+}
+
+.closing .ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}

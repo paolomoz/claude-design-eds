@@ -1,0 +1,98 @@
+/*
+ * Bento Block — lifted from home-C-cinematic.html prototype (lines 173-182,
+ * responsive 253/262). CSS scoped under .bento. Global tokens + buttons live
+ * in styles/styles.css.
+ */
+
+/* Content wrap — re-creates the prototype's max-width constraint. The section
+   background (if any) stays full-bleed; only the content is constrained. */
+.bento .wrap {
+  max-width: var(--max-width, 1080px);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.bento h2 {
+  font-size: var(--heading-xl, 42px);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.bento .lede {
+  margin-top: 14px;
+  max-width: 65ch;
+  color: var(--color-slate, #50617a);
+}
+
+.bento .bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.bento .tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-hairline, #e5edf5);
+  border-radius: var(--radius, 8px);
+  background: var(--color-bg, #fff);
+  transition: border-color 0.2s ease;
+}
+
+.bento .tile:hover {
+  border-color: #c9d6e6;
+}
+
+.bento .tile img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.bento .tile .pad {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+/* Fallback for empty image cells (no authored image). */
+.bento .tile:not(:has(img)) .pad {
+  border-top: 1px solid var(--color-hairline, #e5edf5);
+}
+
+.bento .tile h3 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* Plain styled text link (NOT a button) with trailing arrow. */
+.bento .tile .arrow-link {
+  margin-top: auto;
+  color: var(--color-accent, #533afd);
+  font-size: 15px;
+  font-weight: 425;
+}
+
+.bento .tile .arrow-link::after {
+  content: " →";
+}
+
+.bento .tile .arrow-link:hover::after {
+  margin-left: 2px;
+}
+
+@media (width <= 1024px) {
+  .bento .bento-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width <= 640px) {
+  .bento .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,100 @@
+/*
+ * developer — technical credibility split-media section.
+ * CSS lifted verbatim from the stardust prototype's section.dev rules
+ * (home-C-cinematic.html <style> lines 211-222, responsive 255) and scoped
+ * under .developer. Global tokens + the button system live in styles/styles.css.
+ *
+ * The block root is the dark section ground; it carries `.dark` (added in JS)
+ * so the on-dark ghost button override in styles.css applies. Background bleeds
+ * full-width; the .wrap keeps the content within the page max-width.
+ */
+
+.developer {
+  background: var(--color-midnight);
+  color: #e7ecf5;
+}
+
+.developer .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.developer h2 {
+  max-width: 18ch;
+  color: #fff;
+}
+
+.developer .lede {
+  max-width: 65ch;
+  margin-top: 14px;
+  color: #aab7cc;
+}
+
+.developer .cols {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.developer .points {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.developer .points li {
+  padding-left: 18px;
+  border-left: 1px solid #2c3a5c;
+  color: #c4cfdf;
+  font-size: var(--body-sm);
+}
+
+.developer .points li code {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-lavender);
+  font-family: var(--mono-font-family);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.developer figure {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.developer .ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 36px;
+}
+
+/*
+ * Ghost-on-dark secondary CTA (prototype .btn--ghost-dark, lines 221-222).
+ * The global on-dark override in styles.css keys off `.section.dark`, which
+ * sits on the EDS section WRAPPER; the block class `.developer`/`.dark` is one
+ * level below on the block element, so that selector doesn't reach here (#41).
+ * Re-scope the ghost treatment to the block class so it applies regardless of
+ * whether the section wrapper carries `.dark`.
+ */
+.developer a.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border-color: #3a4a6e;
+}
+
+.developer a.btn-secondary:hover {
+  background: #16224a;
+}
+
+/* Responsive — collapse the 2-col layout (prototype line 255). */
+@media (width <= 1024px) {
+  .developer .cols {
+    grid-template-columns: 1fr;
+  }
+}

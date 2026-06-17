@@ -1,0 +1,143 @@
+/* ——— businesses (role: section) ———
+   Lifted verbatim from the .biz section of home-C-cinematic.html
+   (prototype <style> lines 192-209; responsive 254 + 262), scoped under
+   .businesses. The section already owns the lead <h2>; titles here are <h3>.
+   Global tokens + button system live in styles/styles.css — referenced, not
+   redefined. */
+
+/* content wrap — the section background (none here) stays full-bleed; the
+   content is constrained. Mirrors the prototype's .wrap. */
+.businesses .wrap {
+  max-width: var(--max-width, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.businesses .intro {
+  max-width: 65ch;
+  margin-top: 14px;
+  color: var(--color-slate);
+}
+
+.businesses h3.track {
+  max-width: 28ch;
+  margin-top: 56px;
+  font-size: var(--heading-lg);
+  font-weight: 300;
+}
+
+.businesses .track-lede {
+  max-width: 65ch;
+  margin-top: 12px;
+  color: var(--color-slate);
+}
+
+/* Enterprise stories — 2-col captioned figures with a gradient overlay. */
+.businesses .ent-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.businesses .story {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.businesses .story img {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  object-fit: cover;
+}
+
+/* fallback when the image cell is empty (no authored asset). */
+.businesses .story:not(:has(img)) {
+  aspect-ratio: 16 / 8;
+  background: var(--color-frost);
+}
+
+.businesses .story figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 18px 20px;
+  background: linear-gradient(transparent, rgb(6 27 49 / 88%));
+  color: #fff;
+  font-size: 17px;
+  font-weight: 425;
+}
+
+/* Startup cards — 5-col portrait cards with a caption. */
+.businesses .startup-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.businesses .startup {
+  overflow: hidden;
+  background: var(--color-bg);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius);
+}
+
+.businesses .startup img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.businesses .startup:not(:has(img))::before {
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: var(--color-frost);
+  content: "";
+}
+
+.businesses .startup p {
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 425;
+  line-height: 1.35;
+}
+
+/* Support — 3-col service blurbs above a hairline rule. */
+.businesses .support {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.businesses .support h3 {
+  font-size: 17px;
+  font-weight: 425;
+}
+
+.businesses .support p {
+  margin-top: 8px;
+  color: var(--color-slate);
+  font-size: var(--body-sm);
+}
+
+/* Responsive — mirrors the prototype's 1024px / 640px breakpoints. */
+@media (width <= 1024px) {
+  .businesses .startup-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .businesses .ent-grid,
+  .businesses .support {
+    grid-template-columns: 1fr;
+  }
+
+  .businesses .startup-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

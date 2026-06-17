@@ -1,86 +1,218 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * Stripe — stardust → EDS foundation
+ * Tokens lifted verbatim from stardust/prototypes/home-C-cinematic.html :root.
  */
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* type families */
+  --heading-font-family: "sohne-var", arial, sans-serif;
+  --body-font-family: "sohne-var", arial, sans-serif;
+  --mono-font-family: "SourceCodePro", "Courier New", courier, monospace;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* type scale */
+  --heading-xxl: clamp(44px, 4.5vw, 56px);
+  --heading-xl: 42px;
+  --heading-lg: 32px;
+  --heading-md: 24px;
+  --body: 18px;
+  --body-sm: 16px;
+  --line-height-heading: 1.06;
+  --line-height-body: 1.5;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* color */
+  --color-bg: #fff; /* paper */
+  --color-fg: #061b31; /* ink-navy */
+  --color-accent: #533afd; /* blurple */
+  --color-slate: #50617a;
+  --color-mist: #64748d;
+  --color-frost: #f8fafd;
+  --color-hairline: #e5edf5;
+  --color-midnight: #0d1738;
+  --color-lavender: #7f7dfc;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 96px;
+
+  /* layout */
+  --section-padding: 64px;
+  --max-width: 1080px;
+  --radius: 8px;
+  --radius-sm: 4px;
+  --radius-pill: 16.5px;
+  --gradient-mesh: linear-gradient(100deg, #a960ee 0%, #ff333d 35%, #ff8a00 65%, #90e0ff 100%);
+  --hds-color-text-solid: currentcolor; /* drives the inline wordmark fill */
+
+  /* motion easing (live-systems register) */
+  --ease-out-cubic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-quart: cubic-bezier(0.42, 0, 0, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --z-nav: 30;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 60px;
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-@media (width >= 900px) {
+@media (width <= 640px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
+    --section-padding: 40px;
+  }
+}
 
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+/* ---- Fonts ---------------------------------------------------------------
+ * sohne-var (Klim Söhne) is a PROPRIETARY commercial font — not OFL/Apache,
+ * so it is NOT self-hosted here. The body defaults to a metric-matched system
+ * sans (Arial override below) and stays on that stack; zero-CLS is not fully
+ * achievable for the brand body face. Source Code Pro (mono, eyebrows/labels)
+ * is OFL and IS self-hosted from fontsource in styles/fonts/.
+ * ------------------------------------------------------------------------- */
+
+/* Self-hosted OFL mono — Source Code Pro Medium (500) */
+@font-face {
+  font-family: SourceCodePro;
+  src: url("/styles/fonts/source-code-pro-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* Metric-matched mono fallback (computed from the woff2 with fonttools) */
+@font-face {
+  font-family: "Courier New";
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 98.42%;
+  descent-override: 27.30%;
+  line-gap-override: 0%;
+}
+
+/* ---- Reset --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  display: none;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: arial, sans-serif;
+  font-size: var(--body);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
 }
 
-body.appear {
+body.session {
+  font-family: var(--body-font-family);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--heading-font-family);
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--heading-xxl);
+  font-weight: 300;
+  line-height: var(--line-height-heading);
+}
+
+h2 {
+  font-size: var(--heading-xl);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: var(--heading-md);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid rgb(83 58 253 / 45%);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (width <= 640px) {
+  h1 {
+    font-size: 38px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+}
+
+/* ---- EDS section scaffold ------------------------------------------------ */
+main > div,
+.has-template,
+div[data-status] {
+  display: none;
+}
+
+main .section {
+  display: block;
+}
+
+main .section > .default-content,
+main .section > .block-content {
   display: block;
 }
 
@@ -88,238 +220,72 @@ header {
   height: var(--nav-height);
 }
 
-header .header,
-footer .footer {
-  visibility: hidden;
-}
-
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
-  visibility: visible;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
-}
-
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
-
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-}
-
-code,
-pre {
-  font-size: var(--body-font-size-s);
-}
-
-pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
-  overflow-x: auto;
-  white-space: pre;
-}
-
-main > div {
-  margin: 40px 16px;
-}
-
-input,
-textarea,
-select,
-button {
-  font: inherit;
-}
-
-/* links */
-a:any-link {
-  color: var(--link-color);
-  text-decoration: none;
-  overflow-wrap: break-word;
-}
-
-a:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline;
-}
-
-/* buttons */
-p.button-wrapper {
-  margin: 12px 0;
-}
-
-a.button:any-link,
-button.button {
-  box-sizing: border-box;
+/* ---- Button system -------------------------------------------------------
+ * Maps the EDS strong/em link convention to the prototype's .btn variants:
+ *   <strong><a>          -> .btn.btn-primary   (blurple fill)
+ *   <em><a>              -> .btn.btn-secondary  (frosted / outline)
+ *   <em><strong><a>      -> .btn.btn-accent     (dark ground)
+ * ------------------------------------------------------------------------- */
+a.btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
-  text-decoration: none;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 425;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-a.button[aria-disabled="true"],
-button.button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
+a.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
 }
 
-a.button.primary,
-button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
-  color: var(--background-color);
+a.btn-primary:hover {
+  background: #3f2bd9;
+  border-color: #3f2bd9;
 }
 
-a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
+a.btn-secondary {
+  background: var(--color-frost);
+  color: var(--color-fg);
+  border-color: var(--color-hairline);
 }
 
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+a.btn-secondary:hover {
+  background: #eef3f9;
 }
 
-a.button.secondary,
-button.button.secondary {
-  border-color: var(--text-color);
-  background-color: transparent;
-  color: var(--text-color);
+a.btn-accent {
+  background: rgb(255 255 255 / 65%);
+  color: var(--color-fg);
+  border-color: rgb(255 255 255 / 40%);
 }
 
-a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--light-color);
-  color: var(--dark-color);
+a.btn-accent:hover {
+  background: rgb(255 255 255 / 85%);
 }
 
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+/* On dark surfaces (.dark / .hero plate / .dev), secondary becomes a ghost
+   button with a light outline so it stays visible (#41). */
+main .section.dark a.btn-secondary,
+main .section.dev a.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border-color: #3a4a6e;
 }
 
-/* high-impact call-to-action */
-a.button.accent,
-button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
+main .section.dark a.btn-secondary:hover,
+main .section.dev a.btn-secondary:hover {
+  background: #16224a;
 }
 
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-main img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-}
-
-.icon {
-  display: inline-block;
-  height: 24px;
-  width: 24px;
-}
-
-.icon img {
-  height: 100%;
-  width: 100%;
-}
-
-/* sections */
-main > .section {
-  margin: 40px 0;
-}
-
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
-}
-
-main > .section:first-of-type {
-  margin-top: 0;
-}
-
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
-}
-
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
 }

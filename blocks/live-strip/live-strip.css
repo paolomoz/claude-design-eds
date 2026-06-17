@@ -1,0 +1,79 @@
+/* live-strip — dark edge-to-edge operational ticker.
+ * Section background stays full-bleed (--color-midnight); content is wrapped.
+ * CSS lifted verbatim from home-C-cinematic.html (prototype lines 284-290,
+ * 305-309) and scoped under .live-strip. BEM __ names and the livePulse
+ * keyframe are lifted from the prototype verbatim. */
+
+/* stylelint-disable selector-class-pattern, keyframes-name-pattern */
+
+main .section.live-strip-container {
+  padding-block: 0;
+  background: var(--color-midnight);
+  color: #dfe7f3;
+}
+
+.live-strip {
+  padding-block: 0;
+  background: var(--color-midnight);
+  color: #dfe7f3;
+}
+
+.live-strip .live-strip__row {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  padding-block: 10px;
+  flex-wrap: wrap;
+  font-family: var(--mono-font-family);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* recreate the prototype's max-width wrap on the ticker content */
+.live-strip .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 24px;
+  width: 100%;
+}
+
+.live-strip .live-strip__item strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.live-strip .live-strip__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #8fe3b0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.live-strip .live-strip__label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2bd07e;
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(43 208 126 / 45%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgb(43 208 126 / 0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-strip .live-strip__label::before {
+    animation: none;
+  }
+}

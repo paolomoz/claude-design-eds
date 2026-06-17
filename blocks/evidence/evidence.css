@@ -1,0 +1,35 @@
+/* Named evidence strip — lifted from home-C-cinematic.html <style> lines 167-171,
+   scoped under .evidence. Hairline-bordered horizontal strip of customer proof points. */
+
+.evidence {
+  border-block: 1px solid var(--color-hairline);
+  padding-block: 32px;
+}
+
+/* Recreate the prototype's max-width content wrap (.wrap). The section/border is
+   full-bleed; only the content is constrained. */
+.evidence .wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.evidence ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  justify-content: space-between;
+}
+
+.evidence li {
+  font-size: var(--body-sm);
+  color: var(--color-slate);
+}
+
+.evidence li strong {
+  color: var(--color-fg);
+  font-weight: 425;
+  display: block;
+}
