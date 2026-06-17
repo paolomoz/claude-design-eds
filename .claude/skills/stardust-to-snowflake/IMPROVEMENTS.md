@@ -212,7 +212,15 @@ story-cards took "the first no-image row" as the head; the head was authored as 
 A rotating hero with N slide headlines each as `<h1>` delivers N `<h1>`s (the block rotates one live `<h1>` post-JS, but crawlers see all N) — violates #35. test-18 had 6.
 **Implemented:** Step 8 + #35 — author the first slide's headline as the page `<h1>`, the rest as `<h2>` (block reads headings generically so the carousel still works). Local-QA: `<h1>` count in the content file = 1. (Applied to test-18.)
 
-**Implemented (#40–57):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 58. 🟠 Merging two prototype bands with different `data-ground` silently inverts the lost band
+test-19's pipeline block fused a light `data-ground="dust"` intro (navy heading) with the following dark `ink` scene into one ink slab — the intro heading flipped navy→cream and the light-band beat vanished. Silent (lint clean, content present); only an eyeball/the #59 flag catches a whole band changing ground.
+**Implemented:** anti-pattern 1b + Step 2 audit cue — when one block spans >1 `data-ground`, reproduce EACH ground as a distinct full-bleed sub-band (light head + dark scene); note each section's ground before merging.
+
+### 59. 🟡 visual-diff records heading colors but never compared them — a ground inversion printed "none"
+The probe stores each heading/eyebrow color but `redFlags()` only checked blank/imagery/content/load/stretch/flush — no proto-vs-EDS color comparison, so a full ground inversion (a matched h2 navy→cream) passed silently. Same blind spot #47/#49 closed for other metrics.
+**Implemented:** `visual-diff.mjs` matches headings by text across proto/EDS and emits a `SURFACE/GROUND MISMATCH` advisory when a matched heading's luminance differs by >90 (dark↔light). Step 10 red-flags list updated.
+
+**Implemented (#40–59):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 

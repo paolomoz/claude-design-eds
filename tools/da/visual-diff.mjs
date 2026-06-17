@@ -199,6 +199,23 @@ function redFlags(eds, proto) {
     if (hp - he >= 3 || (cp >= 4 && ce < cp * 0.6) || mhRatio < 0.6) {
       flags.push(`CONTENT GAP (#49): proto ${hp} headings / ${cp} content-boxes / main ${proto.mainHeight}px vs EDS ${he} / ${ce} / ${eds.mainHeight}px. The EDS likely DROPPED or duplicated authored content (a missing section, a dropped CTA) — eyeball the section pair; metrics-only checks (stretch/flush/blank) can't see this.`);
     }
+    // Surface/ground mismatch (#59): a matched heading rendered on the wrong
+    // ground (dark band vs light band) — the probe records colors but never
+    // compared them, so a full inversion printed "none".
+    const lum = (c) => {
+      const m = (c || '').match(/(\d+)\D+(\d+)\D+(\d+)/);
+      return m ? 0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3] : null;
+    };
+    const pByText = new Map(proto.headings.map((h) => [h.text.toLowerCase(), h.color]));
+    eds.headings.forEach((h) => {
+      const pc = pByText.get(h.text.toLowerCase());
+      if (!pc) return;
+      const lp = lum(pc);
+      const le = lum(h.color);
+      if (lp !== null && le !== null && Math.abs(lp - le) > 90) {
+        flags.push(`SURFACE/GROUND MISMATCH (#59): heading "${h.text}" is ${h.color} in EDS vs ${pc} in proto (luminance ${Math.round(le)} vs ${Math.round(lp)}) — a band likely rendered on the wrong ground (dark vs light). Check the owning block's section background.`);
+      }
+    });
   }
   eds.images.filter((i) => i.failedToLoad).forEach((i) => {
     flags.push(`IMAGE DID NOT LOAD (#43): ${i.src} rendered ${i.rendered} but natural 0x0. In the local harness, rewrite absolute aem.page image URLs to root-relative /img/... so the asset loads and the stretch check has real dimensions.`);
