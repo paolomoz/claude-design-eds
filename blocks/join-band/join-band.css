@@ -1,0 +1,40 @@
+/* Join band — recruitment band (role: band).
+   Section background stays full-bleed; the content is wrapped to max-width. */
+.join-band {
+  background: var(--dusk);
+  color: #fff;
+}
+
+.join-band .container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--spacing-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding-block: var(--spacing-lg);
+}
+
+.join-band h2 {
+  font-size: var(--heading-md);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.join-band a {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+@media (width <= 640px) {
+  .join-band .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

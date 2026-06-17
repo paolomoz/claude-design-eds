@@ -1,0 +1,126 @@
+<style>
+  .trh-header .container {
+    max-width: 1110px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  /* Crisis strip */
+  .trh-header .crisis-strip {
+    background: var(--harbor, #005560);
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  .trh-header .crisis-strip .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding-block: 10px;
+  }
+
+  .trh-header .crisis-strip strong {
+    font-family: var(--heading-font-family, "HarmoniaSans", arial, sans-serif);
+    font-weight: 700;
+  }
+
+  .trh-header .crisis-strip a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  /* Header bar */
+  .trh-header .site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--mist, #e9eeef);
+  }
+
+  .trh-header .site-header .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+    padding-block: 16px;
+  }
+
+  .trh-header .logo img {
+    height: 56px;
+    width: auto;
+  }
+
+  .trh-header .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+    margin-left: auto;
+  }
+
+  .trh-header .site-nav a {
+    font-family: var(--heading-font-family, "HarmoniaSans", arial, sans-serif);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    color: var(--color-fg, #11181a);
+    text-decoration: none;
+    padding-block: 6px;
+    border-bottom: 3px solid transparent;
+  }
+
+  .trh-header .site-nav a:hover {
+    border-bottom-color: var(--color-accent, #008192);
+  }
+
+  .trh-header .site-nav a.donate {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-accent, #008192);
+    color: #fff;
+    border-bottom: none;
+    padding: 12px 26px;
+    border-radius: 0;
+  }
+
+  .trh-header .site-nav a.donate:hover {
+    background: var(--harbor, #005560);
+  }
+
+  @media (max-width: 640px) {
+    .trh-header .site-header .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .trh-header .site-nav {
+      margin-left: 0;
+      gap: 10px 16px;
+    }
+
+    .trh-header .site-nav a {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+<div class="trh-header">
+  <div class="crisis-strip" role="region" aria-label="Immediate shelter help">
+    <div class="container">
+      <strong>Looking for immediate shelter?</strong>
+      <span>Call the Homeless Services Line at <a href="tel:8019909999">801-990-9999</a></span>
+    </div>
+  </div>
+  <div class="site-header">
+    <div class="container">
+      <a class="logo" href="/"><img src="/img/theroadhome/logo.png" alt="The Road Home" width="140" height="80"></a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/get-help">GET HELP</a>
+        <a href="/give">GIVE</a>
+        <a href="/get-involved">GET INVOLVED</a>
+        <a href="/about-us">ABOUT US</a>
+        <a class="donate" href="/donate">DONATE</a>
+      </nav>
+    </div>
+  </div>
+</div>

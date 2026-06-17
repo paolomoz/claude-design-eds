@@ -1,0 +1,92 @@
+/* ============ Housing resources ============
+ * Lifted verbatim from home-C-cinematic.html (.resources, lines 331-343),
+ * scoped under .resources. Global tokens + button system live in styles.css.
+ */
+
+/* The block IS the `.block-content > div`, which the section scaffold
+ * constrains to max-width. Release it so the section background + watermark
+ * go full-bleed; the inner .resources-content carries the max-width wrap. */
+main .section > .block-content > div.resources {
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.resources {
+  position: relative;
+  padding-block: var(--section-padding);
+  background: #fff;
+}
+
+.resources .watermark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.resources .resources-content {
+  position: relative;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.resources h2 {
+  font-size: var(--heading-lg);
+  font-weight: 900;
+  color: var(--harbor);
+}
+
+.resources .resources-intro {
+  margin-top: var(--spacing-md);
+}
+
+.resources .resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+  margin-block: var(--spacing-xl);
+}
+
+.resources .resource-col {
+  background: var(--dusk-tint);
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.resources .resource-col .resource-icon {
+  display: block;
+  margin-inline: auto;
+  margin-bottom: var(--spacing-md);
+}
+
+.resources .resource-col .resource-icon svg {
+  height: 88px;
+  width: auto;
+  display: block;
+  margin-inline: auto;
+}
+
+.resources .resource-col h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-fg);
+}
+
+.resources .resources-outro {
+  margin-bottom: var(--spacing-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resources *,
+  .resources *::before,
+  .resources *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

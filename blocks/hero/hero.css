@@ -1,37 +1,129 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * Hero block — full-bleed cinematic hero.
+ * CSS lifted verbatim from stardust prototype home-C-cinematic.html (.hero rules,
+ * lines 264-281), scoped under .hero. Section background stays full-bleed; the
+ * content is wrapped to the prototype max-width. Parallax / scrim-deepen JS
+ * motion dropped — a single static scrim remains.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background photo. Authored <picture>/<img> is positioned to fill; a CSS
+ * fallback image covers the empty-image-cell case. */
+.hero .hero-photo,
+.hero .hero-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero .hero-photo {
+  background: var(--harbor) url("/img/theroadhome/hero-photo.jpg") center 30% / cover no-repeat;
+}
+
+.hero .hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgb(0 47 56 / 88%) 0%,
+    rgb(0 47 56 / 62%) 46%,
+    rgb(0 47 56 / 18%) 100%
+  );
+}
+
+/* Max-width content wrap (recreates the prototype .container) */
+.hero .hero-content {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+  color: #fff;
+}
+
+.hero .hero-text {
+  max-width: 640px;
+  padding-block: var(--spacing-xl);
+}
+
+/* Entrance motion (lifted from the cinematic layer; honors reduced-motion) */
+@keyframes hero-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  font-size: var(--heading-xxl);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+  color: #fff;
+  animation: hero-enter-up var(--enter-duration) var(--ease-out-cubic) backwards;
 }
 
-.hero picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+.hero .hero-deck {
+  margin-top: var(--spacing-lg);
+  font-size: 1.125rem;
+  color: #fff;
+  max-width: 70ch;
+  animation: hero-enter-up var(--enter-duration) var(--ease-out-cubic)
+    calc(var(--enter-stagger) * 1) backwards;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  animation: hero-enter-up var(--enter-duration) var(--ease-out-cubic)
+    calc(var(--enter-stagger) * 2) backwards;
+}
+
+.hero .hero-ctas .btn {
   width: 100%;
-  height: 100%;
 }
 
-@media (width >= 900px) {
+/* ============ Responsive (mobile-first; min-width per project convention) ============ */
+@media (width >= 600px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 64vh;
+  }
+
+  .hero .hero-text {
+    padding-block: var(--spacing-2xl);
+  }
+
+  .hero .hero-ctas .btn {
+    width: auto;
+  }
+}
+
+@media (width >= 1200px) {
+  .hero {
+    min-height: 76vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero h1,
+  .hero .hero-deck,
+  .hero .hero-ctas {
+    animation: none;
   }
 }

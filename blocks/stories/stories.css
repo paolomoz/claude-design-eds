@@ -1,0 +1,101 @@
+/*
+ * Stories block — 6-up housing-stories testimony grid.
+ * CSS lifted verbatim from stardust prototype home-C-cinematic.html (lines
+ * 345-368), scoped under .stories. Global tokens + button system live in
+ * styles/styles.css — referenced here, not redefined.
+ */
+
+.stories {
+  padding-block: var(--section-padding);
+  background: #fff;
+}
+
+/* Centered max-width wrap (prototype .container) recreated for the content. */
+.stories .stories-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.stories h2 {
+  font-size: var(--heading-lg);
+  font-weight: 900;
+  color: var(--color-fg);
+}
+
+.stories .stories-intro {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stories .stories-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.stories .story-card {
+  border-top: 4px solid var(--dusk);
+  background: var(--mist);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.stories .story-head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.stories .story-portrait {
+  width: 72px;
+  height: 72px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(200 188 214 / 70%);
+  outline: 2px dashed var(--color-accent);
+  outline-offset: -2px;
+}
+
+.stories .story-portrait .placeholder-eyebrow {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  color: var(--harbor);
+  text-align: center;
+}
+
+.stories .story-portrait .placeholder-shape {
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: 1.75rem;
+  color: var(--dusk);
+}
+
+.stories .story-card h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.stories .story-card p {
+  font-size: var(--body);
+}
+
+.stories .story-card .story-more {
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: var(--body-sm);
+  letter-spacing: 0.04em;
+  color: var(--harbor);
+  margin-top: auto;
+}
+
+.stories .stories-cta {
+  margin-top: var(--spacing-xl);
+}

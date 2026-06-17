@@ -1,0 +1,115 @@
+/*
+ * newsletter block — email-capture form on a mist band.
+ * CSS lifted verbatim from stardust prototype home-C-cinematic.html
+ * (.newsletter section, lines 370-386), scoped under .newsletter.
+ * Global tokens + button system live in styles/styles.css.
+ */
+
+/* Full-bleed mist band: the background lives on the SECTION (so it spans the
+ * viewport), while the block itself is centered and max-width-wrapped by the
+ * shared section scaffold in styles.css (.block-content > div). */
+main .section:has(> .block-content > .newsletter) {
+  background: var(--mist);
+}
+
+.newsletter {
+  padding-block: var(--section-padding);
+}
+
+.newsletter h2 {
+  font-size: var(--heading-lg);
+  font-weight: 900;
+  color: var(--harbor);
+}
+
+.newsletter .newsletter-deck {
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: var(--heading-md);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Non-submitting wrapper (no <form> — see #20, EDS CSP makes form submit reload) */
+.newsletter .newsletter-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+  max-width: 920px;
+}
+
+.newsletter .field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.newsletter label {
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: var(--body-sm);
+  letter-spacing: 0.04em;
+}
+
+.newsletter input[type="text"],
+.newsletter input[type="email"],
+.newsletter input[type="tel"] {
+  border: 1px solid var(--slate-line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font-family: var(--body-font-family);
+  font-size: var(--body);
+  background: #fff;
+  color: var(--color-fg);
+}
+
+.newsletter .sms-consent {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+  font-size: var(--body-sm);
+}
+
+.newsletter .sms-consent input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+  margin-top: 2px;
+}
+
+.newsletter .form-actions {
+  grid-column: 1 / -1;
+}
+
+/* The Subscribe control is a <button>, not an <a>, so the global a.btn
+ * system in styles.css does not reach it — give it the prototype's button
+ * paint here (lifted .btn + .btn-primary, with the prototype's button
+ * overrides border:none / cursor). */
+.newsletter button.btn-primary {
+  display: inline-block;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 200ms var(--ease-out-quart),
+    color 200ms var(--ease-out-quart);
+}
+
+.newsletter button.btn-primary:hover {
+  background: var(--harbor);
+}
+
+.newsletter .legal {
+  font-size: var(--body-sm);
+  color: #4a5254;
+  margin-top: var(--spacing-lg);
+  max-width: 78ch;
+}

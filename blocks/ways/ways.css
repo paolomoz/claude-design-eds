@@ -1,0 +1,100 @@
+/* ============ Ways 3-up — audience-routing photo cards ============
+ * Lifted verbatim from home-C-cinematic.html (.ways / .ways-grid / .way-card),
+ * scoped under .ways. Global tokens live in styles/styles.css.
+ */
+
+.ways {
+  padding-block: var(--section-padding);
+}
+
+/* Centered max-width wrap (recreates the prototype's .container). */
+.ways .ways-wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.ways .ways-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.ways .way-card {
+  position: relative;
+  display: block;
+  min-height: 360px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.ways .way-card img.way-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fallback when an author leaves the image cell empty. */
+.ways .way-card .way-photo-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--harbor);
+}
+
+.ways .way-card .way-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgb(0 47 56 / 92%) 0%,
+    rgb(0 47 56 / 35%) 55%,
+    rgb(0 47 56 / 25%) 100%
+  );
+  transition: background-color 250ms cubic-bezier(0.42, 0, 0, 1);
+}
+
+.ways .way-card:hover .way-scrim {
+  background-color: rgb(0 85 96 / 35%);
+}
+
+.ways .way-card .way-label {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.ways .way-card .way-icon {
+  height: 64px;
+  width: auto;
+}
+
+.ways .way-card .way-title {
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.ways .way-card .way-arrow {
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  color: #fff;
+  font-size: var(--body-sm);
+  letter-spacing: 0.06em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ways .way-card .way-scrim {
+    transition: none;
+  }
+}

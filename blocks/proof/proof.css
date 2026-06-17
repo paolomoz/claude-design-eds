@@ -1,0 +1,99 @@
+/*
+ * Proof band block CSS.
+ * Lifted verbatim from stardust prototype home-C-cinematic.html (.proof rules,
+ * lines 313-329), scoped under .proof. Tokens + button system live in
+ * styles/styles.css — referenced here, not redefined.
+ */
+
+.proof {
+  background: var(--harbor);
+  color: #fff;
+  padding-block: var(--section-padding);
+}
+
+/* Recreated max-width wrap (prototype .container) — full-bleed background,
+   centered content. */
+.proof .proof-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-lg);
+}
+
+.proof .proof-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-lg);
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+}
+
+.proof .proof-head h2 {
+  font-size: var(--heading-lg);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.proof .proof-head p {
+  margin-top: var(--spacing-sm);
+  max-width: 70ch;
+  color: rgb(255 255 255 / 85%);
+}
+
+.proof .proof-marks {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.proof .proof-marks img {
+  height: 84px;
+  width: auto;
+  padding: 8px;
+  background: #fff;
+}
+
+.proof .proof-marks img.centennial {
+  height: 96px;
+  padding: 0;
+  background: transparent;
+}
+
+.proof .stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.proof .stat {
+  padding-top: var(--spacing-lg);
+  border-top: 4px solid rgb(255 255 255 / 35%);
+}
+
+.proof .stat img {
+  height: 56px;
+  width: auto;
+  margin-bottom: var(--spacing-md);
+}
+
+.proof .stat .stat-number {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-weight: 900;
+  font-size: var(--heading-xl);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.proof .stat p {
+  margin-top: var(--spacing-md);
+  color: rgb(255 255 255 / 92%);
+}
+
+/* Responsive: stack the head (prototype @media max-width 768px). */
+@media (width <= 768px) {
+  .proof .proof-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
