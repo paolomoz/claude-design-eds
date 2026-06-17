@@ -172,11 +172,22 @@ async function capture(browser, url, tag, opts) {
   return metrics;
 }
 
-function redFlags(eds) {
+function redFlags(eds, proto) {
   const flags = [];
   if (eds.blankRender) {
     flags.push(`BLANK RENDER: the EDS page is hidden/empty (main height ${eds.mainHeight}px, text ${eds.textLen} chars). NOT a pass — likely a foundation body{display:none}/body.appear gate the runtime never satisfies (use the body.session font gate, no display gate), or the harness failed to load. Fix before trusting any other result.`);
     return flags; // every other metric is meaningless on a blank page
+  }
+  // Imagery gap (#47): the EDS renders far fewer images than the prototype —
+  // usually because image-less claude-design/stardust content (#2) relies on CSS
+  // fallbacks. Expected, but a broken fallback looks identical to "red flags none",
+  // so force an eyeball rather than a silent pass. Advisory, not a defect.
+  if (proto) {
+    const pN = proto.images.length;
+    const eN = eds.images.length;
+    if (pN >= 3 && eN < Math.max(1, pN * 0.5)) {
+      flags.push(`IMAGERY GAP (#47): prototype renders ${pN} images, EDS renders ${eN}. Likely image-less content using CSS fallbacks (#2) — EYEBALL the screenshots to confirm the fallbacks render intentionally (not a missing-asset regression). Not a defect by itself.`);
+    }
   }
   eds.images.filter((i) => i.failedToLoad).forEach((i) => {
     flags.push(`IMAGE DID NOT LOAD (#43): ${i.src} rendered ${i.rendered} but natural 0x0. In the local harness, rewrite absolute aem.page image URLs to root-relative /img/... so the asset loads and the stretch check has real dimensions.`);
@@ -201,7 +212,7 @@ async function main() {
   let report;
   try {
     const [protoM, edsM] = [await capture(browser, proto, 'proto', opts), await capture(browser, eds, 'eds', opts)];
-    report = { viewport: opts.width, out: opts.out, proto: protoM, eds: edsM, redFlags: redFlags(edsM) };
+    report = { viewport: opts.width, out: opts.out, proto: protoM, eds: edsM, redFlags: redFlags(edsM, protoM) };
   } finally {
     await browser.close();
   }
