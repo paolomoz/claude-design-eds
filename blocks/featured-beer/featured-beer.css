@@ -1,0 +1,190 @@
+/* ===== featured-beer — 3-up commerce strip =====
+   CSS lifted verbatim from prototype home-proposed-C2.html
+   (section[data-section="featured-beer"]), scoped under .featured-beer.
+   Tokens + button system live in styles/styles.css — referenced, not redefined. */
+
+/* The section background/padding stays full-bleed; content is wrapped. */
+main .section.featured-beer-container,
+.featured-beer {
+  padding: 80px 0;
+  background: var(--brand-black);
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Constrained content wrap (recreates the prototype's max-width container). */
+.featured-beer .featured-beer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.featured-beer .ds-section-eyebrow {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin: 0 0 var(--space-md);
+}
+
+.featured-beer .ds-section-h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--surface-white);
+  margin: 0 0 var(--space-2xl);
+  max-width: 50ch;
+}
+
+.featured-beer .ds-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+  margin-bottom: var(--space-2xl);
+}
+
+.featured-beer .ds-card {
+  background: var(--brand-black);
+  color: var(--surface-white);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  transition: outline var(--dur-state) var(--ease-snap);
+  outline: 0 solid transparent;
+}
+
+.featured-beer .ds-card:hover {
+  outline: 4px solid var(--brand-yellow);
+  outline-offset: 0;
+}
+
+.featured-beer .ds-card-badge {
+  background: var(--brand-yellow);
+  color: var(--brand-black);
+  padding: 4px 10px;
+  align-self: flex-start;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-none);
+}
+
+.featured-beer .ds-card-name {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--surface-white);
+}
+
+.featured-beer .ds-card-photo-wrap {
+  aspect-ratio: 4 / 5;
+  background: var(--text-near-black);
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-beer .ds-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.featured-beer .ds-card-style {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neutral-grey);
+  margin: 0;
+}
+
+.featured-beer .ds-card-readmore {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  align-self: flex-start;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  border-bottom: 2px solid var(--brand-yellow);
+  padding: var(--space-sm) 0 6px;
+  min-height: 44px; /* WCAG 2.5.5 target-size minimum */
+  transition:
+    color var(--dur-state) var(--ease-snap),
+    border-color var(--dur-state) var(--ease-snap);
+}
+
+.featured-beer .ds-card-readmore:hover {
+  color: var(--surface-white);
+  border-bottom-color: var(--surface-white);
+}
+
+.featured-beer .ds-card-readmore:focus-visible {
+  outline: 2px solid var(--brand-yellow);
+  outline-offset: 2px;
+}
+
+.featured-beer .ds-strip-foot {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Footer text-link ("See the lineup") — plain styled anchor, not a button. */
+.featured-beer .ds-text-link {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  border-bottom: 2px solid var(--brand-yellow);
+  padding-bottom: 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition:
+    color var(--dur-state) var(--ease-snap),
+    border-color var(--dur-state) var(--ease-snap);
+}
+
+.featured-beer .ds-text-link:hover {
+  color: var(--surface-white);
+  border-bottom-color: var(--surface-white);
+}
+
+.featured-beer .ds-text-link:focus-visible {
+  outline: 2px solid var(--brand-yellow);
+  outline-offset: 2px;
+}
+
+/* ===== Responsive (prototype @media max-width:1023px) ===== */
+@media (width <= 1023px) {
+  .featured-beer .ds-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-beer .ds-card,
+  .featured-beer .ds-card-readmore,
+  .featured-beer .ds-text-link {
+    transition: none;
+  }
+}

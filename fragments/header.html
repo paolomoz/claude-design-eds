@@ -1,0 +1,206 @@
+<style>
+  /* Wasatch Back header — sticky overlay-on-hero nav, lifted from prototype
+     [data-section="header"]. Scoped under .wb-header (postlcp sets the host
+     element's class to "header"; the wrapper carries the brand root class). */
+  header.header { position: sticky; top: 0; z-index: 20; display: block; }
+
+  .wb-header {
+    background: linear-gradient(to bottom, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 0%) 100%);
+    color: var(--surface-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px var(--section-pad-desktop);
+  }
+
+  .wb-wordmark {
+    color: var(--surface-white);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .wb-est { color: var(--brand-yellow); font-size: 0.6875rem; letter-spacing: 0.16em; }
+
+  .wb-nav { display: flex; gap: 28px; align-items: center; }
+
+  .wb-nav a {
+    color: var(--surface-white);
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--dur-state) var(--ease-snap);
+  }
+
+  .wb-nav a:hover,
+  .wb-nav a[aria-current="page"] { border-bottom-color: var(--brand-yellow); }
+
+  /* CSS-only hamburger (no JS in fragments). */
+  .wb-nav-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
+  }
+
+  .wb-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .wb-nav-burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .wb-nav-toggle:focus-visible ~ .wb-nav-burger {
+    outline: 2px solid var(--brand-yellow);
+    outline-offset: 2px;
+  }
+
+  .wb-nav-burger-icon,
+  .wb-nav-burger-icon::before,
+  .wb-nav-burger-icon::after {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--surface-white);
+    transition:
+      transform var(--dur-state) var(--ease-snap),
+      background var(--dur-state) var(--ease-snap),
+      opacity var(--dur-state) var(--ease-snap);
+  }
+
+  .wb-nav-burger-icon { position: relative; }
+
+  .wb-nav-burger-icon::before,
+  .wb-nav-burger-icon::after { content: ''; position: absolute; left: 0; }
+
+  .wb-nav-burger-icon::before { transform: translateY(-7px); }
+  .wb-nav-burger-icon::after { transform: translateY(7px); }
+
+  .wb-nav-toggle:checked ~ .wb-nav-burger .wb-nav-burger-icon { background: transparent; }
+  .wb-nav-toggle:checked ~ .wb-nav-burger .wb-nav-burger-icon::before { transform: translateY(0) rotate(45deg); background: var(--brand-yellow); }
+  .wb-nav-toggle:checked ~ .wb-nav-burger .wb-nav-burger-icon::after { transform: translateY(0) rotate(-45deg); background: var(--brand-yellow); }
+
+  @media (max-width: 640px) {
+    .wb-header {
+      padding: 12px var(--section-pad-mobile);
+      flex-wrap: nowrap;
+      gap: var(--space-md);
+      position: relative;
+    }
+
+    .wb-wordmark { flex-shrink: 0; font-size: 1rem; gap: 8px; }
+    .wb-est { font-size: 0.625rem; letter-spacing: 0.14em; }
+    .wb-nav-burger { display: inline-flex; }
+
+    .wb-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--brand-black);
+      border-top: 1px solid var(--hairline);
+      border-bottom: 4px solid var(--brand-yellow);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: var(--space-sm) var(--section-pad-mobile) var(--space-lg);
+      transform: translateY(-12px);
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition:
+        transform var(--dur-state) var(--ease-snap),
+        opacity var(--dur-state) var(--ease-snap),
+        visibility 0s linear var(--dur-state);
+    }
+
+    .wb-nav-toggle:checked ~ .wb-nav {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transition:
+        transform var(--dur-state) var(--ease-snap),
+        opacity var(--dur-state) var(--ease-snap),
+        visibility 0s linear 0s;
+    }
+
+    .wb-nav a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: var(--space-md) 0;
+      font-family: var(--display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--surface-white);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .wb-nav a:last-child { border-bottom: 0; }
+
+    .wb-nav a:hover,
+    .wb-nav a[aria-current="page"] { color: var(--brand-yellow); border-bottom-color: var(--brand-yellow); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wb-header *,
+    .wb-header *::before,
+    .wb-header *::after { transition-duration: 1ms !important; }
+  }
+</style>
+
+<div class="wb-header">
+  <a class="wb-wordmark" href="/" aria-label="Wasatch Back Beerworks, established 1996">
+    Wasatch Back <span class="wb-est">Est 1996</span>
+  </a>
+
+  <input class="wb-nav-toggle" type="checkbox" id="wb-nav-toggle">
+  <label class="wb-nav-burger" for="wb-nav-toggle" aria-controls="wb-nav-list">
+    <span class="wb-nav-burger-icon" aria-hidden="true"></span>
+    <span class="wb-sr-only">Menu</span>
+  </label>
+
+  <nav class="wb-nav" id="wb-nav-list" aria-label="Primary">
+    <a href="/" aria-current="page">Home</a>
+    <a href="/beers">Beers</a>
+    <a href="/the-brewery">The Brewery</a>
+    <a href="/taprooms">Taprooms</a>
+  </nav>
+</div>
