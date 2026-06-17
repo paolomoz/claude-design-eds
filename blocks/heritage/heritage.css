@@ -1,6 +1,6 @@
-/* heritage — editorial spread, lifted verbatim from the prototype's
-   [data-section="heritage"] + .ds-heritage-* rules, scoped under .heritage.
-   On-dark section: text colors are scoped to the block (#41). */
+/* heritage — editorial spread, lifted from the prototype's heritage section
+   (the archival photo + giant year + prose + ghost CTA), scoped under .heritage.
+   On-dark section: text colors scoped to the block (#41). */
 
 .heritage {
   background: var(--brand-black);
@@ -9,15 +9,28 @@
   border-block: 1px solid var(--hairline);
 }
 
-/* Content constrained to --maxw; the black background bleeds full-width (#74). */
+/* full-bleed black background; content constrained + centered (#74) */
 .heritage .wrap {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 0 24px;
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
   gap: var(--section-pad-desktop);
   align-items: center;
+}
+
+.heritage .heritage-photo {
+  margin: 0;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+
+.heritage .heritage-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .heritage .heritage-text {
@@ -27,6 +40,7 @@
 }
 
 .heritage .heritage-eyebrow {
+  font-family: var(--body);
   font-weight: 600;
   font-size: 0.8125rem;
   letter-spacing: 0.18em;
@@ -46,9 +60,7 @@
 }
 
 .heritage .heritage-prose {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  font-family: var(--body);
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.6;
@@ -56,23 +68,15 @@
   max-width: 60ch;
 }
 
-.heritage .heritage-prose p {
-  margin: 0;
-}
+.heritage .heritage-prose p + p { margin-top: 1em; }
 
-@media (width <= 1023px) {
-  .heritage {
-    padding-inline: var(--section-pad-tablet);
-  }
+.heritage .heritage-cta a.btn-secondary { align-self: flex-start; }
+
+@media (width <= 900px) {
+  .heritage { padding: 64px var(--section-pad-mobile); }
 
   .heritage .wrap {
     grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
-@media (width <= 640px) {
-  .heritage {
-    padding-inline: var(--section-pad-mobile);
+    gap: var(--space-xl);
   }
 }

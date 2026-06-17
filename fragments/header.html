@@ -1,49 +1,53 @@
 <style>
-  header.header { display: block; }
+  /* The header overlays the hero (the prototype's "overlay-on-hero"): a fixed
+     yellow promo strip + a transparent dark-scrim nav that fades to clear, so
+     the hero photo shows through it and it's invisible over the black sections. */
+  header.header {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+  }
 
   .wbb-promo {
     background: var(--brand-yellow);
     color: var(--brand-black);
     text-align: center;
-    font-family: var(--body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    padding: 8px var(--section-pad-mobile);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    padding: 8px var(--section-pad-desktop);
   }
 
   .wbb-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 24px;
-    background: var(--brand-black);
-    padding: 14px clamp(24px, 4vw, 48px);
+    background: linear-gradient(to bottom, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 0%) 100%);
+    color: var(--surface-white);
+    padding: 14px var(--section-pad-desktop);
   }
   .wbb-wordmark {
-    display: inline-flex;
+    display: flex;
     align-items: baseline;
     gap: 10px;
     color: var(--surface-white);
     font-family: var(--display);
+    font-weight: 700;
     font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
   .wbb-wordmark .wbb-est {
     color: var(--brand-yellow);
-    font-family: var(--body);
     font-size: 0.6875rem;
-    font-weight: 700;
     letter-spacing: 0.16em;
   }
-  .wbb-nav {
-    margin-left: auto;
-    display: flex;
-    gap: 28px;
-  }
+  .wbb-nav { display: flex; gap: 28px; align-items: center; }
   .wbb-nav a {
     color: var(--surface-white);
     font-family: var(--body);
@@ -57,9 +61,9 @@
   .wbb-nav a:hover,
   .wbb-nav a[aria-current="page"] { border-bottom-color: var(--brand-yellow); }
 
-  .wbb-burger { display: none; }
-
   @media (max-width: 640px) {
+    .wbb-promo { padding: 8px var(--section-pad-mobile); }
+    .wbb-header { padding: 12px var(--section-pad-mobile); }
     .wbb-nav { display: none; }
   }
 </style>

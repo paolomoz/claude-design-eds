@@ -4,49 +4,57 @@
     background: var(--brand-black);
     color: var(--surface-white);
     margin-top: 0;
+    padding: 64px var(--section-pad-desktop) 32px;
   }
   .wbb-footer-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 56px clamp(24px, 4vw, 48px) 32px;
+    gap: var(--space-2xl);
+    margin-bottom: 64px;
   }
   .wbb-footer-col h3 {
     color: var(--brand-yellow);
     font-family: var(--display);
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin: 0 0 var(--space-md);
   }
-  .wbb-footer-col ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .wbb-footer-col ul { list-style: none; padding: 0; margin: 0; }
+  .wbb-footer-col li { margin-bottom: var(--space-sm); }
   .wbb-footer-col a {
     font-family: var(--body);
     font-size: 0.875rem;
-    color: rgb(255 255 255 / 80%);
+    color: var(--surface-white);
+    border-bottom: 1px solid transparent;
   }
-  .wbb-footer-col a:hover { color: var(--brand-yellow); }
+  .wbb-footer-col a:hover { border-bottom-color: var(--brand-yellow); }
 
   .wbb-footer-bottom {
+    padding-top: var(--space-lg);
     border-top: 1px solid var(--hairline);
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 20px clamp(24px, 4vw, 48px);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: var(--space-lg);
     font-family: var(--body);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
     color: var(--neutral-grey);
   }
-  .wbb-footer-bottom a { color: var(--brand-yellow); }
-  .wbb-footer-bottom .wbb-est-mark { letter-spacing: 0.1em; text-transform: uppercase; }
+  .wbb-footer-bottom .wbb-footer-inquiry a { color: var(--surface-white); }
+  .wbb-footer-bottom .wbb-est-mark {
+    color: var(--brand-yellow);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
 
   @media (max-width: 640px) {
-    .wbb-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    footer.footer { padding: 48px var(--section-pad-mobile) 24px; }
+    .wbb-footer-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
   }
 </style>
 
@@ -66,6 +74,6 @@
 </div>
 <div class="wbb-footer-bottom">
   <span>© 2026 Wasatch Back Beerworks LLC. All rights reserved.</span>
-  <span>Inquiries: <a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></span>
+  <span class="wbb-footer-inquiry">Inquiries: <a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></span>
   <span class="wbb-est-mark">Est 1996 · Heber Valley, Utah</span>
 </div>

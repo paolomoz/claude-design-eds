@@ -46,6 +46,7 @@
   position: relative;
   padding: 96px var(--section-pad-desktop);
   min-height: 70vh;
+  height: 100%; /* fill the grid-stretched half so both halves bottom-align (#9) */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

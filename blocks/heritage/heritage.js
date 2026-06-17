@@ -1,20 +1,16 @@
 /**
  * heritage — brand-anchor editorial spread (prototype data-section="heritage").
  *
- * A black, 2-column editorial spread. LEFT: an eyebrow above a GIANT display
- * numeral (the founding year, authored as <h2>1996</h2>). RIGHT: brewery-origin
- * prose paragraphs. Content constrained to --maxw.
+ * A black 2-column spread: LEFT a B&W archival photo (figure, 16/11), RIGHT a
+ * text column holding the eyebrow, a GIANT founding-year numeral, prose, and a
+ * ghost CTA. Lifted from the prototype's [data-section="heritage"] / .ds-* rules.
  *
  * Authoring rows (classified by CONTENT, never by index):
- *   row 1   eyebrow line  ("The early days")
- *   row 2   <h2>1996</h2> — the giant year numeral (heading element)
- *   rows 3+ one prose paragraph each
+ *   eyebrow line ("The early days") · <h2>1996</h2> · prose paragraph(s) ·
+ *   a CTA link (<em><a>…→</a></em>) · a <picture>/<img> (archival photo)
  *
- * Decode is a cell-level cascade collector (#71): iterate :scope>div>div cells;
- * push child elements, else synth a <p> from the cell's text. Then classify:
- *   - the first heading (h1..h6) is the giant year
- *   - the short text run BEFORE the year is the eyebrow
- *   - everything else is prose
+ * Decode is a cell-level cascade collector (#71); media matches `picture, img`
+ * (#72); the year heading is unwrapped before cloning (#55).
  */
 
 function collectNodes(block) {
@@ -32,63 +28,64 @@ function collectNodes(block) {
   return out.length ? out : [...block.children];
 }
 
-function isHeading(el) {
-  return el.matches('h1, h2, h3, h4, h5, h6') || el.querySelector('h1, h2, h3, h4, h5, h6');
-}
+const matchOrFind = (el, sel) => (el.matches(sel) ? el : el.querySelector(sel));
 
 export default async function decorate(block) {
   const nodes = collectNodes(block);
   if (!nodes.length) return;
 
-  // The giant year is the first heading; the eyebrow is the text run that
-  // precedes it; everything after the year is prose.
-  const yearIdx = nodes.findIndex(isHeading);
-  const yearNode = yearIdx >= 0 ? nodes[yearIdx] : null;
+  const media = nodes.map((n) => matchOrFind(n, 'picture, img')).find(Boolean);
+  const link = nodes.map((n) => matchOrFind(n, 'a')).find(Boolean);
+  const yearSrc = nodes.find((n) => matchOrFind(n, 'h1, h2, h3, h4, h5, h6'));
+  const textRows = nodes.filter((n) => n !== yearSrc && n.textContent.trim()
+    && !matchOrFind(n, 'a') && !matchOrFind(n, 'picture, img'));
+  const eyebrowNode = textRows[0] || null;
+  const proseNodes = textRows.slice(1);
 
-  const before = yearIdx >= 0 ? nodes.slice(0, yearIdx) : [];
-  const after = yearIdx >= 0 ? nodes.slice(yearIdx + 1) : nodes;
+  // LEFT — archival photo.
+  const figure = document.createElement('figure');
+  figure.className = 'heritage-photo';
+  if (media) figure.append(matchOrFind(media, 'picture, img'));
 
-  const eyebrowNode = before.find((n) => n.textContent.trim()) || null;
-  const proseNodes = after.filter((n) => n.textContent.trim());
-
-  const wrap = document.createElement('div');
-  wrap.className = 'wrap';
-
-  // LEFT column — eyebrow + giant year numeral.
-  const left = document.createElement('div');
-  left.className = 'heritage-text';
+  // RIGHT — text column.
+  const text = document.createElement('div');
+  text.className = 'heritage-text';
 
   if (eyebrowNode) {
     const eyebrow = document.createElement('p');
     eyebrow.className = 'heritage-eyebrow';
     eyebrow.textContent = eyebrowNode.textContent.trim();
-    left.append(eyebrow);
+    text.append(eyebrow);
   }
-
-  if (yearNode) {
-    // Unwrap the cell's own heading so we don't double it (#55).
-    const inner = yearNode.matches('h1, h2, h3, h4, h5, h6')
-      ? yearNode
-      : yearNode.querySelector('h1, h2, h3, h4, h5, h6') || yearNode;
+  if (yearSrc) {
+    const inner = matchOrFind(yearSrc, 'h1, h2, h3, h4, h5, h6') || yearSrc;
     const year = document.createElement('h2');
     year.className = 'heritage-year';
     year.append(...inner.childNodes);
-    left.append(year);
+    text.append(year);
+  }
+  if (proseNodes.length) {
+    const prose = document.createElement('div');
+    prose.className = 'heritage-prose';
+    proseNodes.forEach((n) => {
+      const p = document.createElement('p');
+      if (n.matches('p')) p.append(...n.childNodes);
+      else p.textContent = n.textContent.trim();
+      prose.append(p);
+    });
+    text.append(prose);
+  }
+  if (link) {
+    // clone as-is; the EDS button decorator turns <em><a> into .btn.btn-secondary.
+    const actions = document.createElement('div');
+    actions.className = 'heritage-cta';
+    actions.append(link.closest('em') || link);
+    text.append(actions);
   }
 
-  // RIGHT column — prose.
-  const right = document.createElement('div');
-  right.className = 'heritage-prose';
-  proseNodes.forEach((n) => {
-    if (n.matches('p')) {
-      right.append(n);
-    } else {
-      const p = document.createElement('p');
-      p.append(...n.childNodes);
-      right.append(p);
-    }
-  });
-
-  wrap.append(left, right);
+  const wrap = document.createElement('div');
+  wrap.className = 'wrap';
+  if (media) wrap.append(figure);
+  wrap.append(text);
   block.replaceChildren(wrap);
 }

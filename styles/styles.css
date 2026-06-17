@@ -16,10 +16,12 @@
   --neutral-grey: #7a7a7a;
   --hairline: #2a2a2a;
 
-  /* type */
+  /* type — the prototype loads ONLY Lilita One; its --display ("Bellfort"→
+     "Bebas Neue") and --body ("Public Sans") are NOT loaded there, so it renders
+     them as system-ui. Match that (don't ship fonts the prototype doesn't use). */
   --hero: "Lilita One", "Bowlby One", impact, sans-serif;
-  --display: "Bebas Neue", "Bellfort", system-ui, sans-serif; /* Bellfort is proprietary — not self-hosted */
-  --body: "Public Sans", arial, sans-serif;
+  --display: "Bebas Neue", "Oswald", system-ui, sans-serif; /* Bellfort is proprietary; Bebas Neue is the prototype's intended fallback */
+  --body: system-ui, -apple-system, "Segoe UI", roboto, helvetica, arial, sans-serif; /* prototype's Public Sans isn't loaded → system */
 
   /* spacing */
   --space-xs: 4px;
@@ -60,24 +62,6 @@
   src: url("/styles/fonts/bebas-neue.woff2") format("woff2");
 }
 
-@font-face {
-  font-family: "Public Sans";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/styles/fonts/public-sans.woff2") format("woff2");
-}
-
-/* Metric-matched fallback for the body face (Public Sans vs Arial) — zero CLS. */
-@font-face {
-  font-family: arial;
-  src: local("Arial");
-  size-adjust: 100%;
-  ascent-override: 94%;
-  descent-override: 24%;
-  line-gap-override: 0%;
-}
-
 /* ===== reset ===== */
 *,
 *::before,
@@ -86,14 +70,12 @@
 * { margin: 0; }
 
 body {
-  font-family: arial, sans-serif;
+  font-family: var(--body);
   color: var(--text-near-black);
   background: var(--surface-white);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-
-body.session { font-family: var(--body); }
 
 h1,
 h2,
@@ -161,8 +143,9 @@ a.btn {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--display);
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   padding: 14px 28px 12px;
   border: 1px solid transparent;

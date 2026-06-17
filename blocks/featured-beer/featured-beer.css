@@ -12,12 +12,9 @@
   border-bottom: 1px solid var(--hairline);
 }
 
-/* Content constrained to --maxw; the black background bleeds full-width (#74). */
-.featured-beer .wrap {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 24px;
-}
+/* The prototype's lineup spans the full section width (no max-width container) —
+   only the section padding insets it. Cards are full-bleed within the band. */
+.featured-beer .wrap { width: 100%; }
 
 .featured-beer .section-eyebrow {
   font-weight: 600;
