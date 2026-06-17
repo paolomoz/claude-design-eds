@@ -1,0 +1,229 @@
+/*
+ * guide-grid — "Your guide to JFK." section.
+ * CSS lifted verbatim from the home-B-cinematic prototype (section.band +
+ * .band__head/.display-head/.band__link + .guide/.guide-card), scoped under
+ * .guide-grid. Global tokens + fonts live in styles/styles.css.
+ */
+
+/* ============= SECTION SHELL (.band) ============= */
+.guide-grid {
+  padding: var(--section-pad) 0;
+}
+
+/* Recreate the prototype's centered max-width container (#13). The section
+   background (if any) stays full-bleed; the CONTENT is wrapped. */
+.guide-grid .wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.guide-grid .guide-grid__head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 44px;
+}
+
+.guide-grid .guide-grid__title {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.028em;
+  margin: 0;
+  overflow: hidden;
+}
+
+.guide-grid .guide-grid__title em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.guide-grid .guide-grid__all {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  transition: gap 200ms var(--ease-out-quart);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.guide-grid .guide-grid__all:hover {
+  gap: 10px;
+  text-decoration: none;
+}
+
+.guide-grid .guide-grid__all::after {
+  content: "→";
+  transition: transform 200ms var(--ease-out-quart);
+}
+
+.guide-grid .guide-grid__all:hover::after {
+  transform: translateX(2px);
+}
+
+/* ============= GUIDE GRID ============= */
+.guide-grid .guide-grid__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 14px;
+}
+
+.guide-grid .guide-grid__card {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--primary-deep); /* fallback when an image cell is empty */
+  aspect-ratio: 3 / 2.2;
+  cursor: pointer;
+  transition: transform 380ms var(--ease-out-quart);
+  text-decoration: none;
+  color: #fff;
+}
+
+.guide-grid .guide-grid__card:hover {
+  transform: translateY(-3px);
+  text-decoration: none;
+}
+
+.guide-grid .guide-grid__card--hero {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.guide-grid .guide-grid__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.guide-grid .guide-grid__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out-quart);
+}
+
+.guide-grid .guide-grid__card:hover .guide-grid__media img {
+  transform: scale(1.05);
+}
+
+.guide-grid .guide-grid__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(9 9 11 / 0%) 30%, rgb(1 21 101 / 84%) 100%);
+  z-index: -1;
+}
+
+.guide-grid .guide-grid__body {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 24px;
+  color: #fff;
+}
+
+.guide-grid .guide-grid__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgb(255 255 255 / 85%);
+  font-weight: 600;
+}
+
+.guide-grid .guide-grid__card-title {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.012em;
+  margin: 0;
+}
+
+.guide-grid .guide-grid__card--hero .guide-grid__card-title {
+  font-size: 56px;
+  max-width: 380px;
+  line-height: 0.92;
+}
+
+.guide-grid .guide-grid__cta {
+  margin-top: 10px;
+  display: inline-block;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: #fff;
+  font-weight: 600;
+}
+
+.guide-grid .guide-grid__cta::after {
+  content: " →";
+  transition: transform 200ms var(--ease-out-quart);
+  display: inline-block;
+}
+
+.guide-grid .guide-grid__card:hover .guide-grid__cta::after {
+  transform: translateX(4px);
+}
+
+/* ============= RESPONSIVE (lifted from prototype) ============= */
+@media (width <= 1024px) {
+  .guide-grid .guide-grid__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+
+  .guide-grid .guide-grid__card--hero {
+    grid-column: span 2;
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (width <= 640px) {
+  .guide-grid .wrap {
+    padding: 0 20px;
+  }
+
+  .guide-grid .guide-grid__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .guide-grid .guide-grid__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-grid .guide-grid__card--hero {
+    grid-column: span 1;
+  }
+}
+
+/* ============= REDUCED MOTION ============= */
+@media (prefers-reduced-motion: reduce) {
+  .guide-grid .guide-grid__card,
+  .guide-grid .guide-grid__media img,
+  .guide-grid .guide-grid__cta::after,
+  .guide-grid .guide-grid__all,
+  .guide-grid .guide-grid__all::after {
+    transition: none !important;
+  }
+}

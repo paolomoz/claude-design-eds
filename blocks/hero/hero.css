@@ -1,37 +1,230 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * hero — full-bleed 100vh cinematic hero.
+ * CSS lifted verbatim from the home-B-cinematic prototype's .hero-marquee
+ * (lines 87-134) and scoped under .hero. The clip-path letter-reveal animation
+ * is dropped (static); the live-pulse on status dots is kept but disabled under
+ * prefers-reduced-motion. Global tokens + button system live in styles.css.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  height: 100vh;
+  min-height: 760px;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+.hero .hero-bg {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: -3;
+
+  /* CSS fallback for an empty/absent authored image cell. */
+  background: linear-gradient(160deg, var(--primary-deep) 0%, var(--primary) 100%);
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-bg img,
+.hero .hero-bg picture {
   width: 100%;
   height: 100%;
 }
 
-@media (width >= 900px) {
+.hero .hero-bg img {
+  object-fit: cover;
+  object-position: center 32%;
+  transform: scale(1.06);
+}
+
+.hero .hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(
+    180deg,
+    rgb(1 21 101 / 55%) 0%,
+    rgb(1 21 101 / 15%) 36%,
+    rgb(1 21 101 / 0%) 60%,
+    rgb(1 21 101 / 55%) 100%
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgb(1 21 101 / 35%) 0%, rgb(1 21 101 / 55%) 100%);
+  pointer-events: none;
+}
+
+.hero .hero-content {
+  position: relative;
+  height: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 132px 32px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* eyebrow */
+.hero .hero-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+  color: rgb(255 255 255 / 85%);
+  margin: 0 0 28px;
+  font-weight: 600;
+}
+
+/* headline — the single page <h1>. The full place name is the accessible
+   heading; the giant J/F/K monogram is decorative. */
+.hero .hero-title {
+  margin: 0;
+}
+
+.hero .hero-monogram {
+  display: flex;
+  gap: 0;
+  align-items: flex-end;
+}
+
+.hero .hero-monogram span {
+  display: inline-block;
+  font-family: var(--font);
+  font-weight: 700;
+  color: #fff;
+  font-size: clamp(160px, 28vw, 360px);
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+}
+
+/* full place name — visually subordinate to the monogram but a real heading
+   for screen readers and SEO. */
+.hero .hero-title-text {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: clamp(15px, 1.6vw, 20px);
+  font-weight: 600;
+  color: rgb(255 255 255 / 92%);
+  max-width: 720px;
+}
+
+/* status strip */
+.hero .hero-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px 28px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(255 255 255 / 34%);
+  max-width: 920px;
+}
+
+.hero .hero-status-label {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: rgb(255 255 255 / 85%);
+  font-weight: 600;
+}
+
+.hero .hero-status-codes {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  color: #fff;
+  font-weight: 600;
+}
+
+.hero .hero-status-codes span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero .hero-status-codes span::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: #4ade80;
+  animation: hero-live-pulse 1.6s ease-in-out infinite;
+}
+
+.hero .hero-status-codes span.warn::before {
+  background: #facc15;
+  animation-name: hero-warn-pulse;
+}
+
+@keyframes hero-live-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(74 222 128 / 60%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgb(74 222 128 / 0%);
+  }
+}
+
+@keyframes hero-warn-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(250 204 21 / 60%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgb(250 204 21 / 0%);
+  }
+}
+
+/* ============= RESPONSIVE (lifted from the prototype) ============= */
+@media (width <= 1024px) {
   .hero {
-    padding: 40px 32px;
+    height: 80vh;
+    min-height: 620px;
+  }
+
+  .hero .hero-monogram span {
+    font-size: clamp(96px, 28vw, 220px);
+  }
+}
+
+@media (width <= 640px) {
+  .hero {
+    height: 70vh;
+    min-height: 540px;
+  }
+
+  .hero .hero-content {
+    padding: 100px 20px 0;
+  }
+
+  .hero .hero-monogram span {
+    font-size: clamp(88px, 32vw, 180px);
+  }
+
+  .hero .hero-status-codes {
+    font-size: 14px;
+    gap: 12px;
+  }
+}
+
+/* ============= REDUCED MOTION ============= */
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-status-codes span::before {
+    animation: none !important;
   }
 }

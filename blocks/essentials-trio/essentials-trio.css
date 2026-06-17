@@ -1,0 +1,218 @@
+/*
+ * essentials-trio — "Essentials at the gate."
+ * Lifted from home-B-cinematic.html .trio-band / .trio (CSS lines 242-297).
+ * The section background stays full-bleed; the .wrap recreates the
+ * prototype's centered max-width content column.
+ * Letter-by-letter blur-in split animation dropped — rendered static.
+ */
+
+.essentials-trio {
+  padding: var(--section-pad) 0;
+  background: var(--bg);
+}
+
+.essentials-trio .wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---- head: two-line display + amenities link ---- */
+.essentials-trio .band-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 44px;
+}
+
+.essentials-trio .display-head {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 112px);
+  line-height: 0.9;
+  letter-spacing: -0.028em;
+}
+
+.essentials-trio .display-head .line {
+  display: block;
+}
+
+.essentials-trio .display-head em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.essentials-trio .band-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--primary);
+  transition: gap 200ms var(--ease-out-quart);
+}
+
+.essentials-trio .band-link:hover {
+  gap: 10px;
+  text-decoration: none;
+}
+
+.essentials-trio .band-link::after {
+  content: "→";
+  transition: transform 200ms var(--ease-out-quart);
+}
+
+.essentials-trio .band-link:hover::after {
+  transform: translateX(2px);
+}
+
+/* ---- 3-up tall image-card grid ---- */
+.essentials-trio .trio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+.essentials-trio .trio-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 4 / 4.4;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  transition: transform 380ms var(--ease-out-quart);
+}
+
+.essentials-trio .trio-card:hover {
+  transform: translateY(-3px);
+}
+
+.essentials-trio .trio-card img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 800ms var(--ease-out-quart);
+}
+
+.essentials-trio .trio-card:hover img {
+  transform: scale(1.06);
+}
+
+/* fallback tint when an image cell is empty */
+.essentials-trio .trio-card:not(:has(img))::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--primary-deep);
+}
+
+.essentials-trio .trio-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgb(9 9 11 / 0%) 40%, rgb(9 9 11 / 85%) 100%);
+}
+
+.essentials-trio .trio-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 30px 32px;
+  color: #fff;
+}
+
+.essentials-trio .trio-num {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 85%);
+}
+
+.essentials-trio .trio-title {
+  overflow: hidden;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(64px, 8vw, 112px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.essentials-trio .trio-copy {
+  max-width: 320px;
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 92%);
+}
+
+.essentials-trio .trio-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: gap 200ms var(--ease-out-quart);
+}
+
+.essentials-trio .trio-link:hover {
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.essentials-trio .trio-link::after {
+  content: "→";
+}
+
+@media (width <= 1024px) {
+  .essentials-trio .trio {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width <= 640px) {
+  .essentials-trio .wrap {
+    padding: 0 20px;
+  }
+
+  .essentials-trio .band-head {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .essentials-trio .trio {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .essentials-trio .trio-card,
+  .essentials-trio .trio-card img,
+  .essentials-trio .trio-link,
+  .essentials-trio .band-link,
+  .essentials-trio .band-link::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,218 @@
+/* ============= TERMINALS SIGNAGE BAND =============
+   Lifted verbatim from the stardust prototype
+   (home-B-cinematic.html, .terminals-band + .terminals-board),
+   scoped under .terminal-waits. Split-flap / count-up animation
+   dropped — numbers render statically. The deep-blue band is
+   full-bleed; content is wrapped in a max-width .wrap. */
+
+.terminal-waits {
+  background: var(--primary-deep);
+  color: #fff;
+  padding: 96px 0 var(--section-pad);
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-waits::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 80% at 0% 0%, rgb(0 69 255 / 32%), transparent 55%),
+    radial-gradient(70% 90% at 100% 100%, rgb(2 45 183 / 42%), transparent 60%);
+}
+
+.terminal-waits .wrap {
+  position: relative;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.terminal-waits .terminal-waits__head {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+}
+
+.terminal-waits .terminal-waits__head h2 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.terminal-waits .terminal-waits__head .meta {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: rgb(255 255 255 / 78%);
+  font-weight: 600;
+}
+
+.terminal-waits .terminal-waits__head .meta b {
+  color: #fff;
+}
+
+.terminal-waits .terminals-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 48px;
+}
+
+.terminal-waits .term-cell {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgb(255 255 255 / 16%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.terminal-waits .term-cell:last-child {
+  border-bottom: 0;
+}
+
+.terminal-waits .term-cell .tno {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(80px, 9vw, 128px);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-waits .term-cell .tlabel {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: rgb(255 255 255 / 60%);
+  font-weight: 600;
+}
+
+.terminal-waits .term-cell .tlabel b {
+  color: #fff;
+}
+
+.terminal-waits .term-cell .wait {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.terminal-waits .term-cell .wait .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: #4ade80;
+  display: inline-block;
+  align-self: center;
+  animation: terminal-waits-live-pulse 1.6s ease-in-out infinite;
+}
+
+.terminal-waits .term-cell.warn .wait .dot {
+  background: #facc15;
+  animation-name: terminal-waits-warn-pulse;
+}
+
+.terminal-waits .term-cell .wait .v {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 36px;
+  color: #fff;
+  line-height: 1;
+}
+
+.terminal-waits .term-cell .wait .u {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgb(255 255 255 / 70%);
+}
+
+.terminal-waits .term-cell .tsa {
+  font-family: var(--font);
+  font-size: 13px;
+  color: rgb(255 255 255 / 78%);
+}
+
+.terminal-waits .term-cell .tsa b {
+  color: #fff;
+  font-weight: 700;
+}
+
+.terminal-waits .terminal-waits__foot {
+  position: relative;
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: rgb(255 255 255 / 62%);
+  font-weight: 600;
+}
+
+.terminal-waits .terminal-waits__foot a {
+  color: #fff;
+}
+
+@keyframes terminal-waits-live-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(74 222 128 / 60%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgb(74 222 128 / 0%);
+  }
+}
+
+@keyframes terminal-waits-warn-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(250 204 21 / 60%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgb(250 204 21 / 0%);
+  }
+}
+
+@media (width >= 900px) {
+  .terminal-waits .terminals-board {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .terminal-waits .term-cell {
+    border-bottom: 0;
+    border-right: 1px solid rgb(255 255 255 / 16%);
+  }
+
+  .terminal-waits .term-cell:last-child {
+    border-right: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-waits .term-cell .wait .dot {
+    animation: none;
+  }
+}

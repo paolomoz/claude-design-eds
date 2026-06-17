@@ -1,0 +1,121 @@
+/*
+ * alerts — full-bleed blue advisory band.
+ * CSS lifted verbatim from the home-B-cinematic prototype (.alerts, lines
+ * 299-323), scoped under .alerts. Global tokens + the .btn button system
+ * live in styles/styles.css — referenced, not redefined. The band background
+ * stays full-bleed; the content is wrapped to the page max-width.
+ */
+
+.alerts {
+  position: relative;
+  isolation: isolate;
+  background: var(--primary);
+  color: #fff;
+  padding: var(--section-pad) 0;
+  overflow: hidden;
+}
+
+.alerts::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 100% at 100% 0%, rgb(2 45 183 / 70%), transparent 55%),
+    radial-gradient(60% 80% at 0% 100%, rgb(1 21 101 / 55%), transparent 60%);
+  z-index: -1;
+}
+
+/* centered max-width wrap — band background bleeds full-width, content does not */
+.alerts .wrap {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.alerts .alerts__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  position: relative;
+}
+
+.alerts .alerts__eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: rgb(255 255 255 / 82%);
+  font-weight: 600;
+}
+
+.alerts h2 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(44px, 5.5vw, 72px);
+  line-height: 0.98;
+  margin: 16px 0 18px;
+  letter-spacing: -0.018em;
+  max-width: 760px;
+}
+
+.alerts h2 em {
+  font-style: normal;
+  color: rgb(255 255 255 / 65%);
+}
+
+.alerts p {
+  color: rgb(255 255 255 / 92%);
+  font-size: 17px;
+  line-height: 1.55;
+  max-width: 580px;
+}
+
+.alerts .ctas {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.alerts__numeral {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.alerts__numeral .big {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(140px, 26vw, 320px);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.alerts__numeral .label {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: rgb(255 255 255 / 78%);
+  font-weight: 600;
+}
+
+.alerts__numeral small {
+  color: rgb(255 255 255 / 78%);
+  font-size: 14px;
+  max-width: 320px;
+  display: block;
+}
+
+/* tablet/desktop — restore the prototype's two-column layout */
+@media (width >= 900px) {
+  .alerts .alerts__inner {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+  }
+}

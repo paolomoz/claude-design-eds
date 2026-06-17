@@ -1,0 +1,148 @@
+<style>
+  .jfk-nav {
+    --jfk-primary: #0045ff;
+    --jfk-text: #09090b;
+    --jfk-text-body: #0f172a;
+    --jfk-surface: #eff9ff;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 96%);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid #e5e7eb;
+    font-family: "Helvetica Now for PANYNJ", arial, sans-serif;
+  }
+
+  .jfk-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 32px;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+
+  .jfk-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .jfk-nav__logo .jfk {
+    font-family: "Helvetica Now for PANYNJ", arial, sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--jfk-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .jfk-nav__logo .panynj {
+    font-family: "Sharp Grotesk Semibold", arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 10px;
+    line-height: 1.15;
+    color: var(--jfk-text-body);
+    letter-spacing: 0.08em;
+    max-width: 90px;
+    padding-left: 14px;
+    border-left: 1px solid #d1d5db;
+  }
+
+  .jfk-nav__list {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: "Sharp Grotesk Semibold", arial, sans-serif;
+  }
+
+  .jfk-nav__list a {
+    background: transparent;
+    border: 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--jfk-text);
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: color 200ms ease, background 200ms ease;
+  }
+
+  .jfk-nav__list a:hover {
+    background: var(--jfk-surface);
+    color: var(--jfk-primary);
+    text-decoration: none;
+  }
+
+  .jfk-nav__utility {
+    display: flex;
+    gap: 4px;
+    padding-left: 12px;
+    margin-left: 4px;
+    border-left: 1px solid #e5e7eb;
+  }
+
+  .jfk-nav .icon-btn {
+    width: 40px;
+    height: 40px;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    color: var(--jfk-text);
+    text-decoration: none;
+    transition: color 200ms ease, background 200ms ease;
+  }
+
+  .jfk-nav .icon-btn:hover {
+    background: var(--jfk-surface);
+    color: var(--jfk-primary);
+  }
+
+  .jfk-nav .icon-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .jfk-nav__list a:nth-child(3),
+    .jfk-nav__list a:nth-child(4) { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .jfk-nav__inner { padding: 12px 20px; }
+    .jfk-nav__list a { display: none; }
+  }
+</style>
+
+<div class="jfk-nav">
+  <div class="jfk-nav__inner">
+    <a class="jfk-nav__logo" href="/" aria-label="JFK Airport — home">
+      <span class="jfk">JFK</span>
+      <span class="panynj">Port Authority<br/>NY · NJ</span>
+    </a>
+    <nav class="jfk-nav__list" aria-label="Main">
+      <a href="/flights">Flights</a>
+      <a href="/transport-parking">Transport &amp; Parking</a>
+      <a href="/explore">Explore JFK</a>
+      <a href="/dine-shop-relax">Dine · Shop · Relax</a>
+    </nav>
+    <div class="jfk-nav__utility">
+      <a class="icon-btn" href="/accessibility" aria-label="Accessibility">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M5 9h14"/><path d="M12 7v10"/><path d="M9 11l-3 7"/><path d="M15 11l3 7"/></svg>
+      </a>
+      <a class="icon-btn" href="/search" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+    </div>
+  </div>
+</div>

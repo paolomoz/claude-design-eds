@@ -1,0 +1,142 @@
+<style>
+  .site-footer {
+    --jfk-primary-deep: #011565;
+    --jfk-display: "Sharp Grotesk Semibold", arial, sans-serif;
+    --jfk-font: "Helvetica Now for PANYNJ", arial, sans-serif;
+
+    background: var(--jfk-primary-deep);
+    color: #fff;
+    padding: 96px 0 36px;
+    position: relative;
+    overflow: hidden;
+    font-family: var(--jfk-font);
+  }
+
+  .site-footer .wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 64px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-footer__brand {
+    font-family: var(--jfk-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 92%);
+    font-weight: 600;
+  }
+
+  .site-footer__addr {
+    color: rgb(255 255 255 / 70%);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 24px;
+  }
+
+  .site-footer__addr b {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 16px;
+  }
+
+  .footer-grid a {
+    color: rgb(255 255 255 / 82%);
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    padding: 4px 0;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .footer-grid a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .site-footer__legal {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid rgb(255 255 255 / 18%);
+    color: rgb(255 255 255 / 62%);
+    font-size: 13px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-footer__legal a {
+    color: rgb(255 255 255 / 82%);
+    text-decoration: none;
+  }
+
+  .site-footer__wordmark {
+    font-family: var(--jfk-font);
+    font-weight: 700;
+    font-size: clamp(96px, 16vw, 220px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: rgb(255 255 255 / 10%);
+    position: absolute;
+    right: -16px;
+    bottom: -28px;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer__inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .site-footer .wrap { padding: 0 20px; }
+  }
+</style>
+
+<div class="site-footer">
+  <div class="site-footer__wordmark" aria-hidden="true">JFK</div>
+  <div class="wrap site-footer__inner">
+    <div>
+      <div class="site-footer__brand">The Port Authority<br/>of New York and<br/>New Jersey</div>
+      <p class="site-footer__addr"><b>4 World Trade Center</b><br/>150 Greenwich Street<br/>New York, NY 10007<br/><br/>+1 (212) 435-7000</p>
+    </div>
+    <nav aria-label="Footer" class="footer-grid">
+      <a href="/accessibility">Accessibility</a>
+      <a href="/air-cargo">Air Cargo</a>
+      <a href="/alerts">Alerts &amp; Advisories</a>
+      <a href="/contact">Contact Us</a>
+      <a href="/faq">FAQ</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/panynj-airports">PANYNJ Airports</a>
+      <a href="/information">Information</a>
+      <a href="/redevelopment">JFK Redevelopment</a>
+      <a href="/lost-and-found">Lost and Found</a>
+      <a href="/press">Press</a>
+      <a href="/investor-relations">Investor Relations</a>
+    </nav>
+  </div>
+  <div class="wrap site-footer__legal">
+    <span>© 2001–2026 The Port Authority of New York and New Jersey. All rights reserved.</span>
+    <span><a href="/disclaimer">Website Disclaimer</a> · <a href="/privacy">Privacy Statement</a></span>
+  </div>
+</div>
