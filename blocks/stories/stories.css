@@ -1,0 +1,108 @@
+/*
+ * stories block — 2-up card strip, centered head.
+ * CSS lifted from the prototype `.ds-stories` rules (home-B3-proposed.html,
+ * lines 233-248), scoped under `.stories`. BEM `__`/`--` collapsed to kebab-case
+ * to satisfy stylelint-config-standard's selector-class-pattern. The mouse-pan
+ * choreography is dropped: the track renders as a static centered strip (mobile
+ * stacks per the prototype's 767px breakpoint). Global tokens + button system
+ * live in styles/styles.css.
+ */
+
+/* The section background stays full-bleed (plain --c-bg); only the CONTENT is
+   wrapped to the prototype max-width. */
+main .section.stories-container,
+.stories {
+  background: var(--c-bg);
+}
+
+.stories {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--section-pad);
+}
+
+/* Section max-width wrap (#37): max-width + auto margins + side padding. */
+.stories .stories-wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.stories .stories-head {
+  margin-bottom: var(--s-xl);
+  text-align: center;
+}
+
+.stories .stories-head h2 {
+  color: var(--c-text);
+}
+
+/* Static centered strip — the prototype's mouse-pan track, minus the transform. */
+.stories .stories-track {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  gap: var(--grid-gap);
+}
+
+.stories .stories-card {
+  display: grid;
+  flex: 0 0 480px;
+  grid-template-columns: 1fr 1fr;
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+}
+
+.stories .stories-card.dark {
+  background: var(--c-cinema-substrate);
+  color: var(--c-knock);
+}
+
+/* Warm-gradient media backgrounds, carried verbatim from the prototype. */
+.stories .stories-card-media {
+  min-height: 180px;
+  background:
+    radial-gradient(ellipse at 60% 50%, var(--warm-amber), transparent 60%),
+    linear-gradient(135deg, #fae3c8 0%, #d4a36a 100%);
+}
+
+.stories .stories-card.dark .stories-card-media {
+  background:
+    radial-gradient(ellipse at 50% 50%, var(--warm-orange), transparent 60%),
+    linear-gradient(135deg, #2a1408 0%, #150804 100%);
+}
+
+.stories .stories-card-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-xs);
+  padding: var(--card-pad);
+}
+
+/* Card CTAs are the prototype's small button (.ds-btn--sm: height 32, padding 18). */
+.stories .stories-card-actions {
+  margin-top: var(--s-xs);
+}
+
+.stories .stories-card-actions a.btn {
+  align-self: flex-start;
+  height: 32px;
+  padding-inline: 18px;
+}
+
+/* Mobile: stack the cards, collapse each card to a single column (CSS 244-248). */
+@media (width <= 767px) {
+  .stories .stories-track {
+    flex-direction: column;
+    gap: var(--s-md);
+  }
+
+  .stories .stories-card {
+    flex: 1 1 auto;
+    grid-template-columns: 1fr;
+  }
+}

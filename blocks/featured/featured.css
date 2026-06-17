@@ -1,0 +1,114 @@
+/* featured — 2-up feature-card grid.
+   Lifted verbatim from prototype .ds-featured (home-B3-proposed.html, CSS
+   268-297), scoped under .featured. The section background stays full-bleed;
+   the CONTENT is wrapped in a max-width container recreated from .ds-container
+   (proto 169-171). Parallax (CHOREOGRAPHY 4) is dropped — media is a static
+   gradient. Global tokens + button system live in styles/styles.css. */
+
+main .section.featured-container {
+  padding-block: var(--section-pad);
+  background: var(--c-surface);
+}
+
+/* Recreated .ds-container wrap (proto .ds-container). The full-bleed section
+   background is set above; this constrains the CONTENT width. */
+.featured .featured-grid {
+  width: 100%;
+  padding-inline: var(--grid-margin);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--grid-gap);
+}
+
+@media (width >= 1441px) {
+  .featured .featured-grid {
+    max-width: var(--container-max);
+    padding-inline: 0;
+  }
+}
+
+@media (width >= 900px) {
+  .featured .featured-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.featured .feature-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--c-bg);
+  border-radius: var(--r-md);
+}
+
+.featured .feature-card.dark {
+  background: var(--c-cinema-substrate);
+  color: var(--c-knock);
+}
+
+.featured .feature-card-media-wrap {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+/* Static gradient (parallax dropped). */
+.featured .feature-card-media {
+  position: absolute;
+  inset: -10% 0;
+  background:
+    radial-gradient(ellipse at 70% 50%, var(--warm-amber), transparent 55%),
+    radial-gradient(ellipse at 30% 60%, var(--warm-orange), transparent 55%),
+    linear-gradient(135deg, #fae3c8 0%, #b08054 100%);
+}
+
+.featured .feature-card.dark .feature-card-media {
+  background:
+    radial-gradient(ellipse at 40% 50%, var(--warm-amber), transparent 50%),
+    radial-gradient(ellipse at 80% 40%, var(--warm-red), transparent 50%),
+    linear-gradient(135deg, #2a1408 0%, #0a0612 100%);
+}
+
+.featured .feature-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+  padding: var(--s-xl) var(--card-pad);
+}
+
+.featured .feature-card-eyebrow {
+  color: var(--c-text-soft);
+}
+
+.featured .feature-card.dark .feature-card-eyebrow {
+  color: var(--c-knock-soft);
+}
+
+.featured .feature-card-h2 {
+  color: var(--c-text);
+}
+
+.featured .feature-card.dark .feature-card-h2 {
+  color: var(--c-knock);
+}
+
+.featured .feature-card-body {
+  max-width: 50ch;
+  color: var(--c-text-soft);
+}
+
+.featured .feature-card.dark .feature-card-body {
+  color: var(--c-knock-soft);
+}
+
+.featured .feature-card-cta {
+  margin-top: var(--s-md);
+  align-self: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured .feature-card-media {
+    transform: none;
+  }
+}

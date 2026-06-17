@@ -1,0 +1,172 @@
+<style>
+  .header.header { all: revert; }
+
+  .header .ds-nav-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: var(--nav-outer) var(--nav-outer) 0;
+    z-index: 200;
+    pointer-events: none;
+  }
+
+  .header .ds-nav {
+    height: var(--nav-h);
+    backdrop-filter: blur(64px);
+    background: rgb(255 255 255 / 64%);
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: var(--s-md);
+    pointer-events: all;
+    transition: box-shadow var(--d-fast) ease, background var(--d-fast) ease;
+  }
+
+  .header .ds-nav__left {
+    display: flex;
+    align-items: center;
+    gap: var(--s-lg);
+    height: 100%;
+    min-width: 0;
+  }
+
+  .header .ds-nav__logo { display: flex; align-items: center; flex-shrink: 0; }
+  .header .ds-nav__logo svg { width: 67px; height: 16px; }
+
+  .header .ds-nav__slash {
+    width: 1px;
+    height: 16px;
+    background: rgb(0 0 0 / 16%);
+    flex-shrink: 0;
+    display: none;
+  }
+
+  .header .ds-nav__links {
+    display: none;
+    list-style: none;
+    align-items: center;
+    height: 100%;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 900px) {
+    .header .ds-nav__slash { display: block; }
+    .header .ds-nav__links { display: flex; }
+  }
+
+  .header .ds-nav__links li a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px;
+    height: var(--nav-h);
+    font-size: var(--t-label);
+    font-weight: 700;
+    color: var(--c-text-soft);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color var(--d-fast) ease;
+  }
+
+  .header .ds-nav__links li a:hover { color: var(--c-text); }
+
+  .header .ds-nav__links li a[aria-current="page"] {
+    color: var(--c-text);
+    box-shadow: inset 0 -2px 0 var(--c-text);
+  }
+
+  .header .ds-nav__links li a svg { width: 8px; height: 5px; opacity: 0.6; }
+
+  .header .ds-nav__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .header .ds-nav__icon-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--c-text-soft);
+    border-radius: var(--r-sm);
+    transition: background var(--d-fast) ease, color var(--d-fast) ease;
+  }
+
+  .header .ds-nav__icon-btn:hover { background: rgb(0 0 0 / 6%); color: var(--c-text); }
+  .header .ds-nav__icon-btn svg { width: 18px; height: 18px; }
+
+  .header .ds-nav-burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--c-text);
+    border-radius: var(--r-sm);
+  }
+
+  .header .ds-nav-burger:hover { background: rgb(0 0 0 / 6%); }
+  .header .ds-nav-burger svg { width: 18px; height: 18px; }
+
+  @media (min-width: 900px) {
+    .header .ds-nav-burger { display: none; }
+  }
+
+  .header .ds-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding-inline: 18px;
+    border-radius: var(--r-md);
+    font: 700 var(--t-label) / 1.29 var(--f-b);
+    border: 1.5px solid transparent;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background var(--d-fast) ease, border-color var(--d-fast) ease;
+  }
+
+  .header .ds-nav__cta--primary { background: var(--c-primary); color: #fff; }
+  .header .ds-nav__cta--primary:hover { background: var(--c-primary-hover); }
+  .header .ds-nav__cta--outline { background: transparent; color: var(--c-text); border-color: var(--c-text); }
+  .header .ds-nav__cta--outline:hover { background: rgb(0 0 0 / 4%); }
+
+  @media (max-width: 640px) {
+    .header .ds-nav__cta--primary { display: none; }
+    .header .ds-nav { padding-inline: var(--s-sm); }
+  }
+</style>
+
+<div class="ds-nav-wrap">
+  <div class="ds-nav" data-nav-collapse="hamburger">
+    <div class="ds-nav__left">
+      <a href="/" class="ds-nav__logo" aria-label="Adobe home">
+        <svg viewBox="0 0 240 60" fill="none" aria-hidden="true"><path d="M178.95 19.95L209.4 60H187.05L177.45 39.6 167.1 60H146.4L177 19.95h2zM62.7 0L93.6 60H72.45L62.4 39.6 52.05 60H32.7L62.4 0h.3zM104.7 17.4q5.7-3.3 12.6-3.3 6.9 0 12.6 3.3 5.7 3.3 9 9.45 3.3 6.15 3.3 14.55 0 8.4-3.3 14.55-3.3 6.15-9 9.45-5.7 3.3-12.6 3.3-6.9 0-12.6-3.3-5.7-3.3-9-9.45-3.3-6.15-3.3-14.55 0-8.4 3.3-14.55 3.3-6.15 9-9.45zm21.45 13.05q-3.6-4.05-8.85-4.05-5.25 0-8.85 4.05-3.6 4.05-3.6 11.55t3.6 11.4q3.6 3.9 8.85 3.9 5.25 0 8.85-3.9 3.6-3.9 3.6-11.4t-3.6-11.55z" fill="#EB1000"/></svg>
+      </a>
+      <div class="ds-nav__slash" aria-hidden="true"></div>
+      <ul class="ds-nav__links">
+        <li><a href="#creativity"><span>Creativity &amp; Design</span><svg viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a href="#pdf" aria-current="page">PDF &amp; E-signatures</a></li>
+        <li><a href="#marketing"><span>Marketing &amp; Commerce</span><svg viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a href="#help">Help &amp; Support</a></li>
+      </ul>
+    </div>
+    <div class="ds-nav__right">
+      <button type="button" class="ds-nav-burger" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+      <button type="button" class="ds-nav__icon-btn" aria-label="All apps"><svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="7" y="1" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="13" y="1" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="1" y="7" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="7" y="7" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="13" y="7" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="1" y="13" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="7" y="13" width="4" height="4" rx="0.5" fill="currentColor"/><rect x="13" y="13" width="4" height="4" rx="0.5" fill="currentColor"/></svg></button>
+      <a href="#pricing" class="ds-nav__cta ds-nav__cta--primary">View plans and pricing</a>
+      <a href="#signin" class="ds-nav__cta ds-nav__cta--outline">Sign In</a>
+    </div>
+  </div>
+</div>

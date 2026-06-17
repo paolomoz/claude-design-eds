@@ -1,0 +1,163 @@
+/* Tutorial carousel — lifted from prototype .ds-tutorial, scoped under .tutorial.
+   Section background stays full-bleed; the carousel content is wrapped to --maxw. */
+
+.tutorial {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+  padding-block: var(--s-4xl);
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+/* content wrap — recreates the prototype's grid-margin inset / max-width */
+.tutorial .tutorial-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.tutorial .tutorial-viewport {
+  overflow: hidden;
+}
+
+.tutorial .tutorial-track {
+  display: flex;
+  gap: var(--grid-gap);
+  transition: transform var(--d-base) var(--e-default);
+  will-change: transform;
+}
+
+.tutorial .tutorial-slide {
+  position: relative;
+  flex: 0 0 100%;
+  aspect-ratio: 1068 / 600;
+  overflow: hidden;
+  background: #eceae7;
+  border-radius: var(--r-md);
+}
+
+.tutorial .tutorial-slide-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 50%, var(--warm-amber), transparent 55%),
+    linear-gradient(135deg, #fae3c8 0%, #d4a36a 100%);
+}
+
+.tutorial .tutorial-slide:nth-child(2) .tutorial-slide-bg {
+  background:
+    radial-gradient(ellipse at 60% 60%, var(--warm-red), transparent 60%),
+    linear-gradient(135deg, #ffe8e0 0%, #f0a890 100%);
+}
+
+.tutorial .tutorial-slide:nth-child(3) .tutorial-slide-bg {
+  background:
+    radial-gradient(ellipse at 40% 50%, var(--warm-orange), transparent 55%),
+    linear-gradient(135deg, #fff0d8 0%, #e0b878 100%);
+}
+
+.tutorial .tutorial-slide-copy {
+  position: absolute;
+  top: 50%;
+  left: 7.5%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+  max-width: 42%;
+  color: var(--c-text);
+  transform: translateY(-50%);
+}
+
+.tutorial .tutorial-slide-copy .eyebrow {
+  color: var(--c-text-soft);
+}
+
+.tutorial .tutorial-slide-copy h2 {
+  margin: 0;
+}
+
+.tutorial .tutorial-slide-copy p {
+  margin: 0;
+}
+
+.tutorial .tutorial-slide-copy a.btn {
+  align-self: flex-start;
+  margin-top: var(--s-xs);
+}
+
+.tutorial .tutorial-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tutorial .tutorial-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 1px 8px rgb(0 0 0 / 14%);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateY(-50%);
+}
+
+.tutorial .tutorial-arrow-prev {
+  left: 24px;
+}
+
+.tutorial .tutorial-arrow-next {
+  right: 24px;
+}
+
+.tutorial .tutorial-arrow svg {
+  width: 11px;
+  height: 11px;
+}
+
+.tutorial .tutorial-dots {
+  position: absolute;
+  bottom: var(--s-xl);
+  left: 50%;
+  display: flex;
+  gap: var(--s-xs);
+  pointer-events: auto;
+  transform: translateX(-50%);
+}
+
+.tutorial .tutorial-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: rgb(0 0 0 / 20%);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--d-fast);
+}
+
+.tutorial .tutorial-dot-active {
+  background: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial .tutorial-track {
+    transition: none;
+  }
+}

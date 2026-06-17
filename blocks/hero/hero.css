@@ -1,37 +1,187 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * Hero (role: hero) — CSS lifted verbatim from the stardust prototype
+ * home-B3-proposed.html (.ds-hero-* rules, lines 205-231) and rendered in
+ * its reduced-motion static layout (lines 423-427: static media, visible
+ * overlay). The 300vh scroll choreography is intentionally dropped for EDS.
+ *
+ * Scoped under .hero. Global tokens + button system live in styles/styles.css.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg);
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+/* ── Text column: centered max-width wrap (prototype #37) ── */
+.hero .hero-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-md);
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--s-4xl) 24px var(--s-2xl);
+  text-align: center;
 }
 
-.hero picture {
+.hero .hero-title {
+  max-width: 1280px;
+  color: var(--c-text);
+}
+
+.hero .hero-eyebrow {
+  color: var(--c-text-soft);
+}
+
+.hero .hero-lede {
+  max-width: 640px;
+  color: var(--c-text);
+}
+
+.hero .hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  align-items: center;
+  margin-top: var(--s-sm);
+}
+
+/* ── Media surface: full-bleed, static (reduced-motion layout) ── */
+.hero .hero-media {
+  position: relative;
+  width: calc(100% - 2 * var(--grid-margin));
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: var(--s-lg) var(--grid-margin);
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: #000;
+}
+
+.hero .hero-video {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
-.hero img {
-  object-fit: cover;
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  background:
+    radial-gradient(ellipse at 70% 40%, var(--warm-amber), transparent 50%),
+    radial-gradient(ellipse at 30% 70%, var(--warm-orange), transparent 55%),
+    linear-gradient(135deg, #f0d9b8 0%, #b08054 50%, #2a1408 100%);
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+/* scrim: visible in the static/reduced-motion layout (opacity 0.4) */
+.hero .hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 60%) 0%,
+    rgb(0 0 0 / 20%) 31%,
+    transparent 97%
+  );
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* overlay product card: visible in the static layout (opacity 1) */
+.hero .hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 1;
+}
+
+.hero .hero-overlay-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: var(--s-2xl);
+}
+
+.hero .hero-overlay-product {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  max-width: 460px;
+  color: #fff;
+}
+
+.hero .hero-overlay-title {
+  font-family: var(--f-h);
+  font-size: var(--t-3);
+  line-height: var(--t-3-lh);
+  letter-spacing: var(--t-3-ls);
+  font-weight: 900;
+  color: #fff;
+}
+
+.hero .hero-overlay-body {
+  font-size: var(--t-body);
+  line-height: var(--t-body-lh);
+  letter-spacing: var(--t-body-track);
+  color: rgb(255 255 255 / 80%);
+}
+
+.hero .hero-overlay-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--s-xs);
+  align-items: center;
+}
+
+/* The overlay sits on a dark gradient: the on-dark "Buy now" CTA wants the
+ * white-fill accent and "Learn more" the light-outline ghost. The block is
+ * marked .hero (dark surface) so styles.css already routes a.btn-secondary
+ * to the light-outline variant (#41). Force the overlay actions to render
+ * light regardless of which row carries them. */
+.hero .hero-overlay-actions a.btn-secondary {
+  color: #fff;
+  border-color: rgb(255 255 255 / 50%);
+  backdrop-filter: blur(16px);
+}
+
+.hero .hero-overlay-actions a.btn-secondary:hover {
+  background: rgb(255 255 255 / 8%);
+}
+
+@media (width >= 600px) {
+  .hero .hero-text {
+    padding-top: var(--s-5xl);
+  }
+}
+
+@media (width <= 599px) {
+  .hero .hero-media {
+    aspect-ratio: 4 / 5;
+  }
+
+  .hero .hero-overlay-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--s-lg);
+  }
+
+  .hero .hero-overlay-actions a {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .hero * {
+    animation: none !important;
+    transition: none !important;
   }
 }

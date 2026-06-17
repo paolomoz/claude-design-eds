@@ -1,0 +1,89 @@
+/* Banner block (role: band) — lifted from the prototype's `.ds-banner`
+   garage-door brand-statement band, scoped under `.banner`. The CSS
+   scroll-driven garage-door animation is dropped; the band renders static.
+   Global tokens + button system live in styles/styles.css. */
+
+.banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: min(100vh, 720px);
+  margin-top: var(--s-md);
+  overflow: clip;
+  isolation: isolate;
+  background: var(--c-warm-substrate);
+  color: var(--c-knock);
+}
+
+/* Layered warm radial-gradient background (`.ds-banner__bg`). */
+.banner .banner-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 30% 30%, var(--warm-amber), transparent 50%),
+    radial-gradient(ellipse at 70% 70%, var(--warm-red), transparent 50%),
+    linear-gradient(180deg, #2a1408 0%, #0a0402 100%);
+}
+
+/* Top/bottom darkening overlay (`.ds-banner__overlay`). */
+.banner .banner-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    #000 0%,
+    rgb(0 0 0 / 0%) 45%,
+    rgb(0 0 0 / 0%) 65%,
+    #000 100%
+  );
+}
+
+/* Centered content column (`.ds-banner__content`), max-width 1064px. */
+.banner .banner-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-md);
+  width: 100%;
+  max-width: 1064px;
+  margin: 0 auto;
+  padding: var(--s-6xl) var(--s-lg) var(--s-4xl);
+  text-align: center;
+}
+
+.banner .banner-eyebrow {
+  color: rgb(255 255 255 / 64%);
+}
+
+.banner .banner-title {
+  color: var(--c-knock);
+}
+
+.banner .banner-body {
+  max-width: 60ch;
+  color: rgb(255 255 255 / 84%);
+}
+
+.banner .banner-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-xs);
+  justify-content: center;
+  margin-top: var(--s-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner,
+  .banner .banner-bg,
+  .banner .banner-content {
+    animation: none !important;
+    transform: none !important;
+  }
+}
