@@ -20,9 +20,21 @@ curl -sS -X PUT -H "Authorization: Bearer $TOKEN" \
   -F "data=@content/$P.html;type=text/html" \
   "https://admin.da.live/source/$ORG/$REPO/$P.html"           # expect 201
 
+# 2b. NEW image assets must be LIVE on Code Bus BEFORE the preview ingests them (#75).
+#     The preview fetches every <img src>, hashes the bytes into Media Bus, and writes
+#     about:error if a URL doesn't return image bytes AT THAT MOMENT. A just-pushed
+#     img/<brand>/x.jpg can lose the race with Code Sync. Wait for each authored image:
+for u in $(grep -oE 'https://[^"]+/img/[^"]+\.(jpg|jpeg|png|webp|svg)' content/$P.html | sort -u); do
+  until [ "$(curl -s -o /dev/null -w '%{http_code}' "$u")" = "200" ]; do sleep 3; done
+done
+
 # 3. preview (separate, required; path WITHOUT .html; ref = the code branch)
 curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
   "https://admin.hlx.page/preview/$ORG/$REPO/$BRANCH/$P"       # expect 200
+
+# 3b. VERIFY no broken-image ingestion (#75) — must be 0; if not, an asset wasn't on
+#     Code Bus yet. Re-run step 3 (preview is idempotent; it re-ingests and repairs).
+curl -s "https://$BRANCH--$REPO--$ORG.aem.page/$P.plain.html" | grep -c about:error   # expect 0
 
 # 4. (optional) publish to aem.live
 curl -sS -X POST -H "Authorization: Bearer $TOKEN" \
