@@ -152,7 +152,11 @@ A dark-surface ghost-button override targeted `main .section.hero a.btn-secondar
 A hero block hard-indexed `rows[3]=headline, rows[4]=lede, rows[5]=CTA` (the rich prototype shape). The SEO-rebuilt content page (#34/#35: single `<h1>`, real metadata) consolidates headline+lede+CTAs into ONE cell, so the index lookups were `undefined` and the hero `.wrap` (the LCP element + the only `<h1>`) rendered EMPTY, silently. This collides directly with the mandatory-metadata/single-`<h1>` rework, which pushes content toward the consolidated shape.
 **Implemented:** Step 8 + the #35 Headings rule — lead/hero blocks decorate by querying content (`block.querySelector('h1,h2…')`; first link-free `<p>` = lede; link-bearing `<p>` = CTAs; `picture` from anywhere), tolerating BOTH the rich multi-row shape and the consolidated single-cell shape. Local-QA: assert the hero inner wrap is non-empty and contains the `<h1>` after decoration.
 
-**Implemented (#40–42):** #40 → visual-diff blank guard + Step 4; #41 → Step 5/7; #42 → Step 8. (Tooling: convert.workflow.js arg-parse + fail-fast hardened so a bad invocation aborts instead of improvising.)
+### 43. 🟠 visual-diff STRETCHED-IMAGE check false-passes when the EDS image fails to load (natural 0×0)
+Snowflake images use absolute `aem.page` origin URLs (#2/#9). In the OFF-pipeline local harness those 404 (cross-origin / not-yet-deployed), so `naturalWidth/Height` come back `0×0`. The #36 stretch test is `!isSvg && natAR && renAR && …` — with `natAR=0` it short-circuits to `false`, so the probe printed "red flags: none" without ever running the check, precisely when the asset didn't load. Surfaced on test-9 (Stripe hero `wave.webp`).
+**Implemented:** (a) `visual-diff.mjs` now emits an `IMAGE DID NOT LOAD` red flag when an `<img>` rendered a box but has natural `0×0`. (b) The Local-QA harness recipe (Step 10): when building the harness, rewrite absolute `…aem.page/img/...` URLs to root-relative `/img/...` (the asset is committed locally) so the image loads and the stretch check has real dimensions. convert.workflow.js validate phase does this rewrite.
+
+**Implemented (#40–43):** #40 → visual-diff blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → visual-diff load guard + Step 10 harness rewrite. (Tooling: convert.workflow.js arg-parse + fail-fast; .eslintignore excludes the vendored runtime so every test branch lints clean.)
 
 ---
 

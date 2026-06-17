@@ -812,7 +812,8 @@ node tools/da/visual-diff.mjs \
 ```
 
 Read the output:
-- **Red flags (advisory)** — `STRETCHED IMAGE` (raster aspect ≠ natural → #36, add `height:auto`); `FLUSH-LEFT TEXT` (a left-anchored heading/para at left≈0 → #37, the owning block dropped its max-width wrap). A clean page prints "none".
+- **Red flags (advisory)** — `BLANK RENDER` (hidden/empty page → #40, a `body{display:none}` gate or harness load failure — fix before trusting anything else); `IMAGE DID NOT LOAD` (rendered box, natural 0×0 → #43, the harness `<img>` 404'd); `STRETCHED IMAGE` (raster aspect ≠ natural → #36, add `height:auto`); `FLUSH-LEFT TEXT` (a left-anchored heading/para at left≈0 → #37, the owning block dropped its max-width wrap). A clean page prints "none".
+- **Harness images (#43):** when building the off-pipeline qa harness, rewrite absolute `…aem.page/img/...` `<img src>` to root-relative `/img/...` (the asset is committed locally) — otherwise the image 404s, natural dims are 0×0, and the stretch check silently skips.
 - **Metrics JSON** — compare `proto` vs `eds`: `eyebrows`/`headings` colors (catches #38 — a primitive styled in the prototype but dropped in one block), `images` dims, and `contentBoxes` (each block's content width + left offset; a wrapped block sits at left ≈ (viewport−maxw)/2 + padding, a dropped-wrap block at left ≈ 0).
 - **Screenshots** in the `--out` dir (default `qa/`): open the full-page pair and any per-section shots and confirm fidelity.
 

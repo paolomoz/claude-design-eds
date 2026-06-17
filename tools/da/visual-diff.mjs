@@ -76,12 +76,17 @@ function analyse() {
     const natAR = nW && nH ? nW / nH : 0;
     const renAR = r.width && r.height ? r.width / r.height : 0;
     const isSvg = /\.svg(\?|$)/i.test(img.currentSrc || img.src || '');
+    // rendered a box but natural 0x0 = the asset failed to load (e.g. an absolute
+    // aem.page URL that 404s in the local harness) — the #36 stretch check then
+    // silently short-circuits to false. Flag it instead of false-passing.
+    const failedToLoad = r.width > 1 && r.height > 1 && (nW === 0 || nH === 0);
     const stretched = !isSvg && natAR && renAR && Math.abs(natAR - renAR) / natAR > 0.04;
     return {
       src: (img.currentSrc || img.src || '').split('/').pop(),
       natural: `${nW}x${nH}`,
       rendered: `${round(r.width)}x${round(r.height)}`,
       stretched,
+      failedToLoad,
     };
   });
 
@@ -173,6 +178,9 @@ function redFlags(eds) {
     flags.push(`BLANK RENDER: the EDS page is hidden/empty (main height ${eds.mainHeight}px, text ${eds.textLen} chars). NOT a pass — likely a foundation body{display:none}/body.appear gate the runtime never satisfies (use the body.session font gate, no display gate), or the harness failed to load. Fix before trusting any other result.`);
     return flags; // every other metric is meaningless on a blank page
   }
+  eds.images.filter((i) => i.failedToLoad).forEach((i) => {
+    flags.push(`IMAGE DID NOT LOAD (#43): ${i.src} rendered ${i.rendered} but natural 0x0. In the local harness, rewrite absolute aem.page image URLs to root-relative /img/... so the asset loads and the stretch check has real dimensions.`);
+  });
   eds.images.filter((i) => i.stretched).forEach((i) => {
     flags.push(`STRETCHED IMAGE (#36): ${i.src} natural ${i.natural} → rendered ${i.rendered}. Add 'height: auto' to the img reset / block CSS.`);
   });
