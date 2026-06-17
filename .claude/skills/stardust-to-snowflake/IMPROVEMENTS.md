@@ -196,7 +196,11 @@ test-16 dropped beer cards (0 rendered) and a whole taproom tile (only 1 of 2) b
 After segmentation the "cells" are bare sibling elements (`<img>`/`<a>`/`<h3>`), so `cell.querySelector('img')` returns null and the content vanishes. 
 **Implemented:** Step 8 — classify with `el.matches(sel) || el.querySelector(sel)`; extract with `el.tagName==='IMG' ? el : el.querySelector('img')` (likewise A / Hn).
 
-**Implemented (#40–53):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 54. 🟡 IMAGERY/CONTENT GAP flags are whole-page — a focused `--sections` run can wrongly dismiss them
+test-17 ran `--sections .hero`; the hero matched cleanly, but the page-wide CONTENT/IMAGERY GAP flags pointed at the services block dropping 3/4 cards. An agent focused on the named section can rationalise GAP flags as "outside my section". 
+**Implemented:** Step 10 — GAP flags are whole-page (computed regardless of `--sections`, which only picks screenshots); when either fires, run an unscoped full-page diff and locate the dropped block before trusting the focused pass. convert.workflow.js validate prompt updated.
+
+**Implemented (#40–54):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
 
 ---
 
