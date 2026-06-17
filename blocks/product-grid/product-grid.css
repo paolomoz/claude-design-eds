@@ -1,0 +1,127 @@
+/* product-grid — lifted from sr-homepage-proposed-v2.html
+   .product-grid + .product-grid__inner + .explore-card* (9 whole-anchor tiles,
+   dark canvas, 3-up grid). Scoped under .product-grid; BEM "__" classes from
+   the prototype are flattened to kebab-case to satisfy stylelint. */
+
+.product-grid {
+  background: var(--ds-dark-section);
+  color: #fff;
+  padding: var(--ds-sp-6xl) var(--ds-sp-3xl);
+}
+
+/* recreate the prototype max-width wrap (content wrapped, surface full-bleed) */
+.product-grid .pg-inner {
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ds-sp-md);
+}
+
+.product-grid .explore-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--ds-rounded-card);
+  overflow: hidden;
+  background: var(--ds-gray-900);
+  transition:
+    transform var(--ds-dur-base),
+    box-shadow var(--ds-dur-base);
+  cursor: pointer;
+}
+
+.product-grid .explore-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 40%);
+}
+
+.product-grid .card-art {
+  position: absolute;
+  inset: 0;
+}
+
+.product-grid .card-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity var(--ds-dur-base);
+}
+
+.product-grid .explore-card:hover .card-art img {
+  opacity: 1;
+}
+
+.product-grid .card-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 5%) 25%, rgb(0 0 0 / 75%) 100%);
+}
+
+/* fallback tint when an image cell is empty (no authored art) */
+.product-grid .card-art:empty {
+  background: var(--ds-gray-900);
+}
+
+.product-grid .card-body {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: var(--ds-sp-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--ds-sp-xs);
+}
+
+.product-grid .card-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--ds-sp-sm);
+}
+
+.product-grid .card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.product-grid .card-title {
+  font-family: var(--ds-heading-stack);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+  color: #fff;
+}
+
+.product-grid .card-desc {
+  font-family: var(--ds-body-stack);
+  font-size: var(--ds-size-body-sm);
+  color: rgb(255 255 255 / 80%);
+  line-height: 1.4;
+}
+
+/* responsive: 2-up on tablet, 1-up on mobile (prototype lines 249, 262) */
+@media (width <= 1024px) {
+  .product-grid .pg-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 768px) {
+  .product-grid .pg-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-grid .explore-card,
+  .product-grid .card-art img {
+    transition: none;
+  }
+
+  .product-grid .explore-card:hover {
+    transform: none;
+  }
+}

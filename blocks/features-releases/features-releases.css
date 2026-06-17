@@ -1,0 +1,94 @@
+/*
+ * features-releases — banner-promo section (lifted verbatim from the prototype's
+ * .banner-promo rules, scoped under .features-releases). Light surface; 2-col
+ * grid (1fr 1fr): left copy, right 4/3 art. Global tokens + button system live
+ * in styles/styles.css — referenced, not redefined.
+ */
+
+/* Light surface — full-bleed; the CONTENT is wrapped in a max-width container. */
+.features-releases {
+  background: var(--ds-surface);
+}
+
+/* max-width content wrap (recreates the prototype's .container). */
+.features-releases .banner-promo-inner {
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  padding: 0 var(--ds-sp-3xl);
+}
+
+/* .banner-promo — verbatim from prototype lines 163. */
+.features-releases .banner-promo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ds-sp-4xl);
+  align-items: center;
+  padding: var(--ds-section-padding) 0;
+}
+
+/* .banner-promo-copy h2 — verbatim from prototype line 164. */
+.features-releases .banner-promo-copy h2 {
+  margin-bottom: var(--ds-sp-md);
+}
+
+/* re-created eyebrow/headline/lede spacing (was inline styles in the prototype). */
+.features-releases .eyebrow {
+  display: block;
+  color: var(--ds-text-subtle);
+  font-family: var(--ds-body-stack);
+  font-weight: 700;
+  font-size: var(--ds-size-body-md);
+}
+
+.features-releases .banner-promo-copy h2.h-title-2 {
+  margin-top: var(--ds-sp-sm);
+  font-family: var(--ds-heading-stack);
+  font-weight: 900;
+  font-size: var(--ds-size-title-2);
+  line-height: 1.07;
+  letter-spacing: -0.96px;
+}
+
+.features-releases .banner-promo-lede {
+  margin-top: var(--ds-sp-md);
+  color: var(--ds-text-subtle);
+}
+
+/* ghost TEXT link (cta--ghost) — plain styled <a>, NOT a button. */
+.features-releases .banner-promo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  margin-top: var(--ds-sp-md);
+  padding: var(--ds-sp-xs) 0;
+  background: transparent;
+  color: var(--ds-text-primary);
+  font-family: var(--ds-body-stack);
+  font-weight: 500;
+  font-size: var(--ds-size-body-md);
+}
+
+.features-releases .banner-promo-link:hover {
+  text-decoration: underline;
+}
+
+/* .banner-promo-art — verbatim from prototype lines 165-166. */
+.features-releases .banner-promo-art {
+  aspect-ratio: 4 / 3;
+  background: var(--ds-gray-100);
+  border-radius: var(--ds-rounded-card);
+  overflow: hidden;
+}
+
+.features-releases .banner-promo-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* responsive collapse to 1col (prototype line 250, @media max-width:1024px). */
+@media (width <= 1024px) {
+  .features-releases .banner-promo {
+    grid-template-columns: 1fr;
+  }
+}

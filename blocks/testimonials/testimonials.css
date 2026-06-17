@@ -1,0 +1,73 @@
+/* Testimonials — light surface quote carousel (lifted from sr-homepage-proposed-v2) */
+
+main .section.testimonials-container {
+  background: var(--ds-surface);
+  padding-block: var(--ds-section-padding);
+}
+
+/* .container wrap recreated: max-width 1080 quote-carousel inside a 1440 content wrap */
+.testimonials {
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  padding: 0 var(--ds-sp-3xl);
+}
+
+.testimonials .quote-carousel {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.testimonials .quote-slide {
+  display: none;
+  text-align: center;
+}
+
+.testimonials .quote-slide.is-active {
+  display: block;
+}
+
+.testimonials .quote-slide blockquote {
+  font-family: var(--ds-heading-stack);
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin: 0 0 var(--ds-sp-xl);
+  text-wrap: balance;
+}
+
+.testimonials .quote-slide figcaption {
+  font-family: var(--ds-body-stack);
+  font-size: var(--ds-size-body-md);
+  color: var(--ds-text-subtle);
+}
+
+.testimonials .quote-carousel-controls {
+  display: flex;
+  gap: var(--ds-sp-md);
+  justify-content: center;
+  margin-top: var(--ds-sp-xl);
+}
+
+.testimonials .quote-carousel-controls button {
+  background: #fff;
+  border: 1px solid var(--ds-border);
+  border-radius: 999px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  color: inherit;
+}
+
+.testimonials .quote-carousel-controls button:hover {
+  background: var(--ds-gray-75);
+}
+
+@media (width >= 600px) {
+  .testimonials {
+    padding: 0 var(--ds-sp-3xl);
+  }
+}

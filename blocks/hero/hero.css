@@ -1,37 +1,158 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * hero — 5-slide full-bleed photographic carousel.
+ * CSS lifted verbatim from the adobecom-sr prototype
+ * (sr-homepage-proposed-v2.html, lines 130-145) and scoped under .hero.
+ * BEM-style names from the prototype are flattened to plain kebab-case to
+ * satisfy stylelint-config-standard. Global tokens + the button system live
+ * in styles/styles.css. The Lenis parallax is dropped (script inert), so the
+ * parallax transform rule is intentionally omitted.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  height: 88vh;
+  min-height: 640px;
+  max-height: 880px;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+.hero .hero-slides {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1000ms var(--ds-ease-transition);
+}
+
+.hero .hero-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.hero .hero-slide picture,
+.hero .hero-slide img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+.hero .hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 35%, rgb(0 0 0 / 55%) 100%);
+  pointer-events: none;
+}
+
+/* slide with no authored picture falls back to a flat tone so the
+   overlaid copy stays legible. */
+.hero .hero-slide:not(:has(picture)) {
+  background: var(--ds-dark-section);
+}
+
+.hero .hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--ds-container-max);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--ds-sp-3xl);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: end;
+  color: #fff;
+}
+
+.hero .hero-slot {
+  padding-bottom: 12vh;
+  max-width: 920px;
+}
+
+.hero .hero-eyebrow {
+  display: block;
+  font-family: var(--ds-body-stack);
+  font-weight: 700;
+  font-size: var(--ds-size-body-md);
+  margin-bottom: var(--ds-sp-md);
+  opacity: 0.95;
+}
+
+.hero .hero-headline {
+  font-family: var(--ds-heading-stack);
+  font-weight: 900;
+  font-size: clamp(48px, 8vw, var(--ds-size-title-1));
+  line-height: 1;
+  letter-spacing: -3.2px;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.hero .hero-cta-row {
+  display: flex;
+  gap: var(--ds-sp-sm);
+  margin-top: var(--ds-sp-xl);
+  flex-wrap: wrap;
+}
+
+.hero .hero-indicators {
+  position: absolute;
+  left: 50%;
+  bottom: var(--ds-sp-xl);
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: var(--ds-sp-xs);
+}
+
+.hero .hero-indicators button {
+  width: 32px;
+  height: 3px;
+  border: 0;
+  background: rgb(255 255 255 / 40%);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color var(--ds-dur-base) var(--ds-ease-transition);
+}
+
+.hero .hero-indicators button[aria-current="true"] {
+  background: #fff;
+}
+
+/* visually hidden status / label text */
+.hero .hero-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (width <= 768px) {
+  /* small-screen: show only the first slide, no carousel */
+  .hero .hero-slide:first-child {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero .hero-indicators {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-slide {
+    transition: none;
   }
 }

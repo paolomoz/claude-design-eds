@@ -1,0 +1,62 @@
+/*
+ * tools-cta — photographic backdrop + gradient, centered white headline,
+ * lede, and two CTA pills, over a dark full-bleed band.
+ *
+ * Lifted from prototype sr-homepage-proposed-v2.html (.tools-cta*, ~L208-219),
+ * scoped under .tools-cta. The garage-door parallax reveal (::before/::after
+ * driven by --parallax-progress) is intentionally dropped — content is visible.
+ */
+
+.tools-cta {
+  position: relative;
+  overflow: hidden;
+  padding: var(--ds-sp-6xl) var(--ds-sp-3xl);
+  color: #fff;
+  text-align: center;
+  background: var(--ds-dark-section);
+}
+
+.tools-cta .tools-cta-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--ds-dark-section);
+}
+
+.tools-cta .tools-cta-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tools-cta .tools-cta-bg::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgb(19 19 19 / 40%) 0%, rgb(19 19 19 / 85%) 100%);
+}
+
+.tools-cta .tools-cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tools-cta .tools-cta-title {
+  margin-bottom: var(--ds-sp-md);
+  color: #fff;
+}
+
+.tools-cta .tools-cta-lede {
+  margin-bottom: var(--ds-sp-xl);
+  font-size: var(--ds-size-body-lg);
+  color: rgb(255 255 255 / 85%);
+}
+
+.tools-cta .tools-cta-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-sp-sm);
+  justify-content: center;
+}

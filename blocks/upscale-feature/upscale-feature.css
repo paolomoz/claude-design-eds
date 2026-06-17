@@ -1,0 +1,111 @@
+/*
+ * upscale-feature — lifted verbatim from the prototype's .feature-wide
+ * (sr-homepage-proposed-v2.html, CSS lines 168-173), scoped under
+ * .upscale-feature. White surface; the section background stays full-bleed,
+ * the CONTENT is wrapped in a centered container (recreates .container).
+ * Global tokens + button system live in styles/styles.css.
+ */
+
+.upscale-feature .feature-wide-container {
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  padding: 0 var(--ds-sp-3xl);
+}
+
+/* Feature-wide (Upscale) — verbatim from prototype */
+.upscale-feature .feature-wide {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--ds-sp-4xl);
+  align-items: center;
+}
+
+.upscale-feature .feature-wide-art {
+  aspect-ratio: 16 / 10;
+  background: var(--ds-gray-100);
+  border-radius: var(--ds-rounded-card);
+  overflow: hidden;
+}
+
+.upscale-feature .feature-wide-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upscale-feature .feature-wide-copy h2 {
+  margin-bottom: var(--ds-sp-md);
+}
+
+.upscale-feature .feature-wide-copy p {
+  color: var(--ds-text-subtle);
+  margin-bottom: var(--ds-sp-lg);
+  max-width: 540px;
+}
+
+/* Headline — .h-title-2 equivalent (prototype applied .h-title-2 to the h2) */
+.upscale-feature .feature-wide-headline {
+  font-family: var(--ds-heading-stack);
+  font-weight: 900;
+  font-size: var(--ds-size-title-2);
+  line-height: 1.07;
+  letter-spacing: -0.96px;
+}
+
+/* Eyebrow row: product-chip + label */
+.upscale-feature .feature-wide-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  margin-bottom: var(--ds-sp-md);
+}
+
+.upscale-feature .product-chip {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.upscale-feature .product-chip svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.upscale-feature .eyebrow {
+  font-family: var(--ds-body-stack);
+  font-weight: 700;
+  font-size: var(--ds-size-body-md);
+  color: var(--ds-text-subtle);
+}
+
+/* Ghost text link — verbatim .cta--ghost behaviour */
+.upscale-feature .feature-wide-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  font-family: var(--ds-body-stack);
+  font-weight: 500;
+  font-size: var(--ds-size-body-md);
+  color: var(--ds-text-primary);
+  padding: 8px 0;
+}
+
+.upscale-feature .feature-wide-ghost:hover {
+  text-decoration: underline;
+}
+
+/* Responsive collapse to 1 column (prototype @max-width:1024px) */
+@media (width <= 1024px) {
+  .upscale-feature .feature-wide {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width <= 768px) {
+  .upscale-feature .feature-wide-container {
+    padding: 0 var(--ds-sp-lg);
+  }
+}

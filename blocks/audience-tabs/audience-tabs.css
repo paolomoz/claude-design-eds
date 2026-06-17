@@ -1,0 +1,49 @@
+/*
+ * Audience Tabs — lifted verbatim from sr-homepage-proposed-v2.html
+ * (prototype CSS lines 124-128), scoped under .audience-tabs.
+ *
+ * Full-bleed band: edge-to-edge in the prototype, no inner wrap. The rail
+ * sits directly under the header and scrolls horizontally on overflow.
+ * Global tokens live in styles/styles.css — referenced, not redefined.
+ */
+
+.audience-tabs {
+  display: flex;
+  gap: var(--ds-sp-xs);
+  padding: var(--ds-sp-sm) var(--ds-sp-3xl);
+  background: #fff;
+  border-bottom: 1px solid var(--ds-border);
+  overflow-x: auto;
+}
+
+.audience-tabs button {
+  flex: 0 0 auto;
+  font-family: var(--ds-body-stack);
+  font-size: var(--ds-size-body-sm);
+  font-weight: 500;
+  border: 0;
+  background: none;
+  padding: 8px 14px;
+  border-radius: var(--ds-rounded-nav-pill);
+  color: var(--ds-text-primary);
+  transition: background-color var(--ds-dur-base) var(--ds-ease-transition);
+}
+
+.audience-tabs button[aria-selected="true"] {
+  background: #000;
+  color: #fff;
+}
+
+.audience-tabs button:hover {
+  background: var(--ds-gray-100);
+}
+
+.audience-tabs button[aria-selected="true"]:hover {
+  background: var(--ds-gray-800);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience-tabs button {
+    transition: none;
+  }
+}

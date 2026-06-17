@@ -1,0 +1,49 @@
+/*
+ * everything — centered section headline on a light surface.
+ * CSS lifted from sr-homepage-proposed-v2.html:
+ *   .section            (padding-block, l.86)
+ *   .section--surface   (light surface bg, l.87)
+ *   .section--rounded-top (rounded top corners, l.88)
+ *   .section-headline   (centered max-width:960px, l.147-148)
+ * Scoped under .everything. Global tokens come from styles/styles.css.
+ */
+
+/* light surface + rounded top — full-bleed; the block element spans the
+   section width (the AuthorKit runtime adds no *-container wrapper). */
+.everything {
+  background: var(--ds-surface);
+  border-radius: 24px 24px 0 0;
+}
+
+/* the section that hosts this block carries the surface edge-to-edge */
+main .section:has(> .block-content > .everything) {
+  background: var(--ds-surface);
+  border-radius: 24px 24px 0 0;
+}
+
+/* content is wrapped to the container max-width */
+.everything .everything-wrap {
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  padding-block: var(--ds-section-padding);
+  padding-inline: var(--ds-sp-3xl);
+}
+
+.everything .everything-headline {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.everything .everything-headline p {
+  margin-top: var(--ds-sp-lg);
+  color: var(--ds-text-subtle);
+  font-size: var(--ds-size-body-lg);
+  line-height: 1.5;
+}
+
+@media (width >= 600px) {
+  .everything .everything-wrap {
+    padding-inline: var(--ds-sp-4xl);
+  }
+}

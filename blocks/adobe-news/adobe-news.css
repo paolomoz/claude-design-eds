@@ -1,0 +1,102 @@
+/*
+ * adobe-news — full-bleed photographic band with dark gradient overlay.
+ * Lifted verbatim from sr-homepage-proposed-v2.html .news-full* (lines 198-206),
+ * scoped under .adobe-news. Global tokens + button system live in styles.css.
+ * BEM-style class names from the prototype are flattened to kebab-case to
+ * satisfy stylelint-config-standard.
+ */
+
+.adobe-news {
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+}
+
+/* full-bleed background picture/image */
+.adobe-news .news-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.adobe-news .news-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CSS fallback when no image cell is authored */
+.adobe-news .news-bg:empty {
+  background: var(--ds-dark-section);
+}
+
+.adobe-news .news-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 35%, rgb(0 0 0 / 70%) 100%);
+}
+
+/* max-width inner wrap — background stays full-bleed, content is wrapped */
+.adobe-news .news-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--ds-container-max);
+  margin: 0 auto;
+  padding: var(--ds-sp-6xl) var(--ds-sp-3xl);
+  color: #fff;
+}
+
+.adobe-news .news-eyebrow {
+  display: block;
+  font-family: var(--ds-body-stack);
+  font-weight: 700;
+  font-size: var(--ds-size-body-md);
+  color: rgb(255 255 255 / 85%);
+  margin-bottom: var(--ds-sp-sm);
+}
+
+.adobe-news .news-inner h2 {
+  color: #fff;
+  margin-bottom: var(--ds-sp-md);
+  max-width: 760px;
+  font-family: var(--ds-heading-stack);
+  font-weight: 900;
+  font-size: var(--ds-size-title-2);
+  line-height: 1.07;
+  letter-spacing: -0.96px;
+}
+
+.adobe-news .news-inner p {
+  color: rgb(255 255 255 / 85%);
+  margin-bottom: var(--ds-sp-lg);
+  max-width: 600px;
+  font-size: var(--ds-size-body-lg);
+  line-height: 1.5;
+}
+
+/* ghost link — 'Read more →' */
+.adobe-news .news-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-sp-xs);
+  padding: 8px 0;
+  font-family: var(--ds-body-stack);
+  font-weight: 500;
+  font-size: var(--ds-size-body-md);
+  color: #fff;
+}
+
+.adobe-news .news-link:hover {
+  text-decoration: underline;
+}
+
+@media (width <= 768px) {
+  .adobe-news .news-inner {
+    padding: var(--ds-sp-3xl) var(--ds-sp-lg);
+  }
+
+  .adobe-news .news-inner h2 {
+    font-size: var(--ds-size-title-3);
+  }
+}

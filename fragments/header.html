@@ -1,0 +1,155 @@
+<style>
+  header.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #fff;
+    border-bottom: 1px solid var(--ds-border);
+  }
+
+  .header .global-nav {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0 var(--ds-sp-3xl);
+    gap: var(--ds-sp-xl);
+  }
+
+  .header .brand-mark {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .header .brand-mark img {
+    width: auto;
+    height: 18px;
+  }
+
+  .header .nav-primary {
+    display: flex;
+    gap: var(--ds-sp-md);
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header .nav-primary > li > a {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--ds-body-stack);
+    font-size: var(--ds-size-body-md);
+    font-weight: 500;
+    padding: var(--ds-sp-sm) var(--ds-sp-md);
+    color: var(--ds-text-primary);
+    border-radius: var(--ds-rounded-nav-pill);
+    transition: background-color var(--ds-dur-base) var(--ds-ease-transition);
+  }
+
+  .header .nav-primary > li > a:hover {
+    background: var(--ds-gray-75);
+  }
+
+  .header .nav-right {
+    display: flex;
+    gap: var(--ds-sp-sm);
+    align-items: center;
+  }
+
+  .header .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--ds-body-stack);
+    font-size: var(--ds-size-body-sm);
+    font-weight: 500;
+    border-radius: var(--ds-rounded-nav-pill);
+    padding: 8px 18px;
+    color: var(--ds-text-primary);
+    transition: background-color var(--ds-dur-base) var(--ds-ease-transition);
+  }
+
+  .header .nav-cta:hover {
+    background: var(--ds-gray-75);
+  }
+
+  .header .nav-cta--signin {
+    background: #fff;
+    border: 1px solid var(--ds-border);
+  }
+
+  /* mobile menu — CSS-only checkbox hack (fragment JS is inert) */
+  .header .mnav-toggle,
+  .header .mnav-open,
+  .header .mnav-scrim {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .header .mnav-open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: auto;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .header .nav-primary,
+    .header .nav-right {
+      position: fixed;
+      inset: 64px 0 auto;
+      flex-direction: column;
+      gap: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--ds-border);
+      padding: var(--ds-sp-md) var(--ds-sp-3xl);
+      transform: translateY(-120%);
+      transition: transform var(--ds-dur-base) var(--ds-ease-entrance);
+      z-index: 49;
+    }
+
+    .header .nav-right {
+      inset: auto 0 auto;
+      top: calc(64px + 200px);
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .header .mnav-toggle:checked ~ .global-nav .nav-primary,
+    .header .mnav-toggle:checked ~ .global-nav .nav-right {
+      transform: translateY(0);
+    }
+
+    .header .mnav-toggle:checked ~ .mnav-scrim {
+      display: block;
+      position: fixed;
+      inset: 64px 0 0;
+      background: rgb(0 0 0 / 30%);
+      z-index: 48;
+    }
+  }
+</style>
+<input type="checkbox" id="mnav-toggle" class="mnav-toggle" aria-hidden="true">
+<nav class="global-nav" aria-label="Adobe">
+  <a href="/" class="brand-mark" aria-label="Adobe">
+    <img src="/img/adobe/adobe-logo-black.svg" alt="Adobe" width="67" height="18">
+  </a>
+  <label for="mnav-toggle" class="mnav-open" aria-label="Open menu">&#9776;</label>
+  <ul class="nav-primary">
+    <li><a href="/">Products</a></li>
+    <li><a href="/">Use Cases</a></li>
+    <li><a href="/">Solutions</a></li>
+    <li><a href="/">Learn &amp; Support</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/" class="nav-cta">All Products</a>
+    <a href="/" class="nav-cta nav-cta--signin">Sign in</a>
+  </div>
+</nav>
+<label for="mnav-toggle" class="mnav-scrim" aria-hidden="true"></label>
