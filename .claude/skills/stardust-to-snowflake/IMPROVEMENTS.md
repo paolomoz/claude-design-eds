@@ -164,7 +164,11 @@ Two test-11 blocks (proof.js, resources.js) hard-coded the asset origin as `http
 The #36 stretch check (natural AR vs rendered-element-box AR) fires on any `img { height: Npx; padding; box-sizing: border-box }` — the padding is subtracted from the content box so the element AR ≠ image AR — and on any `object-fit: cover` full-bleed background/watermark. When the PROTOTYPE does the same thing (the diff flags it on the proto side too), "fixing" the EDS would make it DIVERGE from the reference. Agents were chasing faithful flags into divergence.
 **Implemented:** Step 10 red-flags rule — a STRETCHED-IMAGE flag is justified (leave the CSS) when (a) `object-fit: cover` intentional full-bleed, OR (b) the same flag appears on the PROTO side. Treat it as a defect only when the proto renders the image at natural AR but the EDS does not.
 
-**Implemented (#40–45):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 46. 🟡 The QA harness metadata-strip was hand-rolled per run and fragile — give it a committed helper
+Building the harness means taking the content `<main>` "with the metadata section removed", but the mandatory metadata block (#34) is nested div-in-div, so a naive non-greedy `…</div></div>` regex stops one tag early and leaves an orphan `</div>` that silently corrupts the harness DOM (an agent hit this 3× on test-12). It recurs on EVERY iteration.
+**Implemented:** committed `tools/da/build-harness.mjs <contentFile> <outHarness>` — extracts `<main>`, removes the metadata wrapper by **balanced tag counting** (not regex), rewrites absolute/localhost `…/img/` URLs to root-relative (#43), warns on any leading orphan tag, and emits the full harness doc. Step 10 + convert.workflow.js validate now call it instead of hand-rolling.
+
+**Implemented (#40–46):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
 
 ---
 

@@ -767,10 +767,10 @@ When the prototype has **real** images, image URLs MUST be fully qualified (`htt
 # 1. dev server (serves /scripts, /styles, /blocks, /fragments at their real paths)
 npx -y @adobe/aem-cli up --no-open &
 
-# 2. harness = head.html scripts + the page's body fragment, saved as a static repo file
-{ echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'; cat head.html; echo '</head>'
-  sed -n '/<body>/,/<\/body>/p' content/<path>.html   # (wrap a bare body fragment in <body>…</body> first)
-  echo '</html>'; } > qa/page.html        # qa/ should be gitignored
+# 2. harness — use the committed helper (do NOT hand-roll the metadata strip, #46):
+#    it removes the metadata block by balanced tag-counting and rewrites absolute
+#    /img/ URLs to root-relative (#43), then emits the full harness doc.
+node tools/da/build-harness.mjs content/<path>.html qa/page.html   # qa/ is gitignored
 ```
 
 Open `http://localhost:3000/qa/page.html` — `scripts.js` runs `loadArea()`, blocks load from the code origin, fragments inject via `postlcp.js`. Screenshot / inspect with headless Chrome (`--virtual-time-budget=9000 --screenshot` / `--dump-dom`) or Playwright.
