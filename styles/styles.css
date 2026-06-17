@@ -1,325 +1,323 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * slicc — foundation styles
+ * Tokens lifted verbatim from the prototype :root; reset + EDS section scaffold
+ * + global button system + self-hosted @font-face declarations.
  */
 
+/* ─────────────────────────────  FONTS  ───────────────────────────── */
+
+/* Inter — body/display sans (SIL OFL 1.1), variable wght 100-900 */
+@font-face {
+  font-family: Inter;
+  src: url("/styles/fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Space Mono — mono labels/terminals (SIL OFL 1.1), static 400/700 */
+@font-face {
+  font-family: "Space Mono";
+  src: url("/styles/fonts/space-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("/styles/fonts/space-mono-700.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Permanent Marker — handwritten rail marker (SIL OFL 1.1), static 400 */
+@font-face {
+  font-family: "Permanent Marker";
+  src: url("/styles/fonts/permanent-marker-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Metric-matched fallback for Inter (sans brand → Arial).
+   Inter's published calibration; naming the face "Arial" makes any
+   reference to Arial in a font stack pick up the adjusted metrics. */
+@font-face {
+  font-family: Arial;
+  src: local("Arial");
+  size-adjust: 107.4%;
+  ascent-override: 90%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+}
+
+/* ─────────────────────────────  TOKENS  ──────────────────────────── */
+
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* surface ladder */
+  --bg-page:     #0a0a0d;
+  --bg-page-2:   #0c0c10;
+  --bg-chrome:   #131319;
+  --bg-card:     #1a1a21;
+  --bg-card-2:   #1e1e26;
+  --bg-elevated: #25262e;
+  --bg-input:    #14141a;
+  --term-bg:     #0f0f14;
+  --term-bar:    #181820;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* text */
+  --text:        #ecedf1;
+  --text-soft:   #cdced6;
+  --text-2:      #9ea0ab;
+  --muted:       #757682;
+  --muted-2:     #525361;
+  --muted-3:     #3a3b48;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* borders */
+  --border:      rgb(255 255 255 / 4%);
+  --border-2:    rgb(255 255 255 / 8%);
+  --border-3:    rgb(255 255 255 / 14%);
+  --highlight:   rgb(255 255 255 / 4%);
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* accents */
+  --pink:        #c73c5f;
+  --pink-soft:   rgb(199 60 95 / 12%);
+  --pink-glow:   rgb(199 60 95 / 40%);
+  --pink-text:   #d97391;
+  --mint:        #4fc990;
+  --mint-soft:   rgb(79 201 144 / 10%);
+  --mint-glow:   rgb(79 201 144 / 40%);
+  --mint-text:   #7ad5ad;
+  --mint-text-2: #5fc996;
+  --amber:       #d89342;
+  --amber-soft:  rgb(216 147 66 / 12%);
+  --amber-glow:  rgb(216 147 66 / 40%);
+  --amber-text:  #e3a868;
 
-  /* nav height */
-  --nav-height: 64px;
+  /* brand-loud — cone + scoops only */
+  --brand-pink:   #e0244f;
+  --brand-mint:   #33e6a0;
+  --brand-orange: #ff9a00;
+
+  /* spacing scale */
+  --s-1: 4px;
+  --s-2: 6px;
+  --s-3: 8px;
+  --s-4: 12px;
+  --s-5: 16px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 48px;
+
+  /* radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-pill: 60px;
+
+  /* layout */
+  --top-h: 52px;
+  --rail-w: 60px;
+  --chat-w: 580px;
+  --sprinkle-w: 52px;
+  --maxw: 1320px;
+
+  /* type families */
+  --font-sans: "Inter", arial, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", monospace;
+
+  /* shadows */
+  --shadow-card:    0 1px 2px rgb(0 0 0 / 40%), inset 0 1px 0 var(--highlight);
+  --shadow-lift:    0 6px 18px -6px rgb(0 0 0 / 55%), inset 0 1px 0 rgb(255 255 255 / 6%);
+  --shadow-button:  0 1px 2px rgb(0 0 0 / 35%), 0 4px 12px -4px var(--pink-glow);
+  --focus-ring:     0 0 0 3px rgb(79 201 144 / 18%);
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
+/* ─────────────────────────────  RESET  ───────────────────────────── */
 
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
+* { box-sizing: border-box; }
 
-@media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
+html { scroll-behavior: smooth; }
 
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
-}
-
-body {
-  display: none;
-  margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
-  line-height: 1.6;
-}
-
-body.appear {
+img {
   display: block;
-}
-
-header {
-  height: var(--nav-height);
-}
-
-header .header,
-footer .footer {
-  visibility: hidden;
-}
-
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
-  visibility: visible;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
-}
-
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
-
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-}
-
-code,
-pre {
-  font-size: var(--body-font-size-s);
-}
-
-pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
-  overflow-x: auto;
-  white-space: pre;
-}
-
-main > div {
-  margin: 40px 16px;
-}
-
-input,
-textarea,
-select,
-button {
-  font: inherit;
-}
-
-/* links */
-a:any-link {
-  color: var(--link-color);
-  text-decoration: none;
-  overflow-wrap: break-word;
-}
-
-a:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline;
-}
-
-/* buttons */
-p.button-wrapper {
-  margin: 12px 0;
-}
-
-a.button:any-link,
-button.button {
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   max-width: 100%;
-  margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
-  text-decoration: none;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-a.button[aria-disabled="true"],
-button.button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-a.button.primary,
-button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
-  color: var(--background-color);
-}
-
-a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
-}
-
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary,
-button.button.secondary {
-  border-color: var(--text-color);
-  background-color: transparent;
-  color: var(--text-color);
-}
-
-a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-/* high-impact call-to-action */
-a.button.accent,
-button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
-}
-
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-main img {
-  max-width: 100%;
-  width: auto;
   height: auto;
 }
 
-.icon {
-  display: inline-block;
-  height: 24px;
-  width: 24px;
+::selection {
+  background: var(--pink-soft);
+  color: var(--text);
 }
 
-.icon img {
-  height: 100%;
-  width: 100%;
-}
-
-/* sections */
-main > .section {
-  margin: 40px 0;
-}
-
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
-}
-
-main > .section:first-of-type {
-  margin-top: 0;
-}
-
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
-}
-
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
+body {
   margin: 0;
-  padding: 40px 0;
+  background: var(--bg-page);
+  color: var(--text);
+  font-family: arial, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  font-feature-settings: "ss01", "cv11";
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+}
+
+/* Font gate: brand font swaps in only once the session is active.
+   ak.js adds body.session — never gate display on body.appear. */
+body.session { font-family: var(--font-sans); }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+}
+
+a {
+  color: var(--mint-text);
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+a:hover { color: var(--mint); }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  color: inherit;
+}
+
+button:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+.num {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* ───────────────────────  EDS SECTION SCAFFOLD  ──────────────────── */
+
+main .section { display: block; }
+
+main .section > .default-content,
+main .section > .block-content { display: block; }
+
+main > div,
+.has-template,
+div[data-status] { display: none; }
+
+/* Every block constrains its content to --maxw; only section backgrounds
+   bleed full-width. Blocks recreate their own .wrap where needed. */
+main .section > div > .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+/* ──────────────────────────  BUTTON SYSTEM  ──────────────────────── */
+
+/*
+ * Author markup → auto class (decorateButton in ak.js):
+ *   <strong><a>          → .btn.btn-primary    (pink gradient fill)
+ *   <em><a>              → .btn.btn-secondary  (outline, surface-aware)
+ *   <em><strong><a>      → .btn.btn-accent     (amber-soft warn)
+ * Lifted from the prototype .btn / .btn--primary / --secondary / --warn.
+ */
+
+a.btn,
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  transition:
+    transform 120ms ease,
+    background 120ms ease,
+    box-shadow 120ms ease,
+    filter 120ms ease,
+    border-color 120ms ease;
+}
+
+a.btn-primary,
+button.btn-primary {
+  background: linear-gradient(180deg, #d44a6c, var(--pink));
+  color: #fff;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 40%),
+    0 4px 12px -3px var(--pink-glow),
+    inset 0 1px 0 rgb(255 255 255 / 18%);
+}
+
+a.btn-primary:hover,
+button.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  color: #fff;
+}
+
+a.btn-secondary,
+button.btn-secondary {
+  background: rgb(255 255 255 / 5%);
+  color: var(--text);
+  border-color: var(--border-2);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
+}
+
+a.btn-secondary:hover,
+button.btn-secondary:hover {
+  background: rgb(255 255 255 / 8%);
+  transform: translateY(-1px);
+  color: var(--text);
+}
+
+a.btn-accent,
+button.btn-accent {
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  border-color: rgb(216 147 66 / 28%);
+}
+
+a.btn-accent:hover,
+button.btn-accent:hover {
+  background: rgb(216 147 66 / 18%);
+  transform: translateY(-1px);
+  color: var(--amber-text);
+}
+
+/* On a light surface, secondary uses a dark-tinted outline. The app is
+   dark throughout, so the on-dark treatment above is the default; this
+   covers any light block (scoped to BOTH .section.light and the block). */
+main .light a.btn-secondary,
+main .section.light a.btn-secondary {
+  background: transparent;
+  color: #131313;
+  border-color: rgb(0 0 0 / 20%);
+}
+
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

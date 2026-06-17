@@ -1,0 +1,89 @@
+/* next-actions — closing CTA card.
+   Lifted verbatim from prototype section.next / .next-head / .next-body /
+   .next-btns, scoped under .next-actions. Global tokens + button system
+   live in styles/styles.css (referenced, not redefined). */
+
+.next-actions .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.next-actions .next {
+  background:
+    radial-gradient(ellipse 400px 200px at 0% 0%, rgb(79 201 144 / 6%), transparent 70%),
+    radial-gradient(ellipse 300px 200px at 100% 100%, rgb(199 60 95 / 5%), transparent 70%),
+    linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  padding: var(--s-5) 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  box-shadow: var(--shadow-card);
+}
+
+.next-actions .next-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--text);
+}
+
+.next-actions .next-head svg {
+  width: 16px;
+  height: 16px;
+  color: var(--mint-text);
+}
+
+.next-actions .next-body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+/* /contact chip — re-created in JS (EDS strips authored <span>). */
+.next-actions .chip {
+  color: var(--pink-text);
+}
+
+.next-actions .next-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* The cloned anchors pick up .btn / .btn-primary / .btn-secondary /
+   .btn-accent from the global button system. Plain ghost anchors
+   ('Refresh /contact', 'Tweak design') are styled here. */
+.next-actions .next-btns a svg {
+  width: 13px;
+  height: 13px;
+}
+
+.next-actions a.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  background: transparent;
+  color: var(--text-2);
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.next-actions a.btn-ghost:hover {
+  background: rgb(255 255 255 / 4%);
+  color: var(--text);
+}

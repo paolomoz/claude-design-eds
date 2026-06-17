@@ -1,0 +1,142 @@
+/* brand-surface — extracted-brand strip (logo / palette / type / lock pill).
+   CSS lifted verbatim from prototype .brand-strip + .sect-h, scoped under
+   .brand-surface. Global tokens live in styles/styles.css — referenced here. */
+
+.brand-surface .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* section heading (.sect-h) */
+.brand-surface .sect-h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 var(--s-3);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text-soft);
+}
+
+.brand-surface .sect-h__hint {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--muted-2);
+}
+
+/* brand strip */
+.brand-surface .brand-strip {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--s-5);
+  align-items: center;
+  padding: 14px var(--s-5);
+  background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-card);
+}
+
+.brand-surface .brand-strip__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0f2a4d, #1c4a85);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), 0 1px 2px rgb(0 0 0 / 30%);
+}
+
+.brand-surface .brand-strip__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.brand-surface .brand-strip__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.brand-surface .brand-strip__row b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.brand-surface .brand-strip__note {
+  color: var(--muted-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.brand-surface .brand-strip__swatches {
+  display: flex;
+  gap: 5px;
+}
+
+.brand-surface .brand-strip__swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+
+.brand-surface .brand-strip__font {
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
+  color: var(--text-soft);
+  background: rgb(255 255 255 / 4%);
+  border: 1px solid var(--border-2);
+}
+
+.brand-surface .brand-strip__font--mono {
+  font-family: var(--font-mono);
+}
+
+.brand-surface .brand-strip__lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mint-text);
+  background: var(--mint-soft);
+  border: 1px solid rgb(79 201 144 / 25%);
+  border-radius: var(--r-pill);
+}
+
+.brand-surface .brand-strip__lock svg {
+  width: 11px;
+  height: 11px;
+}
+
+@media (width <= 600px) {
+  .brand-surface .brand-strip {
+    grid-template-columns: auto 1fr;
+    row-gap: var(--s-4);
+  }
+
+  .brand-surface .brand-strip__lock {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}

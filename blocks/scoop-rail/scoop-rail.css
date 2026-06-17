@@ -1,0 +1,174 @@
+/* scoop-rail — left app navigation rail.
+   CSS lifted verbatim from slicc-app-v13-proposed.html (.rail* rules,
+   lines 186-282), scoped under .scoop-rail. Global tokens + the Permanent
+   Marker @font-face live in styles/styles.css — referenced, not redefined. */
+
+.scoop-rail-inner {
+  background: var(--bg-chrome);
+  border-right: 1px solid var(--border-2);
+  padding: var(--s-4) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  position: relative;
+  width: var(--rail-w);
+}
+
+.scoop-rail-item {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  position: relative;
+  transition: background 120ms, color 120ms;
+}
+
+.scoop-rail-item:hover {
+  background: rgb(255 255 255 / 5%);
+  color: var(--text-soft);
+}
+
+.scoop-rail-item.is-active {
+  background: rgb(79 201 144 / 8%);
+  color: var(--mint-text);
+}
+
+.scoop-rail-item.is-active::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--mint);
+  box-shadow: 0 0 6px rgb(79 201 144 / 50%);
+}
+
+.scoop-rail-item svg {
+  width: 17px;
+  height: 17px;
+}
+
+.scoop-rail-rule {
+  width: 22px;
+  height: 1px;
+  background: var(--border-2);
+  margin: var(--s-2) 0;
+}
+
+.scoop-rail-scoop {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgb(0 0 0 / 78%);
+  position: relative;
+  cursor: pointer;
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 140ms;
+}
+
+.scoop-rail-scoop:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px -2px rgb(0 0 0 / 60%);
+}
+
+/* subtle inner-light gradient gives the scoop a touch of dimension */
+.scoop-rail-scoop-pink {
+  background: radial-gradient(circle at 35% 28%, #ec4a6f, var(--brand-pink) 70%);
+  color: #fff;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 18%), 0 2px 6px -2px rgb(224 36 79 / 50%);
+}
+
+.scoop-rail-scoop-mint {
+  background: radial-gradient(circle at 35% 28%, #5ff5b3, var(--brand-mint) 70%);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 14%), 0 2px 6px -2px rgb(51 230 160 / 35%);
+}
+
+.scoop-rail-scoop-orange {
+  background: radial-gradient(circle at 35% 28%, #ffba3a, var(--brand-orange) 70%);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 16%), 0 2px 6px -2px rgb(255 154 0 / 40%);
+}
+
+.scoop-rail-scoop-plus {
+  background: transparent;
+  color: var(--muted-2);
+  border: 1.5px dashed rgb(255 255 255 / 12%);
+  font-size: 15px;
+  box-shadow: none;
+}
+
+.scoop-rail-scoop-plus:hover {
+  background: rgb(255 255 255 / 4%);
+  color: var(--text);
+  border-color: rgb(255 255 255 / 20%);
+  transform: none;
+}
+
+.scoop-rail-pulse {
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--brand-mint);
+  border: 2px solid var(--bg-chrome);
+  box-shadow: 0 0 0 0 rgb(51 230 160 / 60%), 0 0 6px rgb(51 230 160 / 40%);
+  animation: scoop-rail-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes scoop-rail-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(51 230 160 / 60%), 0 0 6px rgb(51 230 160 / 40%); }
+  50% { box-shadow: 0 0 0 4px rgb(51 230 160 / 0%), 0 0 6px rgb(51 230 160 / 40%); }
+}
+
+/* handwritten "your scoops" marker — anchored to the first scoop's y level.
+   nav block (4 items x 36 + 3 x 8 = 168) + top pad 12 + rule 1+12 = ~193,
+   scoop 01 starts at ~205, center ~221 */
+.scoop-rail-marker {
+  position: absolute;
+  left: 56px;
+  top: 218px;
+  font-family: "Permanent Marker", cursive;
+  color: var(--pink-text);
+  font-size: 12px;
+  line-height: 1;
+  transform: rotate(-3deg);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.9;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+}
+
+.scoop-rail-marker-arrow {
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: -1px;
+  color: var(--pink-text);
+}
+
+.scoop-rail-marker-arrow svg {
+  width: 22px;
+  height: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scoop-rail-pulse {
+    animation: none;
+  }
+
+  .scoop-rail-scoop,
+  .scoop-rail-item {
+    transition: none;
+  }
+}

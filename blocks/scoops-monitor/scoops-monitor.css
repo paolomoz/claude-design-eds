@@ -1,0 +1,164 @@
+/* scoops-monitor — live parallel-scoops monitor.
+   CSS lifted from slicc-app-v13-proposed.html (.scoops-mon + .scoop-card,
+   lines 937-987) and scoped under .scoops-monitor. BEM double-underscore class
+   names from the prototype are flattened to kebab-case (stylelint standard).
+   Global tokens live in styles/styles.css — referenced, never redefined. */
+
+.scoops-monitor .wrap {
+  padding: 0 24px;
+}
+
+/* section title — "Right now" + hint */
+.scoops-monitor .sect-h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: var(--s-3);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text-soft);
+}
+
+/* the title element is a real <h2>; reset to the prototype's sect-h size */
+.scoops-monitor .sect-h h2 {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.scoops-monitor .sect-hint {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--muted-2);
+}
+
+/* live scoops monitor — see what they're doing right now */
+.scoops-monitor .scoops-mon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.scoops-monitor .scoop-card {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) 14px;
+  background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card));
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.scoops-monitor .scoop-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -30%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgb(216 147 66 / 6%), transparent);
+  animation: scoops-monitor-shimmer 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.scoops-monitor .scoop-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgb(0 0 0 / 78%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scoops-monitor .scoop-avatar-pink {
+  background: radial-gradient(circle at 35% 28%, #ec4a6f, var(--brand-pink) 70%);
+  color: #fff;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 18%), 0 2px 5px -1px rgb(224 36 79 / 40%);
+}
+
+.scoops-monitor .scoop-avatar-mint {
+  background: radial-gradient(circle at 35% 28%, #5ff5b3, var(--brand-mint) 70%);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 14%), 0 2px 5px -1px rgb(51 230 160 / 30%);
+}
+
+.scoops-monitor .scoop-avatar-orange {
+  background: radial-gradient(circle at 35% 28%, #ffba3a, var(--brand-orange) 70%);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 16%), 0 2px 5px -1px rgb(255 154 0 / 35%);
+}
+
+.scoops-monitor .scoop-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scoops-monitor .scoop-line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.scoops-monitor .scoop-page {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.scoops-monitor .scoop-task {
+  color: var(--muted);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scoops-monitor .scoop-progress {
+  height: 3px;
+  background: rgb(255 255 255 / 5%);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scoops-monitor .scoop-progress-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 2px;
+  box-shadow: 0 0 4px rgb(216 147 66 / 50%);
+}
+
+.scoops-monitor .scoop-eta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted-2);
+  position: relative;
+  z-index: 1;
+  font-feature-settings: "tnum";
+}
+
+@keyframes scoops-monitor-shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(500%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scoops-monitor .scoop-card::before { animation: none; }
+}

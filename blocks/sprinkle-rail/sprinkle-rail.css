@@ -1,0 +1,73 @@
+/* sprinkle-rail — right utility rail (sprinkles).
+   CSS lifted verbatim from slicc-app-v13-proposed.html (.sprinkle* rules,
+   lines 858-886), scoped under .sprinkle-rail. Global tokens live in
+   styles/styles.css — referenced, not redefined. */
+
+.sprinkle-rail-inner {
+  background: var(--bg-chrome);
+  border-left: 1px solid var(--border-2);
+  padding: var(--s-4) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  width: var(--sprinkle-w);
+  min-height: 100%;
+}
+
+.sprinkle-rail-item {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  position: relative;
+  transition: background 120ms, color 120ms;
+}
+
+.sprinkle-rail-item:hover {
+  background: rgb(255 255 255 / 5%);
+  color: var(--text-soft);
+}
+
+.sprinkle-rail-item.is-active {
+  background: var(--bg-card-2);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%), 0 1px 2px rgb(0 0 0 / 30%);
+}
+
+.sprinkle-rail-item.is-active::before {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--mint);
+  box-shadow: 0 0 6px rgb(79 201 144 / 50%);
+}
+
+.sprinkle-rail-item svg {
+  width: 16px;
+  height: 16px;
+}
+
+.sprinkle-rail-rule {
+  width: 22px;
+  height: 1px;
+  background: var(--border-2);
+  margin: var(--s-2) 0;
+}
+
+.sprinkle-rail-spacer {
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sprinkle-rail-item {
+    transition: none;
+  }
+}
