@@ -1,0 +1,180 @@
+<style>
+  .hirslanden-header {
+    --hh-bg: #fff;
+    --hh-surface: #f7f6f5;
+    --hh-text: #534c46;
+    --hh-text-muted: #72665b;
+    --hh-border: #d0cac6;
+    --hh-primary: #0094d4;
+    --hh-on-primary: #fff;
+    --hh-emergency: #e2231a;
+    --hh-xs: 13px;
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    background: rgb(255 255 255 / 92%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--hh-border);
+    font-family: "Metropolis", arial, helvetica, sans-serif;
+  }
+
+  .hirslanden-header .hh-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+
+  .hirslanden-header .hh-utility {
+    background: rgb(247 246 245 / 50%);
+    font-size: var(--hh-xs);
+  }
+
+  .hirslanden-header .hh-utility__inner {
+    display: flex;
+    justify-content: flex-end;
+    gap: 24px;
+    align-items: center;
+    padding: 6px 0;
+    color: var(--hh-text-muted);
+  }
+
+  .hirslanden-header .hh-utility a {
+    color: var(--hh-text-muted);
+    text-decoration: none;
+  }
+
+  .hirslanden-header .hh-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 16px;
+    border-left: 1px solid var(--hh-border);
+  }
+
+  .hirslanden-header .hh-lang a {
+    padding: 4px 8px;
+    border-radius: 9999px;
+  }
+
+  .hirslanden-header .hh-lang a[aria-current="true"] {
+    background: var(--hh-primary);
+    color: var(--hh-on-primary);
+  }
+
+  .hirslanden-header .hh-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+  }
+
+  .hirslanden-header .hh-logo img {
+    height: 50px;
+    width: auto;
+  }
+
+  .hirslanden-header .hh-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .hirslanden-header .hh-links a {
+    color: var(--hh-text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .hirslanden-header .hh-emergency {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--hh-emergency);
+    color: var(--hh-on-primary) !important;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: var(--hh-xs);
+    letter-spacing: 0.04em;
+  }
+
+  .hirslanden-header .hh-toggle,
+  .hirslanden-header .hh-burger {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .hirslanden-header .hh-utility,
+    .hirslanden-header .hh-lang {
+      display: none;
+    }
+
+    .hirslanden-header .hh-links {
+      position: fixed;
+      inset: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+      background: var(--hh-bg);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 90;
+    }
+
+    .hirslanden-header .hh-toggle:checked ~ .hh-nav .hh-links {
+      transform: translateX(0);
+    }
+
+    .hirslanden-header .hh-burger {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 95;
+    }
+
+    .hirslanden-header .hh-burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--hh-text);
+    }
+  }
+</style>
+<div class="hirslanden-header">
+  <input type="checkbox" id="hh-toggle" class="hh-toggle" aria-hidden="true">
+  <div class="hh-utility">
+    <div class="hh-container hh-utility__inner">
+      <a href="/contact">Contact</a>
+      <a href="/media">Media</a>
+      <span class="hh-lang" aria-label="Language">
+        <a href="#" aria-label="Deutsch">DE</a>
+        <a href="#" aria-label="Français">FR</a>
+        <a href="#" aria-current="true" aria-label="English">EN</a>
+      </span>
+    </div>
+  </div>
+  <nav class="hh-container hh-nav" aria-label="Primary">
+    <a class="hh-logo" href="/" aria-label="Hirslanden home"><img src="https://main--claude-design-eds--paolomoz.aem.page/img/hirslanden/logo.png" alt="Hirslanden" width="188" height="54"></a>
+    <ul class="hh-links">
+      <li><a href="/healthline">Healthline</a></li>
+      <li><a href="/hospitals">Hospitals</a></li>
+      <li><a href="/doctors">Doctors</a></li>
+      <li><a href="/specialities">Specialities</a></li>
+      <li><a href="/search">Search</a></li>
+      <li><a href="/emergency" class="hh-emergency" aria-label="Emergency 144"><span>Emergency</span><strong>144</strong></a></li>
+    </ul>
+    <label for="hh-toggle" class="hh-burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </label>
+  </nav>
+</div>

@@ -1,0 +1,132 @@
+/* ── Locations 2×2 ─────────────────────────────────────────── */
+.locations {
+  padding-block: var(--pad-editorial);
+  background: var(--bg);
+}
+
+/* max-width content wrap (prototype .container) */
+.locations .locations-wrap {
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding-inline: var(--gutter, 24px);
+}
+
+.locations .locations-head {
+  margin-bottom: 48px;
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.locations .kicker {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 0 0 16px;
+}
+
+.locations .locations-head h2 {
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  font-size: var(--fs-2xl);
+}
+
+.locations .locations-head p {
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+  margin: 0;
+}
+
+.locations .locations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.locations .region {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--on-primary);
+  display: block;
+  background: var(--surface);
+}
+
+.locations .region-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms cubic-bezier(0.42, 0, 0, 1);
+}
+
+.locations .region:hover .region-img {
+  transform: scale(1.02);
+}
+
+.locations .region::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 45%, rgb(0 0 0 / 65%) 100%);
+  pointer-events: none;
+}
+
+.locations .region-cap {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+}
+
+.locations .region-name {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--on-primary);
+}
+
+.locations .region-count {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--on-primary);
+  opacity: 0.85;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (width <= 768px) {
+  .locations .locations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locations .region-img {
+    transition: none !important;
+  }
+
+  .locations .region:hover .region-img {
+    transform: none !important;
+  }
+
+  .locations * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

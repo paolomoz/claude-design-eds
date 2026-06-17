@@ -1,0 +1,103 @@
+/* ─────────────────────────────────────────────────────────────
+ * photo-band — split-media editorial band
+ * CSS lifted verbatim from home-C-cinematic.html (.photo-band*,
+ * lines 230-266 + responsive 500-503), scoped under .photo-band.
+ * Class names kebab-cased for stylelint (no BEM __/--).
+ * Variants: .photo-band-reverse (image right) and
+ *           .photo-band-surface (tinted background).
+ * ───────────────────────────────────────────────────────────── */
+
+.photo-band {
+  padding-block: var(--pad-editorial);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Surface tint variant — full-bleed: the section background is tinted,
+   the content stays inside the max-width wrap. */
+main .section.photo-band-container:has(.photo-band-surface),
+.photo-band.photo-band-surface {
+  background: var(--surface);
+}
+
+/* Recreate the prototype's .container max-width wrap around the content. */
+.photo-band-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  width: 100%;
+}
+
+.photo-band-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  width: 100%;
+}
+
+.photo-band-media {
+  aspect-ratio: 4 / 5;
+  max-height: 60vh;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.photo-band-grid-reverse > .photo-band-media {
+  order: 2;
+}
+
+.photo-band-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-band-copy .kicker {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 0 0 16px;
+}
+
+.photo-band-copy h2 {
+  font-size: var(--fs-2xl);
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.photo-band-copy p {
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  max-width: 520px;
+}
+
+/* No entrance animation is applied (the prototype's data-anim is dropped),
+   but honor reduced-motion defensively for any inherited transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .photo-band,
+  .photo-band * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (width <= 960px) {
+  .photo-band-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .photo-band-media {
+    aspect-ratio: 4 / 3;
+    max-height: 50vh;
+  }
+
+  .photo-band-grid-reverse > .photo-band-media {
+    order: 0;
+  }
+}

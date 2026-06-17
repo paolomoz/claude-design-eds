@@ -1,0 +1,211 @@
+<style>
+  .hirslanden-footer {
+    --hf-bg: #fff;
+    --hf-surface: #f7f6f5;
+    --hf-text: #534c46;
+    --hf-text-muted: #72665b;
+    --hf-border: #d0cac6;
+    --hf-primary: #0094d4;
+    --hf-on-primary: #fff;
+    --hf-emergency: #e2231a;
+    --hf-xs: 13px;
+    --hf-sm: 16px;
+    --hf-lg: 25px;
+    background: var(--hf-bg);
+    padding-top: 96px;
+    padding-bottom: 32px;
+    border-top: 1px solid var(--hf-border);
+    font-family: "Metropolis", arial, helvetica, sans-serif;
+    color: var(--hf-text);
+    display: block;
+  }
+
+  .hirslanden-footer .hf-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+
+  .hirslanden-footer .hf-wordmark {
+    font-weight: 700;
+    font-size: clamp(40px, 11vw, 180px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--hf-primary);
+    opacity: 0.92;
+    margin-bottom: 56px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hirslanden-footer .hf-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .hirslanden-footer .hf-top h3 {
+    font-size: var(--hf-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 16px;
+    font-weight: 700;
+  }
+
+  .hirslanden-footer .hf-brand p {
+    color: var(--hf-text-muted);
+    max-width: 320px;
+    margin: 0 0 16px;
+  }
+
+  .hirslanden-footer .hf-brand .hf-logo img {
+    height: 40px;
+    width: auto;
+    margin-bottom: 24px;
+  }
+
+  .hirslanden-footer .hf-emergency {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 12px 18px;
+    background: var(--hf-emergency);
+    color: var(--hf-on-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .hirslanden-footer .hf-emergency__num {
+    font-size: var(--hf-lg);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .hirslanden-footer .hf-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hirslanden-footer .hf-col a {
+    color: var(--hf-text-muted);
+    text-decoration: none;
+    font-size: var(--hf-sm);
+  }
+
+  .hirslanden-footer .hf-col a:hover {
+    color: var(--hf-primary);
+  }
+
+  .hirslanden-footer .hf-social {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .hirslanden-footer .hf-social a {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    background: var(--hf-surface);
+    color: var(--hf-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--hf-xs);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .hirslanden-footer .hf-legal {
+    border-top: 1px solid var(--hf-border);
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: var(--hf-xs);
+    color: var(--hf-text-muted);
+  }
+
+  .hirslanden-footer .hf-legal a {
+    color: var(--hf-text-muted);
+    text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    .hirslanden-footer .hf-top {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hirslanden-footer .hf-top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<div class="hirslanden-footer">
+  <div class="hf-container">
+    <div class="hf-wordmark">Hirslanden</div>
+    <div class="hf-top">
+      <div class="hf-brand">
+        <a class="hf-logo" href="/" aria-label="Hirslanden home"><img src="https://main--claude-design-eds--paolomoz.aem.page/img/hirslanden/logo.png" alt="Hirslanden" width="188" height="54"></a>
+        <p>16 hospitals, more than 300 medical centres and institutes and over 3 000 doctors — your health is our focus.</p>
+        <a class="hf-emergency" href="/emergency" aria-label="Emergency 144">
+          <span>Emergency number</span>
+          <span class="hf-emergency__num">144</span>
+        </a>
+        <div class="hf-social" aria-label="Follow us">
+          <a href="https://www.facebook.com/Hirslanden" aria-label="Facebook">Fb</a>
+          <a href="https://www.instagram.com/hirslanden/" aria-label="Instagram">Ig</a>
+          <a href="https://www.tiktok.com/@hirslanden" aria-label="TikTok">Tt</a>
+          <a href="https://ch.linkedin.com/company/hirslanden" aria-label="LinkedIn">In</a>
+          <a href="https://www.youtube.com/user/Privatklinikgruppe" aria-label="YouTube">Yt</a>
+          <a href="https://blog.hirslanden.ch/" aria-label="Blog">Bl</a>
+        </div>
+      </div>
+      <div class="hf-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/hospital-stay">Stay</a></li>
+          <li><a href="/hirslanden-baby">Maternity</a></li>
+          <li><a href="/assurance">Assurance</a></li>
+          <li><a href="https://www.hirslanden.com/en/international/home.html">International Patients</a></li>
+          <li><a href="/courses-and-events">Courses &amp; Events</a></li>
+        </ul>
+      </div>
+      <div class="hf-col">
+        <h3>Service Offerings</h3>
+        <ul>
+          <li><a href="/hospitals-and-centres">Hospitals &amp; Centres</a></li>
+          <li><a href="/hirslanden-near-you">Cantonal overview</a></li>
+          <li><a href="/doctor-search">Find a Doctor</a></li>
+          <li><a href="/hotel-style-services">Hotels &amp; Services</a></li>
+        </ul>
+      </div>
+      <div class="hf-col">
+        <h3>About us</h3>
+        <ul>
+          <li><a href="/the-hirslanden-group">Hirslanden Group</a></li>
+          <li><a href="/quality">Quality</a></li>
+          <li><a href="https://careers.hirslanden.ch/" target="_blank" rel="noopener">Jobs &amp; Career</a></li>
+          <li><a href="/media-news">Media &amp; News</a></li>
+          <li><a href="/data-protection">Dataprotection</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hf-legal">
+      <span>© Hirslanden Group 2026</span>
+      <a href="/terms-of-use">Terms Of Use</a>
+      <a href="/data-protection-statement">Privacy Policy Website</a>
+      <a href="/cookie-notice">Cookie Policy</a>
+      <a href="/impressum">Legal Information</a>
+    </div>
+  </div>
+</div>

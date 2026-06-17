@@ -1,0 +1,115 @@
+/* ── Events ────────────────────────────────────────────────── */
+.events {
+  padding-block: var(--pad-section);
+  background: var(--bg);
+}
+
+/* max-width content wrap (prototype .container) */
+.events .events-wrap {
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding-inline: var(--gutter, 24px);
+}
+
+.events .events-head {
+  margin-bottom: 32px;
+}
+
+.events .kicker {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 0 0 16px;
+}
+
+.events .events-head h2 {
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: var(--fs-2xl);
+}
+
+.events .events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.events .event {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.events .event-date {
+  text-align: center;
+  padding: 8px;
+  background: var(--surface);
+}
+
+.events .event-day {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--primary);
+}
+
+.events .event-month {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.events .event-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.events .event-title {
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.events .event-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.events .text-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (width <= 768px) {
+  .events .event {
+    grid-template-columns: 64px 1fr;
+  }
+
+  .events .event .text-link {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .events * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
