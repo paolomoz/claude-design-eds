@@ -180,7 +180,15 @@ On test-14 both blocks were written against a fixed row/cell contract that didn'
 The probe printed "red flags: none" on test-14 round 1 while the EDS was missing an entire taproom section AND the contact CTA — because the red-flag set only covered stretch/flush/blank, and the metrics JSON required a human to notice proto had 2 taproom-head boxes / 4 headings vs EDS 1 / 3. A missing section/dropped sub-element is the highest-severity conversion defect and was invisible to the automated pass. Same blind spot #47 fixed for image count.
 **Implemented:** `visual-diff.mjs` now emits a `CONTENT GAP` advisory when proto vs EDS differ materially in heading count (≥3), contentBox count (proto ≥4 and EDS <60%), or main-height ratio (<0.6) — "EDS dropped/duplicated authored content, eyeball the section pair." (mirrors the #47 image-count rule.)
 
-**Implemented (#40–49):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
+### 50. 🟠 DA flattens semantic `<dl>`/`<ol>`/`<ul>` to single-cell delimited lines — parse by delimiter, not tag (refines #48)
+test-15 broke the same two blocks again: the real authored shape is neither a `<dl>` cell nor #48's `dt|dd` 2-cell rows — it's a sequence of single-cell `<p>` lines with inline delimiters (`Address: PLACEHOLDER · …` key:value; `01 · Tabernacle · Imp. Stout · 6.5%` spec line; `Heber Valley · Utah · Est 1996` foot). A block querying `dl,dt`/`ol,ul,li` finds nothing and silently drops the whole data table/tap list — invisible to a render check (the card head still shows). Caught by the #49 CONTENT GAP flag (1062px vs 1935px).
+**Implemented:** Step 8 — the canonical contract is "one line per row, delimiters carry structure"; parse `Key: value` on the colon, split `·`-delimited lines into spans, detect a list by its preceding heading; never rely on authored `<dl>/<ol>/<ul>` surviving. Checklist: assert the data container's row count is non-zero post-decorate.
+
+### 51. 🟡 Eyebrow vs lede: "first link-free `<p>`" swaps them — disambiguate by order/length (refines #42)
+page-intro took the first link-free `<p>` as the lede, but the short eyebrow line is also a link-free `<p>` and comes first, so eyebrow and lede swapped. Recurs on any lead/intro with both a small eyebrow and a body paragraph.
+**Implemented:** Step 8 #42 heuristic refined — the canonical lead order is eyebrow → heading → lede; the eyebrow is the short/uppercase line BEFORE the heading, the lede the sentence AFTER it; classify by document order/length, not "first paragraph".
+
+**Implemented (#40–51):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule. (Tooling: convert.workflow.js arg-parse/fail-fast + title/description plain-prose guard + validate-phase leak gate; .eslintignore excludes the vendored runtime.)
 
 ---
 
