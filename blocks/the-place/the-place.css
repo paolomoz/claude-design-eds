@@ -74,6 +74,24 @@
   max-width: 60ch;
 }
 
+/* Text link (prototype .ds-text-link) — white, yellow underline, not a button. */
+.the-place .the-place-cta {
+  align-self: flex-start;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--surface-white);
+  border-bottom: 2px solid var(--brand-yellow);
+  padding-bottom: 4px;
+  transition: color 0.25s ease;
+}
+
+.the-place .the-place-cta:hover {
+  color: var(--brand-yellow);
+}
+
 @media (width <= 1023px) {
   .the-place .the-place-overlay {
     padding-inline: var(--section-pad-tablet);

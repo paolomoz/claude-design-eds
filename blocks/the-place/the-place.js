@@ -37,12 +37,17 @@ function isHeading(el) {
   return el.matches('h1, h2, h3, h4, h5, h6') ? el : el.querySelector('h1, h2, h3, h4, h5, h6');
 }
 
+function isLink(el) {
+  return el.matches('a') ? el : el.querySelector('a');
+}
+
 export default async function decorate(block) {
   const nodes = collectNodes(block);
   if (!nodes.length) return;
 
   let media = null;
   let heading = null;
+  let link = null;
   const texts = [];
 
   nodes.forEach((el) => {
@@ -50,6 +55,10 @@ export default async function decorate(block) {
     if (m && !media) { media = m; return; }
     const h = isHeading(el);
     if (h && !heading) { heading = h; return; }
+    // The CTA is a bare text link (prototype .ds-text-link), authored as a
+    // plain <a> — pull it out before it falls into the body texts.
+    const a = isLink(el);
+    if (a && !link) { link = a; return; }
     if (el.textContent.trim()) texts.push(el);
   });
 
@@ -88,6 +97,10 @@ export default async function decorate(block) {
     p.classList.add('the-place-body');
     overlay.append(p);
   });
+  if (link) {
+    link.classList.add('the-place-cta');
+    overlay.append(link);
+  }
 
   const children = [];
   if (media) children.push(media);
