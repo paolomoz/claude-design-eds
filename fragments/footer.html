@@ -1,0 +1,95 @@
+<style>
+  .surly-footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: var(--s-6) 0 var(--s-4);
+    margin-top: var(--s-7);
+  }
+  .surly-footer .inner {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding: 0 var(--margin-d);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: var(--s-5);
+  }
+  .surly-footer h4 {
+    font-family: var(--display);
+    font-size: var(--fs-h3);
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+  .surly-footer p,
+  .surly-footer a,
+  .surly-footer li {
+    font-family: var(--body);
+    font-size: var(--fs-caption);
+    color: var(--paper);
+    text-decoration: none;
+    line-height: 1.7;
+  }
+  .surly-footer a:hover { color: var(--yellow); }
+  .surly-footer ul { list-style: none; }
+  .surly-footer .rewards {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    padding: 12px 20px;
+    font-family: var(--body);
+    font-size: var(--fs-caption);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 16px;
+    border: 1px solid var(--red);
+  }
+  .surly-footer .rewards:hover {
+    background: transparent;
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .surly-footer .colophon {
+    border-top: 1px solid var(--charcoal);
+    margin-top: var(--s-5);
+    padding-top: 24px;
+    font-size: var(--fs-micro);
+    color: var(--stone-soft);
+    text-align: center;
+  }
+  @media (max-width: 640px) {
+    .surly-footer .inner { grid-template-columns: 1fr; padding: 0 var(--margin-m); }
+  }
+</style>
+<div class="surly-footer">
+  <div class="inner">
+    <div>
+      <h4>Surly Brewing Co.</h4>
+      <p>Independent Minneapolis craft brewery since 2006.</p>
+      <a href="/rewards" class="rewards">Join Surly Rewards &rarr;</a>
+    </div>
+    <div>
+      <h4>Beer Hall</h4>
+      <p class="num">520 Malcolm Ave SE<br>Minneapolis, MN 55414</p>
+      <p style="margin-top:12px">Mon&ndash;Thu &nbsp; 3PM&ndash;9PM<br>Fri &nbsp; 3PM&ndash;12AM<br>Sat &nbsp; 11AM&ndash;12AM<br>Sun &nbsp; 11AM&ndash;10PM</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="/beer">Beers</a></li>
+        <li><a href="/our-story">Our story</a></li>
+        <li><a href="/find">Find Surly</a></li>
+        <li><a href="/gives-a-damn">Surly Gives a Damn</a></li>
+        <li><a href="/events">Events</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:beer@surlybrewing.com">beer@surlybrewing.com</a></li>
+        <li><a href="/press">Press</a></li>
+        <li><a href="/careers">Jobs &amp; careers</a></li>
+        <li><a href="/accessibility">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon">&copy; 2026 Surly Brewing Co. &middot; All Rights Reserved &middot; Drink Surly responsibly.</div>
+</div>

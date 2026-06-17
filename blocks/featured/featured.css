@@ -1,0 +1,95 @@
+/*
+ * Featured block — "Our beers" card strip.
+ * CSS lifted verbatim from the prototype `.featured` section (home.html),
+ * scoped under `.featured`. Global tokens + button system live in
+ * styles/styles.css — referenced here, not redefined.
+ *
+ * The section background (--ink) stays full-bleed via the section wrapper;
+ * the CONTENT is constrained to a centred max-width wrap.
+ */
+
+.featured {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--s-6) 0 var(--s-7);
+}
+
+/* Centred content wrap (recreates the prototype's .inner). */
+.featured > .head,
+.featured > .grid {
+  max-width: var(--max-content);
+  margin-inline: auto;
+  padding-inline: var(--margin-d);
+}
+
+.featured .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--charcoal);
+  padding-bottom: 24px;
+  margin-bottom: 48px;
+}
+
+.featured .head h2 {
+  color: var(--paper);
+  font-size: var(--fs-display-md);
+}
+
+.featured .head a {
+  color: var(--yellow);
+  text-decoration: none;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--yellow);
+  padding-bottom: 4px;
+}
+
+.featured .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.featured .card {
+  background: var(--charcoal);
+  border: 1px solid var(--charcoal);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-decoration: none;
+  color: var(--paper);
+  transition: border-color 0.15s ease;
+}
+
+.featured .card:hover {
+  border-color: var(--red);
+}
+
+.featured .card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.featured .card h3 {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  color: var(--paper);
+  line-height: 1;
+}
+
+.featured .card .style {
+  color: var(--stone);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (width <= 900px) {
+  .featured .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

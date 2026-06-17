@@ -1,0 +1,64 @@
+/*
+ * Twenty block (role: band)
+ * Lifted from surly-mode-a home.html prototype (.twenty, lines 56-99),
+ * scoped under .twenty. Full-bleed red band; content wrapped at max-content.
+ */
+
+.twenty {
+  padding: var(--s-7) 0;
+  overflow: hidden;
+  color: #fff;
+  background: var(--red);
+  border-bottom: 1px solid var(--ink);
+}
+
+.twenty .wrap {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--s-5);
+  align-items: end;
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 var(--margin-d);
+}
+
+.twenty .num-card {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 360px;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+}
+
+.twenty .label-row {
+  margin-top: 12px;
+  font-family: var(--body);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.twenty .col-right p {
+  margin-bottom: 24px;
+  font-size: var(--fs-body-lg);
+  line-height: 1.5;
+  color: #fff;
+}
+
+.twenty .actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (width <= 640px) {
+  .twenty .wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .twenty .num-card {
+    font-size: 200px;
+  }
+}

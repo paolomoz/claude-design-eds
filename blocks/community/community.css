@@ -1,0 +1,62 @@
+/*
+ * Community block — enumeration spread.
+ * CSS lifted verbatim from the prototype's .community section, scoped under
+ * the block class. The section background stays full-bleed; .inner wraps the
+ * content to max-content. Global tokens live in styles/styles.css.
+ */
+
+.community {
+  background: var(--paper);
+  padding: var(--s-7) 0 var(--s-7);
+}
+
+.community .inner {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 var(--margin-d);
+}
+
+.community .pre {
+  font-family: var(--body);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 24px;
+}
+
+.community .roster {
+  list-style: none;
+  columns: 2;
+  column-gap: 64px;
+  font-family: var(--display);
+  font-size: var(--fs-display-md);
+  line-height: 1.02;
+}
+
+.community .roster li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ink);
+  break-inside: avoid;
+}
+
+.community .roster li:nth-child(odd) {
+  color: var(--ink);
+}
+
+.community .roster li:nth-child(even) {
+  color: var(--red);
+}
+
+.community .closing {
+  margin-top: 64px;
+  font-size: var(--fs-body-lg);
+  max-width: 64ch;
+}
+
+@media (width <= 900px) {
+  .community .roster {
+    columns: 1;
+    font-size: var(--fs-h2);
+  }
+}

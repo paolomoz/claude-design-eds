@@ -1,0 +1,73 @@
+/* FIND-OUR-BEER strip — lifted verbatim from prototype, scoped under .find-strip.
+   Tokens (--red, --yellow, --ink, spacing, type scale, --display, --body,
+   --max-content, --margin-*) are global in styles/styles.css. */
+
+.find-strip {
+  background: var(--red);
+  color: white;
+  padding: var(--s-6) 0;
+  margin-top: var(--s-7);
+}
+
+.find-strip .wrap {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 var(--margin-d);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  align-items: center;
+}
+
+.find-strip .head {
+  font-family: var(--display);
+  font-size: var(--fs-display-md);
+  line-height: 0.95;
+  color: white;
+  margin: 0;
+}
+
+.find-strip .zip {
+  display: flex;
+  gap: 0;
+  border: 2px solid white;
+  background: rgb(255 255 255 / 6%);
+}
+
+.find-strip input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  padding: 18px 20px;
+  color: white;
+  font-family: var(--body);
+  font-size: var(--fs-body);
+  letter-spacing: 0.04em;
+}
+
+.find-strip input::placeholder { color: rgb(255 255 255 / 70%); }
+
+.find-strip button {
+  background: white;
+  color: var(--red);
+  border: 0;
+  padding: 18px 32px;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.find-strip button:hover {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+@media (width <= 640px) {
+  .find-strip .wrap {
+    grid-template-columns: 1fr;
+    padding: 0 var(--margin-m);
+  }
+}

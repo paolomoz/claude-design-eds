@@ -1,325 +1,312 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * Surly Brewing Co. — foundation styles
+ * Tokens lifted verbatim from the prototype :root (Mode A, modular 1.250 scale).
  */
+
+/* ============================================================
+   Fonts
+   ------------------------------------------------------------
+   Body font: Lekton (monospace, SIL OFL 1.1) — self-hosted from
+   @fontsource/lekton. Gated via body.session so it never paints at
+   first render; a metric-matched Courier New fallback eliminates CLS.
+
+   Display font: "Hebden Incised" is Surly's proprietary, foundry-direct
+   display face (served from surlybrewing.com, NOT redistributable / not
+   OFL). We do NOT self-host it. Headings fall back to a system serif
+   stack ("Times New Roman", serif). Zero-CLS cannot be guaranteed for
+   the display face; impact is limited to large headings only.
+   ============================================================ */
+
+@font-face {
+  font-family: Lekton;
+  src: url("/styles/fonts/lekton-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Lekton;
+  src: url("/styles/fonts/lekton-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Display face — self-hosted from the prototype (surlybrewing.com webfont).
+   Without this @font-face the --display stack falls through to Times New
+   Roman/serif and the headings render as a plain light serif. */
+@font-face {
+  font-family: "Hebden Incised";
+  src: url("/styles/fonts/hebden-incised.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-matched fallback: renamed after the system mono font so any
+   reference to "Courier New" in a stack picks up Lekton's line box.
+   Calibration computed from the woff2 with fonttools (Courier New ref). */
+@font-face {
+  font-family: "Courier New";
+  src: local("Courier New");
+  size-adjust: 83.32%;
+  ascent-override: 90.01%;
+  descent-override: 30.00%;
+  line-gap-override: 0%;
+}
 
 :root {
   /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --red: #e81d2c;
+  --red-deep: #b91622;
+  --red-hover: #d12026;
+  --yellow: #f5d50a;
+  --ink: #0a0a0a;
+  --paper: #f7f4ee;
+  --paper-pure: #fff;
+  --stone: #5e5751;
+  --stone-soft: #8a8580;
+  --charcoal: #26201e;
+  --display: "Hebden Incised", "Times New Roman", serif;
+  --body: "Lekton", "Courier New", monospace;
+  --font-body: "Lekton", "Courier New", monospace;
+  --fallback: "Helvetica Neue", arial, sans-serif;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* Modular 1.250 type scale */
+  --fs-display-xxl: 168px;
+  --fs-display-xl: 128px;
+  --fs-display-lg: 96px;
+  --fs-display-md: 72px;
+  --fs-h1: 56px;
+  --fs-h2: 42px;
+  --fs-h3: 28px;
+  --fs-body-lg: 21px;
+  --fs-body: 17px;
+  --fs-caption: 13px;
+  --fs-micro: 11px;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* spacing scale */
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 40px;
+  --s-5: 64px;
+  --s-6: 104px;
+  --s-7: 168px;
+  --s-8: 272px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* layout */
+  --gutter: 24px;
+  --margin-d: 64px;
+  --margin-m: 24px;
+  --max-content: 1320px;
 
-  /* nav height */
-  --nav-height: 64px;
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --weight-bold: 700;
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-@media (width >= 900px) {
+@media (width <= 640px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    --fs-display-xxl: 88px;
+    --fs-display-xl: 72px;
+    --fs-display-lg: 56px;
+    --fs-display-md: 40px;
+    --fs-h1: 36px;
+    --fs-h2: 28px;
+    --fs-h3: 22px;
   }
 }
 
-body {
-  display: none;
+/* ============================================================
+   Reset
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  padding: 0;
 }
 
-body.appear {
+html {
+  scroll-behavior: smooth;
+}
+
+img {
   display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ============================================================
+   Body — font gating (CLS-safe)
+   First paint uses metric-matched Courier New; body.session
+   (added by ak.js) swaps in the brand body font (Lekton).
+   Body stays VISIBLE at all times — no display:none gate.
+   ============================================================ */
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Courier New", courier, monospace;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+}
+
+body.session {
+  font-family: var(--font-body);
 }
 
 header {
-  height: var(--nav-height);
-}
-
-header .header,
-footer .footer {
-  visibility: hidden;
-}
-
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
-  visibility: visible;
+  min-height: 73px;
 }
 
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
 
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+p {
+  text-wrap: pretty;
 }
 
-code,
-pre {
-  font-size: var(--body-font-size-s);
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
-pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
-  overflow-x: auto;
-  white-space: pre;
-}
-
-main > div {
-  margin: 40px 16px;
-}
-
-input,
-textarea,
-select,
-button {
-  font: inherit;
-}
-
-/* links */
-a:any-link {
-  color: var(--link-color);
+a {
+  color: inherit;
   text-decoration: none;
-  overflow-wrap: break-word;
 }
 
-a:hover {
-  color: var(--link-hover-color);
-  text-decoration: underline;
+/* ============================================================
+   EDS section scaffold
+   ============================================================ */
+
+main .section {
+  display: block;
 }
 
-/* buttons */
-p.button-wrapper {
-  margin: 12px 0;
+main .section > .default-content,
+main .section > .block-content {
+  display: block;
 }
 
-a.button:any-link,
-button.button {
-  box-sizing: border-box;
+main > div,
+.has-template,
+div[data-status] {
+  display: none;
+}
+
+/* ============================================================
+   Global button system
+   Author markup → auto class (decorateButton in ak.js):
+     <strong><a>      → .btn.btn-primary  (red fill, white text)
+     <em><a>          → .btn.btn-secondary (outline, color-aware)
+     <em><strong><a>  → .btn.btn-accent   (paper fill on dark)
+   ============================================================ */
+
+a.btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
-  text-decoration: none;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--body);
+  font-size: var(--fs-caption);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
-a.button[aria-disabled="true"],
-button.button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
+a.btn-primary {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
 }
 
-a.button.primary,
-button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
-  color: var(--background-color);
+a.btn-primary:hover {
+  background: var(--red-deep);
+  border-color: var(--red-deep);
 }
 
-a.button.primary:hover,
-a.button.primary:focus-visible,
-button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
+a.btn-secondary {
+  background: transparent;
+  color: currentcolor;
+  border-color: currentcolor;
 }
 
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+a.btn-secondary:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
 }
 
-a.button.secondary,
-button.button.secondary {
-  border-color: var(--text-color);
-  background-color: transparent;
-  color: var(--text-color);
+/* On light (paper) surfaces the outline tint resolves to ink. */
+main .section:not(.twenty, .featured) a.btn-secondary {
+  border-color: var(--ink);
+  color: var(--ink);
 }
 
-a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--light-color);
-  color: var(--dark-color);
+main .section:not(.twenty, .featured) a.btn-secondary:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
 }
 
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+a.btn-accent {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
 }
 
-/* high-impact call-to-action */
-a.button.accent,
-button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
+a.btn-accent:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
 }
 
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-main img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-}
-
-.icon {
-  display: inline-block;
-  height: 24px;
-  width: 24px;
-}
-
-.icon img {
-  height: 100%;
-  width: 100%;
-}
-
-/* sections */
-main > .section {
-  margin: 40px 0;
-}
-
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
-}
-
-main > .section:first-of-type {
-  margin-top: 0;
-}
-
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
-}
-
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
 }

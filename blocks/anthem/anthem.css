@@ -1,0 +1,65 @@
+/*
+ * Anthem block — lifted verbatim from the prototype's .anthem panel
+ * (stardust/prototypes/home.html), scoped under .anthem.
+ * Paper background full-bleed; content wrapped at max-content.
+ */
+
+.anthem {
+  background: var(--paper);
+  padding: var(--s-7) 0;
+}
+
+/* Content wrap — the prototype's .inner. Background stays full-bleed,
+   the CONTENT is wrapped at max-content with the page gutter. */
+.anthem .anthem-wrap {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  padding: 0 var(--margin-d);
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--s-5);
+  align-items: center;
+}
+
+.anthem .anthem-text h2 {
+  font-size: var(--fs-display-md);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.anthem .anthem-text h2 em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.anthem .anthem-text p {
+  font-size: var(--fs-body);
+}
+
+.anthem .anthem-text p + p {
+  margin-top: 24px;
+}
+
+/* CTA — solid red primary on the light paper surface, with breathing room
+   above it (prototype authored the link in a paragraph with margin-top). */
+.anthem .anthem-text a.btn {
+  margin-top: 24px;
+}
+
+.anthem .anthem-media img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Empty image cell fallback — a dark block keeps the 3/2 cell present. */
+.anthem .anthem-media:empty {
+  aspect-ratio: 3 / 2;
+  background: var(--ink);
+}
+
+@media (width <= 900px) {
+  .anthem .anthem-wrap {
+    grid-template-columns: 1fr;
+  }
+}
