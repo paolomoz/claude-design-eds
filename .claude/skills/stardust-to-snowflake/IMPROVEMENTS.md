@@ -264,7 +264,15 @@ The hero produced 7 jumbled slides with 0 CTAs: it assumed eyebrow→heading ord
 test-26's channel-archive prepended a `▶` to a section h2 that already began with `▶` → `▶ ▶ Latest signal`. Silent (lint clean); caught by the visual-diff text-match. The same block already stripped it for card links but not the title.
 **Implemented:** Step 8 (near #55) — when decorate() prepends a fixed marker (glyph/badge/`CH NN`) to authored heading/link text, strip a matching leading occurrence first, consistently at every injection site.
 
-**Implemented (#40–70):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 71. 🟠 The cascade collector must be CELL-LEVEL, not block-level (corrects #68)
+test-27: all 6 blocks used `:scope > div > div > *`; the content authored each element in its OWN row, and text-only cells (eyebrow/lede/count/meta/date) hold a bare text node, so `> *` dropped them. #68's BLOCK-level chain doesn't help: its first tier succeeds whenever any cell has a child element, so the bare-text cells are still dropped in mixed blocks. This is the common one-element-per-row DA shape.
+**Implemented:** Step 8 + workflow brief — canonical `collectNodes()` iterates `:scope > div > div` CELLS and recovers each (child elements if any, else synthesize a `<p>` from the cell text). Checklist: assert text-only cells (counts/meta/eyebrows) survive.
+
+### 72. 🟡 Media classifiers must match `<img>` as well as `<picture>`
+Two test-27 bands matched only `picture`/`querySelector('picture')`; a bare authored `<img>` (harness / un-pipelined / pasted URL) was dropped → empty media box.
+**Implemented:** Step 8 #53 — every media test uses `picture, img` (`el.matches('picture, img') ? el : el.querySelector('picture, img')`).
+
+**Implemented (#40–72):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 
