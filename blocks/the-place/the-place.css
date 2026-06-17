@@ -1,0 +1,93 @@
+/* ==========================================================================
+   the-place — full-bleed cinematic photo with overlay
+   Lifted verbatim from the prototype's [data-section="the-place"] /
+   .ds-the-place-* rules, scoped under .the-place. Tokens are global.
+   ========================================================================== */
+
+.the-place {
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.the-place .the-place-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.the-place .the-place-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 30%) 50%, rgb(0 0 0 / 0%) 100%);
+  pointer-events: none;
+}
+
+.the-place .the-place-tag {
+  position: absolute;
+  top: var(--section-pad-desktop);
+  right: var(--section-pad-desktop);
+  background: var(--brand-yellow);
+  color: var(--brand-black);
+  padding: 4px 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.the-place .the-place-overlay {
+  position: relative;
+  padding: 96px var(--section-pad-desktop);
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-lg);
+  max-width: 70ch;
+}
+
+.the-place .the-place-h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--surface-white);
+  margin: 0;
+}
+
+.the-place .the-place-body {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--surface-white);
+  margin: 0;
+  max-width: 60ch;
+}
+
+@media (width <= 1023px) {
+  .the-place .the-place-overlay {
+    padding-inline: var(--section-pad-tablet);
+  }
+}
+
+@media (width <= 640px) {
+  .the-place .the-place-overlay {
+    padding-inline: var(--section-pad-mobile);
+    padding-block: 64px;
+  }
+
+  .the-place .the-place-tag {
+    right: var(--section-pad-mobile);
+    top: var(--section-pad-mobile);
+  }
+}

@@ -1,0 +1,76 @@
+<style>
+  header.header { display: block; }
+
+  .wbb-promo {
+    background: var(--brand-yellow);
+    color: var(--brand-black);
+    text-align: center;
+    font-family: var(--body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 8px var(--section-pad-mobile);
+  }
+
+  .wbb-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--brand-black);
+    padding: 14px clamp(24px, 4vw, 48px);
+  }
+  .wbb-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    color: var(--surface-white);
+    font-family: var(--display);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .wbb-wordmark .wbb-est {
+    color: var(--brand-yellow);
+    font-family: var(--body);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+  .wbb-nav {
+    margin-left: auto;
+    display: flex;
+    gap: 28px;
+  }
+  .wbb-nav a {
+    color: var(--surface-white);
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+  }
+  .wbb-nav a:hover,
+  .wbb-nav a[aria-current="page"] { border-bottom-color: var(--brand-yellow); }
+
+  .wbb-burger { display: none; }
+
+  @media (max-width: 640px) {
+    .wbb-nav { display: none; }
+  }
+</style>
+
+<div class="wbb-promo">Powder Day 2026 IPA pouring now at both taprooms · Heber + Park City</div>
+<div class="wbb-header">
+  <a class="wbb-wordmark" href="/" aria-label="Wasatch Back Beerworks, established 1996">Wasatch Back <span class="wbb-est">Est 1996</span></a>
+  <nav class="wbb-nav" aria-label="Primary">
+    <a href="/" aria-current="page">Home</a>
+    <a href="/beers">Beers</a>
+    <a href="/the-brewery">The Brewery</a>
+    <a href="/taprooms">Taprooms</a>
+  </nav>
+</div>

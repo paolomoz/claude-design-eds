@@ -1,0 +1,71 @@
+<style>
+  footer.footer {
+    display: block;
+    background: var(--brand-black);
+    color: var(--surface-white);
+    margin-top: 0;
+  }
+  .wbb-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 56px clamp(24px, 4vw, 48px) 32px;
+  }
+  .wbb-footer-col h3 {
+    color: var(--brand-yellow);
+    font-family: var(--display);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .wbb-footer-col ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .wbb-footer-col a {
+    font-family: var(--body);
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 80%);
+  }
+  .wbb-footer-col a:hover { color: var(--brand-yellow); }
+
+  .wbb-footer-bottom {
+    border-top: 1px solid var(--hairline);
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 20px clamp(24px, 4vw, 48px);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--body);
+    font-size: 0.8rem;
+    color: var(--neutral-grey);
+  }
+  .wbb-footer-bottom a { color: var(--brand-yellow); }
+  .wbb-footer-bottom .wbb-est-mark { letter-spacing: 0.1em; text-transform: uppercase; }
+
+  @media (max-width: 640px) {
+    .wbb-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+</style>
+
+<div class="wbb-footer-grid">
+  <div class="wbb-footer-col">
+    <h3>The Brewery</h3>
+    <ul><li><a href="/the-brewery">Our story</a></li><li><a href="/the-brewery#the-people">The brewers</a></li><li><a href="/the-brewery#the-place">The Wasatch Back</a></li><li><a href="/press">Press</a></li></ul>
+  </div>
+  <div class="wbb-footer-col">
+    <h3>Taprooms</h3>
+    <ul><li><a href="/taprooms#heber-valley">Heber Valley</a></li><li><a href="/taprooms#park-city">Park City</a></li><li><a href="/taprooms#hours">Hours</a></li><li><a href="/private-events">Private events</a></li></ul>
+  </div>
+  <div class="wbb-footer-col">
+    <h3>The Beer</h3>
+    <ul><li><a href="/beers">The lineup</a></li><li><a href="/beers#year-round">Year-round</a></li><li><a href="/beers#seasonal">Seasonal</a></li><li><a href="/beers#powder-day">Powder Day 2026</a></li></ul>
+  </div>
+</div>
+<div class="wbb-footer-bottom">
+  <span>© 2026 Wasatch Back Beerworks LLC. All rights reserved.</span>
+  <span>Inquiries: <a href="mailto:hello@wasatchback.beer">hello@wasatchback.beer</a></span>
+  <span class="wbb-est-mark">Est 1996 · Heber Valley, Utah</span>
+</div>

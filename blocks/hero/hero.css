@@ -1,0 +1,116 @@
+/* ==========================================================================
+   hero — full-bleed cinematic photo with overlay
+   Lifted verbatim from the prototype's [data-section="hero"] / .ds-hero-*
+   rules, scoped under .hero. Tokens are global (styles/styles.css).
+   ========================================================================== */
+
+.hero {
+  position: relative;
+
+  /* viewport-sized photo block. svh handles mobile browser chrome; vh fallback. */
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--brand-black);
+  overflow: hidden;
+}
+
+.hero .hero-photo-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.hero .hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero .hero-scrim {
+  /* Two-layer scrim: bottom-strong linear for text legibility + edge vignette
+     radial that leaves a light window around the centered can. */
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgb(0 0 0 / 88%) 0%,
+      rgb(0 0 0 / 55%) 25%,
+      rgb(0 0 0 / 15%) 55%,
+      rgb(0 0 0 / 0%) 75%
+    ),
+    radial-gradient(
+      ellipse 38% 50% at 50% 42%,
+      rgb(0 0 0 / 0%) 0%,
+      rgb(0 0 0 / 5%) 50%,
+      rgb(0 0 0 / 45%) 85%,
+      rgb(0 0 0 / 58%) 100%
+    );
+  pointer-events: none;
+}
+
+.hero .hero-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--section-pad-desktop) var(--section-pad-desktop) calc(var(--section-pad-desktop) * 1.5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 80ch;
+}
+
+.hero .hero-eyebrow {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin: 0;
+}
+
+.hero .hero-h1 {
+  font-family: var(--hero);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--surface-white);
+  margin: 0;
+}
+
+.hero .hero-subhead {
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin: 0;
+}
+
+.hero .hero-cta-row {
+  margin-top: var(--space-md);
+}
+
+@media (width <= 1023px) {
+  .hero .hero-overlay {
+    padding-inline: var(--section-pad-tablet);
+  }
+}
+
+@media (width <= 640px) {
+  .hero .hero-overlay {
+    padding-inline: var(--section-pad-mobile);
+    padding-bottom: var(--section-pad-mobile);
+  }
+}
+
+@media (prefers-reduced-data: reduce) {
+  .hero .hero-photo {
+    object-fit: contain;
+  }
+}

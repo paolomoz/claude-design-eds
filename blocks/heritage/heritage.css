@@ -1,0 +1,78 @@
+/* heritage — editorial spread, lifted verbatim from the prototype's
+   [data-section="heritage"] + .ds-heritage-* rules, scoped under .heritage.
+   On-dark section: text colors are scoped to the block (#41). */
+
+.heritage {
+  background: var(--brand-black);
+  color: var(--surface-white);
+  padding: 96px var(--section-pad-desktop);
+  border-block: 1px solid var(--hairline);
+}
+
+/* Content constrained to --maxw; the black background bleeds full-width (#74). */
+.heritage .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+  gap: var(--section-pad-desktop);
+  align-items: center;
+}
+
+.heritage .heritage-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.heritage .heritage-eyebrow {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin: 0;
+}
+
+.heritage .heritage-year {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(6rem, 14vw, 11rem);
+  line-height: 0.85;
+  letter-spacing: 0;
+  color: var(--surface-white);
+  margin: 0;
+}
+
+.heritage .heritage-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--neutral-grey);
+  max-width: 60ch;
+}
+
+.heritage .heritage-prose p {
+  margin: 0;
+}
+
+@media (width <= 1023px) {
+  .heritage {
+    padding-inline: var(--section-pad-tablet);
+  }
+
+  .heritage .wrap {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+@media (width <= 640px) {
+  .heritage {
+    padding-inline: var(--section-pad-mobile);
+  }
+}

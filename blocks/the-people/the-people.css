@@ -1,0 +1,130 @@
+/* ==========================================================================
+   the-people — two equal full-bleed photo halves, each a clickable taproom panel
+   Lifted verbatim from the prototype's [data-section="the-people"] /
+   .ds-people-* rules, scoped under .the-people. Tokens are global.
+   ========================================================================== */
+
+.the-people {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+  border-bottom: 1px solid var(--hairline);
+  gap: 1px;
+  background-color: var(--hairline);
+}
+
+.the-people .the-people-half {
+  position: relative;
+  background: var(--brand-black);
+  overflow: hidden;
+  text-decoration: none;
+  transition: filter var(--dur-state) var(--ease-snap);
+}
+
+.the-people .the-people-half:hover {
+  filter: brightness(1.1);
+}
+
+.the-people .the-people-half-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.the-people .the-people-half-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 70%) 0%, rgb(0 0 0 / 20%) 60%, rgb(0 0 0 / 0%) 100%);
+  pointer-events: none;
+}
+
+.the-people .the-people-overlay {
+  position: relative;
+  padding: 96px var(--section-pad-desktop);
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-md);
+}
+
+.the-people .the-people-eyebrow {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin: 0;
+}
+
+.the-people .the-people-h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--surface-white);
+  margin: 0;
+}
+
+.the-people .the-people-teaser {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--surface-white);
+  margin: 0;
+  max-width: 40ch;
+}
+
+.the-people .the-people-cta {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+  margin-top: var(--space-sm);
+  border-bottom: 2px solid var(--brand-yellow);
+  align-self: flex-start;
+  padding-bottom: 2px;
+}
+
+@media (width <= 1023px) {
+  .the-people .the-people-overlay {
+    padding-inline: var(--section-pad-tablet);
+    padding-block: 64px;
+  }
+}
+
+@media (width <= 640px) {
+  .the-people {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .the-people .the-people-half {
+    min-height: 320px;
+  }
+
+  .the-people .the-people-overlay {
+    padding-inline: var(--section-pad-mobile);
+    padding-block: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .the-people .the-people-half {
+    transition: none;
+  }
+
+  .the-people .the-people-half:hover {
+    filter: none;
+  }
+}
