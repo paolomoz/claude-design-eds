@@ -390,6 +390,10 @@ That's it. No section-style classes. No motion primitives. No utility classes be
 
 Four principles, applied in this order on every project:
 
+**0. Ship an `@font-face` for EVERY named family — not just the body face (#65).** Prototypes name a display face AND a body face (`--display: "Hebden Incised", …; --body: "Lekton", …`). If you self-host only the body font, every heading/numeral/title whose stack names the un-shipped display family silently falls back to `Times New Roman`/`Arial` (generic serif/sans) — **invisible to size/color checks** (the glyphs differ but the metrics match; only the `FONT MISMATCH` probe flag #66 or an eyeball catches it). Distinct from #11/#22 (wrong weight) and #30 (opsz): here the family is NAMED but NEVER SHIPPED. For each quoted family in `--display`/`--body`/any heading stack, self-host a matching `@font-face` (download + commit the woff2 under `styles/fonts/`, reference root-relative — never the prototype's brand-CDN origin, #44). **Checklist:** grep every quoted family in `styles.css`'s font stacks against the `@font-face { font-family }` names declared — any unmatched name is a silent fallback.
+
+Then four principles, applied in this order on every project:
+
 **1. Leave `head.html` untouched. No font lines, period.**
 No Google Fonts `<link>`. No CDN `<link rel="stylesheet">` for type. No `<style>` blocks declaring `@font-face`. **No `<link rel="preload" as="font">`** either — even self-hosted preloads belong out of `head.html`. The browser will fetch the woff2 it needs as soon as `styles/styles.css` parses; the `body { arial }` / `body.session { var(--font-body) }` split (principle 3) eliminates the CLS that preloading is normally meant to prevent. **All `@font-face` declarations live in `styles/styles.css`.**
 
@@ -838,6 +842,7 @@ Read the output:
 - **Justified vs defect `STRETCHED IMAGE` (#45):** a stretch flag is JUSTIFIED — leave the CSS — when (a) the image is an `object-fit: cover` intentional full-bleed background/watermark, OR (b) the SAME flag appears on the proto side of the diff (a faithful lift of the prototype's own `height:Npx; padding; box-sizing:border-box` rule). "Fixing" a faithful flag only makes the EDS diverge. Treat it as a real defect ONLY when the proto renders the image at its natural AR but the EDS does not.
 - **Pre-deploy URL gate (#44):** `grep -rn "http://localhost\|aem\.page/img\|aem\.live/img" blocks/` MUST be empty. Block JS that injects fixed imagery (logos/icons/watermarks) must reference assets root-relative `/img/...`; an absolute origin baked into block JS passes local QA (the dev server is localhost:3000) but 404s in every real environment.
 
+- **`FONT MISMATCH` (#66):** a heading whose named display/body family loaded in the proto but NOT in the EDS = a missing `@font-face` falling back to serif/sans (#65). Ship the woff2 self-hosted + root-relative.
 - **`SURFACE/GROUND MISMATCH` (#59):** a heading that matches the proto by text but renders a materially different color (luminance flipped dark↔light) means its band rendered on the wrong ground (e.g. a light intro band fused into a dark scene, #58). Check the owning block's section background.
 - **GAP flags are WHOLE-PAGE, independent of `--sections` (#54):** `IMAGERY GAP` (#47) and `CONTENT GAP` (#49) are computed page-wide; `--sections` only chooses which per-section *screenshots* are saved. So a focused `--sections .hero` run whose hero looks perfect can STILL fire a GAP pointing at a defect in a *different* block (e.g. services dropping 3/4 cards). Never dismiss a GAP flag as "outside my section" — when either fires, run an UNSCOPED full-page diff (or a per-section diff on the suspect block) and locate the dropped/duplicated content before trusting the focused pass.
 

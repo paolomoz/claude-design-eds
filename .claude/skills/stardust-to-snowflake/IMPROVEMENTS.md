@@ -240,7 +240,15 @@ test-21's beer-rail rendered 0 of 10 cards: each beer is ONE delimited `<p>` lin
 test-22's featured-beers keyed card boundaries on the can `<picture>`, but the content is image-less (#2) so all 3 beers collapsed into 1 — even though each had a per-card `<h3>`. The sibling events.js (heading boundary, picture as hint) was fine. Caught by #49.
 **Implemented:** Step 8 #52 — never use `<picture>` as the primary card boundary; segment on the per-card heading first, picture only a media hint. A grid rendering 1-of-N is the symptom.
 
-**Implemented (#40–64):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
+### 65. 🟠 Every named font family must ship an @font-face — else silent serif/sans fallback
+test-23 lifted `--display: "Hebden Incised", …` but self-hosted only the body face, so every heading/numeral/title fell back to Times serif — silent (size/color match the proto; only the #66 FONT MISMATCH flag or an eyeball catches it). Distinct from #11/#22 (weight) and #30 (opsz): the family is NAMED but NEVER SHIPPED.
+**Implemented:** Step 4 principle 0 — self-host an @font-face for EVERY quoted family in --display/--body/heading stacks (download+commit woff2 root-relative, not the brand CDN #44). Checklist: grep every quoted family against the @font-face names in styles.css.
+
+### 66. 🟡 visual-diff never captured fontFamily — a wholesale display-font fallback passed silently
+The probe compared color (#59) and size but not font, so the #65 fallback produced no flag (sizes/colors matched; only glyphs differed). Same blind-spot class as #47/#49/#59.
+**Implemented:** `visual-diff.mjs` captures the first named family per heading + whether it loaded (`document.fonts.check`), and emits a `FONT MISMATCH` advisory when a text-matched heading's named face loaded in the proto but not the EDS. Step 10 red-flags list updated.
+
+**Implemented (#40–66):** #40 → blank guard + Step 4; #41 → Step 5/7; #42 → Step 8; #43 → load guard + Step 10 harness rewrite; #44 → anti-pattern + Step 10 grep gate; #45 → Step 10 justified-flag rule; #46 → build-harness.mjs; #47/#49/#59 → visual-diff count/colour advisories; #48/#50/#51/#52/#53/#55/#56/#57 → Step 8 decoration contract; #54 → Step 10 whole-page; #58 → anti-pattern 1b. (Tooling: convert.workflow.js arg-parse/fail-fast + title/desc plain-prose + leak gate; .eslintignore excludes vendored runtime; dev-server guard in iter-setup.)
 
 ---
 

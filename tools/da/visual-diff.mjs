@@ -94,11 +94,18 @@ function analyse() {
   // proto-vs-EDS count (chrome is fragments in EDS, outside main) — #60.
   const headings = [...(mainEl || document).querySelectorAll('h1, h2, h3')].map((h) => {
     const cs = getComputedStyle(h);
+    // the first QUOTED (named) family in the stack, and whether it actually loaded
+    // — a named --display face with no @font-face silently falls back (#65/#66).
+    const named = (cs.fontFamily.match(/"([^"]+)"|'([^']+)'/) || [])[1];
+    let fontLoaded = true;
+    try { fontLoaded = named ? document.fonts.check(`${cs.fontSize} "${named}"`) : true; } catch { fontLoaded = true; }
     return {
       tag: h.tagName.toLowerCase(),
       text: h.textContent.trim().slice(0, 32),
       color: cs.color,
       fontSize: cs.fontSize,
+      family: named || cs.fontFamily.split(',')[0].trim(),
+      fontLoaded,
     };
   });
 
@@ -219,6 +226,15 @@ function redFlags(eds, proto) {
       const le = lum(h.color);
       if (lp !== null && le !== null && Math.abs(lp - le) > 90) {
         flags.push(`SURFACE/GROUND MISMATCH (#59): heading "${h.text}" is ${h.color} in EDS vs ${pc} in proto (luminance ${Math.round(le)} vs ${Math.round(lp)}) — a band likely rendered on the wrong ground (dark vs light). Check the owning block's section background.`);
+      }
+    });
+    // Font mismatch (#66): a named display/body face that loaded in the proto but
+    // not the EDS = a missing @font-face silently falling back to serif/sans (#65).
+    const pFont = new Map(proto.headings.map((h) => [h.text.toLowerCase(), h]));
+    eds.headings.forEach((h) => {
+      const p = pFont.get(h.text.toLowerCase());
+      if (p && p.fontLoaded && !h.fontLoaded && h.family) {
+        flags.push(`FONT MISMATCH (#66): heading "${h.text}" wants "${h.family}" but it did NOT load in EDS (silent serif/sans fallback). Ship an @font-face for every named --display/--body family (#65), self-hosted + root-relative.`);
       }
     });
   }
