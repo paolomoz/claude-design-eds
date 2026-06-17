@@ -1,0 +1,163 @@
+<style>
+footer.footer {
+  background: var(--bg-deep);
+  border-top: 1px solid var(--brand-red);
+  padding-block: 64px 32px;
+  margin-top: 96px;
+}
+
+.surly-footer__container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter-d);
+}
+
+.surly-footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--bg-line);
+}
+
+.surly-footer__col h3 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+  margin: 0 0 14px;
+}
+
+.surly-footer__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+.surly-footer__col a { transition: color var(--t-fast); }
+.surly-footer__col a:hover { color: var(--brand-yellow); }
+
+.surly-footer__brand p {
+  color: var(--ink-muted);
+  font-family: var(--body);
+  font-size: 14px;
+  max-width: 36ch;
+}
+
+.surly-footer__brand .logo {
+  display: block;
+  margin-bottom: 16px;
+  width: 200px;
+}
+
+.surly-footer__brand .logo img {
+  height: 36px;
+  width: auto;
+}
+
+.surly-footer__brand .addr {
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 16px;
+}
+
+.surly-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  font-family: var(--body);
+  font-size: 12px;
+  color: var(--ink-faint);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.surly-footer__legal { display: flex; gap: 16px; }
+.surly-footer__legal a { transition: color var(--t-fast); }
+.surly-footer__legal a:hover { color: var(--brand-yellow); }
+
+.surly-footer__social { display: flex; gap: 14px; }
+
+.surly-footer__social a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--bg-line);
+  display: grid;
+  place-items: center;
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+
+.surly-footer__social a:hover {
+  border-color: var(--brand-yellow);
+  color: var(--brand-yellow);
+}
+
+@media (max-width: 1024px) {
+  .surly-footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+@media (max-width: 640px) {
+  .surly-footer__grid { grid-template-columns: 1fr; }
+  .surly-footer__bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+
+<div class="surly-footer__container">
+  <div class="surly-footer__grid">
+    <div class="surly-footer__brand surly-footer__col">
+      <a href="/" class="logo"><img src="/img/surly/logo.svg" alt="Surly Brewing Co." width="200" height="36"></a>
+      <p>Each day, Surly Brewing Co. relentlessly pursues craft beer perfection.</p>
+      <div class="addr">520 Malcolm Avenue SE<br>Minneapolis, MN 55414</div>
+    </div>
+    <div class="surly-footer__col">
+      <h3>Beer</h3>
+      <ul>
+        <li><a href="/beer">Beer Lineup</a></li>
+        <li><a href="/thc-cbd">THC / CBD</a></li>
+        <li><a href="/distributors">Distributors</a></li>
+        <li><a href="/contract-brewing">Contract Brewing</a></li>
+      </ul>
+    </div>
+    <div class="surly-footer__col">
+      <h3>Visit</h3>
+      <ul>
+        <li><a href="/beer-hall">Beer Hall</a></li>
+        <li><a href="/private-events">Private Events</a></li>
+        <li><a href="/events">Events Calendar</a></li>
+        <li><a href="/on-stage">On Stage</a></li>
+      </ul>
+    </div>
+    <div class="surly-footer__col">
+      <h3>About</h3>
+      <ul>
+        <li><a href="/story">Story</a></li>
+        <li><a href="/gives-a-damn">Gives a Damn</a></li>
+        <li><a href="/jobs">Jobs</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/faqs">FAQs</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="surly-footer__bottom">
+    <div>© 2026 Surly Brewing Co. · Drink Responsibly · 21+</div>
+    <div class="surly-footer__social" aria-label="Social">
+      <a href="https://instagram.com" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
+      <a href="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="https://tiktok.com" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+    </div>
+    <div class="surly-footer__legal">
+      <a href="/privacy">Privacy</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/terms">Terms</a>
+    </div>
+  </div>
+</div>

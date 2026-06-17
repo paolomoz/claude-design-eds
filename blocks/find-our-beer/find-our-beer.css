@@ -1,0 +1,97 @@
+/* FIND OUR BEER — where-to-buy band ---------------------------------- */
+
+/* Max-width content wrap (section background, if any, stays full-bleed). */
+.find-our-beer {
+  max-width: var(--container, 1280px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Two-column band with top + bottom hairline rules (lifted from .ds-find). */
+.find-our-beer .find {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: 48px;
+  padding: 64px 0;
+  border-top: 1px solid var(--bg-line);
+  border-bottom: 1px solid var(--bg-line);
+}
+
+/* Left: copy column (.ds-find__copy). */
+.find-our-beer .find-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Eyebrow (recreated .ds-eyebrow — EDS strips the authored span). */
+.find-our-beer .find-eyebrow {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--brand-yellow);
+}
+
+/* Red display heading (.ds-display.ds-display-m.ds-find__heading). */
+.find-our-beer .find-heading {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--brand-red);
+}
+
+/* Lede (.ds-lede). */
+.find-our-beer .find-lede {
+  margin: 0;
+  max-width: 60ch;
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+/* Right: CTA column aligned right (.ds-find__cta). */
+.find-our-beer .find-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+  justify-self: end;
+  text-align: right;
+}
+
+/* Secondary CTA renders as a yellow text link (.ds-btn--link), not an outline. */
+.find-our-beer .find-cta a.btn-secondary {
+  padding: 8px 0;
+  border: 0;
+  color: var(--brand-yellow);
+  background: transparent;
+}
+
+.find-our-beer .find-cta a.btn-secondary:hover {
+  color: var(--brand-yellow);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Tablet / mobile: collapse to one column, left-aligned. */
+@media (width <= 1024px) {
+  .find-our-beer .find {
+    grid-template-columns: 1fr;
+  }
+
+  .find-our-beer .find-cta {
+    align-items: flex-start;
+    justify-self: start;
+    text-align: left;
+  }
+}

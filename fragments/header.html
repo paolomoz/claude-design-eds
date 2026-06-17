@@ -1,0 +1,174 @@
+<style>
+header.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bg-line);
+}
+
+.surly-header__utility {
+  display: flex;
+  justify-content: flex-end;
+  gap: 32px;
+  padding: 8px var(--gutter-d);
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--bg-line);
+}
+
+.surly-header__utility a { transition: color var(--t-fast); }
+.surly-header__utility a:hover { color: var(--brand-yellow); }
+
+.surly-header__main {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 32px;
+  padding: 20px var(--gutter-d);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.surly-logo { display: block; height: 32px; }
+.surly-logo img { height: 100%; width: auto; display: block; }
+
+.surly-nav {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.surly-nav a {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: var(--tracking-cta);
+  padding: 8px 0;
+  position: relative;
+  transition: color var(--t-fast);
+}
+
+.surly-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--brand-yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+
+.surly-nav a:hover { color: var(--brand-yellow); }
+.surly-nav a:hover::after { transform: scaleX(1); }
+
+.surly-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.surly-shop {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-cta);
+  padding: 10px 16px;
+  background: var(--brand-yellow);
+  color: #0a0a0a;
+  border-radius: var(--radius-interactive);
+  transition: background var(--t-fast) var(--ease-out);
+}
+
+.surly-shop:hover { background: var(--brand-yellow-warm); }
+
+.surly-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+}
+
+.surly-burger-toggle { display: none; }
+
+@media (max-width: 1024px) {
+  .surly-header__utility { gap: 20px; font-size: 10px; }
+}
+
+@media (max-width: 640px) {
+  .surly-header__utility { display: none; }
+
+  .surly-header__main {
+    grid-template-columns: auto 1fr;
+    padding: 14px var(--gutter-m);
+  }
+
+  .surly-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    border: 1px solid var(--ink);
+    cursor: pointer;
+  }
+
+  .surly-nav { display: none; }
+
+  .surly-burger-toggle:checked ~ .surly-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--bg-line);
+    padding: 16px var(--gutter-m);
+  }
+
+  .surly-burger-toggle:checked ~ .surly-nav a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--bg-line);
+    font-size: 16px;
+  }
+
+  .surly-header__actions { display: none; }
+}
+</style>
+
+<div class="surly-header__utility" role="navigation" aria-label="Utility">
+  <a href="/shop">Surly Shop</a>
+  <a href="/thc">Surly THC</a>
+  <a href="/newsletter">Newsletter</a>
+  <a href="/rewards">Surly Rewards</a>
+</div>
+
+<div class="surly-header__main">
+  <a class="surly-logo" href="/" aria-label="Surly Brewing Co. — home">
+    <img src="/img/surly/logo.svg" alt="Surly Brewing Co." width="120" height="32">
+  </a>
+
+  <input type="checkbox" id="surly-burger-toggle" class="surly-burger-toggle" aria-hidden="true">
+  <label class="surly-burger" for="surly-burger-toggle" aria-label="Open navigation">
+    <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="0" y1="1" x2="20" y2="1"/><line x1="0" y1="7" x2="20" y2="7"/><line x1="0" y1="13" x2="20" y2="13"/></svg>
+  </label>
+
+  <nav class="surly-nav" aria-label="Primary">
+    <a href="/beer">Beer</a>
+    <a href="/visit">Visit</a>
+    <a href="/story">Story</a>
+    <a href="/gives-a-damn">Gives a Damn</a>
+    <a href="/news">News</a>
+    <a href="/contact">Contact</a>
+  </nav>
+
+  <div class="surly-header__actions">
+    <a href="/shop" class="surly-shop">Shop</a>
+  </div>
+</div>

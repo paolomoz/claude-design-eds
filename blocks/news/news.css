@@ -1,0 +1,213 @@
+/* NEWS — three-up news row on an elevated surface.
+   Lifted from home-proposed.html (.ds-news-wrap / .ds-news / .ds-news-card …),
+   scoped under .news. Global tokens + buttons live in styles/styles.css. */
+
+/* Elevated full-bleed surface; CONTENT is wrapped (max-width). */
+.news {
+  background: var(--bg-elevated);
+  padding-block: var(--section-pad-t);
+}
+
+.news .news-wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter-d);
+}
+
+/* Section head — eyebrow + h2 left, text-link CTA right. */
+.news .news-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--bg-line);
+}
+
+.news .news-head .lhs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.news .news-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+  display: inline-block;
+}
+
+.news .news-head h2 {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  font-size: clamp(34px, 4vw, 56px);
+  color: var(--brand-red);
+  margin: 0;
+}
+
+.news .news-head-link {
+  background: transparent;
+  color: var(--brand-yellow);
+  padding: 8px 0;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.news .news-head-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Card grid — repeat(3) → 2 → 1. */
+.news .news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.news .news-card {
+  background: var(--bg);
+  border: 1px solid var(--bg-line);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hatched CSS media placeholder (image-less fallback). */
+.news .news-media {
+  aspect-ratio: 16 / 9;
+  background: repeating-linear-gradient(45deg, #1f1f1f 0 8px, #161616 8px 16px);
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--ink-faint);
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  font-size: 11px;
+}
+
+.news .news-media::after {
+  content: "PLACEHOLDER";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--brand-yellow);
+  color: #0a0a0a;
+  padding: 6px 12px;
+  font-family: var(--display);
+  font-size: 10px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Real authored image, when present, replaces the hatch. */
+.news .news-media.has-image {
+  background: var(--bg);
+}
+
+.news .news-media.has-image::after {
+  content: none;
+}
+
+.news .news-media picture,
+.news .news-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news .news-copy {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.news .news-card-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+}
+
+.news .news-card-title {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  margin: 0;
+}
+
+.news .news-lede {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  flex: 1;
+  margin: 0;
+}
+
+.news .news-byline {
+  font-family: var(--body);
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin: 0;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--bg-line);
+}
+
+@media (width <= 1024px) {
+  .news .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .news .news-grid > :last-child {
+    display: none;
+  }
+
+  .news .news-head h2 {
+    font-size: 36px;
+  }
+}
+
+@media (width <= 640px) {
+  .news {
+    padding-block: var(--section-pad-m);
+  }
+
+  .news .news-wrap {
+    padding: 0 var(--gutter-m);
+  }
+
+  .news .news-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .news .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news .news-grid > :last-child {
+    display: flex;
+  }
+}

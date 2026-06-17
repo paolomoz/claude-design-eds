@@ -1,37 +1,210 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/*
+ * hero — rotating editorial promo hero.
+ * CSS lifted verbatim from the stardust prototype (.ds-hero family,
+ * home-proposed.html lines 259–331), scoped under .hero. Global tokens and the
+ * button system live in styles/styles.css — referenced here, not redefined.
+ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  overflow: hidden;
+  background: var(--bg-deep);
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+.hero .hero-stage {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  min-height: 480px;
+  max-height: 760px;
 }
 
-.hero picture {
+.hero .hero-slide {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  display: grid;
+  align-items: end;
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease-out);
+  background-size: cover;
+  background-position: center;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-slide[data-active="true"] {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero .hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 10%) 0%,
+    rgb(0 0 0 / 10%) 40%,
+    rgb(0 0 0 / 78%) 100%
+  );
+  pointer-events: none;
+}
+
+.hero .hero-copy {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  height: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter-d) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-@media (width >= 900px) {
-  .hero {
-    padding: 40px 32px;
+.hero .hero-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+  display: inline-block;
+}
+
+.hero .hero-headline {
+  margin: 0;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-wrap: balance;
+  font-size: clamp(44px, 6vw, 80px);
+  color: var(--ink);
+}
+
+.hero .hero-lede {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 56ch;
+}
+
+.hero .hero-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.hero .hero-pagination {
+  position: absolute;
+  right: var(--gutter-d);
+  bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 3;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+.hero .hero-pagination button {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 4px 0;
+  color: var(--ink-faint);
+  transition: color var(--t-fast);
+}
+
+.hero .hero-pagination button:hover {
+  color: var(--brand-yellow);
+}
+
+.hero .hero-pagination button[data-active="true"] {
+  color: var(--brand-yellow);
+}
+
+.hero .hero-pagination .num {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.hero .hero-pagination .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.7;
+  max-width: 130px;
+}
+
+.hero .hero-pagination .timer-bar {
+  width: 80px;
+  height: 2px;
+  background: rgb(255 255 255 / 18%);
+  position: relative;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.hero .hero-pagination button[data-active="true"] .timer-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--brand-yellow);
+  transform: translateX(-100%);
+  animation: hero-tick 7s linear forwards;
+}
+
+@keyframes hero-tick {
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-pagination button[data-active="true"] .timer-bar::before {
+    animation: none;
+    transform: translateX(0);
+  }
+}
+
+@media (width <= 1024px) {
+  .hero .hero-stage {
+    aspect-ratio: 4 / 3;
+    min-height: 420px;
+  }
+
+  .hero .hero-copy {
+    padding: 0 var(--gutter-d) 96px;
+  }
+}
+
+@media (width <= 640px) {
+  .hero .hero-pagination {
+    right: var(--gutter-m);
+    bottom: 16px;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .hero .hero-pagination .label {
+    display: none;
+  }
+
+  .hero .hero-pagination .timer-bar {
+    width: 28px;
+  }
+
+  .hero .hero-copy {
+    padding: 0 var(--gutter-m) 80px;
+  }
+
+  .hero .hero-stage {
+    aspect-ratio: 3 / 4;
+    min-height: 540px;
   }
 }

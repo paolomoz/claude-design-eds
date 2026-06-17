@@ -1,0 +1,135 @@
+/* NEWSLETTER BAND ---------------------------------------------------- */
+
+/*
+ * Full-bleed red sign-up band. The section background stays full-bleed; the
+ * CONTENT is wrapped to the container max-width. CSS lifted verbatim from the
+ * prototype's .ds-newsletter rules (home-proposed.html), scoped under
+ * .newsletter. Global tokens + button system live in styles/styles.css.
+ */
+
+main .section.newsletter-container {
+  background: var(--brand-red-deep);
+  padding-block: var(--section-pad-t);
+}
+
+@media (width >= 600px) {
+  main .section.newsletter-container {
+    padding-block: var(--section-pad-d);
+  }
+}
+
+.newsletter {
+  text-align: center;
+}
+
+.newsletter .newsletter-content {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter-m);
+}
+
+@media (width >= 600px) {
+  .newsletter .newsletter-content {
+    padding: 0 var(--gutter-d);
+  }
+}
+
+.newsletter .newsletter-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+  display: inline-block;
+}
+
+.newsletter .newsletter-heading {
+  color: var(--ink);
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  margin: 8px 0 14px;
+}
+
+.newsletter .newsletter-lede {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  max-width: 50ch;
+  margin: 0 auto 28px;
+}
+
+.newsletter .newsletter-form {
+  display: flex;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.newsletter .newsletter-form input {
+  flex: 1;
+  background: rgb(0 0 0 / 20%);
+  border: 1.5px solid rgb(255 255 255 / 40%);
+  color: var(--ink);
+  padding: 14px 18px;
+  font-family: var(--body);
+  font-size: 16px;
+  border-radius: var(--radius-interactive);
+}
+
+.newsletter .newsletter-form input::placeholder {
+  color: rgb(255 255 255 / 65%);
+}
+
+.newsletter .newsletter-form input:focus {
+  outline: 2px solid var(--brand-yellow);
+  outline-offset: 1px;
+  border-color: var(--brand-yellow);
+}
+
+/* Visually-hidden label for a11y. */
+.newsletter .newsletter-label {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Submit control — invert button (dark fill, yellow on hover), lifted from
+   the prototype's .ds-btn / .ds-btn--invert. */
+.newsletter .newsletter-submit {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: var(--tracking-cta);
+  padding: 14px 22px;
+  border-radius: var(--radius-interactive);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #0a0a0a;
+  color: var(--ink);
+  transition:
+    background var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out);
+}
+
+.newsletter .newsletter-submit:hover {
+  background: var(--brand-yellow);
+  color: #0a0a0a;
+}
+
+.newsletter .newsletter-submit:focus-visible {
+  outline: 2px solid var(--brand-yellow);
+  outline-offset: 3px;
+}
+
+@media (width < 600px) {
+  .newsletter .newsletter-form {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,146 @@
+/*
+ * beer-hall — Beer Hall destination split.
+ * CSS lifted verbatim from the stardust prototype (.ds-beerhall, lines 416-440)
+ * and scoped under .beer-hall. Global tokens + button system live in
+ * styles/styles.css — referenced here, not redefined.
+ */
+
+/* Content wrap — recreate the prototype's .ds-container (the section background,
+   if any, stays full-bleed; the CONTENT is constrained). */
+.beer-hall .beer-hall-inner {
+  max-width: var(--container, 1180px);
+  margin: 0 auto;
+  padding: 0 24px;
+
+  /* .ds-beerhall */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+
+/* .ds-beerhall__media */
+.beer-hall .beer-hall-media {
+  aspect-ratio: 4 / 5;
+  background-color: var(--bg-elevated);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* .ds-beerhall__media::after — bottom gradient */
+.beer-hall .beer-hall-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgb(10 10 10 / 60%) 100%);
+}
+
+/* .ds-beerhall__copy */
+.beer-hall .beer-hall-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  padding-block: 20px;
+}
+
+/* eyebrow (.ds-eyebrow) */
+.beer-hall .beer-hall-eyebrow {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--brand-yellow);
+  display: inline-block;
+}
+
+/* .ds-beerhall__heading */
+.beer-hall .beer-hall-heading {
+  color: var(--brand-red);
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-wrap: balance;
+  font-size: clamp(34px, 4vw, 56px);
+  margin: 0;
+}
+
+/* lede (.ds-lede) */
+.beer-hall .beer-hall-lede {
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* .ds-beerhall__address */
+.beer-hall .beer-hall-address {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+  padding: 16px 0;
+  border-top: 1px solid var(--bg-line);
+  border-bottom: 1px solid var(--bg-line);
+}
+
+/* .ds-beerhall__address strong — recreated as the yellow uppercase label span */
+.beer-hall .beer-hall-label {
+  color: var(--brand-yellow);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: var(--tracking-eyebrow);
+}
+
+.beer-hall .beer-hall-street {
+  margin: 0;
+}
+
+/* .ds-beerhall__hours */
+.beer-hall .beer-hall-hours {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 18px;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 14px 0 0;
+}
+
+.beer-hall .beer-hall-hours dt {
+  color: var(--ink);
+}
+
+.beer-hall .beer-hall-hours dd {
+  margin: 0;
+}
+
+/* .ds-beerhall__ctas */
+.beer-hall .beer-hall-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* .ds-beerhall responsive — single column below 1024px */
+@media (width <= 1024px) {
+  .beer-hall .beer-hall-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .beer-hall .beer-hall-media {
+    aspect-ratio: 16 / 9;
+  }
+}
